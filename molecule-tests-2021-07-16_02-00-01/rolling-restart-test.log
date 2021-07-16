@@ -1,0 +1,414 @@
+/bin/bash: go: command not found
+/bin/bash: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT/helm-charts'
+Will use this helm executable: /tmp/KIALI-GIT/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator-1.38.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT/helm-charts'
+error: You must be logged in to the server (Unauthorized)
+error: You must be logged in to the server (Unauthorized)
+Manually patching image registry operator to ensure it is managed
+error: You must be logged in to the server (Unauthorized)
+Manually patching image registry operator to expose the cluster internal image registry
+error: You must be logged in to the server (Unauthorized)
+OCP repos: external=[default-route-openshift-image-registry.apps.ocp4.local] internal=[image-registry.openshift-image-registry.svc:5000]
+Will auto-detect hosts to add based on the CLUSTER_REPO: default-route-openshift-image-registry.apps.ocp4.local
+Auto-detected add host args: --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.100 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.100 --add-host=api.ocp4.local:192.168.122.100 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.100
+Will not rebuild kiali-molecule image.
+for msn in rolling-restart-test; do podman run --rm  --env MOLECULE_HELM_CHARTS_REPO=/tmp/helm-charts-repo -v "/tmp/KIALI-GIT/helm-charts":/tmp/helm-charts-repo:ro,Z -v "/tmp/KIALI-GIT/kiali/operator":/tmp/operator:ro,Z -v "/home/jmazzite/.kube/config":/root/.kube/config:ro,Z   -w /tmp/operator --network="host" --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.100 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.100 --add-host=api.ocp4.local:192.168.122.100 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.100 --add-host="api.crc.testing:192.168.130.11" --add-host="kiali-istio-system.apps-crc.testing:192.168.130.11" --add-host="prometheus-istio-system.apps-crc.testing:192.168.130.11" --env DORP=podman --env MOLECULE_KIALI_CR_SPEC_VERSION=default  --env MOLECULE_OPERATOR_PROFILER_ENABLED=true --env MOLECULE_OPERATOR_INSTALLER=helm --env MOLECULE_DUMP_LOGS_ON_ERROR=true  --env MOLECULE_WAIT_RETRIES=360 localhost/kiali-molecule:latest molecule --debug test  --scenario-name ${msn}; if [ "$?" != "0" ]; then echo "Molecule test failed: ${msn}"; exit 1; fi; done
+--> Test matrix
+    
+└── rolling-restart-test
+    ├── prepare
+    ├── converge
+    └── destroy
+    
+--> Scenario: 'rolling-restart-test'
+--> Action: 'prepare'
+--> Sanity checks: 'podman'
+DEBUG: ANSIBLE ENVIRONMENT
+---
+ANSIBLE_COLLECTIONS_PATH: /root/.cache/molecule/operator/rolling-restart-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /root/.cache/molecule/operator/rolling-restart-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/rolling-restart-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /root/.cache/molecule/operator/rolling-restart-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT
+---
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /root/.cache/molecule/operator/rolling-restart-test
+MOLECULE_EXTRAS: docker,docs,podman,windows,lint
+MOLECULE_FILE: /root/.cache/molecule/operator/rolling-restart-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /root/.cache/molecule/operator/rolling-restart-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_PLUGINS: 'molecule-azure molecule-containers molecule-docker molecule-digitalocean
+  molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman
+  molecule-vagrant '
+MOLECULE_PROJECT_DIRECTORY: /tmp/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/operator/molecule/rolling-restart-test
+MOLECULE_SCENARIO_NAME: rolling-restart-test
+MOLECULE_STATE_FILE: /root/.cache/molecule/operator/rolling-restart-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/operator/molecule/rolling-restart-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY
+ANSIBLE_COLLECTIONS_PATH=/root/.cache/molecule/operator/rolling-restart-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/root/.cache/molecule/operator/rolling-restart-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/rolling-restart-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/root/.cache/molecule/operator/rolling-restart-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/root/.cache/molecule/operator/rolling-restart-test MOLECULE_EXTRAS=docker,docs,podman,windows,lint MOLECULE_FILE=/root/.cache/molecule/operator/rolling-restart-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/root/.cache/molecule/operator/rolling-restart-test/instance_config.yml MOLECULE_INVENTORY_FILE=/root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_PLUGINS=molecule-azure molecule-containers molecule-docker molecule-digitalocean molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman molecule-vagrant  MOLECULE_PROJECT_DIRECTORY=/tmp/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/operator/molecule/rolling-restart-test MOLECULE_SCENARIO_NAME=rolling-restart-test MOLECULE_STATE_FILE=/root/.cache/molecule/operator/rolling-restart-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/operator/molecule/rolling-restart-test/tests MOLECULE_WAIT_RETRIES=360
+
+DEBUG: COMMAND
+/usr/bin/ansible-playbook --skip-tags=molecule-notest,notest --diff --inventory=/root/.cache/molecule/operator/rolling-restart-test/inventory /tmp/operator/molecule/default/prepare.yml -vvv
+
+    [0;34mansible-playbook 2.10.2[0m
+    [0;34m  config file = /root/.cache/molecule/operator/rolling-restart-test/ansible.cfg[0m
+    [0;34m  configured module search path = ['/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules', '/usr/lib/python3.8/site-packages/molecule_lxd/modules', '/usr/lib/python3.8/site-packages/molecule_vagrant/modules', '/root/.cache/molecule/operator/rolling-restart-test/library', '/tmp/operator/library', '/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules'][0m
+    [0;34m  ansible python module location = /usr/lib/python3.8/site-packages/ansible[0m
+    [0;34m  executable location = /usr/bin/ansible-playbook[0m
+    [0;34m  python version = 3.8.6 (default, Oct  5 2020, 00:23:48) [GCC 10.2.0][0m
+    [0;34mUsing /root/.cache/molecule/operator/rolling-restart-test/ansible.cfg as config file[0m
+    [0;34mhost_list declined parsing /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mscript declined parsing /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mParsed /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml inventory source with yaml plugin[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mstatically imported: /tmp/operator/molecule/default/process-network-policy.yml[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    
+    PLAYBOOK: prepare.yml **********************************************************
+    [0;34m1 plays in /tmp/operator/molecule/default/prepare.yml[0m
+    
+    PLAY [Prepare] *****************************************************************
+    
+    TASK [Gathering Facts] *********************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:1[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626426160.7831993-12-144341396667297 `" && echo ansible-tmp-1626426160.7831993-12-144341396667297="` echo /root/.ansible/tmp/ansible-tmp-1626426160.7831993-12-144341396667297 `" ) && sleep 0'[0m
+    [0;34mUsing module file /usr/lib/python3.8/site-packages/ansible/modules/setup.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-539pv_ra2/tmpbwue8sdq TO /root/.ansible/tmp/ansible-tmp-1626426160.7831993-12-144341396667297/AnsiballZ_setup.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626426160.7831993-12-144341396667297/ /root/.ansible/tmp/ansible-tmp-1626426160.7831993-12-144341396667297/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626426160.7831993-12-144341396667297/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626426160.7831993-12-144341396667297/ > /dev/null 2>&1 && sleep 0'[0m
+    [0;32mok: [localhost][0m
+    [0;34mMETA: ran handlers[0m
+    
+    TASK [Get information about the cluster] ***************************************
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:8[0m
+/usr/lib/python3.8/site-packages/urllib3/connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(
+    
+    PLAY RECAP *********************************************************************
+    [0;31mlocalhost[0m                  : [0;32mok=1   [0m changed=0    unreachable=0    [0;31mfailed=1   [0m skipped=0    rescued=0    ignored=0
+    
+[0;31mfatal: [localhost]: FAILED! => {[0m
+[0;31m    "msg": "An unhandled exception occurred while running the lookup plugin 'kubernetes.core.k8s'. Error was a <class 'kubernetes.dynamic.exceptions.UnauthorizedError'>, original message: 401\nReason: Unauthorized\nHTTP response headers: HTTPHeaderDict({'Audit-Id': '66f6945a-16e0-4e05-9361-12ec4154bcb9', 'Cache-Control': 'no-cache, private', 'Content-Type': 'application/json', 'Date': 'Fri, 16 Jul 2021 09:02:44 GMT', 'Content-Length': '129'})\nHTTP response body: b'{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Failure\",\"message\":\"Unauthorized\",\"reason\":\"Unauthorized\",\"code\":401}\\n'\nOriginal traceback: \n  File \"/usr/lib/python3.8/site-packages/kubernetes/dynamic/client.py\", line 55, in inner\n    resp = func(self, *args, **kwargs)\n\n  File \"/usr/lib/python3.8/site-packages/kubernetes/dynamic/client.py\", line 240, in request\n    return self.client.call_api(\n\n  File \"/usr/lib/python3.8/site-packages/kubernetes/client/api_client.py\", line 348, in call_api\n    return self.__call_api(resource_path, method,\n\n  File \"/usr/lib/python3.8/site-packages/kubernetes/client/api_client.py\", line 180, in __call_api\n    response_data = self.request(\n\n  File \"/usr/lib/python3.8/site-packages/kubernetes/client/api_client.py\", line 373, in request\n    return self.rest_client.GET(url,\n\n  File \"/usr/lib/python3.8/site-packages/kubernetes/client/rest.py\", line 239, in GET\n    return self.request(\"GET\", url,\n\n  File \"/usr/lib/python3.8/site-packages/kubernetes/client/rest.py\", line 233, in request\n    raise ApiException(http_resp=r)\n"[0m
+[0;31m}[0m
+ERROR: 
+An error occurred during the test sequence action: 'prepare'. Cleaning up.
+--> Scenario: 'rolling-restart-test'
+--> Action: 'cleanup'
+DEBUG: ANSIBLE ENVIRONMENT
+---
+ANSIBLE_COLLECTIONS_PATH: /root/.cache/molecule/operator/rolling-restart-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /root/.cache/molecule/operator/rolling-restart-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/rolling-restart-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /root/.cache/molecule/operator/rolling-restart-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT
+---
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /root/.cache/molecule/operator/rolling-restart-test
+MOLECULE_EXTRAS: docker,docs,podman,windows,lint
+MOLECULE_FILE: /root/.cache/molecule/operator/rolling-restart-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /root/.cache/molecule/operator/rolling-restart-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_PLUGINS: 'molecule-azure molecule-containers molecule-docker molecule-digitalocean
+  molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman
+  molecule-vagrant '
+MOLECULE_PROJECT_DIRECTORY: /tmp/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/operator/molecule/rolling-restart-test
+MOLECULE_SCENARIO_NAME: rolling-restart-test
+MOLECULE_STATE_FILE: /root/.cache/molecule/operator/rolling-restart-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/operator/molecule/rolling-restart-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY
+ANSIBLE_COLLECTIONS_PATH=/root/.cache/molecule/operator/rolling-restart-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/root/.cache/molecule/operator/rolling-restart-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/rolling-restart-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/root/.cache/molecule/operator/rolling-restart-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/root/.cache/molecule/operator/rolling-restart-test MOLECULE_EXTRAS=docker,docs,podman,windows,lint MOLECULE_FILE=/root/.cache/molecule/operator/rolling-restart-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/root/.cache/molecule/operator/rolling-restart-test/instance_config.yml MOLECULE_INVENTORY_FILE=/root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_PLUGINS=molecule-azure molecule-containers molecule-docker molecule-digitalocean molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman molecule-vagrant  MOLECULE_PROJECT_DIRECTORY=/tmp/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/operator/molecule/rolling-restart-test MOLECULE_SCENARIO_NAME=rolling-restart-test MOLECULE_STATE_FILE=/root/.cache/molecule/operator/rolling-restart-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/operator/molecule/rolling-restart-test/tests MOLECULE_WAIT_RETRIES=360
+
+DEBUG: COMMAND
+/usr/bin/ansible-playbook --skip-tags=molecule-notest,notest --diff --inventory=/root/.cache/molecule/operator/rolling-restart-test/inventory /tmp/operator/molecule/default/cleanup.yml -vvv
+
+    [0;34mansible-playbook 2.10.2[0m
+    [0;34m  config file = /root/.cache/molecule/operator/rolling-restart-test/ansible.cfg[0m
+    [0;34m  configured module search path = ['/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules', '/usr/lib/python3.8/site-packages/molecule_lxd/modules', '/usr/lib/python3.8/site-packages/molecule_vagrant/modules', '/root/.cache/molecule/operator/rolling-restart-test/library', '/tmp/operator/library', '/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules'][0m
+    [0;34m  ansible python module location = /usr/lib/python3.8/site-packages/ansible[0m
+    [0;34m  executable location = /usr/bin/ansible-playbook[0m
+    [0;34m  python version = 3.8.6 (default, Oct  5 2020, 00:23:48) [GCC 10.2.0][0m
+    [0;34mUsing /root/.cache/molecule/operator/rolling-restart-test/ansible.cfg as config file[0m
+    [0;34mhost_list declined parsing /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mscript declined parsing /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mParsed /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml inventory source with yaml plugin[0m
+    [0;34mstatically imported: /tmp/operator/molecule/default/dump-logs.yml[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    
+    PLAYBOOK: cleanup.yml **********************************************************
+    [0;34m1 plays in /tmp/operator/molecule/default/cleanup.yml[0m
+    
+    PLAY [Cleanup] *****************************************************************
+    
+    TASK [Gathering Facts] *********************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/cleanup.yml:1[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626426173.8928356-91-70846141044661 `" && echo ansible-tmp-1626426173.8928356-91-70846141044661="` echo /root/.ansible/tmp/ansible-tmp-1626426173.8928356-91-70846141044661 `" ) && sleep 0'[0m
+    [0;34mUsing module file /usr/lib/python3.8/site-packages/ansible/modules/setup.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-84qf9o7e0e/tmpbd2aks_b TO /root/.ansible/tmp/ansible-tmp-1626426173.8928356-91-70846141044661/AnsiballZ_setup.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626426173.8928356-91-70846141044661/ /root/.ansible/tmp/ansible-tmp-1626426173.8928356-91-70846141044661/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626426173.8928356-91-70846141044661/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626426173.8928356-91-70846141044661/ > /dev/null 2>&1 && sleep 0'[0m
+    [0;32mok: [localhost][0m
+    [0;34mMETA: ran handlers[0m
+    
+    TASK [set_fact] ****************************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/dump-logs.yml:4[0m
+    [0;32mok: [localhost] => {[0m
+    [0;32m    "ansible_facts": {[0m
+    [0;32m        "dump_logs_on_error": true[0m
+    [0;32m    },[0m
+    [0;32m    "changed": false[0m
+    [0;32m}[0m
+    
+    TASK [Get Kiali Operator Pod logs] *********************************************
+    [1;30mtask path: /tmp/operator/molecule/default/dump-logs.yml:7[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306 `" && echo ansible-tmp-1626426176.8703032-161-44728982334306="` echo /root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306 `" ) && sleep 0'[0m
+    [0;34mUsing module file /root/.ansible/collections/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-84qf9o7e0e/tmp_nj14gu8 TO /root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306/AnsiballZ_k8s_log.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306/ /root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306/AnsiballZ_k8s_log.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306/AnsiballZ_k8s_log.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306/ > /dev/null 2>&1 && sleep 0'[0m
+[0;31mThe full traceback is:[0m
+    [0;36m...ignoring[0m
+[0;31mTraceback (most recent call last):[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306/AnsiballZ_k8s_log.py", line 102, in <module>[0m
+[0;31m    _ansiballz_main()[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306/AnsiballZ_k8s_log.py", line 94, in _ansiballz_main[0m
+[0;31m    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306/AnsiballZ_k8s_log.py", line 40, in invoke_module[0m
+[0;31m    runpy.run_module(mod_name='ansible_collections.kubernetes.core.plugins.modules.k8s_log', init_globals=None, run_name='__main__', alter_sys=True)[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 207, in run_module[0m
+[0;31m    return _run_module_code(code, init_globals, run_name, mod_spec)[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 97, in _run_module_code[0m
+[0;31m    _run_code(code, mod_globals, init_globals,[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 87, in _run_code[0m
+[0;31m    exec(code, run_globals)[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_lkpycxkh/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 227, in <module>[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_lkpycxkh/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 223, in main[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_lkpycxkh/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 153, in execute_module[0m
+[0;31mAttributeError: 'AnsibleModule' object has no attribute 'fail'[0m
+[0;31mfatal: [localhost]: FAILED! => {[0m
+[0;31m    "changed": false,[0m
+[0;31m    "invocation": {[0m
+[0;31m        "label_selectors": [[0m
+[0;31m            "app.kubernetes.io/name=kiali-operator"[0m
+[0;31m        ],[0m
+[0;31m        "module_args": {[0m
+[0;31m            "label_selectors": [[0m
+[0;31m                "app.kubernetes.io/name=kiali-operator"[0m
+[0;31m            ],[0m
+[0;31m            "namespace": "kiali-operator"[0m
+[0;31m        },[0m
+[0;31m        "namespace": "kiali-operator"[0m
+[0;31m    },[0m
+[0;31m    "module_stderr": "Traceback (most recent call last):\n  File \"/root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306/AnsiballZ_k8s_log.py\", line 102, in <module>\n    _ansiballz_main()\n  File \"/root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306/AnsiballZ_k8s_log.py\", line 94, in _ansiballz_main\n    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)\n  File \"/root/.ansible/tmp/ansible-tmp-1626426176.8703032-161-44728982334306/AnsiballZ_k8s_log.py\", line 40, in invoke_module\n    runpy.run_module(mod_name='ansible_collections.kubernetes.core.plugins.modules.k8s_log', init_globals=None, run_name='__main__', alter_sys=True)\n  File \"/usr/lib/python3.8/runpy.py\", line 207, in run_module\n    return _run_module_code(code, init_globals, run_name, mod_spec)\n  File \"/usr/lib/python3.8/runpy.py\", line 97, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.8/runpy.py\", line 87, in _run_code\n    exec(code, run_globals)\n  File \"/tmp/ansible_k8s_log_payload_lkpycxkh/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 227, in <module>\n  File \"/tmp/ansible_k8s_log_payload_lkpycxkh/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 223, in main\n  File \"/tmp/ansible_k8s_log_payload_lkpycxkh/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 153, in execute_module\nAttributeError: 'AnsibleModule' object has no attribute 'fail'\n",[0m
+[0;31m    "module_stdout": "",[0m
+[0;31m    "msg": "MODULE FAILURE\nSee stdout/stderr for the exact error",[0m
+[0;31m    "rc": 1[0m
+[0;31m}[0m
+    
+    TASK [Dump Kiali Operator Pod logs] ********************************************
+    [1;30mtask path: /tmp/operator/molecule/default/dump-logs.yml:17[0m
+    [0;36mskipping: [localhost] => {}[0m
+    
+    TASK [Get Kiali Server Pod logs] ***********************************************
+    [1;30mtask path: /tmp/operator/molecule/default/dump-logs.yml:24[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943 `" && echo ansible-tmp-1626426180.7092838-180-226424447024943="` echo /root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943 `" ) && sleep 0'[0m
+    [0;34mUsing module file /root/.ansible/collections/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-84qf9o7e0e/tmp5dpm1acd TO /root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943/AnsiballZ_k8s_log.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943/ /root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943/AnsiballZ_k8s_log.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943/AnsiballZ_k8s_log.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943/ > /dev/null 2>&1 && sleep 0'[0m
+[0;31mThe full traceback is:[0m
+[0;31mTraceback (most recent call last):[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943/AnsiballZ_k8s_log.py", line 102, in <module>[0m
+[0;31m    _ansiballz_main()[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943/AnsiballZ_k8s_log.py", line 94, in _ansiballz_main[0m
+[0;31m    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943/AnsiballZ_k8s_log.py", line 40, in invoke_module[0m
+[0;31m    runpy.run_module(mod_name='ansible_collections.kubernetes.core.plugins.modules.k8s_log', init_globals=None, run_name='__main__', alter_sys=True)[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 207, in run_module[0m
+[0;31m    return _run_module_code(code, init_globals, run_name, mod_spec)[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 97, in _run_module_code[0m
+    [0;36m...ignoring[0m
+[0;31m    _run_code(code, mod_globals, init_globals,[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 87, in _run_code[0m
+[0;31m    exec(code, run_globals)[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_freqtmx7/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 227, in <module>[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_freqtmx7/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 223, in main[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_freqtmx7/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 153, in execute_module[0m
+[0;31mAttributeError: 'AnsibleModule' object has no attribute 'fail'[0m
+[0;31mfatal: [localhost]: FAILED! => {[0m
+[0;31m    "changed": false,[0m
+[0;31m    "invocation": {[0m
+[0;31m        "label_selectors": [[0m
+[0;31m            "app.kubernetes.io/name=kiali"[0m
+[0;31m        ],[0m
+[0;31m        "module_args": {[0m
+[0;31m            "label_selectors": [[0m
+[0;31m                "app.kubernetes.io/name=kiali"[0m
+[0;31m            ],[0m
+[0;31m            "namespace": "istio-system"[0m
+[0;31m        },[0m
+[0;31m        "namespace": "istio-system"[0m
+[0;31m    },[0m
+[0;31m    "module_stderr": "Traceback (most recent call last):\n  File \"/root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943/AnsiballZ_k8s_log.py\", line 102, in <module>\n    _ansiballz_main()\n  File \"/root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943/AnsiballZ_k8s_log.py\", line 94, in _ansiballz_main\n    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)\n  File \"/root/.ansible/tmp/ansible-tmp-1626426180.7092838-180-226424447024943/AnsiballZ_k8s_log.py\", line 40, in invoke_module\n    runpy.run_module(mod_name='ansible_collections.kubernetes.core.plugins.modules.k8s_log', init_globals=None, run_name='__main__', alter_sys=True)\n  File \"/usr/lib/python3.8/runpy.py\", line 207, in run_module\n    return _run_module_code(code, init_globals, run_name, mod_spec)\n  File \"/usr/lib/python3.8/runpy.py\", line 97, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.8/runpy.py\", line 87, in _run_code\n    exec(code, run_globals)\n  File \"/tmp/ansible_k8s_log_payload_freqtmx7/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 227, in <module>\n  File \"/tmp/ansible_k8s_log_payload_freqtmx7/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 223, in main\n  File \"/tmp/ansible_k8s_log_payload_freqtmx7/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 153, in execute_module\nAttributeError: 'AnsibleModule' object has no attribute 'fail'\n",[0m
+[0;31m    "module_stdout": "",[0m
+[0;31m    "msg": "MODULE FAILURE\nSee stdout/stderr for the exact error",[0m
+[0;31m    "rc": 1[0m
+[0;31m}[0m
+    
+    TASK [Dump Kiali Server Pod logs] **********************************************
+    [1;30mtask path: /tmp/operator/molecule/default/dump-logs.yml:36[0m
+    [0;36mskipping: [localhost] => {}[0m
+    [0;34mMETA: ran handlers[0m
+    [0;34mMETA: ran handlers[0m
+    
+    PLAY RECAP *********************************************************************
+    [0;32mlocalhost[0m                  : [0;32mok=4   [0m changed=0    unreachable=0    failed=0    [0;36mskipped=2   [0m rescued=0    [1;35mignored=2   [0m
+    
+--> Scenario: 'rolling-restart-test'
+--> Action: 'destroy'
+DEBUG: ANSIBLE ENVIRONMENT
+---
+ANSIBLE_COLLECTIONS_PATH: /root/.cache/molecule/operator/rolling-restart-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /root/.cache/molecule/operator/rolling-restart-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/rolling-restart-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /root/.cache/molecule/operator/rolling-restart-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT
+---
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /root/.cache/molecule/operator/rolling-restart-test
+MOLECULE_EXTRAS: docker,docs,podman,windows,lint
+MOLECULE_FILE: /root/.cache/molecule/operator/rolling-restart-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /root/.cache/molecule/operator/rolling-restart-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_PLUGINS: 'molecule-azure molecule-containers molecule-docker molecule-digitalocean
+  molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman
+  molecule-vagrant '
+MOLECULE_PROJECT_DIRECTORY: /tmp/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/operator/molecule/rolling-restart-test
+MOLECULE_SCENARIO_NAME: rolling-restart-test
+MOLECULE_STATE_FILE: /root/.cache/molecule/operator/rolling-restart-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/operator/molecule/rolling-restart-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY
+ANSIBLE_COLLECTIONS_PATH=/root/.cache/molecule/operator/rolling-restart-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/root/.cache/molecule/operator/rolling-restart-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/rolling-restart-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/root/.cache/molecule/operator/rolling-restart-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/root/.cache/molecule/operator/rolling-restart-test MOLECULE_EXTRAS=docker,docs,podman,windows,lint MOLECULE_FILE=/root/.cache/molecule/operator/rolling-restart-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/root/.cache/molecule/operator/rolling-restart-test/instance_config.yml MOLECULE_INVENTORY_FILE=/root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_PLUGINS=molecule-azure molecule-containers molecule-docker molecule-digitalocean molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman molecule-vagrant  MOLECULE_PROJECT_DIRECTORY=/tmp/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/operator/molecule/rolling-restart-test MOLECULE_SCENARIO_NAME=rolling-restart-test MOLECULE_STATE_FILE=/root/.cache/molecule/operator/rolling-restart-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/operator/molecule/rolling-restart-test/tests MOLECULE_WAIT_RETRIES=360
+
+DEBUG: COMMAND
+/usr/bin/ansible-playbook --skip-tags=molecule-notest,notest --diff --inventory=/root/.cache/molecule/operator/rolling-restart-test/inventory /tmp/operator/molecule/default/destroy.yml -vvv
+
+    [0;34mansible-playbook 2.10.2[0m
+    [0;34m  config file = /root/.cache/molecule/operator/rolling-restart-test/ansible.cfg[0m
+    [0;34m  configured module search path = ['/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules', '/usr/lib/python3.8/site-packages/molecule_lxd/modules', '/usr/lib/python3.8/site-packages/molecule_vagrant/modules', '/root/.cache/molecule/operator/rolling-restart-test/library', '/tmp/operator/library', '/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules'][0m
+    [0;34m  ansible python module location = /usr/lib/python3.8/site-packages/ansible[0m
+    [0;34m  executable location = /usr/bin/ansible-playbook[0m
+    [0;34m  python version = 3.8.6 (default, Oct  5 2020, 00:23:48) [GCC 10.2.0][0m
+    [0;34mUsing /root/.cache/molecule/operator/rolling-restart-test/ansible.cfg as config file[0m
+    [0;34mhost_list declined parsing /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mscript declined parsing /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mParsed /root/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml inventory source with yaml plugin[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mstatically imported: /tmp/operator/molecule/default/process-network-policy.yml[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    
+    PLAYBOOK: destroy.yml **********************************************************
+    [0;34m1 plays in /tmp/operator/molecule/default/destroy.yml[0m
+    
+    PLAY [Destroy] *****************************************************************
+    
+    TASK [Gathering Facts] *********************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/destroy.yml:1[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626426193.1912963-208-28366308461829 `" && echo ansible-tmp-1626426193.1912963-208-28366308461829="` echo /root/.ansible/tmp/ansible-tmp-1626426193.1912963-208-28366308461829 `" ) && sleep 0'[0m
+    [0;34mUsing module file /usr/lib/python3.8/site-packages/ansible/modules/setup.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-201awhzc8l2/tmp7roi13se TO /root/.ansible/tmp/ansible-tmp-1626426193.1912963-208-28366308461829/AnsiballZ_setup.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626426193.1912963-208-28366308461829/ /root/.ansible/tmp/ansible-tmp-1626426193.1912963-208-28366308461829/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626426193.1912963-208-28366308461829/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626426193.1912963-208-28366308461829/ > /dev/null 2>&1 && sleep 0'[0m
+    [0;32mok: [localhost][0m
+    [0;34mMETA: ran handlers[0m
+    
+    TASK [Get information about the cluster] ***************************************
+    [1;30mtask path: /tmp/operator/molecule/default/destroy.yml:8[0m
+[0;31mfatal: [localhost]: FAILED! => {[0m
+[0;31m    "msg": "An unhandled exception occurred while running the lookup plugin 'kubernetes.core.k8s'. Error was a <class 'urllib3.exceptions.MaxRetryError'>, original message: HTTPSConnectionPool(host='api.ocp4.local', port=6443): Max retries exceeded with url: /version (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1124)')))"[0m
+[0;31m}[0m
+    
+    PLAY RECAP *********************************************************************
+    [0;31mlocalhost[0m                  : [0;32mok=1   [0m changed=0    unreachable=0    [0;31mfailed=1   [0m skipped=0    rescued=0    ignored=0
+    
+ERROR: 
+Molecule test failed: rolling-restart-test
+make: *** [make/Makefile.molecule.mk:136: molecule-test] Error 1

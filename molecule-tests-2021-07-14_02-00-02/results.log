@@ -1,0 +1,78 @@
+========== SETTINGS ==========
+DORP=podman
+KIALI_SRC_HOME=/tmp/KIALI-GIT/kiali
+ALL_TESTS=accessible-namespaces-test
+affinity-tolerations-resources-test
+api-test
+config-values-test
+default-namespace-test
+header-auth-test
+instance-name-test
+metrics-test
+null-cr-values-test
+only-view-only-mode-test
+openid-test
+openshift-auth-test
+os-console-links-test
+roles-test
+rolling-restart-test
+token-test
+SKIP_TESTS=header-auth-test openid-test
+CLUSTER_TYPE=openshift
+MOLECULE_USE_DEV_IMAGES=false
+MOLECULE_DEBUG=true
+MOLECULE_DESTROY_NEVER=false
+MOLECULE_KIALI_CR_SPEC_VERSION=default
+MOLECULE_OPERATOR_INSTALLER=helm
+MOLECULE_OPERATOR_PROFILER_ENABLED=true
+TEST_LOGS_DIR=/tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2021-07-14_02-00-02
+TEST_CLIENT_EXE=/root/ocp4_setup_ocp4/oc
+COLOR=false
+MINIKUBE_EXE=
+MINIKUBE_PROFILE=
+HELM_CHARTS_REPO=/tmp/KIALI-GIT/helm-charts
+==============================
+All molecule test logs will go here: /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2021-07-14_02-00-02
+
+=========================
+=== BUILD HELM CHARTS ===
+=========================
+
+make: Entering directory '/tmp/KIALI-GIT/helm-charts'
+You do not have helm (v3.2+) installed in your PATH. The binary will be downloaded to /tmp/KIALI-GIT/helm-charts/_output/helm-install/helm
+Will use this helm executable: /tmp/KIALI-GIT/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator-1.38.0-SNAPSHOT.tgz
+Building Helm Chart for Kiali server
+==> Linting /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-server
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-server-1.38.0-SNAPSHOT.tgz
+make: Leaving directory '/tmp/KIALI-GIT/helm-charts'
+
+=====================
+=== TEST RESULTS: ===
+=====================
+
+              accessible-namespaces-test... success [15m 38s]
+     affinity-tolerations-resources-test... success [15m 41s]
+                                api-test... success [10m 24s]
+                      config-values-test... success [11m 47s]
+                  default-namespace-test... success [7m 21s]
+                        header-auth-test... skipped
+                      instance-name-test... success [12m 1s]
+                            metrics-test... success [12m 47s]
+                     null-cr-values-test... success [7m 25s]
+                only-view-only-mode-test... success [12m 28s]
+                             openid-test... skipped
+                     openshift-auth-test... success [8m 29s]
+                   os-console-links-test... success [22m 49s]
+                              roles-test... success [26m 0s]
+                    rolling-restart-test... success [13m 28s]
+                              token-test... success [8m 43s]
+
+Test logs can be found at: /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2021-07-14_02-00-02
+

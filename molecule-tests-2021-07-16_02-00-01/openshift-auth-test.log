@@ -1,0 +1,1713 @@
+/bin/bash: go: command not found
+/bin/bash: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT/helm-charts'
+Will use this helm executable: /tmp/KIALI-GIT/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator-1.38.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT/helm-charts'
+OCP repos: external=[default-route-openshift-image-registry.apps.ocp4.local] internal=[image-registry.openshift-image-registry.svc:5000]
+Will auto-detect hosts to add based on the CLUSTER_REPO: default-route-openshift-image-registry.apps.ocp4.local
+Auto-detected add host args: --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.100 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.100 --add-host=api.ocp4.local:192.168.122.100 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.100
+Will not rebuild kiali-molecule image.
+for msn in openshift-auth-test; do podman run --rm  --env MOLECULE_HELM_CHARTS_REPO=/tmp/helm-charts-repo -v "/tmp/KIALI-GIT/helm-charts":/tmp/helm-charts-repo:ro,Z -v "/tmp/KIALI-GIT/kiali/operator":/tmp/operator:ro,Z -v "/home/jmazzite/.kube/config":/root/.kube/config:ro,Z   -w /tmp/operator --network="host" --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.100 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.100 --add-host=api.ocp4.local:192.168.122.100 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.100 --add-host="api.crc.testing:192.168.130.11" --add-host="kiali-istio-system.apps-crc.testing:192.168.130.11" --add-host="prometheus-istio-system.apps-crc.testing:192.168.130.11" --env DORP=podman --env MOLECULE_KIALI_CR_SPEC_VERSION=default  --env MOLECULE_OPERATOR_PROFILER_ENABLED=true --env MOLECULE_OPERATOR_INSTALLER=helm --env MOLECULE_DUMP_LOGS_ON_ERROR=true  --env MOLECULE_WAIT_RETRIES=360 localhost/kiali-molecule:latest molecule --debug test  --scenario-name ${msn}; if [ "$?" != "0" ]; then echo "Molecule test failed: ${msn}"; exit 1; fi; done
+unknown seccomp syscall `faccessat2` ignored
+unknown seccomp syscall `openat2` ignored
+unknown seccomp syscall `pidfd_getfd` ignored
+--> Test matrix
+    
+└── openshift-auth-test
+    ├── prepare
+    ├── converge
+    └── destroy
+    
+--> Scenario: 'openshift-auth-test'
+--> Action: 'prepare'
+--> Sanity checks: 'podman'
+DEBUG: ANSIBLE ENVIRONMENT
+---
+ANSIBLE_COLLECTIONS_PATH: /root/.cache/molecule/operator/openshift-auth-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /root/.cache/molecule/operator/openshift-auth-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/openshift-auth-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /root/.cache/molecule/operator/openshift-auth-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT
+---
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /root/.cache/molecule/operator/openshift-auth-test
+MOLECULE_EXTRAS: docker,docs,podman,windows,lint
+MOLECULE_FILE: /root/.cache/molecule/operator/openshift-auth-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /root/.cache/molecule/operator/openshift-auth-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_PLUGINS: 'molecule-azure molecule-containers molecule-docker molecule-digitalocean
+  molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman
+  molecule-vagrant '
+MOLECULE_PROJECT_DIRECTORY: /tmp/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/operator/molecule/openshift-auth-test
+MOLECULE_SCENARIO_NAME: openshift-auth-test
+MOLECULE_STATE_FILE: /root/.cache/molecule/operator/openshift-auth-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/operator/molecule/openshift-auth-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY
+ANSIBLE_COLLECTIONS_PATH=/root/.cache/molecule/operator/openshift-auth-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/root/.cache/molecule/operator/openshift-auth-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/openshift-auth-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/root/.cache/molecule/operator/openshift-auth-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/root/.cache/molecule/operator/openshift-auth-test MOLECULE_EXTRAS=docker,docs,podman,windows,lint MOLECULE_FILE=/root/.cache/molecule/operator/openshift-auth-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/root/.cache/molecule/operator/openshift-auth-test/instance_config.yml MOLECULE_INVENTORY_FILE=/root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_PLUGINS=molecule-azure molecule-containers molecule-docker molecule-digitalocean molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman molecule-vagrant  MOLECULE_PROJECT_DIRECTORY=/tmp/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/operator/molecule/openshift-auth-test MOLECULE_SCENARIO_NAME=openshift-auth-test MOLECULE_STATE_FILE=/root/.cache/molecule/operator/openshift-auth-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/operator/molecule/openshift-auth-test/tests MOLECULE_WAIT_RETRIES=360
+
+DEBUG: COMMAND
+/usr/bin/ansible-playbook --skip-tags=molecule-notest,notest --diff --inventory=/root/.cache/molecule/operator/openshift-auth-test/inventory /tmp/operator/molecule/default/prepare.yml -vvv
+
+    [0;34mansible-playbook 2.10.2[0m
+    [0;34m  config file = /root/.cache/molecule/operator/openshift-auth-test/ansible.cfg[0m
+    [0;34m  configured module search path = ['/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules', '/usr/lib/python3.8/site-packages/molecule_lxd/modules', '/usr/lib/python3.8/site-packages/molecule_vagrant/modules', '/root/.cache/molecule/operator/openshift-auth-test/library', '/tmp/operator/library', '/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules'][0m
+    [0;34m  ansible python module location = /usr/lib/python3.8/site-packages/ansible[0m
+    [0;34m  executable location = /usr/bin/ansible-playbook[0m
+    [0;34m  python version = 3.8.6 (default, Oct  5 2020, 00:23:48) [GCC 10.2.0][0m
+    [0;34mUsing /root/.cache/molecule/operator/openshift-auth-test/ansible.cfg as config file[0m
+    [0;34mhost_list declined parsing /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mscript declined parsing /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mParsed /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml inventory source with yaml plugin[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mstatically imported: /tmp/operator/molecule/default/process-network-policy.yml[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    
+    PLAYBOOK: prepare.yml **********************************************************
+    [0;34m1 plays in /tmp/operator/molecule/default/prepare.yml[0m
+    
+    PLAY [Prepare] *****************************************************************
+    
+    TASK [Gathering Facts] *********************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:1[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626423650.3913913-12-178931995863999 `" && echo ansible-tmp-1626423650.3913913-12-178931995863999="` echo /root/.ansible/tmp/ansible-tmp-1626423650.3913913-12-178931995863999 `" ) && sleep 0'[0m
+    [0;34mUsing module file /usr/lib/python3.8/site-packages/ansible/modules/setup.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-50ju9qj_5/tmp4157ayp0 TO /root/.ansible/tmp/ansible-tmp-1626423650.3913913-12-178931995863999/AnsiballZ_setup.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626423650.3913913-12-178931995863999/ /root/.ansible/tmp/ansible-tmp-1626423650.3913913-12-178931995863999/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626423650.3913913-12-178931995863999/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626423650.3913913-12-178931995863999/ > /dev/null 2>&1 && sleep 0'[0m
+    [0;32mok: [localhost][0m
+    [0;34mMETA: ran handlers[0m
+    
+    TASK [Get information about the cluster] ***************************************
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:8[0m
+/usr/lib/python3.8/site-packages/urllib3/connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(
+    [0;32mok: [localhost] => {[0m
+    [0;32m    "ansible_facts": {[0m
+    [0;32m        "api_groups": [[0m
+    [0;32m            "",[0m
+    [0;32m            "apiregistration.k8s.io",[0m
+    [0;32m            "apps",[0m
+    [0;32m            "events.k8s.io",[0m
+    [0;32m            "authentication.k8s.io",[0m
+    [0;32m            "authorization.k8s.io",[0m
+    [0;32m            "autoscaling",[0m
+    [0;32m            "batch",[0m
+    [0;32m            "certificates.k8s.io",[0m
+    [0;32m            "networking.k8s.io",[0m
+    [0;32m            "extensions",[0m
+    [0;32m            "policy",[0m
+    [0;32m            "rbac.authorization.k8s.io",[0m
+    [0;32m            "storage.k8s.io",[0m
+    [0;32m            "admissionregistration.k8s.io",[0m
+    [0;32m            "apiextensions.k8s.io",[0m
+    [0;32m            "scheduling.k8s.io",[0m
+    [0;32m            "coordination.k8s.io",[0m
+    [0;32m            "node.k8s.io",[0m
+    [0;32m            "discovery.k8s.io",[0m
+    [0;32m            "flowcontrol.apiserver.k8s.io",[0m
+    [0;32m            "apps.openshift.io",[0m
+    [0;32m            "authorization.openshift.io",[0m
+    [0;32m            "build.openshift.io",[0m
+    [0;32m            "image.openshift.io",[0m
+    [0;32m            "oauth.openshift.io",[0m
+    [0;32m            "project.openshift.io",[0m
+    [0;32m            "quota.openshift.io",[0m
+    [0;32m            "route.openshift.io",[0m
+    [0;32m            "security.openshift.io",[0m
+    [0;32m            "template.openshift.io",[0m
+    [0;32m            "user.openshift.io",[0m
+    [0;32m            "packages.operators.coreos.com",[0m
+    [0;32m            "config.openshift.io",[0m
+    [0;32m            "operator.openshift.io",[0m
+    [0;32m            "autoscaling.openshift.io",[0m
+    [0;32m            "cloudcredential.openshift.io",[0m
+    [0;32m            "console.openshift.io",[0m
+    [0;32m            "imageregistry.operator.openshift.io",[0m
+    [0;32m            "ingress.operator.openshift.io",[0m
+    [0;32m            "k8s.cni.cncf.io",[0m
+    [0;32m            "machineconfiguration.openshift.io",[0m
+    [0;32m            "monitoring.coreos.com",[0m
+    [0;32m            "network.openshift.io",[0m
+    [0;32m            "network.operator.openshift.io",[0m
+    [0;32m            "operators.coreos.com",[0m
+    [0;32m            "samples.operator.openshift.io",[0m
+    [0;32m            "security.internal.openshift.io",[0m
+    [0;32m            "snapshot.storage.k8s.io",[0m
+    [0;32m            "tuned.openshift.io",[0m
+    [0;32m            "controlplane.operator.openshift.io",[0m
+    [0;32m            "install.istio.io",[0m
+    [0;32m            "kiali.io",[0m
+    [0;32m            "metal3.io",[0m
+    [0;32m            "migration.k8s.io",[0m
+    [0;32m            "telemetry.istio.io",[0m
+    [0;32m            "whereabouts.cni.cncf.io",[0m
+    [0;32m            "networking.istio.io",[0m
+    [0;32m            "helm.openshift.io",[0m
+    [0;32m            "machine.openshift.io",[0m
+    [0;32m            "security.istio.io",[0m
+    [0;32m            "metrics.k8s.io"[0m
+    [0;32m        ][0m
+    [0;32m    },[0m
+    [0;32m    "changed": false[0m
+    [0;32m}[0m
+    
+    TASK [Determine the Istio implementation] **************************************
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:11[0m
+    [0;32mok: [localhost] => {[0m
+    [0;32m    "ansible_facts": {[0m
+    [0;32m        "is_maistra": false[0m
+    [0;32m    },[0m
+    [0;32m    "changed": false[0m
+    [0;32m}[0m
+    
+    TASK [Determine if the operator installation is managed externally or not] *****
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:15[0m
+    [0;32mok: [localhost] => {[0m
+    [0;32m    "ansible_facts": {[0m
+    [0;32m        "operator_installer": "helm"[0m
+    [0;32m    },[0m
+    [0;32m    "changed": false[0m
+    [0;32m}[0m
+    
+    TASK [See if we have Service Mesh htpasswd secret for accessing external services like Prometheus] ***
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:19[0m
+    [0;36mskipping: [localhost] => {[0m
+    [0;36m    "changed": false,[0m
+    [0;36m    "skip_reason": "Conditional result was False"[0m
+    [0;36m}[0m
+    
+    TASK [Define url and auth for Prometheus for Service Mesh] *********************
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:29[0m
+    [0;36mskipping: [localhost] => {[0m
+    [0;36m    "changed": false,[0m
+    [0;36m    "skip_reason": "Conditional result was False"[0m
+    [0;36m}[0m
+    
+    TASK [Make sure the operator namespace exists] *********************************
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:43[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626423655.2932622-90-203410569865697 `" && echo ansible-tmp-1626423655.2932622-90-203410569865697="` echo /root/.ansible/tmp/ansible-tmp-1626423655.2932622-90-203410569865697 `" ) && sleep 0'[0m
+    [0;34mUsing module file /root/.ansible/collections/ansible_collections/kubernetes/core/plugins/modules/k8s.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-50ju9qj_5/tmpma1aqzdw TO /root/.ansible/tmp/ansible-tmp-1626423655.2932622-90-203410569865697/AnsiballZ_k8s.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626423655.2932622-90-203410569865697/ /root/.ansible/tmp/ansible-tmp-1626423655.2932622-90-203410569865697/AnsiballZ_k8s.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626423655.2932622-90-203410569865697/AnsiballZ_k8s.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626423655.2932622-90-203410569865697/ > /dev/null 2>&1 && sleep 0'[0m
+    [0;32mok: [localhost] => {[0m
+    [0;32m    "changed": false,[0m
+    [0;32m    "diff": {},[0m
+    [0;32m    "invocation": {[0m
+    [0;32m        "module_args": {[0m
+    [0;32m            "api_key": null,[0m
+    [0;32m            "api_version": "v1",[0m
+    [0;32m            "append_hash": false,[0m
+    [0;32m            "apply": false,[0m
+    [0;32m            "ca_cert": null,[0m
+    [0;32m            "client_cert": null,[0m
+    [0;32m            "client_key": null,[0m
+    [0;32m            "context": null,[0m
+    [0;32m            "continue_on_error": false,[0m
+    [0;32m            "delete_options": null,[0m
+    [0;32m            "force": false,[0m
+    [0;32m            "host": null,[0m
+    [0;32m            "kind": "Namespace",[0m
+    [0;32m            "kubeconfig": null,[0m
+    [0;32m            "merge_type": null,[0m
+    [0;32m            "name": "kiali-operator",[0m
+    [0;32m            "namespace": null,[0m
+    [0;32m            "password": null,[0m
+    [0;32m            "persist_config": null,[0m
+    [0;32m            "proxy": null,[0m
+    [0;32m            "proxy_headers": null,[0m
+    [0;32m            "resource_definition": null,[0m
+    [0;32m            "src": null,[0m
+    [0;32m            "state": "present",[0m
+    [0;32m            "template": null,[0m
+    [0;32m            "username": null,[0m
+    [0;32m            "validate": null,[0m
+    [0;32m            "validate_certs": null,[0m
+    [0;32m            "wait": false,[0m
+    [0;32m            "wait_condition": null,[0m
+    [0;32m            "wait_sleep": 5,[0m
+    [0;32m            "wait_timeout": 120[0m
+    [0;32m        }[0m
+    [0;32m    },[0m
+    [0;32m    "method": "patch",[0m
+    [0;32m    "result": {[0m
+    [0;32m        "apiVersion": "v1",[0m
+    [0;32m        "kind": "Namespace",[0m
+    [0;32m        "metadata": {[0m
+    [0;32m            "annotations": {[0m
+    [0;32m                "openshift.io/sa.scc.mcs": "s0:c26,c25",[0m
+    [0;32m                "openshift.io/sa.scc.supplemental-groups": "1000700000/10000",[0m
+    [0;32m                "openshift.io/sa.scc.uid-range": "1000700000/10000"[0m
+    [0;32m            },[0m
+    [0;32m            "creationTimestamp": "2021-07-16T06:44:49Z",[0m
+    [0;32m            "deletionTimestamp": "2021-07-16T06:55:12Z",[0m
+    [0;32m            "managedFields": [[0m
+    [0;32m                {[0m
+    [0;32m                    "apiVersion": "v1",[0m
+    [0;32m                    "fieldsType": "FieldsV1",[0m
+    [0;32m                    "fieldsV1": {[0m
+    [0;32m                        "f:status": {[0m
+    [0;32m                            "f:phase": {}[0m
+    [0;32m                        }[0m
+    [0;32m                    },[0m
+    [0;32m                    "manager": "OpenAPI-Generator",[0m
+    [0;32m                    "operation": "Update",[0m
+    [0;32m                    "time": "2021-07-16T06:44:49Z"[0m
+    [0;32m                },[0m
+    [0;32m                {[0m
+    [0;32m                    "apiVersion": "v1",[0m
+    [0;32m                    "fieldsType": "FieldsV1",[0m
+    [0;32m                    "fieldsV1": {[0m
+    [0;32m                        "f:metadata": {[0m
+    [0;32m                            "f:annotations": {[0m
+    [0;32m                                ".": {},[0m
+    [0;32m                                "f:openshift.io/sa.scc.mcs": {},[0m
+    [0;32m                                "f:openshift.io/sa.scc.supplemental-groups": {},[0m
+    [0;32m                                "f:openshift.io/sa.scc.uid-range": {}[0m
+    [0;32m                            }[0m
+    [0;32m                        }[0m
+    [0;32m                    },[0m
+    [0;32m                    "manager": "cluster-policy-controller",[0m
+    [0;32m                    "operation": "Update",[0m
+    [0;32m                    "time": "2021-07-16T06:44:49Z"[0m
+    [0;32m                },[0m
+    [0;32m                {[0m
+    [0;32m                    "apiVersion": "v1",[0m
+    [0;32m                    "fieldsType": "FieldsV1",[0m
+    [0;32m                    "fieldsV1": {[0m
+    [0;32m                        "f:status": {[0m
+    [0;32m                            "f:conditions": {[0m
+    [0;32m                                ".": {},[0m
+    [0;32m                                "k:{\"type\":\"NamespaceContentRemaining\"}": {[0m
+    [0;32m                                    ".": {},[0m
+    [0;32m                                    "f:lastTransitionTime": {},[0m
+    [0;32m                                    "f:message": {},[0m
+    [0;32m                                    "f:reason": {},[0m
+    [0;32m                                    "f:status": {},[0m
+    [0;32m                                    "f:type": {}[0m
+    [0;32m                                },[0m
+    [0;32m                                "k:{\"type\":\"NamespaceDeletionContentFailure\"}": {[0m
+    [0;32m                                    ".": {},[0m
+    [0;32m                                    "f:lastTransitionTime": {},[0m
+    [0;32m                                    "f:message": {},[0m
+    [0;32m                                    "f:reason": {},[0m
+    [0;32m                                    "f:status": {},[0m
+    [0;32m                                    "f:type": {}[0m
+    [0;32m                                },[0m
+    [0;32m                                "k:{\"type\":\"NamespaceDeletionDiscoveryFailure\"}": {[0m
+    [0;32m                                    ".": {},[0m
+    [0;32m                                    "f:lastTransitionTime": {},[0m
+    [0;32m                                    "f:message": {},[0m
+    [0;32m                                    "f:reason": {},[0m
+    [0;32m                                    "f:status": {},[0m
+    [0;32m                                    "f:type": {}[0m
+    [0;32m                                },[0m
+    [0;32m                                "k:{\"type\":\"NamespaceDeletionGroupVersionParsingFailure\"}": {[0m
+    [0;32m                                    ".": {},[0m
+    [0;32m                                    "f:lastTransitionTime": {},[0m
+    [0;32m                                    "f:message": {},[0m
+    [0;32m                                    "f:reason": {},[0m
+    [0;32m                                    "f:status": {},[0m
+    [0;32m                                    "f:type": {}[0m
+    [0;32m                                },[0m
+    [0;32m                                "k:{\"type\":\"NamespaceFinalizersRemaining\"}": {[0m
+    [0;32m                                    ".": {},[0m
+    [0;32m                                    "f:lastTransitionTime": {},[0m
+    [0;32m                                    "f:message": {},[0m
+    [0;32m                                    "f:reason": {},[0m
+    [0;32m                                    "f:status": {},[0m
+    [0;32m                                    "f:type": {}[0m
+    [0;32m                                }[0m
+    [0;32m                            }[0m
+    [0;32m                        }[0m
+    [0;32m                    },[0m
+    [0;32m                    "manager": "kube-controller-manager",[0m
+    [0;32m                    "operation": "Update",[0m
+    [0;32m                    "time": "2021-07-16T06:55:22Z"[0m
+    [0;32m                }[0m
+    [0;32m            ],[0m
+    [0;32m            "name": "kiali-operator",[0m
+    [0;32m            "resourceVersion": "9467366",[0m
+    [0;32m            "selfLink": "/api/v1/namespaces/kiali-operator",[0m
+    [0;32m            "uid": "e70c91fb-d9d6-4f61-b670-15f0c97d2b0f"[0m
+    [0;32m        },[0m
+    [0;32m        "spec": {[0m
+    [0;32m            "finalizers": [[0m
+    [0;32m                "kubernetes"[0m
+    [0;32m            ][0m
+    [0;32m        },[0m
+    [0;32m        "status": {[0m
+    [0;32m            "conditions": [[0m
+    [0;32m                {[0m
+    [0;32m                    "lastTransitionTime": "2021-07-16T06:55:22Z",[0m
+    [0;32m                    "message": "All resources successfully discovered",[0m
+    [0;32m                    "reason": "ResourcesDiscovered",[0m
+    [0;32m                    "status": "False",[0m
+    [0;32m                    "type": "NamespaceDeletionDiscoveryFailure"[0m
+    [0;32m                },[0m
+    [0;32m                {[0m
+    [0;32m                    "lastTransitionTime": "2021-07-16T06:55:22Z",[0m
+    [0;32m                    "message": "All legacy kube types successfully parsed",[0m
+    [0;32m                    "reason": "ParsedGroupVersions",[0m
+    [0;32m                    "status": "False",[0m
+    [0;32m                    "type": "NamespaceDeletionGroupVersionParsingFailure"[0m
+    [0;32m                },[0m
+    [0;32m                {[0m
+    [0;32m                    "lastTransitionTime": "2021-07-16T06:55:22Z",[0m
+    [0;32m                    "message": "All content successfully deleted, may be waiting on finalization",[0m
+    [0;32m                    "reason": "ContentDeleted",[0m
+    [0;32m                    "status": "False",[0m
+    [0;32m                    "type": "NamespaceDeletionContentFailure"[0m
+    [0;32m                },[0m
+    [0;32m                {[0m
+    [0;32m                    "lastTransitionTime": "2021-07-16T06:55:22Z",[0m
+    [0;32m                    "message": "Some resources are remaining: kialis.kiali.io has 1 resource instances",[0m
+    [0;32m                    "reason": "SomeResourcesRemain",[0m
+    [0;32m                    "status": "True",[0m
+    [0;32m                    "type": "NamespaceContentRemaining"[0m
+    [0;32m                },[0m
+    [0;32m                {[0m
+    [0;32m                    "lastTransitionTime": "2021-07-16T06:55:22Z",[0m
+    [0;32m                    "message": "Some content in the namespace has finalizers remaining: kiali.io/finalizer in 1 resource instances",[0m
+    [0;32m                    "reason": "SomeFinalizersRemain",[0m
+    [0;32m                    "status": "True",[0m
+    [0;32m                    "type": "NamespaceFinalizersRemaining"[0m
+    [0;32m                }[0m
+    [0;32m            ],[0m
+    [0;32m            "phase": "Terminating"[0m
+    [0;32m        }[0m
+    [0;32m    }[0m
+    [0;32m}[0m
+    
+    TASK [Find the latest Operator Helm Chart] *************************************
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:50[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626423658.8855217-107-40548483332097 `" && echo ansible-tmp-1626423658.8855217-107-40548483332097="` echo /root/.ansible/tmp/ansible-tmp-1626423658.8855217-107-40548483332097 `" ) && sleep 0'[0m
+    [0;34mUsing module file /usr/lib/python3.8/site-packages/ansible/modules/command.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-50ju9qj_5/tmpvk7q9gvc TO /root/.ansible/tmp/ansible-tmp-1626423658.8855217-107-40548483332097/AnsiballZ_command.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626423658.8855217-107-40548483332097/ /root/.ansible/tmp/ansible-tmp-1626423658.8855217-107-40548483332097/AnsiballZ_command.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626423658.8855217-107-40548483332097/AnsiballZ_command.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626423658.8855217-107-40548483332097/ > /dev/null 2>&1 && sleep 0'[0m
+    [0;33mchanged: [localhost] => {[0m
+    [0;33m    "changed": true,[0m
+    [0;33m    "cmd": "ls -dt1 /tmp/helm-charts-repo/_output/charts/kiali-operator*.tgz | head -n 1",[0m
+    [0;33m    "delta": "0:00:00.006264",[0m
+    [0;33m    "end": "2021-07-16 08:20:59.939841",[0m
+    [0;33m    "invocation": {[0m
+    [0;33m        "module_args": {[0m
+    [0;33m            "_raw_params": "ls -dt1 /tmp/helm-charts-repo/_output/charts/kiali-operator*.tgz | head -n 1",[0m
+    [0;33m            "_uses_shell": true,[0m
+    [0;33m            "argv": null,[0m
+    [0;33m            "chdir": null,[0m
+    [0;33m            "creates": null,[0m
+    [0;33m            "executable": null,[0m
+    [0;33m            "removes": null,[0m
+    [0;33m            "stdin": null,[0m
+    [0;33m            "stdin_add_newline": true,[0m
+    [0;33m            "strip_empty_ends": true,[0m
+    [0;33m            "warn": true[0m
+    [0;33m        }[0m
+    [0;33m    },[0m
+    [0;33m    "rc": 0,[0m
+    [0;33m    "start": "2021-07-16 08:20:59.933577",[0m
+    [0;33m    "stderr": "",[0m
+    [0;33m    "stderr_lines": [],[0m
+    [0;33m    "stdout": "/tmp/helm-charts-repo/_output/charts/kiali-operator-1.38.0-SNAPSHOT.tgz",[0m
+    [0;33m    "stdout_lines": [[0m
+    [0;33m        "/tmp/helm-charts-repo/_output/charts/kiali-operator-1.38.0-SNAPSHOT.tgz"[0m
+    [0;33m    ][0m
+    [0;33m}[0m
+    
+    TASK [set_fact] ****************************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:56[0m
+    [0;32mok: [localhost] => {[0m
+    [0;32m    "ansible_facts": {[0m
+    [0;32m        "helm_chart_location": "/tmp/helm-charts-repo/_output/charts/kiali-operator-1.38.0-SNAPSHOT.tgz"[0m
+    [0;32m    },[0m
+    [0;32m    "changed": false[0m
+    [0;32m}[0m
+    
+    TASK [fail] ********************************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:62[0m
+    [0;36mskipping: [localhost] => {[0m
+    [0;36m    "changed": false,[0m
+    [0;36m    "skip_reason": "Conditional result was False"[0m
+    [0;36m}[0m
+    
+    TASK [Install Operator via Helm] ***********************************************
+    [1;30mtask path: /tmp/operator/molecule/default/prepare.yml:68[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626423660.840076-131-181791837574156 `" && echo ansible-tmp-1626423660.840076-131-181791837574156="` echo /root/.ansible/tmp/ansible-tmp-1626423660.840076-131-181791837574156 `" ) && sleep 0'[0m
+    [0;34mUsing module file /usr/lib/python3.8/site-packages/ansible/modules/command.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-50ju9qj_5/tmpl7vo7rpd TO /root/.ansible/tmp/ansible-tmp-1626423660.840076-131-181791837574156/AnsiballZ_command.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626423660.840076-131-181791837574156/ /root/.ansible/tmp/ansible-tmp-1626423660.840076-131-181791837574156/AnsiballZ_command.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626423660.840076-131-181791837574156/AnsiballZ_command.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626423660.840076-131-181791837574156/ > /dev/null 2>&1 && sleep 0'[0m
+[0;31mfatal: [localhost]: FAILED! => {[0m
+[0;31m    "changed": true,[0m
+[0;31m    "cmd": [[0m
+[0;31m        "helm",[0m
+[0;31m        "upgrade",[0m
+[0;31m        "--install",[0m
+[0;31m        "--atomic",[0m
+[0;31m        "--cleanup-on-fail",[0m
+[0;31m        "--namespace=kiali-operator",[0m
+[0;31m        "--set",[0m
+[0;31m        "debug.enableProfiler=true",[0m
+[0;31m        "--set",[0m
+[0;31m        "allowAdHocKialiNamespace=true",[0m
+[0;31m        "--set",[0m
+[0;31m        "allowAdHocKialiImage=true",[0m
+[0;31m        "--set",[0m
+[0;31m        "cr.create=false",[0m
+[0;31m        "--set",[0m
+[0;31m        "image.repo=quay.io/kiali/kiali-operator",[0m
+[0;31m        "--set",[0m
+[0;31m        "image.tag=latest",[0m
+[0;31m        "--set",[0m
+[0;31m        "image.pullPolicy=Always",[0m
+[0;31m        "--set",[0m
+[0;31m        "watchNamespace=kiali-operator",[0m
+[0;31m        "--set",[0m
+[0;31m        "clusterRoleCreator=true",[0m
+[0;31m        "--set",[0m
+    
+    PLAY RECAP *********************************************************************
+    [0;31mlocalhost[0m                  : [0;32mok=7   [0m [0;33mchanged=1   [0m unreachable=0    [0;31mfailed=1   [0m [0;36mskipped=3   [0m rescued=0    ignored=0
+    
+[0;31m        "onlyViewOnlyMode=false",[0m
+[0;31m        "--debug",[0m
+[0;31m        "kiali-operator",[0m
+[0;31m        "/tmp/helm-charts-repo/_output/charts/kiali-operator-1.38.0-SNAPSHOT.tgz"[0m
+[0;31m    ],[0m
+[0;31m    "delta": "0:00:02.292904",[0m
+[0;31m    "end": "2021-07-16 08:21:03.651020",[0m
+[0;31m    "invocation": {[0m
+[0;31m        "module_args": {[0m
+[0;31m            "_raw_params": null,[0m
+[0;31m            "_uses_shell": false,[0m
+[0;31m            "argv": [[0m
+[0;31m                "helm",[0m
+[0;31m                "upgrade",[0m
+[0;31m                "--install",[0m
+[0;31m                "--atomic",[0m
+[0;31m                "--cleanup-on-fail",[0m
+[0;31m                "--namespace=kiali-operator",[0m
+[0;31m                "--set",[0m
+[0;31m                "debug.enableProfiler=true",[0m
+[0;31m                "--set",[0m
+[0;31m                "allowAdHocKialiNamespace=true",[0m
+[0;31m                "--set",[0m
+[0;31m                "allowAdHocKialiImage=true",[0m
+[0;31m                "--set",[0m
+[0;31m                "cr.create=false",[0m
+[0;31m                "--set",[0m
+[0;31m                "image.repo=quay.io/kiali/kiali-operator",[0m
+[0;31m                "--set",[0m
+[0;31m                "image.tag=latest",[0m
+[0;31m                "--set",[0m
+[0;31m                "image.pullPolicy=Always",[0m
+[0;31m                "--set",[0m
+[0;31m                "watchNamespace=kiali-operator",[0m
+[0;31m                "--set",[0m
+[0;31m                "clusterRoleCreator=true",[0m
+[0;31m                "--set",[0m
+[0;31m                "onlyViewOnlyMode=false",[0m
+[0;31m                "--debug",[0m
+[0;31m                "kiali-operator",[0m
+[0;31m                "/tmp/helm-charts-repo/_output/charts/kiali-operator-1.38.0-SNAPSHOT.tgz"[0m
+[0;31m            ],[0m
+[0;31m            "chdir": null,[0m
+[0;31m            "creates": null,[0m
+[0;31m            "executable": null,[0m
+[0;31m            "removes": null,[0m
+[0;31m            "stdin": null,[0m
+[0;31m            "stdin_add_newline": true,[0m
+[0;31m            "strip_empty_ends": true,[0m
+[0;31m            "warn": true[0m
+[0;31m        }[0m
+[0;31m    },[0m
+[0;31m    "msg": "non-zero return code",[0m
+[0;31m    "rc": 1,[0m
+[0;31m    "start": "2021-07-16 08:21:01.358116",[0m
+[0;31m    "stderr": "history.go:56: [debug] getting history for release kiali-operator\ninstall.go:173: [debug] Original chart version: \"\"\ninstall.go:190: [debug] CHART PATH: /tmp/helm-charts-repo/_output/charts/kiali-operator-1.38.0-SNAPSHOT.tgz\n\nclient.go:128: [debug] creating 1 resource(s)\ninstall.go:146: [debug] CRD kialis.kiali.io is already present. Skipping.\nError: create: failed to create: secrets \"sh.helm.release.v1.kiali-operator.v1\" is forbidden: unable to create new content in namespace kiali-operator because it is being terminated\nhelm.go:88: [debug] secrets \"sh.helm.release.v1.kiali-operator.v1\" is forbidden: unable to create new content in namespace kiali-operator because it is being terminated\ncreate: failed to create\nhelm.sh/helm/v3/pkg/storage/driver.(*Secrets).Create\n\thelm.sh/helm/v3/pkg/storage/driver/secrets.go:164\nhelm.sh/helm/v3/pkg/storage.(*Storage).Create\n\thelm.sh/helm/v3/pkg/storage/storage.go:69\nhelm.sh/helm/v3/pkg/action.(*Install).Run\n\thelm.sh/helm/v3/pkg/action/install.go:328\nmain.runInstall\n\thelm.sh/helm/v3/cmd/helm/install.go:242\nmain.newUpgradeCmd.func2\n\thelm.sh/helm/v3/cmd/helm/upgrade.go:115\ngithub.com/spf13/cobra.(*Command).execute\n\tgithub.com/spf13/cobra@v1.1.3/command.go:852\ngithub.com/spf13/cobra.(*Command).ExecuteC\n\tgithub.com/spf13/cobra@v1.1.3/command.go:960\ngithub.com/spf13/cobra.(*Command).Execute\n\tgithub.com/spf13/cobra@v1.1.3/command.go:897\nmain.main\n\thelm.sh/helm/v3/cmd/helm/helm.go:87\nruntime.main\n\truntime/proc.go:225\nruntime.goexit\n\truntime/asm_amd64.s:1371",[0m
+[0;31m    "stderr_lines": [[0m
+[0;31m        "history.go:56: [debug] getting history for release kiali-operator",[0m
+[0;31m        "install.go:173: [debug] Original chart version: \"\"",[0m
+[0;31m        "install.go:190: [debug] CHART PATH: /tmp/helm-charts-repo/_output/charts/kiali-operator-1.38.0-SNAPSHOT.tgz",[0m
+[0;31m        "",[0m
+[0;31m        "client.go:128: [debug] creating 1 resource(s)",[0m
+[0;31m        "install.go:146: [debug] CRD kialis.kiali.io is already present. Skipping.",[0m
+[0;31m        "Error: create: failed to create: secrets \"sh.helm.release.v1.kiali-operator.v1\" is forbidden: unable to create new content in namespace kiali-operator because it is being terminated",[0m
+[0;31m        "helm.go:88: [debug] secrets \"sh.helm.release.v1.kiali-operator.v1\" is forbidden: unable to create new content in namespace kiali-operator because it is being terminated",[0m
+[0;31m        "create: failed to create",[0m
+[0;31m        "helm.sh/helm/v3/pkg/storage/driver.(*Secrets).Create",[0m
+[0;31m        "\thelm.sh/helm/v3/pkg/storage/driver/secrets.go:164",[0m
+[0;31m        "helm.sh/helm/v3/pkg/storage.(*Storage).Create",[0m
+[0;31m        "\thelm.sh/helm/v3/pkg/storage/storage.go:69",[0m
+[0;31m        "helm.sh/helm/v3/pkg/action.(*Install).Run",[0m
+[0;31m        "\thelm.sh/helm/v3/pkg/action/install.go:328",[0m
+[0;31m        "main.runInstall",[0m
+[0;31m        "\thelm.sh/helm/v3/cmd/helm/install.go:242",[0m
+[0;31m        "main.newUpgradeCmd.func2",[0m
+[0;31m        "\thelm.sh/helm/v3/cmd/helm/upgrade.go:115",[0m
+[0;31m        "github.com/spf13/cobra.(*Command).execute",[0m
+[0;31m        "\tgithub.com/spf13/cobra@v1.1.3/command.go:852",[0m
+[0;31m        "github.com/spf13/cobra.(*Command).ExecuteC",[0m
+[0;31m        "\tgithub.com/spf13/cobra@v1.1.3/command.go:960",[0m
+[0;31m        "github.com/spf13/cobra.(*Command).Execute",[0m
+[0;31m        "\tgithub.com/spf13/cobra@v1.1.3/command.go:897",[0m
+[0;31m        "main.main",[0m
+[0;31m        "\thelm.sh/helm/v3/cmd/helm/helm.go:87",[0m
+[0;31m        "runtime.main",[0m
+[0;31m        "\truntime/proc.go:225",[0m
+[0;31m        "runtime.goexit",[0m
+[0;31m        "\truntime/asm_amd64.s:1371"[0m
+[0;31m    ],[0m
+[0;31m    "stdout": "Release \"kiali-operator\" does not exist. Installing it now.",[0m
+[0;31m    "stdout_lines": [[0m
+[0;31m        "Release \"kiali-operator\" does not exist. Installing it now."[0m
+[0;31m    ][0m
+[0;31m}[0m
+ERROR: 
+An error occurred during the test sequence action: 'prepare'. Cleaning up.
+--> Scenario: 'openshift-auth-test'
+--> Action: 'cleanup'
+DEBUG: ANSIBLE ENVIRONMENT
+---
+ANSIBLE_COLLECTIONS_PATH: /root/.cache/molecule/operator/openshift-auth-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /root/.cache/molecule/operator/openshift-auth-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/openshift-auth-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /root/.cache/molecule/operator/openshift-auth-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT
+---
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /root/.cache/molecule/operator/openshift-auth-test
+MOLECULE_EXTRAS: docker,docs,podman,windows,lint
+MOLECULE_FILE: /root/.cache/molecule/operator/openshift-auth-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /root/.cache/molecule/operator/openshift-auth-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_PLUGINS: 'molecule-azure molecule-containers molecule-docker molecule-digitalocean
+  molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman
+  molecule-vagrant '
+MOLECULE_PROJECT_DIRECTORY: /tmp/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/operator/molecule/openshift-auth-test
+MOLECULE_SCENARIO_NAME: openshift-auth-test
+MOLECULE_STATE_FILE: /root/.cache/molecule/operator/openshift-auth-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/operator/molecule/openshift-auth-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY
+ANSIBLE_COLLECTIONS_PATH=/root/.cache/molecule/operator/openshift-auth-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/root/.cache/molecule/operator/openshift-auth-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/openshift-auth-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/root/.cache/molecule/operator/openshift-auth-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/root/.cache/molecule/operator/openshift-auth-test MOLECULE_EXTRAS=docker,docs,podman,windows,lint MOLECULE_FILE=/root/.cache/molecule/operator/openshift-auth-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/root/.cache/molecule/operator/openshift-auth-test/instance_config.yml MOLECULE_INVENTORY_FILE=/root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_PLUGINS=molecule-azure molecule-containers molecule-docker molecule-digitalocean molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman molecule-vagrant  MOLECULE_PROJECT_DIRECTORY=/tmp/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/operator/molecule/openshift-auth-test MOLECULE_SCENARIO_NAME=openshift-auth-test MOLECULE_STATE_FILE=/root/.cache/molecule/operator/openshift-auth-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/operator/molecule/openshift-auth-test/tests MOLECULE_WAIT_RETRIES=360
+
+DEBUG: COMMAND
+/usr/bin/ansible-playbook --skip-tags=molecule-notest,notest --diff --inventory=/root/.cache/molecule/operator/openshift-auth-test/inventory /tmp/operator/molecule/default/cleanup.yml -vvv
+
+    [0;34mansible-playbook 2.10.2[0m
+    [0;34m  config file = /root/.cache/molecule/operator/openshift-auth-test/ansible.cfg[0m
+    [0;34m  configured module search path = ['/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules', '/usr/lib/python3.8/site-packages/molecule_lxd/modules', '/usr/lib/python3.8/site-packages/molecule_vagrant/modules', '/root/.cache/molecule/operator/openshift-auth-test/library', '/tmp/operator/library', '/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules'][0m
+    [0;34m  ansible python module location = /usr/lib/python3.8/site-packages/ansible[0m
+    [0;34m  executable location = /usr/bin/ansible-playbook[0m
+    [0;34m  python version = 3.8.6 (default, Oct  5 2020, 00:23:48) [GCC 10.2.0][0m
+    [0;34mUsing /root/.cache/molecule/operator/openshift-auth-test/ansible.cfg as config file[0m
+    [0;34mhost_list declined parsing /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mscript declined parsing /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mParsed /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml inventory source with yaml plugin[0m
+    [0;34mstatically imported: /tmp/operator/molecule/default/dump-logs.yml[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    
+    PLAYBOOK: cleanup.yml **********************************************************
+    [0;34m1 plays in /tmp/operator/molecule/default/cleanup.yml[0m
+    
+    PLAY [Cleanup] *****************************************************************
+    
+    TASK [Gathering Facts] *********************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/cleanup.yml:1[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626423673.0102274-194-255157544189152 `" && echo ansible-tmp-1626423673.0102274-194-255157544189152="` echo /root/.ansible/tmp/ansible-tmp-1626423673.0102274-194-255157544189152 `" ) && sleep 0'[0m
+    [0;34mUsing module file /usr/lib/python3.8/site-packages/ansible/modules/setup.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-1877wf2ap9c/tmp8xi9yf2n TO /root/.ansible/tmp/ansible-tmp-1626423673.0102274-194-255157544189152/AnsiballZ_setup.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626423673.0102274-194-255157544189152/ /root/.ansible/tmp/ansible-tmp-1626423673.0102274-194-255157544189152/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626423673.0102274-194-255157544189152/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626423673.0102274-194-255157544189152/ > /dev/null 2>&1 && sleep 0'[0m
+    [0;32mok: [localhost][0m
+    [0;34mMETA: ran handlers[0m
+    
+    TASK [set_fact] ****************************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/dump-logs.yml:4[0m
+    [0;32mok: [localhost] => {[0m
+    [0;32m    "ansible_facts": {[0m
+    [0;32m        "dump_logs_on_error": true[0m
+    [0;32m    },[0m
+    [0;32m    "changed": false[0m
+    [0;32m}[0m
+    
+    TASK [Get Kiali Operator Pod logs] *********************************************
+    [1;30mtask path: /tmp/operator/molecule/default/dump-logs.yml:7[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255 `" && echo ansible-tmp-1626423675.5214221-264-2844110113255="` echo /root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255 `" ) && sleep 0'[0m
+    [0;34mUsing module file /root/.ansible/collections/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-1877wf2ap9c/tmpf7x3mf8s TO /root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255/AnsiballZ_k8s_log.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255/ /root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255/AnsiballZ_k8s_log.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255/AnsiballZ_k8s_log.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255/ > /dev/null 2>&1 && sleep 0'[0m
+[0;31mThe full traceback is:[0m
+[0;31mTraceback (most recent call last):[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255/AnsiballZ_k8s_log.py", line 102, in <module>[0m
+[0;31m    _ansiballz_main()[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255/AnsiballZ_k8s_log.py", line 94, in _ansiballz_main[0m
+[0;31m    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255/AnsiballZ_k8s_log.py", line 40, in invoke_module[0m
+[0;31m    runpy.run_module(mod_name='ansible_collections.kubernetes.core.plugins.modules.k8s_log', init_globals=None, run_name='__main__', alter_sys=True)[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 207, in run_module[0m
+[0;31m    return _run_module_code(code, init_globals, run_name, mod_spec)[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 97, in _run_module_code[0m
+    [0;36m...ignoring[0m
+[0;31m    _run_code(code, mod_globals, init_globals,[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 87, in _run_code[0m
+[0;31m    exec(code, run_globals)[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_qx6ss5et/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 227, in <module>[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_qx6ss5et/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 223, in main[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_qx6ss5et/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 153, in execute_module[0m
+[0;31mAttributeError: 'AnsibleModule' object has no attribute 'fail'[0m
+[0;31mfatal: [localhost]: FAILED! => {[0m
+[0;31m    "changed": false,[0m
+[0;31m    "invocation": {[0m
+[0;31m        "label_selectors": [[0m
+[0;31m            "app.kubernetes.io/name=kiali-operator"[0m
+[0;31m        ],[0m
+[0;31m        "module_args": {[0m
+[0;31m            "label_selectors": [[0m
+[0;31m                "app.kubernetes.io/name=kiali-operator"[0m
+[0;31m            ],[0m
+[0;31m            "namespace": "kiali-operator"[0m
+[0;31m        },[0m
+[0;31m        "namespace": "kiali-operator"[0m
+[0;31m    },[0m
+[0;31m    "module_stderr": "Traceback (most recent call last):\n  File \"/root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255/AnsiballZ_k8s_log.py\", line 102, in <module>\n    _ansiballz_main()\n  File \"/root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255/AnsiballZ_k8s_log.py\", line 94, in _ansiballz_main\n    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)\n  File \"/root/.ansible/tmp/ansible-tmp-1626423675.5214221-264-2844110113255/AnsiballZ_k8s_log.py\", line 40, in invoke_module\n    runpy.run_module(mod_name='ansible_collections.kubernetes.core.plugins.modules.k8s_log', init_globals=None, run_name='__main__', alter_sys=True)\n  File \"/usr/lib/python3.8/runpy.py\", line 207, in run_module\n    return _run_module_code(code, init_globals, run_name, mod_spec)\n  File \"/usr/lib/python3.8/runpy.py\", line 97, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.8/runpy.py\", line 87, in _run_code\n    exec(code, run_globals)\n  File \"/tmp/ansible_k8s_log_payload_qx6ss5et/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 227, in <module>\n  File \"/tmp/ansible_k8s_log_payload_qx6ss5et/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 223, in main\n  File \"/tmp/ansible_k8s_log_payload_qx6ss5et/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 153, in execute_module\nAttributeError: 'AnsibleModule' object has no attribute 'fail'\n",[0m
+[0;31m    "module_stdout": "",[0m
+[0;31m    "msg": "MODULE FAILURE\nSee stdout/stderr for the exact error",[0m
+[0;31m    "rc": 1[0m
+[0;31m}[0m
+    
+    TASK [Dump Kiali Operator Pod logs] ********************************************
+    [1;30mtask path: /tmp/operator/molecule/default/dump-logs.yml:17[0m
+    [0;36mskipping: [localhost] => {}[0m
+    
+    TASK [Get Kiali Server Pod logs] ***********************************************
+    [1;30mtask path: /tmp/operator/molecule/default/dump-logs.yml:24[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s_log to kubernetes.core.k8s_info[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749 `" && echo ansible-tmp-1626423679.1627612-283-206912161721749="` echo /root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749 `" ) && sleep 0'[0m
+    [0;34mUsing module file /root/.ansible/collections/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-1877wf2ap9c/tmp2hocftfu TO /root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749/AnsiballZ_k8s_log.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749/ /root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749/AnsiballZ_k8s_log.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749/AnsiballZ_k8s_log.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749/ > /dev/null 2>&1 && sleep 0'[0m
+    [0;36m...ignoring[0m
+[0;31mThe full traceback is:[0m
+[0;31mTraceback (most recent call last):[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749/AnsiballZ_k8s_log.py", line 102, in <module>[0m
+[0;31m    _ansiballz_main()[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749/AnsiballZ_k8s_log.py", line 94, in _ansiballz_main[0m
+[0;31m    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)[0m
+[0;31m  File "/root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749/AnsiballZ_k8s_log.py", line 40, in invoke_module[0m
+[0;31m    runpy.run_module(mod_name='ansible_collections.kubernetes.core.plugins.modules.k8s_log', init_globals=None, run_name='__main__', alter_sys=True)[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 207, in run_module[0m
+[0;31m    return _run_module_code(code, init_globals, run_name, mod_spec)[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 97, in _run_module_code[0m
+[0;31m    _run_code(code, mod_globals, init_globals,[0m
+[0;31m  File "/usr/lib/python3.8/runpy.py", line 87, in _run_code[0m
+[0;31m    exec(code, run_globals)[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_pkynd_li/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 227, in <module>[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_pkynd_li/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 223, in main[0m
+[0;31m  File "/tmp/ansible_k8s_log_payload_pkynd_li/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py", line 153, in execute_module[0m
+[0;31mAttributeError: 'AnsibleModule' object has no attribute 'fail'[0m
+[0;31mfatal: [localhost]: FAILED! => {[0m
+[0;31m    "changed": false,[0m
+[0;31m    "invocation": {[0m
+[0;31m        "label_selectors": [[0m
+[0;31m            "app.kubernetes.io/name=kiali"[0m
+[0;31m        ],[0m
+[0;31m        "module_args": {[0m
+[0;31m            "label_selectors": [[0m
+[0;31m                "app.kubernetes.io/name=kiali"[0m
+[0;31m            ],[0m
+[0;31m            "namespace": "istio-system"[0m
+[0;31m        },[0m
+[0;31m        "namespace": "istio-system"[0m
+[0;31m    },[0m
+[0;31m    "module_stderr": "Traceback (most recent call last):\n  File \"/root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749/AnsiballZ_k8s_log.py\", line 102, in <module>\n    _ansiballz_main()\n  File \"/root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749/AnsiballZ_k8s_log.py\", line 94, in _ansiballz_main\n    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)\n  File \"/root/.ansible/tmp/ansible-tmp-1626423679.1627612-283-206912161721749/AnsiballZ_k8s_log.py\", line 40, in invoke_module\n    runpy.run_module(mod_name='ansible_collections.kubernetes.core.plugins.modules.k8s_log', init_globals=None, run_name='__main__', alter_sys=True)\n  File \"/usr/lib/python3.8/runpy.py\", line 207, in run_module\n    return _run_module_code(code, init_globals, run_name, mod_spec)\n  File \"/usr/lib/python3.8/runpy.py\", line 97, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.8/runpy.py\", line 87, in _run_code\n    exec(code, run_globals)\n  File \"/tmp/ansible_k8s_log_payload_pkynd_li/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 227, in <module>\n  File \"/tmp/ansible_k8s_log_payload_pkynd_li/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 223, in main\n  File \"/tmp/ansible_k8s_log_payload_pkynd_li/ansible_k8s_log_payload.zip/ansible_collections/kubernetes/core/plugins/modules/k8s_log.py\", line 153, in execute_module\nAttributeError: 'AnsibleModule' object has no attribute 'fail'\n",[0m
+[0;31m    "module_stdout": "",[0m
+[0;31m    "msg": "MODULE FAILURE\nSee stdout/stderr for the exact error",[0m
+[0;31m    "rc": 1[0m
+[0;31m}[0m
+    
+    TASK [Dump Kiali Server Pod logs] **********************************************
+    [1;30mtask path: /tmp/operator/molecule/default/dump-logs.yml:36[0m
+    [0;36mskipping: [localhost] => {}[0m
+    [0;34mMETA: ran handlers[0m
+    [0;34mMETA: ran handlers[0m
+    
+    PLAY RECAP *********************************************************************
+    [0;32mlocalhost[0m                  : [0;32mok=4   [0m changed=0    unreachable=0    failed=0    [0;36mskipped=2   [0m rescued=0    [1;35mignored=2   [0m
+    
+--> Scenario: 'openshift-auth-test'
+--> Action: 'destroy'
+DEBUG: ANSIBLE ENVIRONMENT
+---
+ANSIBLE_COLLECTIONS_PATH: /root/.cache/molecule/operator/openshift-auth-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /root/.cache/molecule/operator/openshift-auth-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/openshift-auth-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /root/.cache/molecule/operator/openshift-auth-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT
+---
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /root/.cache/molecule/operator/openshift-auth-test
+MOLECULE_EXTRAS: docker,docs,podman,windows,lint
+MOLECULE_FILE: /root/.cache/molecule/operator/openshift-auth-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /root/.cache/molecule/operator/openshift-auth-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_PLUGINS: 'molecule-azure molecule-containers molecule-docker molecule-digitalocean
+  molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman
+  molecule-vagrant '
+MOLECULE_PROJECT_DIRECTORY: /tmp/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/operator/molecule/openshift-auth-test
+MOLECULE_SCENARIO_NAME: openshift-auth-test
+MOLECULE_STATE_FILE: /root/.cache/molecule/operator/openshift-auth-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/operator/molecule/openshift-auth-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY
+ANSIBLE_COLLECTIONS_PATH=/root/.cache/molecule/operator/openshift-auth-test/collections:/root/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/root/.cache/molecule/operator/openshift-auth-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/filter:/root/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/operator/plugins/filter:/root/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/lib/python3.8/site-packages/molecule_lxd/modules:/usr/lib/python3.8/site-packages/molecule_vagrant/modules:/root/.cache/molecule/operator/openshift-auth-test/library:/tmp/operator/library:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/root/.cache/molecule/operator/openshift-auth-test/roles:/tmp:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/root/.cache/molecule/operator/openshift-auth-test MOLECULE_EXTRAS=docker,docs,podman,windows,lint MOLECULE_FILE=/root/.cache/molecule/operator/openshift-auth-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/root/.cache/molecule/operator/openshift-auth-test/instance_config.yml MOLECULE_INVENTORY_FILE=/root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_PLUGINS=molecule-azure molecule-containers molecule-docker molecule-digitalocean molecule-ec2 molecule-gce molecule-libvirt molecule-lxd molecule-openstack molecule-podman molecule-vagrant  MOLECULE_PROJECT_DIRECTORY=/tmp/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/operator/molecule/openshift-auth-test MOLECULE_SCENARIO_NAME=openshift-auth-test MOLECULE_STATE_FILE=/root/.cache/molecule/operator/openshift-auth-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/operator/molecule/openshift-auth-test/tests MOLECULE_WAIT_RETRIES=360
+
+DEBUG: COMMAND
+/usr/bin/ansible-playbook --skip-tags=molecule-notest,notest --diff --inventory=/root/.cache/molecule/operator/openshift-auth-test/inventory /tmp/operator/molecule/default/destroy.yml -vvv
+
+    [0;34mansible-playbook 2.10.2[0m
+    [0;34m  config file = /root/.cache/molecule/operator/openshift-auth-test/ansible.cfg[0m
+    [0;34m  configured module search path = ['/usr/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/modules', '/usr/lib/python3.8/site-packages/molecule_lxd/modules', '/usr/lib/python3.8/site-packages/molecule_vagrant/modules', '/root/.cache/molecule/operator/openshift-auth-test/library', '/tmp/operator/library', '/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules'][0m
+    [0;34m  ansible python module location = /usr/lib/python3.8/site-packages/ansible[0m
+    [0;34m  executable location = /usr/bin/ansible-playbook[0m
+    [0;34m  python version = 3.8.6 (default, Oct  5 2020, 00:23:48) [GCC 10.2.0][0m
+    [0;34mUsing /root/.cache/molecule/operator/openshift-auth-test/ansible.cfg as config file[0m
+    [0;34mhost_list declined parsing /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mscript declined parsing /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml as it did not pass its verify_file() method[0m
+    [0;34mParsed /root/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml inventory source with yaml plugin[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mstatically imported: /tmp/operator/molecule/default/process-network-policy.yml[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    
+    PLAYBOOK: destroy.yml **********************************************************
+    [0;34m1 plays in /tmp/operator/molecule/default/destroy.yml[0m
+    
+    PLAY [Destroy] *****************************************************************
+    
+    TASK [Gathering Facts] *********************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/destroy.yml:1[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626423691.2419991-311-252891099568140 `" && echo ansible-tmp-1626423691.2419991-311-252891099568140="` echo /root/.ansible/tmp/ansible-tmp-1626423691.2419991-311-252891099568140 `" ) && sleep 0'[0m
+    [0;34mUsing module file /usr/lib/python3.8/site-packages/ansible/modules/setup.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-304t42m20qw/tmpp4ktl5qq TO /root/.ansible/tmp/ansible-tmp-1626423691.2419991-311-252891099568140/AnsiballZ_setup.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626423691.2419991-311-252891099568140/ /root/.ansible/tmp/ansible-tmp-1626423691.2419991-311-252891099568140/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626423691.2419991-311-252891099568140/AnsiballZ_setup.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626423691.2419991-311-252891099568140/ > /dev/null 2>&1 && sleep 0'[0m
+    [0;32mok: [localhost][0m
+    [0;34mMETA: ran handlers[0m
+    
+    TASK [Get information about the cluster] ***************************************
+    [1;30mtask path: /tmp/operator/molecule/default/destroy.yml:8[0m
+/usr/lib/python3.8/site-packages/urllib3/connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(
+    [0;32mok: [localhost] => {[0m
+    [0;32m    "ansible_facts": {[0m
+    [0;32m        "api_groups": [[0m
+    [0;32m            "",[0m
+    [0;32m            "apiregistration.k8s.io",[0m
+    [0;32m            "apps",[0m
+    [0;32m            "events.k8s.io",[0m
+    [0;32m            "authentication.k8s.io",[0m
+    [0;32m            "authorization.k8s.io",[0m
+    [0;32m            "autoscaling",[0m
+    [0;32m            "batch",[0m
+    [0;32m            "certificates.k8s.io",[0m
+    [0;32m            "networking.k8s.io",[0m
+    [0;32m            "extensions",[0m
+    [0;32m            "policy",[0m
+    [0;32m            "rbac.authorization.k8s.io",[0m
+    [0;32m            "storage.k8s.io",[0m
+    [0;32m            "admissionregistration.k8s.io",[0m
+    [0;32m            "apiextensions.k8s.io",[0m
+    [0;32m            "scheduling.k8s.io",[0m
+    [0;32m            "coordination.k8s.io",[0m
+    [0;32m            "node.k8s.io",[0m
+    [0;32m            "discovery.k8s.io",[0m
+    [0;32m            "flowcontrol.apiserver.k8s.io",[0m
+    [0;32m            "apps.openshift.io",[0m
+    [0;32m            "authorization.openshift.io",[0m
+    [0;32m            "build.openshift.io",[0m
+    [0;32m            "image.openshift.io",[0m
+    [0;32m            "oauth.openshift.io",[0m
+    [0;32m            "project.openshift.io",[0m
+    [0;32m            "quota.openshift.io",[0m
+    [0;32m            "route.openshift.io",[0m
+    [0;32m            "security.openshift.io",[0m
+    [0;32m            "template.openshift.io",[0m
+    [0;32m            "user.openshift.io",[0m
+    [0;32m            "packages.operators.coreos.com",[0m
+    [0;32m            "config.openshift.io",[0m
+    [0;32m            "operator.openshift.io",[0m
+    [0;32m            "autoscaling.openshift.io",[0m
+    [0;32m            "cloudcredential.openshift.io",[0m
+    [0;32m            "console.openshift.io",[0m
+    [0;32m            "imageregistry.operator.openshift.io",[0m
+    [0;32m            "ingress.operator.openshift.io",[0m
+    [0;32m            "k8s.cni.cncf.io",[0m
+    [0;32m            "machineconfiguration.openshift.io",[0m
+    [0;32m            "monitoring.coreos.com",[0m
+    [0;32m            "network.openshift.io",[0m
+    [0;32m            "network.operator.openshift.io",[0m
+    [0;32m            "operators.coreos.com",[0m
+    [0;32m            "samples.operator.openshift.io",[0m
+    [0;32m            "security.internal.openshift.io",[0m
+    [0;32m            "snapshot.storage.k8s.io",[0m
+    [0;32m            "tuned.openshift.io",[0m
+    [0;32m            "controlplane.operator.openshift.io",[0m
+    [0;32m            "install.istio.io",[0m
+    [0;32m            "kiali.io",[0m
+    [0;32m            "metal3.io",[0m
+    [0;32m            "migration.k8s.io",[0m
+    [0;32m            "telemetry.istio.io",[0m
+    [0;32m            "whereabouts.cni.cncf.io",[0m
+    [0;32m            "networking.istio.io",[0m
+    [0;32m            "helm.openshift.io",[0m
+    [0;32m            "machine.openshift.io",[0m
+    [0;32m            "security.istio.io",[0m
+    [0;32m            "metrics.k8s.io"[0m
+    [0;32m        ][0m
+    [0;32m    },[0m
+    [0;32m    "changed": false[0m
+    [0;32m}[0m
+    
+    TASK [Determine the Istio implementation] **************************************
+    [1;30mtask path: /tmp/operator/molecule/default/destroy.yml:11[0m
+    [0;32mok: [localhost] => {[0m
+    [0;32m    "ansible_facts": {[0m
+    [0;32m        "is_maistra": false[0m
+    [0;32m    },[0m
+    [0;32m    "changed": false[0m
+    [0;32m}[0m
+    
+    TASK [Determine if the operator installation is managed externally or not] *****
+    [1;30mtask path: /tmp/operator/molecule/default/destroy.yml:15[0m
+    [0;32mok: [localhost] => {[0m
+    [0;32m    "ansible_facts": {[0m
+    [0;32m        "operator_installer": "helm"[0m
+    [0;32m    },[0m
+    [0;32m    "changed": false[0m
+    [0;32m}[0m
+    
+    TASK [Remove Kiali CR] *********************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/destroy.yml:19[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626423695.8031976-385-253926321713045 `" && echo ansible-tmp-1626423695.8031976-385-253926321713045="` echo /root/.ansible/tmp/ansible-tmp-1626423695.8031976-385-253926321713045 `" ) && sleep 0'[0m
+    [0;34mUsing module file /root/.ansible/collections/ansible_collections/kubernetes/core/plugins/modules/k8s.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-304t42m20qw/tmph074xchy TO /root/.ansible/tmp/ansible-tmp-1626423695.8031976-385-253926321713045/AnsiballZ_k8s.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626423695.8031976-385-253926321713045/ /root/.ansible/tmp/ansible-tmp-1626423695.8031976-385-253926321713045/AnsiballZ_k8s.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626423695.8031976-385-253926321713045/AnsiballZ_k8s.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626423695.8031976-385-253926321713045/ > /dev/null 2>&1 && sleep 0'[0m
+[0;31mfatal: [localhost]: FAILED! => {[0m
+[0;31m    "changed": true,[0m
+[0;31m    "duration": 602,[0m
+[0;31m    "invocation": {[0m
+[0;31m        "module_args": {[0m
+[0;31m            "api_key": null,[0m
+[0;31m            "api_version": "kiali.io/v1alpha1",[0m
+[0;31m            "append_hash": false,[0m
+[0;31m            "apply": false,[0m
+[0;31m            "ca_cert": null,[0m
+[0;31m            "client_cert": null,[0m
+[0;31m            "client_key": null,[0m
+[0;31m            "context": null,[0m
+[0;31m            "continue_on_error": false,[0m
+[0;31m            "delete_options": null,[0m
+[0;31m            "force": false,[0m
+[0;31m            "host": null,[0m
+[0;31m            "kind": "Kiali",[0m
+[0;31m            "kubeconfig": null,[0m
+[0;31m            "merge_type": null,[0m
+[0;31m            "name": "kiali",[0m
+[0;31m            "namespace": "kiali-operator",[0m
+[0;31m            "password": null,[0m
+[0;31m            "persist_config": null,[0m
+    [0;36m...ignoring[0m
+[0;31m            "proxy": null,[0m
+[0;31m            "proxy_headers": null,[0m
+[0;31m            "resource_definition": null,[0m
+[0;31m            "src": null,[0m
+[0;31m            "state": "absent",[0m
+[0;31m            "template": null,[0m
+[0;31m            "username": null,[0m
+[0;31m            "validate": null,[0m
+[0;31m            "validate_certs": null,[0m
+[0;31m            "wait": true,[0m
+[0;31m            "wait_condition": null,[0m
+[0;31m            "wait_sleep": 5,[0m
+[0;31m            "wait_timeout": 600[0m
+[0;31m        }[0m
+[0;31m    },[0m
+[0;31m    "method": "delete",[0m
+[0;31m    "msg": "Kiali kiali: Resource deletion timed out",[0m
+[0;31m    "result": {[0m
+[0;31m        "apiVersion": "kiali.io/v1alpha1",[0m
+[0;31m        "kind": "Kiali",[0m
+[0;31m        "metadata": {[0m
+[0;31m            "creationTimestamp": "2021-07-16T06:45:10Z",[0m
+[0;31m            "deletionGracePeriodSeconds": 0,[0m
+[0;31m            "deletionTimestamp": "2021-07-16T06:51:17Z",[0m
+[0;31m            "finalizers": [[0m
+[0;31m                "kiali.io/finalizer"[0m
+[0;31m            ],[0m
+[0;31m            "generation": 2,[0m
+[0;31m            "managedFields": [[0m
+[0;31m                {[0m
+[0;31m                    "apiVersion": "kiali.io/v1alpha1",[0m
+[0;31m                    "fieldsType": "FieldsV1",[0m
+[0;31m                    "fieldsV1": {[0m
+[0;31m                        "f:metadata": {[0m
+[0;31m                            "f:finalizers": {[0m
+[0;31m                                ".": {},[0m
+[0;31m                                "v:\"kiali.io/finalizer\"": {}[0m
+[0;31m                            }[0m
+[0;31m                        },[0m
+[0;31m                        "f:status": {[0m
+[0;31m                            ".": {},[0m
+[0;31m                            "f:conditions": {}[0m
+[0;31m                        }[0m
+[0;31m                    },[0m
+[0;31m                    "manager": "ansible-operator",[0m
+[0;31m                    "operation": "Update",[0m
+[0;31m                    "time": "2021-07-16T06:45:10Z"[0m
+[0;31m                },[0m
+[0;31m                {[0m
+[0;31m                    "apiVersion": "kiali.io/v1alpha1",[0m
+[0;31m                    "fieldsType": "FieldsV1",[0m
+[0;31m                    "fieldsV1": {[0m
+[0;31m                        "f:spec": {[0m
+[0;31m                            ".": {},[0m
+[0;31m                            "f:auth": {[0m
+[0;31m                                ".": {},[0m
+[0;31m                                "f:strategy": {}[0m
+[0;31m                            },[0m
+[0;31m                            "f:custom_dashboards": {},[0m
+[0;31m                            "f:deployment": {[0m
+[0;31m                                ".": {},[0m
+[0;31m                                "f:accessible_namespaces": {},[0m
+[0;31m                                "f:image_name": {},[0m
+[0;31m                                "f:image_pull_policy": {},[0m
+[0;31m                                "f:image_version": {},[0m
+[0;31m                                "f:logger": {[0m
+[0;31m                                    ".": {},[0m
+[0;31m                                    "f:log_level": {}[0m
+[0;31m                                },[0m
+[0;31m                                "f:namespace": {},[0m
+[0;31m                                "f:service_type": {}[0m
+[0;31m                            },[0m
+[0;31m                            "f:istio_namespace": {},[0m
+[0;31m                            "f:version": {}[0m
+[0;31m                        },[0m
+[0;31m                        "f:status": {[0m
+[0;31m                            "f:deployment": {[0m
+[0;31m                                ".": {},[0m
+[0;31m                                "f:accessibleNamespaces": {},[0m
+[0;31m                                "f:instanceName": {},[0m
+[0;31m                                "f:namespace": {}[0m
+[0;31m                            },[0m
+[0;31m                            "f:environment": {[0m
+[0;31m                                ".": {},[0m
+[0;31m                                "f:isOpenshift": {},[0m
+[0;31m                                "f:kubernetesVersion": {},[0m
+[0;31m                                "f:openshiftVersion": {},[0m
+[0;31m                                "f:operatorVersion": {}[0m
+[0;31m                            },[0m
+[0;31m                            "f:progress": {[0m
+[0;31m                                ".": {},[0m
+[0;31m                                "f:duration": {},[0m
+[0;31m                                "f:message": {}[0m
+[0;31m                            }[0m
+[0;31m                        }[0m
+[0;31m                    },[0m
+[0;31m                    "manager": "OpenAPI-Generator",[0m
+[0;31m                    "operation": "Update",[0m
+[0;31m                    "time": "2021-07-16T06:49:28Z"[0m
+[0;31m                }[0m
+[0;31m            ],[0m
+[0;31m            "name": "kiali",[0m
+    
+    TASK [Wait for Kiali ConfigMap to be uninstalled] ******************************
+    [1;30mtask path: /tmp/operator/molecule/default/destroy.yml:33[0m
+[0;31m            "namespace": "kiali-operator",[0m
+[0;31m            "resourceVersion": "9465979",[0m
+[0;31m            "selfLink": "/apis/kiali.io/v1alpha1/namespaces/kiali-operator/kialis/kiali",[0m
+[0;31m            "uid": "1b34ad0a-f736-43eb-b664-51f07cbc132c"[0m
+[0;31m        },[0m
+[0;31m        "spec": {[0m
+[0;31m            "auth": {[0m
+[0;31m                "strategy": "anonymous"[0m
+[0;31m            },[0m
+[0;31m            "custom_dashboards": [[0m
+[0;31m                {[0m
+[0;31m                    "name": "go"[0m
+[0;31m                }[0m
+[0;31m            ],[0m
+[0;31m            "deployment": {[0m
+[0;31m                "accessible_namespaces": [[0m
+[0;31m                    "**"[0m
+[0;31m                ],[0m
+[0;31m                "image_name": "quay.io/kiali/kiali",[0m
+[0;31m                "image_pull_policy": "Always",[0m
+[0;31m                "image_version": "latest",[0m
+[0;31m                "logger": {[0m
+[0;31m                    "log_level": "trace"[0m
+[0;31m                },[0m
+[0;31m                "namespace": "istio-system",[0m
+[0;31m                "service_type": "NodePort"[0m
+[0;31m            },[0m
+[0;31m            "istio_namespace": "istio-system",[0m
+[0;31m            "version": "default"[0m
+[0;31m        },[0m
+[0;31m        "status": {[0m
+[0;31m            "conditions": [[0m
+[0;31m                {[0m
+[0;31m                    "lastTransitionTime": "2021-07-16T06:45:10Z",[0m
+[0;31m                    "message": "Running reconciliation",[0m
+[0;31m                    "reason": "Running",[0m
+[0;31m                    "status": "True",[0m
+[0;31m                    "type": "Running"[0m
+[0;31m                }[0m
+[0;31m            ],[0m
+[0;31m            "deployment": {[0m
+[0;31m                "accessibleNamespaces": "**",[0m
+[0;31m                "instanceName": "kiali",[0m
+[0;31m                "namespace": "istio-system"[0m
+[0;31m            },[0m
+[0;31m            "environment": {[0m
+[0;31m                "isOpenshift": true,[0m
+[0;31m                "kubernetesVersion": "1.20.0+2817867",[0m
+[0;31m                "openshiftVersion": "4.7.17",[0m
+[0;31m                "operatorVersion": "v1.38.0-SNAPSHOT"[0m
+[0;31m            },[0m
+[0;31m            "progress": {[0m
+[0;31m                "duration": "0:03:49",[0m
+[0;31m                "message": "7. Finished all resource creation"[0m
+[0;31m            }[0m
+[0;31m        }[0m
+[0;31m    }[0m
+[0;31m}[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626424301.1421807-402-205910067751931 `" && echo ansible-tmp-1626424301.1421807-402-205910067751931="` echo /root/.ansible/tmp/ansible-tmp-1626424301.1421807-402-205910067751931 `" ) && sleep 0'[0m
+    [0;34mUsing module file /root/.ansible/collections/ansible_collections/kubernetes/core/plugins/modules/k8s_info.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-304t42m20qw/tmp1fa0le_4 TO /root/.ansible/tmp/ansible-tmp-1626424301.1421807-402-205910067751931/AnsiballZ_k8s_info.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626424301.1421807-402-205910067751931/ /root/.ansible/tmp/ansible-tmp-1626424301.1421807-402-205910067751931/AnsiballZ_k8s_info.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626424301.1421807-402-205910067751931/AnsiballZ_k8s_info.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626424301.1421807-402-205910067751931/ > /dev/null 2>&1 && sleep 0'[0m
+    [0;34mredirecting filter ansible.builtin.json_query to community.general.json_query[0m
+    [0;34mredirecting filter ansible.builtin.json_query to community.general.json_query[0m
+    [0;34mredirecting filter ansible.builtin.json_query to community.general.json_query[0m
+    [0;34mredirecting filter ansible.builtin.json_query to community.general.json_query[0m
+    [0;34mredirecting filter ansible.builtin.json_query to community.general.json_query[0m
+    [0;34mredirecting filter ansible.builtin.json_query to community.general.json_query[0m
+    [0;34mredirecting filter ansible.builtin.json_query to community.general.json_query[0m
+    [0;34mredirecting filter ansible.builtin.json_query to community.general.json_query[0m
+    [0;32mok: [localhost] => {[0m
+    [0;32m    "api_found": true,[0m
+    [0;32m    "attempts": 1,[0m
+    [0;32m    "changed": false,[0m
+    [0;32m    "invocation": {[0m
+    [0;32m        "module_args": {[0m
+    [0;32m            "api_key": null,[0m
+    [0;32m            "api_version": "v1",[0m
+    [0;32m            "ca_cert": null,[0m
+    [0;32m            "client_cert": null,[0m
+    [0;32m            "client_key": null,[0m
+    [0;32m            "context": null,[0m
+    [0;32m            "field_selectors": [],[0m
+    [0;32m            "host": null,[0m
+    [0;32m            "kind": "ConfigMap",[0m
+    [0;32m            "kubeconfig": null,[0m
+    [0;32m            "label_selectors": [],[0m
+    [0;32m            "name": "kiali",[0m
+    [0;32m            "namespace": "istio-system",[0m
+    [0;32m            "password": null,[0m
+    [0;32m            "persist_config": null,[0m
+    [0;32m            "proxy": null,[0m
+    [0;32m            "proxy_headers": null,[0m
+    [0;32m            "username": null,[0m
+    [0;32m            "validate_certs": null,[0m
+    [0;32m            "wait": false,[0m
+    [0;32m            "wait_condition": null,[0m
+    [0;32m            "wait_sleep": 5,[0m
+    [0;32m            "wait_timeout": 120[0m
+    [0;32m        }[0m
+    [0;32m    },[0m
+    [0;32m    "resources": [][0m
+    [0;32m}[0m
+    
+    TASK [Process NetworkPolicy needed to access the Kiali UI when in Maistra environment [state=absent]] ***
+    [1;30mtask path: /tmp/operator/molecule/default/process-network-policy.yml:1[0m
+    [0;36mskipping: [localhost] => {[0m
+    [0;36m    "changed": false,[0m
+    [0;36m    "skip_reason": "Conditional result was False"[0m
+    [0;36m}[0m
+    
+    TASK [Uninstall Operator via Helm] *********************************************
+    [1;30mtask path: /tmp/operator/molecule/default/destroy.yml:54[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626424305.2601073-421-264628242350169 `" && echo ansible-tmp-1626424305.2601073-421-264628242350169="` echo /root/.ansible/tmp/ansible-tmp-1626424305.2601073-421-264628242350169 `" ) && sleep 0'[0m
+    [0;34mUsing module file /usr/lib/python3.8/site-packages/ansible/modules/command.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-304t42m20qw/tmp6vk6jvb6 TO /root/.ansible/tmp/ansible-tmp-1626424305.2601073-421-264628242350169/AnsiballZ_command.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626424305.2601073-421-264628242350169/ /root/.ansible/tmp/ansible-tmp-1626424305.2601073-421-264628242350169/AnsiballZ_command.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626424305.2601073-421-264628242350169/AnsiballZ_command.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626424305.2601073-421-264628242350169/ > /dev/null 2>&1 && sleep 0'[0m
+    [0;36m...ignoring[0m
+[0;31mfatal: [localhost]: FAILED! => {[0m
+[0;31m    "changed": true,[0m
+[0;31m    "cmd": [[0m
+[0;31m        "helm",[0m
+[0;31m        "uninstall",[0m
+[0;31m        "--namespace=kiali-operator",[0m
+[0;31m        "--debug",[0m
+[0;31m        "kiali-operator"[0m
+[0;31m    ],[0m
+[0;31m    "delta": "0:00:00.158628",[0m
+[0;31m    "end": "2021-07-16 08:31:46.418410",[0m
+[0;31m    "invocation": {[0m
+[0;31m        "module_args": {[0m
+[0;31m            "_raw_params": null,[0m
+[0;31m            "_uses_shell": false,[0m
+[0;31m            "argv": [[0m
+[0;31m                "helm",[0m
+[0;31m                "uninstall",[0m
+[0;31m                "--namespace=kiali-operator",[0m
+[0;31m                "--debug",[0m
+[0;31m                "kiali-operator"[0m
+[0;31m            ],[0m
+[0;31m            "chdir": null,[0m
+[0;31m            "creates": null,[0m
+[0;31m            "executable": null,[0m
+[0;31m            "removes": null,[0m
+[0;31m            "stdin": null,[0m
+[0;31m            "stdin_add_newline": true,[0m
+[0;31m            "strip_empty_ends": true,[0m
+[0;31m            "warn": true[0m
+[0;31m        }[0m
+[0;31m    },[0m
+[0;31m    "msg": "non-zero return code",[0m
+[0;31m    "rc": 1,[0m
+[0;31m    "start": "2021-07-16 08:31:46.259782",[0m
+[0;31m    "stderr": "Error: uninstall: Release not loaded: kiali-operator: release: not found\nhelm.go:88: [debug] release: not found\nhelm.sh/helm/v3/pkg/storage/driver.init\n\thelm.sh/helm/v3/pkg/storage/driver/driver.go:29\nruntime.doInit\n\truntime/proc.go:6309\nruntime.doInit\n\truntime/proc.go:6286\nruntime.doInit\n\truntime/proc.go:6286\nruntime.doInit\n\truntime/proc.go:6286\nruntime.main\n\truntime/proc.go:208\nruntime.goexit\n\truntime/asm_amd64.s:1371\nuninstall: Release not loaded: kiali-operator\nhelm.sh/helm/v3/pkg/action.(*Uninstall).Run\n\thelm.sh/helm/v3/pkg/action/uninstall.go:72\nmain.newUninstallCmd.func2\n\thelm.sh/helm/v3/cmd/helm/uninstall.go:56\ngithub.com/spf13/cobra.(*Command).execute\n\tgithub.com/spf13/cobra@v1.1.3/command.go:852\ngithub.com/spf13/cobra.(*Command).ExecuteC\n\tgithub.com/spf13/cobra@v1.1.3/command.go:960\ngithub.com/spf13/cobra.(*Command).Execute\n\tgithub.com/spf13/cobra@v1.1.3/command.go:897\nmain.main\n\thelm.sh/helm/v3/cmd/helm/helm.go:87\nruntime.main\n\truntime/proc.go:225\nruntime.goexit\n\truntime/asm_amd64.s:1371",[0m
+[0;31m    "stderr_lines": [[0m
+[0;31m        "Error: uninstall: Release not loaded: kiali-operator: release: not found",[0m
+[0;31m        "helm.go:88: [debug] release: not found",[0m
+[0;31m        "helm.sh/helm/v3/pkg/storage/driver.init",[0m
+[0;31m        "\thelm.sh/helm/v3/pkg/storage/driver/driver.go:29",[0m
+[0;31m        "runtime.doInit",[0m
+[0;31m        "\truntime/proc.go:6309",[0m
+[0;31m        "runtime.doInit",[0m
+[0;31m        "\truntime/proc.go:6286",[0m
+[0;31m        "runtime.doInit",[0m
+[0;31m        "\truntime/proc.go:6286",[0m
+[0;31m        "runtime.doInit",[0m
+[0;31m        "\truntime/proc.go:6286",[0m
+[0;31m        "runtime.main",[0m
+[0;31m        "\truntime/proc.go:208",[0m
+[0;31m        "runtime.goexit",[0m
+[0;31m        "\truntime/asm_amd64.s:1371",[0m
+[0;31m        "uninstall: Release not loaded: kiali-operator",[0m
+[0;31m        "helm.sh/helm/v3/pkg/action.(*Uninstall).Run",[0m
+[0;31m        "\thelm.sh/helm/v3/pkg/action/uninstall.go:72",[0m
+[0;31m        "main.newUninstallCmd.func2",[0m
+[0;31m        "\thelm.sh/helm/v3/cmd/helm/uninstall.go:56",[0m
+[0;31m        "github.com/spf13/cobra.(*Command).execute",[0m
+[0;31m        "\tgithub.com/spf13/cobra@v1.1.3/command.go:852",[0m
+[0;31m        "github.com/spf13/cobra.(*Command).ExecuteC",[0m
+[0;31m        "\tgithub.com/spf13/cobra@v1.1.3/command.go:960",[0m
+[0;31m        "github.com/spf13/cobra.(*Command).Execute",[0m
+[0;31m        "\tgithub.com/spf13/cobra@v1.1.3/command.go:897",[0m
+[0;31m        "main.main",[0m
+[0;31m        "\thelm.sh/helm/v3/cmd/helm/helm.go:87",[0m
+[0;31m        "runtime.main",[0m
+[0;31m        "\truntime/proc.go:225",[0m
+[0;31m        "runtime.goexit",[0m
+[0;31m        "\truntime/asm_amd64.s:1371"[0m
+[0;31m    ],[0m
+[0;31m    "stdout": "",[0m
+[0;31m    "stdout_lines": [][0m
+[0;31m}[0m
+    
+    TASK [Remove CRDs] *************************************************************
+    [1;30mtask path: /tmp/operator/molecule/default/destroy.yml:67[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626424306.5601556-448-58398871013058 `" && echo ansible-tmp-1626424306.5601556-448-58398871013058="` echo /root/.ansible/tmp/ansible-tmp-1626424306.5601556-448-58398871013058 `" ) && sleep 0'[0m
+    [0;34mUsing module file /root/.ansible/collections/ansible_collections/kubernetes/core/plugins/modules/k8s.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-304t42m20qw/tmppu33nj31 TO /root/.ansible/tmp/ansible-tmp-1626424306.5601556-448-58398871013058/AnsiballZ_k8s.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626424306.5601556-448-58398871013058/ /root/.ansible/tmp/ansible-tmp-1626424306.5601556-448-58398871013058/AnsiballZ_k8s.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626424306.5601556-448-58398871013058/AnsiballZ_k8s.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626424306.5601556-448-58398871013058/ > /dev/null 2>&1 && sleep 0'[0m
+[0;31mfatal: [localhost]: FAILED! => {[0m
+[0;31m    "changed": true,[0m
+[0;31m    "duration": 121,[0m
+[0;31m    "invocation": {[0m
+[0;31m        "module_args": {[0m
+[0;31m            "api_key": null,[0m
+[0;31m            "api_version": "v1",[0m
+[0;31m            "append_hash": false,[0m
+[0;31m            "apply": false,[0m
+[0;31m            "ca_cert": null,[0m
+[0;31m            "client_cert": null,[0m
+[0;31m            "client_key": null,[0m
+[0;31m            "context": null,[0m
+[0;31m            "continue_on_error": false,[0m
+[0;31m            "delete_options": null,[0m
+[0;31m            "force": false,[0m
+[0;31m            "host": null,[0m
+[0;31m            "kind": null,[0m
+[0;31m            "kubeconfig": null,[0m
+[0;31m            "merge_type": null,[0m
+[0;31m            "name": null,[0m
+[0;31m            "namespace": null,[0m
+[0;31m            "password": null,[0m
+[0;31m            "persist_config": null,[0m
+[0;31m            "proxy": null,[0m
+    [0;36m...ignoring[0m
+[0;31m            "proxy_headers": null,[0m
+[0;31m            "resource_definition": null,[0m
+[0;31m            "src": "/tmp/helm-charts-repo/kiali-operator/crds/crds.yaml",[0m
+[0;31m            "state": "absent",[0m
+[0;31m            "template": null,[0m
+[0;31m            "username": null,[0m
+[0;31m            "validate": null,[0m
+[0;31m            "validate_certs": null,[0m
+[0;31m            "wait": true,[0m
+[0;31m            "wait_condition": null,[0m
+[0;31m            "wait_sleep": 5,[0m
+[0;31m            "wait_timeout": 120[0m
+[0;31m        }[0m
+[0;31m    },[0m
+[0;31m    "method": "delete",[0m
+[0;31m    "msg": "CustomResourceDefinition kialis.kiali.io: Resource deletion timed out",[0m
+[0;31m    "result": {[0m
+[0;31m        "apiVersion": "apiextensions.k8s.io/v1",[0m
+[0;31m        "kind": "CustomResourceDefinition",[0m
+[0;31m        "metadata": {[0m
+[0;31m            "creationTimestamp": "2021-07-16T06:44:53Z",[0m
+[0;31m            "deletionGracePeriodSeconds": 0,[0m
+[0;31m            "deletionTimestamp": "2021-07-16T06:53:07Z",[0m
+[0;31m            "finalizers": [[0m
+[0;31m                "customresourcecleanup.apiextensions.k8s.io"[0m
+[0;31m            ],[0m
+[0;31m            "generation": 1,[0m
+[0;31m            "managedFields": [[0m
+[0;31m                {[0m
+[0;31m                    "apiVersion": "apiextensions.k8s.io/v1",[0m
+[0;31m                    "fieldsType": "FieldsV1",[0m
+[0;31m                    "fieldsV1": {[0m
+[0;31m                        "f:spec": {[0m
+[0;31m                            "f:conversion": {[0m
+[0;31m                                ".": {},[0m
+[0;31m                                "f:strategy": {}[0m
+[0;31m                            },[0m
+[0;31m                            "f:group": {},[0m
+[0;31m                            "f:names": {[0m
+[0;31m                                "f:kind": {},[0m
+[0;31m                                "f:listKind": {},[0m
+[0;31m                                "f:plural": {},[0m
+[0;31m                                "f:singular": {}[0m
+[0;31m                            },[0m
+[0;31m                            "f:scope": {},[0m
+[0;31m                            "f:versions": {}[0m
+[0;31m                        },[0m
+[0;31m                        "f:status": {[0m
+[0;31m                            "f:storedVersions": {}[0m
+[0;31m                        }[0m
+[0;31m                    },[0m
+[0;31m                    "manager": "helm",[0m
+[0;31m                    "operation": "Update",[0m
+[0;31m                    "time": "2021-07-16T06:44:53Z"[0m
+[0;31m                },[0m
+[0;31m                {[0m
+[0;31m                    "apiVersion": "apiextensions.k8s.io/v1",[0m
+[0;31m                    "fieldsType": "FieldsV1",[0m
+[0;31m                    "fieldsV1": {[0m
+[0;31m                        "f:status": {[0m
+[0;31m                            "f:acceptedNames": {[0m
+[0;31m                                "f:kind": {},[0m
+[0;31m                                "f:listKind": {},[0m
+[0;31m                                "f:plural": {},[0m
+[0;31m                                "f:singular": {}[0m
+[0;31m                            },[0m
+[0;31m                            "f:conditions": {}[0m
+[0;31m                        }[0m
+[0;31m                    },[0m
+[0;31m                    "manager": "kube-apiserver",[0m
+[0;31m                    "operation": "Update",[0m
+[0;31m                    "time": "2021-07-16T06:44:53Z"[0m
+[0;31m                }[0m
+[0;31m            ],[0m
+[0;31m            "name": "kialis.kiali.io",[0m
+[0;31m            "resourceVersion": "9493967",[0m
+[0;31m            "selfLink": "/apis/apiextensions.k8s.io/v1/customresourcedefinitions/kialis.kiali.io",[0m
+[0;31m            "uid": "3afd35d6-21dd-4069-b136-97f580cbf2c7"[0m
+[0;31m        },[0m
+[0;31m        "spec": {[0m
+[0;31m            "conversion": {[0m
+[0;31m                "strategy": "None"[0m
+[0;31m            },[0m
+[0;31m            "group": "kiali.io",[0m
+[0;31m            "names": {[0m
+[0;31m                "kind": "Kiali",[0m
+[0;31m                "listKind": "KialiList",[0m
+[0;31m                "plural": "kialis",[0m
+[0;31m                "singular": "kiali"[0m
+[0;31m            },[0m
+[0;31m            "scope": "Namespaced",[0m
+[0;31m            "versions": [[0m
+[0;31m                {[0m
+[0;31m                    "name": "v1alpha1",[0m
+[0;31m                    "schema": {[0m
+[0;31m                        "openAPIV3Schema": {[0m
+[0;31m                            "type": "object",[0m
+[0;31m                            "x-kubernetes-preserve-unknown-fields": true[0m
+[0;31m                        }[0m
+[0;31m                    },[0m
+[0;31m                    "served": true,[0m
+[0;31m                    "storage": true,[0m
+[0;31m                    "subresources": {[0m
+[0;31m                        "status": {}[0m
+[0;31m                    }[0m
+[0;31m                }[0m
+[0;31m            ][0m
+[0;31m        },[0m
+[0;31m        "status": {[0m
+[0;31m            "acceptedNames": {[0m
+[0;31m                "kind": "Kiali",[0m
+[0;31m                "listKind": "KialiList",[0m
+[0;31m                "plural": "kialis",[0m
+[0;31m                "singular": "kiali"[0m
+[0;31m            },[0m
+[0;31m            "conditions": [[0m
+[0;31m                {[0m
+[0;31m                    "lastTransitionTime": "2021-07-16T06:44:53Z",[0m
+[0;31m                    "message": "no conflicts found",[0m
+[0;31m                    "reason": "NoConflicts",[0m
+[0;31m                    "status": "True",[0m
+[0;31m                    "type": "NamesAccepted"[0m
+[0;31m                },[0m
+[0;31m                {[0m
+[0;31m                    "lastTransitionTime": "2021-07-16T06:44:53Z",[0m
+[0;31m                    "message": "the initial names have been accepted",[0m
+[0;31m                    "reason": "InitialNamesAccepted",[0m
+[0;31m                    "status": "True",[0m
+[0;31m                    "type": "Established"[0m
+[0;31m                },[0m
+[0;31m                {[0m
+[0;31m                    "lastTransitionTime": "2021-07-16T06:53:07Z",[0m
+[0;31m                    "message": "could not confirm zero CustomResources remaining: timed out waiting for the condition",[0m
+[0;31m                    "reason": "InstanceDeletionCheck",[0m
+[0;31m                    "status": "True",[0m
+[0;31m                    "type": "Terminating"[0m
+[0;31m                }[0m
+[0;31m            ],[0m
+[0;31m            "storedVersions": [[0m
+[0;31m                "v1alpha1"[0m
+[0;31m            ][0m
+[0;31m        }[0m
+[0;31m    }[0m
+[0;31m}[0m
+    
+    TASK [Removing Operator namespace] *********************************************
+    [1;30mtask path: /tmp/operator/molecule/default/destroy.yml:78[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34mredirecting (type: action) kubernetes.core.k8s to kubernetes.core.k8s_info[0m
+    [0;34m<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: root[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'echo ~root && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1626424430.765321-465-8241127493581 `" && echo ansible-tmp-1626424430.765321-465-8241127493581="` echo /root/.ansible/tmp/ansible-tmp-1626424430.765321-465-8241127493581 `" ) && sleep 0'[0m
+    [0;34mUsing module file /root/.ansible/collections/ansible_collections/kubernetes/core/plugins/modules/k8s.py[0m
+    [0;34m<127.0.0.1> PUT /root/.ansible/tmp/ansible-local-304t42m20qw/tmpjbvq1800 TO /root/.ansible/tmp/ansible-tmp-1626424430.765321-465-8241127493581/AnsiballZ_k8s.py[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1626424430.765321-465-8241127493581/ /root/.ansible/tmp/ansible-tmp-1626424430.765321-465-8241127493581/AnsiballZ_k8s.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1626424430.765321-465-8241127493581/AnsiballZ_k8s.py && sleep 0'[0m
+    [0;34m<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1626424430.765321-465-8241127493581/ > /dev/null 2>&1 && sleep 0'[0m
+[0;31mfatal: [localhost]: FAILED! => {[0m
+[0;31m    "changed": true,[0m
+[0;31m    "duration": 122,[0m
+[0;31m    "invocation": {[0m
+[0;31m        "module_args": {[0m
+[0;31m            "api_key": null,[0m
+[0;31m            "api_version": "v1",[0m
+[0;31m            "append_hash": false,[0m
+[0;31m            "apply": false,[0m
+[0;31m            "ca_cert": null,[0m
+[0;31m            "client_cert": null,[0m
+[0;31m            "client_key": null,[0m
+[0;31m            "context": null,[0m
+[0;31m            "continue_on_error": false,[0m
+[0;31m            "delete_options": null,[0m
+[0;31m            "force": false,[0m
+[0;31m            "host": null,[0m
+[0;31m            "kind": "Namespace",[0m
+[0;31m            "kubeconfig": null,[0m
+[0;31m            "merge_type": null,[0m
+[0;31m            "name": "kiali-operator",[0m
+[0;31m            "namespace": null,[0m
+[0;31m            "password": null,[0m
+[0;31m            "persist_config": null,[0m
+    
+    PLAY RECAP *********************************************************************
+    [0;31mlocalhost[0m                  : [0;32mok=8   [0m [0;33mchanged=3   [0m unreachable=0    [0;31mfailed=1   [0m [0;36mskipped=1   [0m rescued=0    [1;35mignored=3   [0m
+    
+[0;31m            "proxy": null,[0m
+[0;31m            "proxy_headers": null,[0m
+[0;31m            "resource_definition": null,[0m
+[0;31m            "src": null,[0m
+[0;31m            "state": "absent",[0m
+[0;31m            "template": null,[0m
+[0;31m            "username": null,[0m
+[0;31m            "validate": null,[0m
+[0;31m            "validate_certs": null,[0m
+[0;31m            "wait": true,[0m
+[0;31m            "wait_condition": null,[0m
+[0;31m            "wait_sleep": 5,[0m
+[0;31m            "wait_timeout": 120[0m
+[0;31m        }[0m
+[0;31m    },[0m
+[0;31m    "method": "delete",[0m
+[0;31m    "msg": "Namespace kiali-operator: Resource deletion timed out",[0m
+[0;31m    "result": {[0m
+[0;31m        "apiVersion": "v1",[0m
+[0;31m        "kind": "Namespace",[0m
+[0;31m        "metadata": {[0m
+[0;31m            "annotations": {[0m
+[0;31m                "openshift.io/sa.scc.mcs": "s0:c26,c25",[0m
+[0;31m                "openshift.io/sa.scc.supplemental-groups": "1000700000/10000",[0m
+[0;31m                "openshift.io/sa.scc.uid-range": "1000700000/10000"[0m
+[0;31m            },[0m
+[0;31m            "creationTimestamp": "2021-07-16T06:44:49Z",[0m
+[0;31m            "deletionTimestamp": "2021-07-16T06:55:12Z",[0m
+[0;31m            "managedFields": [[0m
+[0;31m                {[0m
+[0;31m                    "apiVersion": "v1",[0m
+[0;31m                    "fieldsType": "FieldsV1",[0m
+[0;31m                    "fieldsV1": {[0m
+[0;31m                        "f:status": {[0m
+[0;31m                            "f:phase": {}[0m
+[0;31m                        }[0m
+[0;31m                    },[0m
+[0;31m                    "manager": "OpenAPI-Generator",[0m
+[0;31m                    "operation": "Update",[0m
+[0;31m                    "time": "2021-07-16T06:44:49Z"[0m
+[0;31m                },[0m
+[0;31m                {[0m
+[0;31m                    "apiVersion": "v1",[0m
+[0;31m                    "fieldsType": "FieldsV1",[0m
+[0;31m                    "fieldsV1": {[0m
+[0;31m                        "f:metadata": {[0m
+[0;31m                            "f:annotations": {[0m
+[0;31m                                ".": {},[0m
+[0;31m                                "f:openshift.io/sa.scc.mcs": {},[0m
+[0;31m                                "f:openshift.io/sa.scc.supplemental-groups": {},[0m
+[0;31m                                "f:openshift.io/sa.scc.uid-range": {}[0m
+[0;31m                            }[0m
+[0;31m                        }[0m
+[0;31m                    },[0m
+[0;31m                    "manager": "cluster-policy-controller",[0m
+[0;31m                    "operation": "Update",[0m
+[0;31m                    "time": "2021-07-16T06:44:49Z"[0m
+[0;31m                },[0m
+[0;31m                {[0m
+[0;31m                    "apiVersion": "v1",[0m
+[0;31m                    "fieldsType": "FieldsV1",[0m
+[0;31m                    "fieldsV1": {[0m
+[0;31m                        "f:status": {[0m
+[0;31m                            "f:conditions": {[0m
+[0;31m                                ".": {},[0m
+[0;31m                                "k:{\"type\":\"NamespaceContentRemaining\"}": {[0m
+[0;31m                                    ".": {},[0m
+[0;31m                                    "f:lastTransitionTime": {},[0m
+[0;31m                                    "f:message": {},[0m
+[0;31m                                    "f:reason": {},[0m
+[0;31m                                    "f:status": {},[0m
+[0;31m                                    "f:type": {}[0m
+[0;31m                                },[0m
+[0;31m                                "k:{\"type\":\"NamespaceDeletionContentFailure\"}": {[0m
+[0;31m                                    ".": {},[0m
+[0;31m                                    "f:lastTransitionTime": {},[0m
+[0;31m                                    "f:message": {},[0m
+[0;31m                                    "f:reason": {},[0m
+[0;31m                                    "f:status": {},[0m
+[0;31m                                    "f:type": {}[0m
+[0;31m                                },[0m
+[0;31m                                "k:{\"type\":\"NamespaceDeletionDiscoveryFailure\"}": {[0m
+[0;31m                                    ".": {},[0m
+[0;31m                                    "f:lastTransitionTime": {},[0m
+[0;31m                                    "f:message": {},[0m
+[0;31m                                    "f:reason": {},[0m
+[0;31m                                    "f:status": {},[0m
+[0;31m                                    "f:type": {}[0m
+[0;31m                                },[0m
+[0;31m                                "k:{\"type\":\"NamespaceDeletionGroupVersionParsingFailure\"}": {[0m
+[0;31m                                    ".": {},[0m
+[0;31m                                    "f:lastTransitionTime": {},[0m
+[0;31m                                    "f:message": {},[0m
+[0;31m                                    "f:reason": {},[0m
+[0;31m                                    "f:status": {},[0m
+[0;31m                                    "f:type": {}[0m
+[0;31m                                },[0m
+[0;31m                                "k:{\"type\":\"NamespaceFinalizersRemaining\"}": {[0m
+[0;31m                                    ".": {},[0m
+[0;31m                                    "f:lastTransitionTime": {},[0m
+[0;31m                                    "f:message": {},[0m
+[0;31m                                    "f:reason": {},[0m
+[0;31m                                    "f:status": {},[0m
+[0;31m                                    "f:type": {}[0m
+[0;31m                                }[0m
+[0;31m                            }[0m
+[0;31m                        }[0m
+[0;31m                    },[0m
+[0;31m                    "manager": "kube-controller-manager",[0m
+[0;31m                    "operation": "Update",[0m
+[0;31m                    "time": "2021-07-16T06:55:22Z"[0m
+[0;31m                }[0m
+[0;31m            ],[0m
+[0;31m            "name": "kiali-operator",[0m
+[0;31m            "resourceVersion": "9467366",[0m
+[0;31m            "selfLink": "/api/v1/namespaces/kiali-operator",[0m
+[0;31m            "uid": "e70c91fb-d9d6-4f61-b670-15f0c97d2b0f"[0m
+[0;31m        },[0m
+[0;31m        "spec": {[0m
+[0;31m            "finalizers": [[0m
+[0;31m                "kubernetes"[0m
+[0;31m            ][0m
+[0;31m        },[0m
+[0;31m        "status": {[0m
+[0;31m            "conditions": [[0m
+[0;31m                {[0m
+[0;31m                    "lastTransitionTime": "2021-07-16T06:55:22Z",[0m
+[0;31m                    "message": "All resources successfully discovered",[0m
+[0;31m                    "reason": "ResourcesDiscovered",[0m
+[0;31m                    "status": "False",[0m
+[0;31m                    "type": "NamespaceDeletionDiscoveryFailure"[0m
+[0;31m                },[0m
+[0;31m                {[0m
+[0;31m                    "lastTransitionTime": "2021-07-16T06:55:22Z",[0m
+[0;31m                    "message": "All legacy kube types successfully parsed",[0m
+[0;31m                    "reason": "ParsedGroupVersions",[0m
+[0;31m                    "status": "False",[0m
+[0;31m                    "type": "NamespaceDeletionGroupVersionParsingFailure"[0m
+[0;31m                },[0m
+[0;31m                {[0m
+[0;31m                    "lastTransitionTime": "2021-07-16T06:55:22Z",[0m
+[0;31m                    "message": "All content successfully deleted, may be waiting on finalization",[0m
+[0;31m                    "reason": "ContentDeleted",[0m
+[0;31m                    "status": "False",[0m
+[0;31m                    "type": "NamespaceDeletionContentFailure"[0m
+[0;31m                },[0m
+[0;31m                {[0m
+[0;31m                    "lastTransitionTime": "2021-07-16T06:55:22Z",[0m
+[0;31m                    "message": "Some resources are remaining: kialis.kiali.io has 1 resource instances",[0m
+[0;31m                    "reason": "SomeResourcesRemain",[0m
+[0;31m                    "status": "True",[0m
+[0;31m                    "type": "NamespaceContentRemaining"[0m
+[0;31m                },[0m
+[0;31m                {[0m
+[0;31m                    "lastTransitionTime": "2021-07-16T06:55:22Z",[0m
+[0;31m                    "message": "Some content in the namespace has finalizers remaining: kiali.io/finalizer in 1 resource instances",[0m
+[0;31m                    "reason": "SomeFinalizersRemain",[0m
+[0;31m                    "status": "True",[0m
+[0;31m                    "type": "NamespaceFinalizersRemaining"[0m
+[0;31m                }[0m
+[0;31m            ],[0m
+[0;31m            "phase": "Terminating"[0m
+[0;31m        }[0m
+[0;31m    }[0m
+[0;31m}[0m
+ERROR: 
+Molecule test failed: openshift-auth-test
+make: *** [make/Makefile.molecule.mk:136: molecule-test] Error 1
