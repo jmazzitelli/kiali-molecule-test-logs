@@ -1,0 +1,7 @@
+<testsuites  id="0" name="kiali molecule tests" tests="1" failures="1" time="2">
+  <testsuite id="0" name="kiali molecule tests" tests="1" failures="1" time="2">
+    <testcase id="default" name="default" classname="default" time="2">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT-KIND/kiali-molecule-test-logs/molecule-tests-2023-08-11_12-48-01/default.log"/>
+    </testcase>
+  </testsuite>
+</testsuites>

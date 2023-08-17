@@ -1,0 +1,5 @@
+<testsuites  id="0" name="kiali molecule tests" tests="1" failures="0" time="123">
+  <testsuite id="0" name="kiali molecule tests" tests="1" failures="0" time="123">
+    <testcase id="default" name="default" classname="default" time="123"></testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,19 @@
+<testsuites  id="0" name="kiali molecule tests" tests="15" failures="0" time="3429">
+  <testsuite id="0" name="kiali molecule tests" tests="15" failures="0" time="3429">
+    <testcase id="accessible-namespaces-test" name="accessible-namespaces-test" classname="accessible-namespaces-test" time="597"></testcase>
+    <testcase id="affinity-tolerations-resources-test" name="affinity-tolerations-resources-test" classname="affinity-tolerations-resources-test" time="216"></testcase>
+    <testcase id="cluster-wide-access-test" name="cluster-wide-access-test" classname="cluster-wide-access-test" time="522"></testcase>
+    <testcase id="config-values-test" name="config-values-test" classname="config-values-test" time="168"></testcase>
+    <testcase id="default-namespace-test" name="default-namespace-test" classname="default-namespace-test" time="122"></testcase>
+    <testcase id="grafana-test" name="grafana-test" classname="grafana-test" time="226"></testcase>
+    <testcase id="instance-name-test" name="instance-name-test" classname="instance-name-test" time="150"></testcase>
+    <testcase id="jaeger-test" name="jaeger-test" classname="jaeger-test" time="170"></testcase>
+    <testcase id="metrics-test" name="metrics-test" classname="metrics-test" time="233"></testcase>
+    <testcase id="null-cr-values-test" name="null-cr-values-test" classname="null-cr-values-test" time="108"></testcase>
+    <testcase id="only-view-only-mode-test" name="only-view-only-mode-test" classname="only-view-only-mode-test" time="161"></testcase>
+    <testcase id="read-certs-secrets-test" name="read-certs-secrets-test" classname="read-certs-secrets-test" time="110"></testcase>
+    <testcase id="roles-test" name="roles-test" classname="roles-test" time="345"></testcase>
+    <testcase id="rolling-restart-test" name="rolling-restart-test" classname="rolling-restart-test" time="168"></testcase>
+    <testcase id="token-test" name="token-test" classname="token-test" time="133"></testcase>
+  </testsuite>
+</testsuites>

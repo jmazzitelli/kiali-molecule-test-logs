@@ -1,0 +1,2202 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT-KIND/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT-KIND/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT-KIND/helm-charts'
+Will use this helm executable: /tmp/KIALI-GIT-KIND/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-operator-1.73.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT-KIND/helm-charts'
+Will auto-detect hosts to add based on the CLUSTER_REPO: 
+Auto-detected add host args: 
+Will not rebuild kiali-molecule image.
+podman volume exists molecule-tests-volume && echo "Podman volume already exists; deleting it" && podman volume rm molecule-tests-volume || true
+podman volume create molecule-tests-volume
+molecule-tests-volume
+podman create -v molecule-tests-volume:/data --name molecule-volume-helper docker.io/busybox true
+9d920da1c3ef9de29e88298b01e7f446dbd3f6dee35f1eeeee853bbf64f5831a
+podman cp "/tmp/KIALI-GIT-KIND/helm-charts" molecule-volume-helper:/data/helm-charts-repo
+podman cp "/tmp/KIALI-GIT-KIND/kiali/operator/" molecule-volume-helper:/data/operator
+podman cp "/home/jmazzite/.kube/config" molecule-volume-helper:/data/kubeconfig
+podman rm molecule-volume-helper
+molecule-volume-helper
+Error: no such object: "ci-control-plane"
+for msn in config-values-test; do podman run --rm  --env KUBECONFIG="/tmp/molecule/kubeconfig" --env K8S_AUTH_KUBECONFIG="/tmp/molecule/kubeconfig" --env MOLECULE_CLUSTER_TYPE="kind" --env MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo -v molecule-tests-volume:/tmp/molecule   --env MOLECULE_KIND_IP= -w /tmp/molecule/operator --network="host"  --add-host="api.crc.testing:192.168.130.11" --add-host="kiali-istio-system.apps-crc.testing:192.168.130.11" --add-host="prometheus-istio-system.apps-crc.testing:192.168.130.11" --env DORP=podman --env OPERATOR_IMAGE_PULL_SECRET_NAME= --env MOLECULE_KIALI_CR_SPEC_VERSION=default  --env MOLECULE_OPERATOR_PROFILER_ENABLED=true --env MOLECULE_OPERATOR_INSTALLER=helm --env MOLECULE_DUMP_LOGS_ON_ERROR=true  --env MOLECULE_WAIT_RETRIES=120 localhost/kiali-molecule:latest molecule --debug test  --scenario-name ${msn}; if [ "$?" != "0" ]; then echo "Molecule test failed: ${msn}"; podman volume rm molecule-tests-volume; exit 1; fi; done
+[2;37mDEBUG   [0m Validating schema [35m/tmp/molecule/operator/molecule/config-values-test/[0m[95mmolecule.yml.[0m
+[34mINFO    [0m config-values-test scenario test matrix: prepare, converge, destroy
+[34mINFO    [0m Performing prerun[33m...[0m
+[34mINFO    [0m Running ansible-galaxy collection install -vr requirements.yml -p [35m/home/runner/.cache/ansible-compat/06e55b/[0m[95mcollections[0m
+[34mINFO    [0m Set [33mANSIBLE_LIBRARY[0m=[35m/home/runner/.cache/ansible-compat/06e55b/[0m[95mmodules[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m
+[34mINFO    [0m Set [33mANSIBLE_COLLECTIONS_PATH[0m=[35m/home/runner/.cache/ansible-compat/06e55b/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m
+[34mINFO    [0m Set [33mANSIBLE_ROLES_PATH[0m=[35m/home/runner/.cache/ansible-compat/06e55b/[0m[95mroles[0m:roles:[35m/home/runner/.ansible/[0m[95mroles[0m:[35m/usr/share/ansible/[0m[95mroles[0m:[35m/etc/ansible/[0m[95mroles[0m
+[34mINFO    [0m [2;36mRunning [0m[2;32mconfig-values-test[0m[2;36m > [0m[2;32mprepare[0m
+[34mINFO    [0m Sanity checks: [32m'podman'[0m
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m
+ANSIBLE_CONFIG: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mansible.cfg[0m
+ANSIBLE_FILTER_PLUGINS: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m
+ANSIBLE_FORCE_COLOR: [32m'1'[0m
+ANSIBLE_LIBRARY: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m
+ANSIBLE_ROLES_PATH: [32m'/home/runner/.cache/molecule/operator/config-values-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles:'[0m
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: kind
+MOLECULE_DEBUG: [32m'True'[0m
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: [32m'true'[0m
+MOLECULE_ENV_FILE: [35m/tmp/molecule/operator/[0m[95m.env.yml[0m
+MOLECULE_EPHEMERAL_DIRECTORY: [35m/home/runner/.cache/molecule/operator/[0m[95mconfig-values-test[0m
+MOLECULE_FILE: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mmolecule.yml[0m
+MOLECULE_HELM_CHARTS_REPO: [35m/tmp/molecule/[0m[95mhelm-charts-repo[0m
+MOLECULE_INSTANCE_CONFIG: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95minstance_config.yml[0m
+MOLECULE_INVENTORY_FILE: [35m/home/runner/.cache/molecule/operator/config-values-test/inventory/[0m[95mansible_inventory.yml[0m
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_KIND_IP: [32m''[0m
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: [32m'true'[0m
+MOLECULE_PROJECT_DIRECTORY: [35m/tmp/molecule/[0m[95moperator[0m
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: [35m/tmp/molecule/operator/molecule/[0m[95mconfig-values-test[0m
+MOLECULE_SCENARIO_NAME: config-values-test
+MOLECULE_STATE_FILE: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mstate.yml[0m
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: [35m/tmp/molecule/operator/molecule/config-values-test/[0m[95mtests[0m
+MOLECULE_WAIT_RETRIES: [32m'120'[0m
+
+DEBUG: SHELL REPLAY:
+[33mANSIBLE_COLLECTIONS_PATH[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m [33mANSIBLE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mansible.cfg[0m [33mANSIBLE_FILTER_PLUGINS[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m [33mANSIBLE_FORCE_COLOR[0m=[1;36m1[0m [33mANSIBLE_LIBRARY[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m [33mANSIBLE_ROLES_PATH[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mroles[0m:[35m/tmp/[0m[95mmolecule[0m:[35m/home/runner/.ansible/[0m[95mroles[0m:[35m/usr/share/ansible/[0m[95mroles[0m:[35m/etc/ansible/[0m[95mroles[0m: [33mMOLECULE_CLUSTER_TYPE[0m=[35mkind[0m [33mMOLECULE_DEBUG[0m=[3;92mTrue[0m [33mMOLECULE_DEPENDENCY_NAME[0m=[35mgalaxy[0m [33mMOLECULE_DRIVER_NAME[0m=[35mpodman[0m [33mMOLECULE_DUMP_LOGS_ON_ERROR[0m=[35mtrue[0m [33mMOLECULE_ENV_FILE[0m=[35m/tmp/molecule/operator/[0m[95m.env.yml[0m [33mMOLECULE_EPHEMERAL_DIRECTORY[0m=[35m/home/runner/.cache/molecule/operator/[0m[95mconfig-values-test[0m [33mMOLECULE_FILE[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mmolecule.yml[0m [33mMOLECULE_HELM_CHARTS_REPO[0m=[35m/tmp/molecule/[0m[95mhelm-charts-repo[0m [33mMOLECULE_INSTANCE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95minstance_config.yml[0m [33mMOLECULE_INVENTORY_FILE[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/inventory/[0m[95mansible_inventory.yml[0m [33mMOLECULE_KIALI_CR_SPEC_VERSION[0m=[35mdefault[0m [33mMOLECULE_KIND_IP[0m= [33mMOLECULE_OPERATOR_INSTALLER[0m=[35mhelm[0m [33mMOLECULE_OPERATOR_PROFILER_ENABLED[0m=[35mtrue[0m [33mMOLECULE_PROJECT_DIRECTORY[0m=[35m/tmp/molecule/[0m[95moperator[0m [33mMOLECULE_PROVISIONER_NAME[0m=[35mansible[0m [33mMOLECULE_SCENARIO_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/[0m[95mconfig-values-test[0m [33mMOLECULE_SCENARIO_NAME[0m=[35mconfig[0m-values-test [33mMOLECULE_STATE_FILE[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mstate.yml[0m [33mMOLECULE_VERIFIER_NAME[0m=[35mansible[0m [33mMOLECULE_VERIFIER_TEST_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/config-values-test/[0m[95mtests[0m [33mMOLECULE_WAIT_RETRIES[0m=[1;36m120[0m
+
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[32mok: [localhost][0m
+
+TASK [Get information about the cluster] ***************************************
+[32mok: [localhost][0m
+
+TASK [Determine the cluster type] **********************************************
+[32mok: [localhost][0m
+
+TASK [Determine the Istio implementation] **************************************
+[32mok: [localhost][0m
+
+TASK [Determine if the operator installation is managed externally or not] *****
+[32mok: [localhost][0m
+
+TASK [Get the SMCP name if on Maistra] *****************************************
+[36mskipping: [localhost][0m
+
+TASK [set_fact] ****************************************************************
+[36mskipping: [localhost][0m
+
+TASK [See if we have Maistra htpasswd secret for accessing external services like Prometheus] ***
+[36mskipping: [localhost][0m
+
+TASK [set_fact] ****************************************************************
+[36mskipping: [localhost][0m
+
+TASK [Make sure the operator namespace exists] *********************************
+[33mchanged: [localhost][0m
+
+TASK [Find the latest Operator Helm Chart] *************************************
+[33mchanged: [localhost][0m
+
+TASK [set_fact] ****************************************************************
+[32mok: [localhost][0m
+
+TASK [fail] ********************************************************************
+[36mskipping: [localhost][0m
+
+TASK [Install Operator via Helm] ***********************************************
+[33mchanged: [localhost][0m
+
+TASK [Make sure the CR namespace exists] ***************************************
+[32mok: [localhost][0m
+
+TASK [Process NetworkPolicy needed to access the Kiali UI when in Maistra environment [state=present]] ***
+[36mskipping: [localhost][0m
+
+TASK [Wait for the CRD to be established] **************************************
+[32mok: [localhost][0m
+
+TASK [Prepare initial Kiali CR definition based solely on the template] ********
+[32mok: [localhost][0m
+
+TASK [Modify the Kiali CR definition with specific Maistra config for Prometheus, Tracing, Grafana and Istio] ***
+[36mskipping: [localhost][0m
+
+TASK [Create Kiali CR] *********************************************************
+[33mchanged: [localhost][0m
+
+TASK [Asserting that Kiali is Deployed] ****************************************
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (120 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (119 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (118 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (117 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (116 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (115 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (114 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (113 retries left).[0m
+[32mok: [localhost][0m
+
+PLAY RECAP *********************************************************************
+[33mlocalhost[0m                  : [32mok=14  [0m [33mchanged=4   [0m unreachable=0    failed=0    [36mskipped=7   [0m rescued=0    ignored=0
+
+[34mINFO    [0m [2;36mRunning [0m[2;32mconfig-values-test[0m[2;36m > [0m[2;32mconverge[0m
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m
+ANSIBLE_CONFIG: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mansible.cfg[0m
+ANSIBLE_FILTER_PLUGINS: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m
+ANSIBLE_FORCE_COLOR: [32m'1'[0m
+ANSIBLE_LIBRARY: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m
+ANSIBLE_ROLES_PATH: [32m'/home/runner/.cache/molecule/operator/config-values-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles:'[0m
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: kind
+MOLECULE_DEBUG: [32m'True'[0m
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: [32m'true'[0m
+MOLECULE_ENV_FILE: [35m/tmp/molecule/operator/[0m[95m.env.yml[0m
+MOLECULE_EPHEMERAL_DIRECTORY: [35m/home/runner/.cache/molecule/operator/[0m[95mconfig-values-test[0m
+MOLECULE_FILE: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mmolecule.yml[0m
+MOLECULE_HELM_CHARTS_REPO: [35m/tmp/molecule/[0m[95mhelm-charts-repo[0m
+MOLECULE_INSTANCE_CONFIG: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95minstance_config.yml[0m
+MOLECULE_INVENTORY_FILE: [35m/home/runner/.cache/molecule/operator/config-values-test/inventory/[0m[95mansible_inventory.yml[0m
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_KIND_IP: [32m''[0m
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: [32m'true'[0m
+MOLECULE_PROJECT_DIRECTORY: [35m/tmp/molecule/[0m[95moperator[0m
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: [35m/tmp/molecule/operator/molecule/[0m[95mconfig-values-test[0m
+MOLECULE_SCENARIO_NAME: config-values-test
+MOLECULE_STATE_FILE: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mstate.yml[0m
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: [35m/tmp/molecule/operator/molecule/config-values-test/[0m[95mtests[0m
+MOLECULE_WAIT_RETRIES: [32m'120'[0m
+
+DEBUG: SHELL REPLAY:
+[33mANSIBLE_COLLECTIONS_PATH[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m [33mANSIBLE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mansible.cfg[0m [33mANSIBLE_FILTER_PLUGINS[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m [33mANSIBLE_FORCE_COLOR[0m=[1;36m1[0m [33mANSIBLE_LIBRARY[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m [33mANSIBLE_ROLES_PATH[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mroles[0m:[35m/tmp/[0m[95mmolecule[0m:[35m/home/runner/.ansible/[0m[95mroles[0m:[35m/usr/share/ansible/[0m[95mroles[0m:[35m/etc/ansible/[0m[95mroles[0m: [33mMOLECULE_CLUSTER_TYPE[0m=[35mkind[0m [33mMOLECULE_DEBUG[0m=[3;92mTrue[0m [33mMOLECULE_DEPENDENCY_NAME[0m=[35mgalaxy[0m [33mMOLECULE_DRIVER_NAME[0m=[35mpodman[0m [33mMOLECULE_DUMP_LOGS_ON_ERROR[0m=[35mtrue[0m [33mMOLECULE_ENV_FILE[0m=[35m/tmp/molecule/operator/[0m[95m.env.yml[0m [33mMOLECULE_EPHEMERAL_DIRECTORY[0m=[35m/home/runner/.cache/molecule/operator/[0m[95mconfig-values-test[0m [33mMOLECULE_FILE[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mmolecule.yml[0m [33mMOLECULE_HELM_CHARTS_REPO[0m=[35m/tmp/molecule/[0m[95mhelm-charts-repo[0m [33mMOLECULE_INSTANCE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95minstance_config.yml[0m [33mMOLECULE_INVENTORY_FILE[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/inventory/[0m[95mansible_inventory.yml[0m [33mMOLECULE_KIALI_CR_SPEC_VERSION[0m=[35mdefault[0m [33mMOLECULE_KIND_IP[0m= [33mMOLECULE_OPERATOR_INSTALLER[0m=[35mhelm[0m [33mMOLECULE_OPERATOR_PROFILER_ENABLED[0m=[35mtrue[0m [33mMOLECULE_PROJECT_DIRECTORY[0m=[35m/tmp/molecule/[0m[95moperator[0m [33mMOLECULE_PROVISIONER_NAME[0m=[35mansible[0m [33mMOLECULE_SCENARIO_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/[0m[95mconfig-values-test[0m [33mMOLECULE_SCENARIO_NAME[0m=[35mconfig[0m-values-test [33mMOLECULE_STATE_FILE[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mstate.yml[0m [33mMOLECULE_VERIFIER_NAME[0m=[35mansible[0m [33mMOLECULE_VERIFIER_TEST_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/config-values-test/[0m[95mtests[0m [33mMOLECULE_WAIT_RETRIES[0m=[1;36m120[0m
+
+
+PLAY [Tests] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[32mok: [localhost][0m
+
+TASK [Get information about the cluster] ***************************************
+[32mok: [localhost][0m
+
+TASK [Determine the cluster type] **********************************************
+[32mok: [localhost][0m
+
+TASK [Determine the Istio implementation] **************************************
+[32mok: [localhost][0m
+
+TASK [Get SMCP if running in Maistra environment] ******************************
+[36mskipping: [localhost][0m
+
+TASK [There must one and only one SMCP already installed in the control plane] ***
+[36mskipping: [localhost][0m
+
+TASK [Get Kiali CR if present] *************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Operator Pod] **************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Pod] ***********************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Configmap] *****************************************************
+[32mok: [localhost][0m
+
+TASK [Format Configmap] ********************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Deployment] ****************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Service] *******************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Route] *********************************************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Ingress URL on minikube] *****************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Ingress URL on kind] *********************************
+[32mok: [localhost][0m
+
+TASK [Assert Kiali Pod is Running and there is only one] ***********************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+[32mok: [localhost][0m
+
+TASK [The initial Kiali ConfigMap] *********************************************
+[32mok: [localhost] => {[0m
+[32m    "msg": {[0m
+[32m        "additional_display_details": [[0m
+[32m            {[0m
+[32m                "annotation": "kiali.io/api-spec",[0m
+[32m                "icon_annotation": "kiali.io/api-type",[0m
+[32m                "title": "API Documentation"[0m
+[32m            }[0m
+[32m        ],[0m
+[32m        "api": {[0m
+[32m            "namespaces": {[0m
+[32m                "exclude": [[0m
+[32m                    "^istio-operator",[0m
+[32m                    "^kube-.*",[0m
+[32m                    "^openshift.*",[0m
+[32m                    "^ibm.*",[0m
+[32m                    "^kiali-operator"[0m
+[32m                ],[0m
+[32m                "include": [],[0m
+[32m                "label_selector_exclude": "",[0m
+[32m                "label_selector_include": "kiali.io/member-of=istio-system"[0m
+[32m            }[0m
+[32m        },[0m
+[32m        "auth": {[0m
+[32m            "openid": {[0m
+[32m                "additional_request_params": {},[0m
+[32m                "allowed_domains": [],[0m
+[32m                "api_proxy": "",[0m
+[32m                "api_proxy_ca_data": "",[0m
+[32m                "api_token": "id_token",[0m
+[32m                "authentication_timeout": 300,[0m
+[32m                "authorization_endpoint": "",[0m
+[32m                "client_id": "",[0m
+[32m                "disable_rbac": false,[0m
+[32m                "http_proxy": "",[0m
+[32m                "https_proxy": "",[0m
+[32m                "insecure_skip_verify_tls": false,[0m
+[32m                "issuer_uri": "",[0m
+[32m                "scopes": [[0m
+[32m                    "openid",[0m
+[32m                    "profile",[0m
+[32m                    "email"[0m
+[32m                ],[0m
+[32m                "username_claim": "sub"[0m
+[32m            },[0m
+[32m            "openshift": {[0m
+[32m                "auth_timeout": 10,[0m
+[32m                "client_id_prefix": "kiali"[0m
+[32m            },[0m
+[32m            "strategy": "token"[0m
+[32m        },[0m
+[32m        "custom_dashboards": [],[0m
+[32m        "deployment": {[0m
+[32m            "accessible_namespaces": [[0m
+[32m                "default",[0m
+[32m                "istio-system",[0m
+[32m                "local-path-storage",[0m
+[32m                "metallb-system"[0m
+[32m            ],[0m
+[32m            "affinity": {[0m
+[32m                "node": {},[0m
+[32m                "pod": {},[0m
+[32m                "pod_anti": {}[0m
+[32m            },[0m
+[32m            "cluster_wide_access": false,[0m
+[32m            "configmap_annotations": {},[0m
+[32m            "custom_secrets": [],[0m
+[32m            "host_aliases": [],[0m
+[32m            "hpa": {[0m
+[32m                "api_version": "autoscaling/v2",[0m
+[32m                "spec": {}[0m
+[32m            },[0m
+[32m            "image_digest": "",[0m
+[32m            "image_name": "quay.io/kiali/kiali",[0m
+[32m            "image_pull_policy": "Always",[0m
+[32m            "image_pull_secrets": [],[0m
+[32m            "image_version": "latest",[0m
+[32m            "ingress": {[0m
+[32m                "additional_labels": {},[0m
+[32m                "class_name": "nginx",[0m
+[32m                "enabled": true[0m
+[32m            },[0m
+[32m            "instance_name": "kiali",[0m
+[32m            "logger": {[0m
+[32m                "log_format": "text",[0m
+[32m                "log_level": "debug",[0m
+[32m                "sampler_rate": "1",[0m
+[32m                "time_field_format": "2006-01-02T15:04:05Z07:00"[0m
+[32m            },[0m
+[32m            "namespace": "istio-system",[0m
+[32m            "node_selector": {},[0m
+[32m            "pod_annotations": {},[0m
+[32m            "pod_labels": {},[0m
+[32m            "priority_class_name": "",[0m
+[32m            "replicas": 1,[0m
+[32m            "resources": {[0m
+[32m                "limits": {[0m
+[32m                    "memory": "1Gi"[0m
+[32m                },[0m
+[32m                "requests": {[0m
+[32m                    "cpu": "10m",[0m
+[32m                    "memory": "64Mi"[0m
+[32m                }[0m
+[32m            },[0m
+[32m            "secret_name": "kiali",[0m
+[32m            "security_context": {},[0m
+[32m            "service_annotations": {},[0m
+[32m            "service_type": "LoadBalancer",[0m
+[32m            "tolerations": [],[0m
+[32m            "version_label": "master",[0m
+[32m            "view_only_mode": false[0m
+[32m        },[0m
+[32m        "external_services": {[0m
+[32m            "custom_dashboards": {[0m
+[32m                "discovery_auto_threshold": 10,[0m
+[32m                "discovery_enabled": "auto",[0m
+[32m                "enabled": true,[0m
+[32m                "is_core": false,[0m
+[32m                "namespace_label": "",[0m
+[32m                "prometheus": {[0m
+[32m                    "auth": {[0m
+[32m                        "ca_file": "",[0m
+[32m                        "insecure_skip_verify": false,[0m
+[32m                        "password": "",[0m
+[32m                        "token": "",[0m
+[32m                        "type": "none",[0m
+[32m                        "use_kiali_token": false,[0m
+[32m                        "username": ""[0m
+[32m                    },[0m
+[32m                    "cache_duration": 7,[0m
+[32m                    "cache_enabled": true,[0m
+[32m                    "cache_expiration": 300,[0m
+[32m                    "custom_headers": {},[0m
+[32m                    "health_check_url": "",[0m
+[32m                    "is_core": true,[0m
+[32m                    "query_scope": {},[0m
+[32m                    "thanos_proxy": {[0m
+[32m                        "enabled": false,[0m
+[32m                        "retention_period": "7d",[0m
+[32m                        "scrape_interval": "30s"[0m
+[32m                    },[0m
+[32m                    "url": ""[0m
+[32m                }[0m
+[32m            },[0m
+[32m            "grafana": {[0m
+[32m                "auth": {[0m
+[32m                    "ca_file": "",[0m
+[32m                    "insecure_skip_verify": false,[0m
+[32m                    "password": "",[0m
+[32m                    "token": "",[0m
+[32m                    "type": "none",[0m
+[32m                    "use_kiali_token": false,[0m
+[32m                    "username": ""[0m
+[32m                },[0m
+[32m                "dashboards": [[0m
+[32m                    {[0m
+[32m                        "name": "Istio Service Dashboard",[0m
+[32m                        "variables": {[0m
+[32m                            "namespace": "var-namespace",[0m
+[32m                            "service": "var-service"[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "name": "Istio Workload Dashboard",[0m
+[32m                        "variables": {[0m
+[32m                            "namespace": "var-namespace",[0m
+[32m                            "workload": "var-workload"[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "name": "Istio Mesh Dashboard"[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "name": "Istio Control Plane Dashboard"[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "name": "Istio Performance Dashboard"[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "name": "Istio Wasm Extension Dashboard"[0m
+[32m                    }[0m
+[32m                ],[0m
+[32m                "enabled": true,[0m
+[32m                "health_check_url": "",[0m
+[32m                "in_cluster_url": "http://grafana.istio-system:3000",[0m
+[32m                "is_core": false,[0m
+[32m                "url": ""[0m
+[32m            },[0m
+[32m            "istio": {[0m
+[32m                "component_status": {[0m
+[32m                    "components": [[0m
+[32m                        {[0m
+[32m                            "app_label": "istiod",[0m
+[32m                            "is_core": true,[0m
+[32m                            "is_proxy": false,[0m
+[32m                            "namespace": ""[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "app_label": "istio-ingressgateway",[0m
+[32m                            "is_core": true,[0m
+[32m                            "is_proxy": true,[0m
+[32m                            "namespace": ""[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "app_label": "istio-egressgateway",[0m
+[32m                            "is_core": false,[0m
+[32m                            "is_proxy": true,[0m
+[32m                            "namespace": ""[0m
+[32m                        }[0m
+[32m                    ],[0m
+[32m                    "enabled": true[0m
+[32m                },[0m
+[32m                "config_map_name": "istio",[0m
+[32m                "envoy_admin_local_port": 15000,[0m
+[32m                "gateway_api_class_name": "",[0m
+[32m                "istio_api_enabled": true,[0m
+[32m                "istio_identity_domain": "svc.cluster.local",[0m
+[32m                "istio_injection_annotation": "sidecar.istio.io/inject",[0m
+[32m                "istio_sidecar_annotation": "sidecar.istio.io/status",[0m
+[32m                "istio_sidecar_injector_config_map_name": "istio-sidecar-injector",[0m
+[32m                "istiod_deployment_name": "istiod",[0m
+[32m                "istiod_pod_monitoring_port": 15014,[0m
+[32m                "root_namespace": "istio-system",[0m
+[32m                "url_service_version": "http://istiod.istio-system:15014/version"[0m
+[32m            },[0m
+[32m            "prometheus": {[0m
+[32m                "auth": {[0m
+[32m                    "ca_file": "",[0m
+[32m                    "insecure_skip_verify": false,[0m
+[32m                    "password": "",[0m
+[32m                    "token": "",[0m
+[32m                    "type": "none",[0m
+[32m                    "use_kiali_token": false,[0m
+[32m                    "username": ""[0m
+[32m                },[0m
+[32m                "cache_duration": 7,[0m
+[32m                "cache_enabled": true,[0m
+[32m                "cache_expiration": 300,[0m
+[32m                "custom_headers": {},[0m
+[32m                "health_check_url": "",[0m
+[32m                "is_core": true,[0m
+[32m                "query_scope": {},[0m
+[32m                "thanos_proxy": {[0m
+[32m                    "enabled": false,[0m
+[32m                    "retention_period": "7d",[0m
+[32m                    "scrape_interval": "30s"[0m
+[32m                },[0m
+[32m                "url": "http://prometheus.istio-system:9090"[0m
+[32m            },[0m
+[32m            "tracing": {[0m
+[32m                "auth": {[0m
+[32m                    "ca_file": "",[0m
+[32m                    "insecure_skip_verify": false,[0m
+[32m                    "password": "",[0m
+[32m                    "token": "",[0m
+[32m                    "type": "none",[0m
+[32m                    "use_kiali_token": false,[0m
+[32m                    "username": ""[0m
+[32m                },[0m
+[32m                "enabled": true,[0m
+[32m                "in_cluster_url": "http://tracing.istio-system:16685/jaeger",[0m
+[32m                "is_core": false,[0m
+[32m                "namespace_selector": true,[0m
+[32m                "query_scope": {},[0m
+[32m                "query_timeout": 5,[0m
+[32m                "url": "",[0m
+[32m                "use_grpc": true,[0m
+[32m                "whitelist_istio_system": [[0m
+[32m                    "jaeger-query",[0m
+[32m                    "istio-ingressgateway"[0m
+[32m                ][0m
+[32m            }[0m
+[32m        },[0m
+[32m        "health_config": {[0m
+[32m            "rate": [][0m
+[32m        },[0m
+[32m        "identity": {[0m
+[32m            "cert_file": "",[0m
+[32m            "private_key_file": ""[0m
+[32m        },[0m
+[32m        "installation_tag": "",[0m
+[32m        "istio_labels": {[0m
+[32m            "app_label_name": "app",[0m
+[32m            "injection_label_name": "istio-injection",[0m
+[32m            "injection_label_rev": "istio.io/rev",[0m
+[32m            "version_label_name": "version"[0m
+[32m        },[0m
+[32m        "istio_namespace": "istio-system",[0m
+[32m        "kiali_feature_flags": {[0m
+[32m            "certificates_information_indicators": {[0m
+[32m                "enabled": true,[0m
+[32m                "secrets": [[0m
+[32m                    "cacerts",[0m
+[32m                    "istio-ca-secret"[0m
+[32m                ][0m
+[32m            },[0m
+[32m            "clustering": {[0m
+[32m                "autodetect_secrets": {[0m
+[32m                    "enabled": true,[0m
+[32m                    "label": "kiali.io/multiCluster=true"[0m
+[32m                },[0m
+[32m                "clusters": [][0m
+[32m            },[0m
+[32m            "disabled_features": [],[0m
+[32m            "istio_annotation_action": true,[0m
+[32m            "istio_injection_action": true,[0m
+[32m            "istio_upgrade_action": false,[0m
+[32m            "ui_defaults": {[0m
+[32m                "graph": {[0m
+[32m                    "find_options": [[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Find: slow edges (> 1s)",[0m
+[32m                            "expression": "rt > 1000"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Find: unhealthy nodes",[0m
+[32m                            "expression": "! healthy"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Find: unknown nodes",[0m
+[32m                            "expression": "name = unknown"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Find: nodes with the 2 top rankings",[0m
+[32m                            "expression": "rank <= 2"[0m
+[32m                        }[0m
+[32m                    ],[0m
+[32m                    "hide_options": [[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Hide: healthy nodes",[0m
+[32m                            "expression": "healthy"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Hide: unknown nodes",[0m
+[32m                            "expression": "name = unknown"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Hide: nodes ranked lower than the 2 top rankings",[0m
+[32m                            "expression": "rank > 2"[0m
+[32m                        }[0m
+[32m                    ],[0m
+[32m                    "settings": {[0m
+[32m                        "font_label": 13,[0m
+[32m                        "min_font_badge": 7,[0m
+[32m                        "min_font_label": 10[0m
+[32m                    },[0m
+[32m                    "traffic": {[0m
+[32m                        "grpc": "requests",[0m
+[32m                        "http": "requests",[0m
+[32m                        "tcp": "sent"[0m
+[32m                    }[0m
+[32m                },[0m
+[32m                "list": {[0m
+[32m                    "include_health": true,[0m
+[32m                    "include_istio_resources": true,[0m
+[32m                    "include_validations": true,[0m
+[32m                    "show_include_toggles": false[0m
+[32m                },[0m
+[32m                "metrics_inbound": {[0m
+[32m                    "aggregations": [][0m
+[32m                },[0m
+[32m                "metrics_outbound": {[0m
+[32m                    "aggregations": [][0m
+[32m                },[0m
+[32m                "metrics_per_refresh": "1m",[0m
+[32m                "namespaces": [],[0m
+[32m                "refresh_interval": "60s"[0m
+[32m            },[0m
+[32m            "validations": {[0m
+[32m                "ignore": [[0m
+[32m                    "KIA1301"[0m
+[32m                ],[0m
+[32m                "skip_wildcard_gateway_hosts": false[0m
+[32m            }[0m
+[32m        },[0m
+[32m        "kubernetes_config": {[0m
+[32m            "burst": 200,[0m
+[32m            "cache_duration": 300,[0m
+[32m            "cache_token_namespace_duration": 10,[0m
+[32m            "cluster_name": "",[0m
+[32m            "excluded_workloads": [[0m
+[32m                "CronJob",[0m
+[32m                "DeploymentConfig",[0m
+[32m                "Job",[0m
+[32m                "ReplicationController"[0m
+[32m            ],[0m
+[32m            "qps": 175[0m
+[32m        },[0m
+[32m        "login_token": {[0m
+[32m            "expiration_seconds": 86400,[0m
+[32m            "signing_key": "secret:kiali-signing-key:key"[0m
+[32m        },[0m
+[32m        "server": {[0m
+[32m            "address": "",[0m
+[32m            "audit_log": true,[0m
+[32m            "cors_allow_all": false,[0m
+[32m            "gzip_enabled": true,[0m
+[32m            "observability": {[0m
+[32m                "metrics": {[0m
+[32m                    "enabled": true,[0m
+[32m                    "port": 9090[0m
+[32m                },[0m
+[32m                "tracing": {[0m
+[32m                    "collector_url": "http://jaeger-collector.istio-system:14268/api/traces",[0m
+[32m                    "enabled": false[0m
+[32m                }[0m
+[32m            },[0m
+[32m            "port": 20001,[0m
+[32m            "web_fqdn": "",[0m
+[32m            "web_history_mode": "",[0m
+[32m            "web_port": "",[0m
+[32m            "web_root": "/kiali",[0m
+[32m            "web_schema": ""[0m
+[32m        },[0m
+[32m        "version": "default"[0m
+[32m    }[0m
+[32m}[0m
+
+TASK [Get Kiali OAuthClient if on OpenShift] ***********************************
+[36mskipping: [localhost][0m
+
+TASK [Test the OAuthClient does not have customized timeouts] ******************
+[36mskipping: [localhost][0m
+
+TASK [Test the default deployment.resources is what we expect] *****************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Get Kiali Role] **********************************************************
+[32mok: [localhost][0m
+
+TASK [Make sure Kiali Role has access to pods/log] *****************************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Test the deprecated api.namespaces.label_selector was renamed api.namespaces.label_selector_include] ***
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [set_fact] ****************************************************************
+[32mok: [localhost][0m
+
+TASK [The current Kiali CR to be used as the base of the test] *****************
+[32mok: [localhost] => {[0m
+[32m    "msg": {[0m
+[32m        "apiVersion": "kiali.io/v1alpha1",[0m
+[32m        "kind": "Kiali",[0m
+[32m        "metadata": {[0m
+[32m            "creationTimestamp": "2023-08-15T08:29:35Z",[0m
+[32m            "finalizers": [[0m
+[32m                "kiali.io/finalizer"[0m
+[32m            ],[0m
+[32m            "generation": 1,[0m
+[32m            "managedFields": [[0m
+[32m                {[0m
+[32m                    "apiVersion": "kiali.io/v1alpha1",[0m
+[32m                    "fieldsType": "FieldsV1",[0m
+[32m                    "fieldsV1": {[0m
+[32m                        "f:spec": {[0m
+[32m                            ".": {},[0m
+[32m                            "f:deployment": {[0m
+[32m                                ".": {},[0m
+[32m                                "f:accessible_namespaces": {},[0m
+[32m                                "f:image_name": {},[0m
+[32m                                "f:image_pull_policy": {},[0m
+[32m                                "f:image_version": {},[0m
+[32m                                "f:ingress": {[0m
+[32m                                    ".": {},[0m
+[32m                                    "f:enabled": {}[0m
+[32m                                },[0m
+[32m                                "f:logger": {[0m
+[32m                                    ".": {},[0m
+[32m                                    "f:log_level": {}[0m
+[32m                                },[0m
+[32m                                "f:namespace": {},[0m
+[32m                                "f:service_type": {}[0m
+[32m                            },[0m
+[32m                            "f:istio_namespace": {},[0m
+[32m                            "f:version": {}[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    "manager": "OpenAPI-Generator",[0m
+[32m                    "operation": "Update",[0m
+[32m                    "time": "2023-08-15T08:29:35Z"[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "apiVersion": "kiali.io/v1alpha1",[0m
+[32m                    "fieldsType": "FieldsV1",[0m
+[32m                    "fieldsV1": {[0m
+[32m                        "f:metadata": {[0m
+[32m                            "f:finalizers": {[0m
+[32m                                ".": {},[0m
+[32m                                "v:\"kiali.io/finalizer\"": {}[0m
+[32m                            }[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    "manager": "ansible-operator",[0m
+[32m                    "operation": "Update",[0m
+[32m                    "time": "2023-08-15T08:29:35Z"[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "apiVersion": "kiali.io/v1alpha1",[0m
+[32m                    "fieldsType": "FieldsV1",[0m
+[32m                    "fieldsV1": {[0m
+[32m                        "f:status": {[0m
+[32m                            "f:deployment": {[0m
+[32m                                ".": {},[0m
+[32m                                "f:accessibleNamespaces": {},[0m
+[32m                                "f:instanceName": {},[0m
+[32m                                "f:namespace": {}[0m
+[32m                            },[0m
+[32m                            "f:environment": {[0m
+[32m                                ".": {},[0m
+[32m                                "f:isKubernetes": {},[0m
+[32m                                "f:kubernetesVersion": {},[0m
+[32m                                "f:operatorVersion": {}[0m
+[32m                            },[0m
+[32m                            "f:progress": {[0m
+[32m                                ".": {},[0m
+[32m                                "f:duration": {},[0m
+[32m                                "f:message": {}[0m
+[32m                            },[0m
+[32m                            "f:specVersion": {}[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    "manager": "OpenAPI-Generator",[0m
+[32m                    "operation": "Update",[0m
+[32m                    "subresource": "status",[0m
+[32m                    "time": "2023-08-15T08:29:52Z"[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "apiVersion": "kiali.io/v1alpha1",[0m
+[32m                    "fieldsType": "FieldsV1",[0m
+[32m                    "fieldsV1": {[0m
+[32m                        "f:status": {[0m
+[32m                            ".": {},[0m
+[32m                            "f:conditions": {}[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    "manager": "ansible-operator",[0m
+[32m                    "operation": "Update",[0m
+[32m                    "subresource": "status",[0m
+[32m                    "time": "2023-08-15T08:29:53Z"[0m
+[32m                }[0m
+[32m            ],[0m
+[32m            "name": "kiali",[0m
+[32m            "namespace": "kiali-operator",[0m
+[32m            "resourceVersion": "5800",[0m
+[32m            "uid": "25dc59b2-c58d-4c10-a50e-f33af1f3f1f5"[0m
+[32m        },[0m
+[32m        "spec": {[0m
+[32m            "deployment": {[0m
+[32m                "accessible_namespaces": [[0m
+[32m                    "^((?!(istio-operator|kube-.*|openshift.*|ibm.*|kiali-operator)).)*$"[0m
+[32m                ],[0m
+[32m                "image_name": "quay.io/kiali/kiali",[0m
+[32m                "image_pull_policy": "Always",[0m
+[32m                "image_version": "latest",[0m
+[32m                "ingress": {[0m
+[32m                    "enabled": true[0m
+[32m                },[0m
+[32m                "logger": {[0m
+[32m                    "log_level": "debug"[0m
+[32m                },[0m
+[32m                "namespace": "istio-system",[0m
+[32m                "service_type": "LoadBalancer"[0m
+[32m            },[0m
+[32m            "istio_namespace": "istio-system",[0m
+[32m            "version": "default"[0m
+[32m        },[0m
+[32m        "status": {[0m
+[32m            "conditions": [[0m
+[32m                {[0m
+[32m                    "ansibleResult": {[0m
+[32m                        "changed": 12,[0m
+[32m                        "completion": "2023-08-15T08:29:52.69527",[0m
+[32m                        "failures": 0,[0m
+[32m                        "ok": 75,[0m
+[32m                        "skipped": 56[0m
+[32m                    },[0m
+[32m                    "lastTransitionTime": "2023-08-15T08:29:35Z",[0m
+[32m                    "message": "Awaiting next reconciliation",[0m
+[32m                    "reason": "Successful",[0m
+[32m                    "status": "True",[0m
+[32m                    "type": "Running"[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "lastTransitionTime": "2023-08-15T08:29:53Z",[0m
+[32m                    "message": "Last reconciliation succeeded",[0m
+[32m                    "reason": "Successful",[0m
+[32m                    "status": "True",[0m
+[32m                    "type": "Successful"[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "lastTransitionTime": "2023-08-15T08:29:53Z",[0m
+[32m                    "message": "",[0m
+[32m                    "reason": "",[0m
+[32m                    "status": "False",[0m
+[32m                    "type": "Failure"[0m
+[32m                }[0m
+[32m            ],[0m
+[32m            "deployment": {[0m
+[32m                "accessibleNamespaces": "default,istio-system,local-path-storage,metallb-system",[0m
+[32m                "instanceName": "kiali",[0m
+[32m                "namespace": "istio-system"[0m
+[32m            },[0m
+[32m            "environment": {[0m
+[32m                "isKubernetes": true,[0m
+[32m                "kubernetesVersion": "1.27.3",[0m
+[32m                "operatorVersion": "v1.73.0-SNAPSHOT"[0m
+[32m            },[0m
+[32m            "progress": {[0m
+[32m                "duration": "0:00:15",[0m
+[32m                "message": "7. Finished all resource creation"[0m
+[32m            },[0m
+[32m            "specVersion": "default"[0m
+[32m        }[0m
+[32m    }[0m
+[32m}[0m
+
+TASK [Set new deployment.version_label to something longer than k8s maximum of 63 chars] ***
+[32mok: [localhost][0m
+
+TASK [Make sure health_config rates are defined] *******************************
+[32mok: [localhost][0m
+
+TASK [Add host_aliases] ********************************************************
+[32mok: [localhost][0m
+
+TASK [Add custom_secrets] ******************************************************
+[32mok: [localhost][0m
+
+TASK [Set deployment.resources to empty map which means we want to not define the pod resources at all] ***
+[32mok: [localhost][0m
+
+TASK [Set a signing key of 16 characters length] *******************************
+[32mok: [localhost][0m
+
+TASK [Add configmap annotation] ************************************************
+[32mok: [localhost][0m
+
+TASK [Disable logs-tab feature] ************************************************
+[32mok: [localhost][0m
+
+TASK [Change security context - turn off readOnlyRootFilesystem] ***************
+[32mok: [localhost][0m
+
+TASK [Add timeouts to the OpenShift OAuthClient] *******************************
+[32mok: [localhost][0m
+
+TASK [The new Kiali CR to be tested] *******************************************
+[32mok: [localhost] => {[0m
+[32m    "msg": {[0m
+[32m        "apiVersion": "kiali.io/v1alpha1",[0m
+[32m        "kind": "Kiali",[0m
+[32m        "metadata": {[0m
+[32m            "creationTimestamp": "2023-08-15T08:29:35Z",[0m
+[32m            "finalizers": [[0m
+[32m                "kiali.io/finalizer"[0m
+[32m            ],[0m
+[32m            "generation": 1,[0m
+[32m            "managedFields": [[0m
+[32m                {[0m
+[32m                    "apiVersion": "kiali.io/v1alpha1",[0m
+[32m                    "fieldsType": "FieldsV1",[0m
+[32m                    "fieldsV1": {[0m
+[32m                        "f:spec": {[0m
+[32m                            ".": {},[0m
+[32m                            "f:deployment": {[0m
+[32m                                ".": {},[0m
+[32m                                "f:accessible_namespaces": {},[0m
+[32m                                "f:image_name": {},[0m
+[32m                                "f:image_pull_policy": {},[0m
+[32m                                "f:image_version": {},[0m
+[32m                                "f:ingress": {[0m
+[32m                                    ".": {},[0m
+[32m                                    "f:enabled": {}[0m
+[32m                                },[0m
+[32m                                "f:logger": {[0m
+[32m                                    ".": {},[0m
+[32m                                    "f:log_level": {}[0m
+[32m                                },[0m
+[32m                                "f:namespace": {},[0m
+[32m                                "f:service_type": {}[0m
+[32m                            },[0m
+[32m                            "f:istio_namespace": {},[0m
+[32m                            "f:version": {}[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    "manager": "OpenAPI-Generator",[0m
+[32m                    "operation": "Update",[0m
+[32m                    "time": "2023-08-15T08:29:35Z"[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "apiVersion": "kiali.io/v1alpha1",[0m
+[32m                    "fieldsType": "FieldsV1",[0m
+[32m                    "fieldsV1": {[0m
+[32m                        "f:metadata": {[0m
+[32m                            "f:finalizers": {[0m
+[32m                                ".": {},[0m
+[32m                                "v:\"kiali.io/finalizer\"": {}[0m
+[32m                            }[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    "manager": "ansible-operator",[0m
+[32m                    "operation": "Update",[0m
+[32m                    "time": "2023-08-15T08:29:35Z"[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "apiVersion": "kiali.io/v1alpha1",[0m
+[32m                    "fieldsType": "FieldsV1",[0m
+[32m                    "fieldsV1": {[0m
+[32m                        "f:status": {[0m
+[32m                            "f:deployment": {[0m
+[32m                                ".": {},[0m
+[32m                                "f:accessibleNamespaces": {},[0m
+[32m                                "f:instanceName": {},[0m
+[32m                                "f:namespace": {}[0m
+[32m                            },[0m
+[32m                            "f:environment": {[0m
+[32m                                ".": {},[0m
+[32m                                "f:isKubernetes": {},[0m
+[32m                                "f:kubernetesVersion": {},[0m
+[32m                                "f:operatorVersion": {}[0m
+[32m                            },[0m
+[32m                            "f:progress": {[0m
+[32m                                ".": {},[0m
+[32m                                "f:duration": {},[0m
+[32m                                "f:message": {}[0m
+[32m                            },[0m
+[32m                            "f:specVersion": {}[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    "manager": "OpenAPI-Generator",[0m
+[32m                    "operation": "Update",[0m
+[32m                    "subresource": "status",[0m
+[32m                    "time": "2023-08-15T08:29:52Z"[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "apiVersion": "kiali.io/v1alpha1",[0m
+[32m                    "fieldsType": "FieldsV1",[0m
+[32m                    "fieldsV1": {[0m
+[32m                        "f:status": {[0m
+[32m                            ".": {},[0m
+[32m                            "f:conditions": {}[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    "manager": "ansible-operator",[0m
+[32m                    "operation": "Update",[0m
+[32m                    "subresource": "status",[0m
+[32m                    "time": "2023-08-15T08:29:53Z"[0m
+[32m                }[0m
+[32m            ],[0m
+[32m            "name": "kiali",[0m
+[32m            "namespace": "kiali-operator",[0m
+[32m            "resourceVersion": "5800",[0m
+[32m            "uid": "25dc59b2-c58d-4c10-a50e-f33af1f3f1f5"[0m
+[32m        },[0m
+[32m        "spec": {[0m
+[32m            "auth": {[0m
+[32m                "openshift": {[0m
+[32m                    "token_inactivity_timeout": 9876,[0m
+[32m                    "token_max_age": 8765[0m
+[32m                }[0m
+[32m            },[0m
+[32m            "deployment": {[0m
+[32m                "accessible_namespaces": [[0m
+[32m                    "^((?!(istio-operator|kube-.*|openshift.*|ibm.*|kiali-operator)).)*$"[0m
+[32m                ],[0m
+[32m                "configmap_annotations": {[0m
+[32m                    "aaa": "bbb",[0m
+[32m                    "camelCaseName": "camelCaseValue"[0m
+[32m                },[0m
+[32m                "custom_secrets": [[0m
+[32m                    {[0m
+[32m                        "mount": "/extra-secret-1",[0m
+[32m                        "name": "extra-secret-1",[0m
+[32m                        "optional": true[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "mount": "/extra-secret-2",[0m
+[32m                        "name": "extra-secret-2",[0m
+[32m                        "optional": true[0m
+[32m                    }[0m
+[32m                ],[0m
+[32m                "host_aliases": [[0m
+[32m                    {[0m
+[32m                        "hostnames": [[0m
+[32m                            "foo.local",[0m
+[32m                            "bar.local"[0m
+[32m                        ],[0m
+[32m                        "ip": "192.168.1.111"[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "hostnames": [[0m
+[32m                            "foo2.local",[0m
+[32m                            "bar2.local"[0m
+[32m                        ],[0m
+[32m                        "ip": "192.168.1.222"[0m
+[32m                    }[0m
+[32m                ],[0m
+[32m                "image_name": "quay.io/kiali/kiali",[0m
+[32m                "image_pull_policy": "Always",[0m
+[32m                "image_version": "latest",[0m
+[32m                "ingress": {[0m
+[32m                    "enabled": true[0m
+[32m                },[0m
+[32m                "logger": {[0m
+[32m                    "log_level": "debug"[0m
+[32m                },[0m
+[32m                "namespace": "istio-system",[0m
+[32m                "resources": {},[0m
+[32m                "security_context": {[0m
+[32m                    "allowPrivilegeEscalation": false,[0m
+[32m                    "capabilities": {[0m
+[32m                        "drop": [[0m
+[32m                            "ALL"[0m
+[32m                        ][0m
+[32m                    },[0m
+[32m                    "privileged": false,[0m
+[32m                    "readOnlyRootFilesystem": false,[0m
+[32m                    "runAsNonRoot": true[0m
+[32m                },[0m
+[32m                "service_type": "LoadBalancer",[0m
+[32m                "version_label": "aaaaaaaaaabbbbbbbbbbccccccccccddddddddddeeeeeeeeee12345678901234"[0m
+[32m            },[0m
+[32m            "health_config": {[0m
+[32m                "rates": [[0m
+[32m                    {[0m
+[32m                        "namespace": "bookinfo",[0m
+[32m                        "tolerance": [[0m
+[32m                            {[0m
+[32m                                "code": "404",[0m
+[32m                                "failure": 10,[0m
+[32m                                "protocol": "http"[0m
+[32m                            },[0m
+[32m                            {[0m
+[32m                                "code": "[45]\\d[^\\D4]",[0m
+[32m                                "protocol": "http"[0m
+[32m                            }[0m
+[32m                        ][0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "namespace": ".*",[0m
+[32m                        "tolerance": [[0m
+[32m                            {[0m
+[32m                                "code": "[4]\\d\\d",[0m
+[32m                                "degraded": 30,[0m
+[32m                                "failure": 40,[0m
+[32m                                "protocol": "http"[0m
+[32m                            },[0m
+[32m                            {[0m
+[32m                                "code": "[5]\\d\\d",[0m
+[32m                                "protocol": "http"[0m
+[32m                            }[0m
+[32m                        ][0m
+[32m                    }[0m
+[32m                ][0m
+[32m            },[0m
+[32m            "istio_namespace": "istio-system",[0m
+[32m            "kiali_feature_flags": {[0m
+[32m                "disabled_features": [[0m
+[32m                    "logs-tab"[0m
+[32m                ][0m
+[32m            },[0m
+[32m            "login_token": {[0m
+[32m                "signing_key": "qazxsw0123456789"[0m
+[32m            },[0m
+[32m            "version": "default"[0m
+[32m        },[0m
+[32m        "status": {[0m
+[32m            "conditions": [[0m
+[32m                {[0m
+[32m                    "ansibleResult": {[0m
+[32m                        "changed": 12,[0m
+[32m                        "completion": "2023-08-15T08:29:52.69527",[0m
+[32m                        "failures": 0,[0m
+[32m                        "ok": 75,[0m
+[32m                        "skipped": 56[0m
+[32m                    },[0m
+[32m                    "lastTransitionTime": "2023-08-15T08:29:35Z",[0m
+[32m                    "message": "Awaiting next reconciliation",[0m
+[32m                    "reason": "Successful",[0m
+[32m                    "status": "True",[0m
+[32m                    "type": "Running"[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "lastTransitionTime": "2023-08-15T08:29:53Z",[0m
+[32m                    "message": "Last reconciliation succeeded",[0m
+[32m                    "reason": "Successful",[0m
+[32m                    "status": "True",[0m
+[32m                    "type": "Successful"[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "lastTransitionTime": "2023-08-15T08:29:53Z",[0m
+[32m                    "message": "",[0m
+[32m                    "reason": "",[0m
+[32m                    "status": "False",[0m
+[32m                    "type": "Failure"[0m
+[32m                }[0m
+[32m            ],[0m
+[32m            "deployment": {[0m
+[32m                "accessibleNamespaces": "default,istio-system,local-path-storage,metallb-system",[0m
+[32m                "instanceName": "kiali",[0m
+[32m                "namespace": "istio-system"[0m
+[32m            },[0m
+[32m            "environment": {[0m
+[32m                "isKubernetes": true,[0m
+[32m                "kubernetesVersion": "1.27.3",[0m
+[32m                "operatorVersion": "v1.73.0-SNAPSHOT"[0m
+[32m            },[0m
+[32m            "progress": {[0m
+[32m                "duration": "0:00:15",[0m
+[32m                "message": "7. Finished all resource creation"[0m
+[32m            },[0m
+[32m            "specVersion": "default"[0m
+[32m        }[0m
+[32m    }[0m
+[32m}[0m
+
+TASK [Change Kiali CR with new Kiali CR] ***************************************
+[31m--- before[0m
+[32m+++ after[0m
+[36m@@ -1,16 +1,90 @@[0m
+ {
+     "metadata": {
+[31m-        "generation": 1,[0m
+[32m+        "generation": 2,[0m
+         "managedFields": [
+[32m+            {[0m
+[32m+                "apiVersion": "kiali.io/v1alpha1",[0m
+[32m+                "fieldsType": "FieldsV1",[0m
+[32m+                "fieldsV1": {[0m
+[32m+                    "f:metadata": {[0m
+[32m+                        "f:finalizers": {[0m
+[32m+                            ".": {},[0m
+[32m+                            "v:\"kiali.io/finalizer\"": {}[0m
+[32m+                        }[0m
+[32m+                    }[0m
+[32m+                },[0m
+[32m+                "manager": "ansible-operator",[0m
+[32m+                "operation": "Update",[0m
+[32m+                "time": "2023-08-15T08:29:35Z"[0m
+[32m+            },[0m
+[32m+            {[0m
+[32m+                "apiVersion": "kiali.io/v1alpha1",[0m
+[32m+                "fieldsType": "FieldsV1",[0m
+[32m+                "fieldsV1": {[0m
+[32m+                    "f:status": {[0m
+[32m+                        "f:deployment": {[0m
+[32m+                            ".": {},[0m
+[32m+                            "f:accessibleNamespaces": {},[0m
+[32m+                            "f:instanceName": {},[0m
+[32m+                            "f:namespace": {}[0m
+[32m+                        },[0m
+[32m+                        "f:environment": {[0m
+[32m+                            ".": {},[0m
+[32m+                            "f:isKubernetes": {},[0m
+[32m+                            "f:kubernetesVersion": {},[0m
+[32m+                            "f:operatorVersion": {}[0m
+[32m+                        },[0m
+[32m+                        "f:progress": {[0m
+[32m+                            ".": {},[0m
+[32m+                            "f:duration": {},[0m
+[32m+                            "f:message": {}[0m
+[32m+                        },[0m
+[32m+                        "f:specVersion": {}[0m
+[32m+                    }[0m
+[32m+                },[0m
+[32m+                "manager": "OpenAPI-Generator",[0m
+[32m+                "operation": "Update",[0m
+[32m+                "subresource": "status",[0m
+[32m+                "time": "2023-08-15T08:29:52Z"[0m
+[32m+            },[0m
+[32m+            {[0m
+[32m+                "apiVersion": "kiali.io/v1alpha1",[0m
+[32m+                "fieldsType": "FieldsV1",[0m
+[32m+                "fieldsV1": {[0m
+[32m+                    "f:status": {[0m
+[32m+                        ".": {},[0m
+[32m+                        "f:conditions": {}[0m
+[32m+                    }[0m
+[32m+                },[0m
+[32m+                "manager": "ansible-operator",[0m
+[32m+                "operation": "Update",[0m
+[32m+                "subresource": "status",[0m
+[32m+                "time": "2023-08-15T08:29:53Z"[0m
+[32m+            },[0m
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+                 "fieldsType": "FieldsV1",
+                 "fieldsV1": {
+                     "f:spec": {
+                         ".": {},
+[32m+                        "f:auth": {[0m
+[32m+                            ".": {},[0m
+[32m+                            "f:openshift": {[0m
+[32m+                                ".": {},[0m
+[32m+                                "f:token_inactivity_timeout": {},[0m
+[32m+                                "f:token_max_age": {}[0m
+[32m+                            }[0m
+[32m+                        },[0m
+                         "f:deployment": {
+                             ".": {},
+                             "f:accessible_namespaces": {},
+[32m+                            "f:configmap_annotations": {[0m
+[32m+                                ".": {},[0m
+[32m+                                "f:aaa": {},[0m
+[32m+                                "f:camelCaseName": {}[0m
+[32m+                            },[0m
+[32m+                            "f:custom_secrets": {},[0m
+[32m+                            "f:host_aliases": {},[0m
+                             "f:image_name": {},
+                             "f:image_pull_policy": {},
+                             "f:image_version": {},
+[36m@@ -23,79 +97,138 @@[0m
+                                 "f:log_level": {}
+                             },
+                             "f:namespace": {},
+[31m-                            "f:service_type": {}[0m
+[32m+                            "f:resources": {},[0m
+[32m+                            "f:security_context": {[0m
+[32m+                                ".": {},[0m
+[32m+                                "f:allowPrivilegeEscalation": {},[0m
+[32m+                                "f:capabilities": {[0m
+[32m+                                    ".": {},[0m
+[32m+                                    "f:drop": {}[0m
+[32m+                                },[0m
+[32m+                                "f:privileged": {},[0m
+[32m+                                "f:readOnlyRootFilesystem": {},[0m
+[32m+                                "f:runAsNonRoot": {}[0m
+[32m+                            },[0m
+[32m+                            "f:service_type": {},[0m
+[32m+                            "f:version_label": {}[0m
+[32m+                        },[0m
+[32m+                        "f:health_config": {[0m
+[32m+                            ".": {},[0m
+[32m+                            "f:rates": {}[0m
+                         },
+                         "f:istio_namespace": {},
+[32m+                        "f:kiali_feature_flags": {[0m
+[32m+                            ".": {},[0m
+[32m+                            "f:disabled_features": {}[0m
+[32m+                        },[0m
+[32m+                        "f:login_token": {[0m
+[32m+                            ".": {},[0m
+[32m+                            "f:signing_key": {}[0m
+[32m+                        },[0m
+                         "f:version": {}
+                     }
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+[31m-                "time": "2023-08-15T08:29:35Z"[0m
+[31m-            },[0m
+[31m-            {[0m
+[31m-                "apiVersion": "kiali.io/v1alpha1",[0m
+[31m-                "fieldsType": "FieldsV1",[0m
+[31m-                "fieldsV1": {[0m
+[31m-                    "f:metadata": {[0m
+[31m-                        "f:finalizers": {[0m
+[31m-                            ".": {},[0m
+[31m-                            "v:\"kiali.io/finalizer\"": {}[0m
+[31m-                        }[0m
+[31m-                    }[0m
+[31m-                },[0m
+[31m-                "manager": "ansible-operator",[0m
+[31m-                "operation": "Update",[0m
+[31m-                "time": "2023-08-15T08:29:35Z"[0m
+[31m-            },[0m
+[31m-            {[0m
+[31m-                "apiVersion": "kiali.io/v1alpha1",[0m
+[31m-                "fieldsType": "FieldsV1",[0m
+[31m-                "fieldsV1": {[0m
+[31m-                    "f:status": {[0m
+[31m-                        "f:deployment": {[0m
+[31m-                            ".": {},[0m
+[31m-                            "f:accessibleNamespaces": {},[0m
+[31m-                            "f:instanceName": {},[0m
+[31m-                            "f:namespace": {}[0m
+[31m-                        },[0m
+[31m-                        "f:environment": {[0m
+[31m-                            ".": {},[0m
+[31m-                            "f:isKubernetes": {},[0m
+[31m-                            "f:kubernetesVersion": {},[0m
+[31m-                            "f:operatorVersion": {}[0m
+[31m-                        },[0m
+[31m-                        "f:progress": {[0m
+[31m-                            ".": {},[0m
+[31m-                            "f:duration": {},[0m
+[31m-                            "f:message": {}[0m
+[31m-                        },[0m
+[31m-                        "f:specVersion": {}[0m
+[31m-                    }[0m
+[31m-                },[0m
+[31m-                "manager": "OpenAPI-Generator",[0m
+[31m-                "operation": "Update",[0m
+[31m-                "subresource": "status",[0m
+[31m-                "time": "2023-08-15T08:29:52Z"[0m
+[31m-            },[0m
+[31m-            {[0m
+[31m-                "apiVersion": "kiali.io/v1alpha1",[0m
+[31m-                "fieldsType": "FieldsV1",[0m
+[31m-                "fieldsV1": {[0m
+[31m-                    "f:status": {[0m
+[31m-                        ".": {},[0m
+[31m-                        "f:conditions": {}[0m
+[31m-                    }[0m
+[31m-                },[0m
+[31m-                "manager": "ansible-operator",[0m
+[31m-                "operation": "Update",[0m
+[31m-                "subresource": "status",[0m
+[31m-                "time": "2023-08-15T08:29:53Z"[0m
+[32m+                "time": "2023-08-15T08:30:29Z"[0m
+             }
+         ],
+[31m-        "resourceVersion": "5800"[0m
+[32m+        "resourceVersion": "5879"[0m
+     },
+     "spec": {
+[31m-        "deployment": {}[0m
+[32m+        "auth": {[0m
+[32m+            "openshift": {[0m
+[32m+                "token_inactivity_timeout": 9876,[0m
+[32m+                "token_max_age": 8765[0m
+[32m+            }[0m
+[32m+        },[0m
+[32m+        "deployment": {[0m
+[32m+            "configmap_annotations": {[0m
+[32m+                "aaa": "bbb",[0m
+[32m+                "camelCaseName": "camelCaseValue"[0m
+[32m+            },[0m
+[32m+            "custom_secrets": [[0m
+[32m+                {[0m
+[32m+                    "mount": "/extra-secret-1",[0m
+[32m+                    "name": "extra-secret-1",[0m
+[32m+                    "optional": true[0m
+[32m+                },[0m
+[32m+                {[0m
+[32m+                    "mount": "/extra-secret-2",[0m
+[32m+                    "name": "extra-secret-2",[0m
+[32m+                    "optional": true[0m
+[32m+                }[0m
+[32m+            ],[0m
+[32m+            "host_aliases": [[0m
+[32m+                {[0m
+[32m+                    "hostnames": [[0m
+[32m+                        "foo.local",[0m
+[32m+                        "bar.local"[0m
+[32m+                    ],[0m
+[32m+                    "ip": "192.168.1.111"[0m
+[32m+                },[0m
+[32m+                {[0m
+[32m+                    "hostnames": [[0m
+[32m+                        "foo2.local",[0m
+[32m+                        "bar2.local"[0m
+[32m+                    ],[0m
+[32m+                    "ip": "192.168.1.222"[0m
+[32m+                }[0m
+[32m+            ],[0m
+[32m+            "resources": {},[0m
+[32m+            "security_context": {[0m
+[32m+                "allowPrivilegeEscalation": false,[0m
+[32m+                "capabilities": {[0m
+[32m+                    "drop": [[0m
+[32m+                        "ALL"[0m
+[32m+                    ][0m
+[32m+                },[0m
+[32m+                "privileged": false,[0m
+[32m+                "readOnlyRootFilesystem": false,[0m
+[32m+                "runAsNonRoot": true[0m
+[32m+            },[0m
+[32m+            "version_label": "aaaaaaaaaabbbbbbbbbbccccccccccddddddddddeeeeeeeeee12345678901234"[0m
+[32m+        },[0m
+[32m+        "health_config": {[0m
+[32m+            "rates": [[0m
+[32m+                {[0m
+[32m+                    "namespace": "bookinfo",[0m
+[32m+                    "tolerance": [[0m
+[32m+                        {[0m
+[32m+                            "code": "404",[0m
+[32m+                            "failure": 10,[0m
+[32m+                            "protocol": "http"[0m
+[32m+                        },[0m
+[32m+                        {[0m
+[32m+                            "code": "[45]\\d[^\\D4]",[0m
+[32m+                            "protocol": "http"[0m
+[32m+                        }[0m
+[32m+                    ][0m
+[32m+                },[0m
+[32m+                {[0m
+[32m+                    "namespace": ".*",[0m
+[32m+                    "tolerance": [[0m
+[32m+                        {[0m
+[32m+                            "code": "[4]\\d\\d",[0m
+[32m+                            "degraded": 30,[0m
+[32m+                            "failure": 40,[0m
+[32m+                            "protocol": "http"[0m
+[32m+                        },[0m
+[32m+                        {[0m
+[32m+                            "code": "[5]\\d\\d",[0m
+[32m+                            "protocol": "http"[0m
+[32m+                        }[0m
+[32m+                    ][0m
+[32m+                }[0m
+[32m+            ][0m
+[32m+        },[0m
+[32m+        "kiali_feature_flags": {[0m
+[32m+            "disabled_features": [[0m
+[32m+                "logs-tab"[0m
+[32m+            ][0m
+[32m+        },[0m
+[32m+        "login_token": {[0m
+[32m+            "signing_key": "qazxsw0123456789"[0m
+[32m+        }[0m
+     }
+ }
+
+[33mchanged: [localhost][0m
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+[1;30mFAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (120 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (119 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (118 retries left).[0m
+[32mok: [localhost][0m
+
+TASK [Asserting that Kiali Pod exists and there is only one] *******************
+[32mok: [localhost][0m
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+[1;30mFAILED - RETRYING: [localhost]: Wait for Kiali to be running and accepting requests (120 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Wait for Kiali to be running and accepting requests (119 retries left).[0m
+[32mok: [localhost][0m
+
+TASK [Get information about the cluster] ***************************************
+[32mok: [localhost][0m
+
+TASK [Determine the cluster type] **********************************************
+[32mok: [localhost][0m
+
+TASK [Determine the Istio implementation] **************************************
+[32mok: [localhost][0m
+
+TASK [Get SMCP if running in Maistra environment] ******************************
+[36mskipping: [localhost][0m
+
+TASK [There must one and only one SMCP already installed in the control plane] ***
+[36mskipping: [localhost][0m
+
+TASK [Get Kiali CR if present] *************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Operator Pod] **************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Pod] ***********************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Configmap] *****************************************************
+[32mok: [localhost][0m
+
+TASK [Format Configmap] ********************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Deployment] ****************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Service] *******************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Route] *********************************************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Ingress URL on minikube] *****************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Ingress URL on kind] *********************************
+[32mok: [localhost][0m
+
+TASK [Assert Kiali Pod is Running and there is only one] ***********************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [The new Kiali ConfigMap] *************************************************
+[32mok: [localhost] => {[0m
+[32m    "msg": {[0m
+[32m        "additional_display_details": [[0m
+[32m            {[0m
+[32m                "annotation": "kiali.io/api-spec",[0m
+[32m                "icon_annotation": "kiali.io/api-type",[0m
+[32m                "title": "API Documentation"[0m
+[32m            }[0m
+[32m        ],[0m
+[32m        "api": {[0m
+[32m            "namespaces": {[0m
+[32m                "exclude": [[0m
+[32m                    "^istio-operator",[0m
+[32m                    "^kube-.*",[0m
+[32m                    "^openshift.*",[0m
+[32m                    "^ibm.*",[0m
+[32m                    "^kiali-operator"[0m
+[32m                ],[0m
+[32m                "include": [],[0m
+[32m                "label_selector_exclude": "",[0m
+[32m                "label_selector_include": "kiali.io/member-of=istio-system"[0m
+[32m            }[0m
+[32m        },[0m
+[32m        "auth": {[0m
+[32m            "openid": {[0m
+[32m                "additional_request_params": {},[0m
+[32m                "allowed_domains": [],[0m
+[32m                "api_proxy": "",[0m
+[32m                "api_proxy_ca_data": "",[0m
+[32m                "api_token": "id_token",[0m
+[32m                "authentication_timeout": 300,[0m
+[32m                "authorization_endpoint": "",[0m
+[32m                "client_id": "",[0m
+[32m                "disable_rbac": false,[0m
+[32m                "http_proxy": "",[0m
+[32m                "https_proxy": "",[0m
+[32m                "insecure_skip_verify_tls": false,[0m
+[32m                "issuer_uri": "",[0m
+[32m                "scopes": [[0m
+[32m                    "openid",[0m
+[32m                    "profile",[0m
+[32m                    "email"[0m
+[32m                ],[0m
+[32m                "username_claim": "sub"[0m
+[32m            },[0m
+[32m            "openshift": {[0m
+[32m                "auth_timeout": 10,[0m
+[32m                "client_id_prefix": "kiali",[0m
+[32m                "token_inactivity_timeout": 9876,[0m
+[32m                "token_max_age": 8765[0m
+[32m            },[0m
+[32m            "strategy": "token"[0m
+[32m        },[0m
+[32m        "custom_dashboards": [],[0m
+[32m        "deployment": {[0m
+[32m            "accessible_namespaces": [[0m
+[32m                "default",[0m
+[32m                "istio-system",[0m
+[32m                "local-path-storage",[0m
+[32m                "metallb-system"[0m
+[32m            ],[0m
+[32m            "affinity": {[0m
+[32m                "node": {},[0m
+[32m                "pod": {},[0m
+[32m                "pod_anti": {}[0m
+[32m            },[0m
+[32m            "cluster_wide_access": false,[0m
+[32m            "configmap_annotations": {[0m
+[32m                "aaa": "bbb",[0m
+[32m                "camelCaseName": "camelCaseValue"[0m
+[32m            },[0m
+[32m            "custom_secrets": [[0m
+[32m                {[0m
+[32m                    "mount": "/extra-secret-1",[0m
+[32m                    "name": "extra-secret-1",[0m
+[32m                    "optional": true[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "mount": "/extra-secret-2",[0m
+[32m                    "name": "extra-secret-2",[0m
+[32m                    "optional": true[0m
+[32m                }[0m
+[32m            ],[0m
+[32m            "host_aliases": [[0m
+[32m                {[0m
+[32m                    "hostnames": [[0m
+[32m                        "foo.local",[0m
+[32m                        "bar.local"[0m
+[32m                    ],[0m
+[32m                    "ip": "192.168.1.111"[0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "hostnames": [[0m
+[32m                        "foo2.local",[0m
+[32m                        "bar2.local"[0m
+[32m                    ],[0m
+[32m                    "ip": "192.168.1.222"[0m
+[32m                }[0m
+[32m            ],[0m
+[32m            "hpa": {[0m
+[32m                "api_version": "autoscaling/v2",[0m
+[32m                "spec": {}[0m
+[32m            },[0m
+[32m            "image_digest": "",[0m
+[32m            "image_name": "quay.io/kiali/kiali",[0m
+[32m            "image_pull_policy": "Always",[0m
+[32m            "image_pull_secrets": [],[0m
+[32m            "image_version": "latest",[0m
+[32m            "ingress": {[0m
+[32m                "additional_labels": {},[0m
+[32m                "class_name": "nginx",[0m
+[32m                "enabled": true[0m
+[32m            },[0m
+[32m            "instance_name": "kiali",[0m
+[32m            "logger": {[0m
+[32m                "log_format": "text",[0m
+[32m                "log_level": "debug",[0m
+[32m                "sampler_rate": "1",[0m
+[32m                "time_field_format": "2006-01-02T15:04:05Z07:00"[0m
+[32m            },[0m
+[32m            "namespace": "istio-system",[0m
+[32m            "node_selector": {},[0m
+[32m            "pod_annotations": {},[0m
+[32m            "pod_labels": {},[0m
+[32m            "priority_class_name": "",[0m
+[32m            "replicas": 1,[0m
+[32m            "resources": {},[0m
+[32m            "secret_name": "kiali",[0m
+[32m            "security_context": {[0m
+[32m                "allowPrivilegeEscalation": false,[0m
+[32m                "capabilities": {[0m
+[32m                    "drop": [[0m
+[32m                        "ALL"[0m
+[32m                    ][0m
+[32m                },[0m
+[32m                "privileged": false,[0m
+[32m                "readOnlyRootFilesystem": false,[0m
+[32m                "runAsNonRoot": true[0m
+[32m            },[0m
+[32m            "service_annotations": {},[0m
+[32m            "service_type": "LoadBalancer",[0m
+[32m            "tolerations": [],[0m
+[32m            "version_label": "aaaaaaaaaabbbbbbbbbbccccccccccddddddddddeeeeeeeeee1234567890XXX",[0m
+[32m            "view_only_mode": false[0m
+[32m        },[0m
+[32m        "external_services": {[0m
+[32m            "custom_dashboards": {[0m
+[32m                "discovery_auto_threshold": 10,[0m
+[32m                "discovery_enabled": "auto",[0m
+[32m                "enabled": true,[0m
+[32m                "is_core": false,[0m
+[32m                "namespace_label": "",[0m
+[32m                "prometheus": {[0m
+[32m                    "auth": {[0m
+[32m                        "ca_file": "",[0m
+[32m                        "insecure_skip_verify": false,[0m
+[32m                        "password": "",[0m
+[32m                        "token": "",[0m
+[32m                        "type": "none",[0m
+[32m                        "use_kiali_token": false,[0m
+[32m                        "username": ""[0m
+[32m                    },[0m
+[32m                    "cache_duration": 7,[0m
+[32m                    "cache_enabled": true,[0m
+[32m                    "cache_expiration": 300,[0m
+[32m                    "custom_headers": {},[0m
+[32m                    "health_check_url": "",[0m
+[32m                    "is_core": true,[0m
+[32m                    "query_scope": {},[0m
+[32m                    "thanos_proxy": {[0m
+[32m                        "enabled": false,[0m
+[32m                        "retention_period": "7d",[0m
+[32m                        "scrape_interval": "30s"[0m
+[32m                    },[0m
+[32m                    "url": ""[0m
+[32m                }[0m
+[32m            },[0m
+[32m            "grafana": {[0m
+[32m                "auth": {[0m
+[32m                    "ca_file": "",[0m
+[32m                    "insecure_skip_verify": false,[0m
+[32m                    "password": "",[0m
+[32m                    "token": "",[0m
+[32m                    "type": "none",[0m
+[32m                    "use_kiali_token": false,[0m
+[32m                    "username": ""[0m
+[32m                },[0m
+[32m                "dashboards": [[0m
+[32m                    {[0m
+[32m                        "name": "Istio Service Dashboard",[0m
+[32m                        "variables": {[0m
+[32m                            "namespace": "var-namespace",[0m
+[32m                            "service": "var-service"[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "name": "Istio Workload Dashboard",[0m
+[32m                        "variables": {[0m
+[32m                            "namespace": "var-namespace",[0m
+[32m                            "workload": "var-workload"[0m
+[32m                        }[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "name": "Istio Mesh Dashboard"[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "name": "Istio Control Plane Dashboard"[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "name": "Istio Performance Dashboard"[0m
+[32m                    },[0m
+[32m                    {[0m
+[32m                        "name": "Istio Wasm Extension Dashboard"[0m
+[32m                    }[0m
+[32m                ],[0m
+[32m                "enabled": true,[0m
+[32m                "health_check_url": "",[0m
+[32m                "in_cluster_url": "http://grafana.istio-system:3000",[0m
+[32m                "is_core": false,[0m
+[32m                "url": ""[0m
+[32m            },[0m
+[32m            "istio": {[0m
+[32m                "component_status": {[0m
+[32m                    "components": [[0m
+[32m                        {[0m
+[32m                            "app_label": "istiod",[0m
+[32m                            "is_core": true,[0m
+[32m                            "is_proxy": false,[0m
+[32m                            "namespace": ""[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "app_label": "istio-ingressgateway",[0m
+[32m                            "is_core": true,[0m
+[32m                            "is_proxy": true,[0m
+[32m                            "namespace": ""[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "app_label": "istio-egressgateway",[0m
+[32m                            "is_core": false,[0m
+[32m                            "is_proxy": true,[0m
+[32m                            "namespace": ""[0m
+[32m                        }[0m
+[32m                    ],[0m
+[32m                    "enabled": true[0m
+[32m                },[0m
+[32m                "config_map_name": "istio",[0m
+[32m                "envoy_admin_local_port": 15000,[0m
+[32m                "gateway_api_class_name": "",[0m
+[32m                "istio_api_enabled": true,[0m
+[32m                "istio_identity_domain": "svc.cluster.local",[0m
+[32m                "istio_injection_annotation": "sidecar.istio.io/inject",[0m
+[32m                "istio_sidecar_annotation": "sidecar.istio.io/status",[0m
+[32m                "istio_sidecar_injector_config_map_name": "istio-sidecar-injector",[0m
+[32m                "istiod_deployment_name": "istiod",[0m
+[32m                "istiod_pod_monitoring_port": 15014,[0m
+[32m                "root_namespace": "istio-system",[0m
+[32m                "url_service_version": "http://istiod.istio-system:15014/version"[0m
+[32m            },[0m
+[32m            "prometheus": {[0m
+[32m                "auth": {[0m
+[32m                    "ca_file": "",[0m
+[32m                    "insecure_skip_verify": false,[0m
+[32m                    "password": "",[0m
+[32m                    "token": "",[0m
+[32m                    "type": "none",[0m
+[32m                    "use_kiali_token": false,[0m
+[32m                    "username": ""[0m
+[32m                },[0m
+[32m                "cache_duration": 7,[0m
+[32m                "cache_enabled": true,[0m
+[32m                "cache_expiration": 300,[0m
+[32m                "custom_headers": {},[0m
+[32m                "health_check_url": "",[0m
+[32m                "is_core": true,[0m
+[32m                "query_scope": {},[0m
+[32m                "thanos_proxy": {[0m
+[32m                    "enabled": false,[0m
+[32m                    "retention_period": "7d",[0m
+[32m                    "scrape_interval": "30s"[0m
+[32m                },[0m
+[32m                "url": "http://prometheus.istio-system:9090"[0m
+[32m            },[0m
+[32m            "tracing": {[0m
+[32m                "auth": {[0m
+[32m                    "ca_file": "",[0m
+[32m                    "insecure_skip_verify": false,[0m
+[32m                    "password": "",[0m
+[32m                    "token": "",[0m
+[32m                    "type": "none",[0m
+[32m                    "use_kiali_token": false,[0m
+[32m                    "username": ""[0m
+[32m                },[0m
+[32m                "enabled": true,[0m
+[32m                "in_cluster_url": "http://tracing.istio-system:16685/jaeger",[0m
+[32m                "is_core": false,[0m
+[32m                "namespace_selector": true,[0m
+[32m                "query_scope": {},[0m
+[32m                "query_timeout": 5,[0m
+[32m                "url": "",[0m
+[32m                "use_grpc": true,[0m
+[32m                "whitelist_istio_system": [[0m
+[32m                    "jaeger-query",[0m
+[32m                    "istio-ingressgateway"[0m
+[32m                ][0m
+[32m            }[0m
+[32m        },[0m
+[32m        "health_config": {[0m
+[32m            "rate": [],[0m
+[32m            "rates": [[0m
+[32m                {[0m
+[32m                    "namespace": "bookinfo",[0m
+[32m                    "tolerance": [[0m
+[32m                        {[0m
+[32m                            "code": "404",[0m
+[32m                            "failure": 10,[0m
+[32m                            "protocol": "http"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "code": "[45]\\d[^\\D4]",[0m
+[32m                            "protocol": "http"[0m
+[32m                        }[0m
+[32m                    ][0m
+[32m                },[0m
+[32m                {[0m
+[32m                    "namespace": ".*",[0m
+[32m                    "tolerance": [[0m
+[32m                        {[0m
+[32m                            "code": "[4]\\d\\d",[0m
+[32m                            "degraded": 30,[0m
+[32m                            "failure": 40,[0m
+[32m                            "protocol": "http"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "code": "[5]\\d\\d",[0m
+[32m                            "protocol": "http"[0m
+[32m                        }[0m
+[32m                    ][0m
+[32m                }[0m
+[32m            ][0m
+[32m        },[0m
+[32m        "identity": {[0m
+[32m            "cert_file": "",[0m
+[32m            "private_key_file": ""[0m
+[32m        },[0m
+[32m        "installation_tag": "",[0m
+[32m        "istio_labels": {[0m
+[32m            "app_label_name": "app",[0m
+[32m            "injection_label_name": "istio-injection",[0m
+[32m            "injection_label_rev": "istio.io/rev",[0m
+[32m            "version_label_name": "version"[0m
+[32m        },[0m
+[32m        "istio_namespace": "istio-system",[0m
+[32m        "kiali_feature_flags": {[0m
+[32m            "certificates_information_indicators": {[0m
+[32m                "enabled": true,[0m
+[32m                "secrets": [[0m
+[32m                    "cacerts",[0m
+[32m                    "istio-ca-secret"[0m
+[32m                ][0m
+[32m            },[0m
+[32m            "clustering": {[0m
+[32m                "autodetect_secrets": {[0m
+[32m                    "enabled": true,[0m
+[32m                    "label": "kiali.io/multiCluster=true"[0m
+[32m                },[0m
+[32m                "clusters": [][0m
+[32m            },[0m
+[32m            "disabled_features": [[0m
+[32m                "logs-tab"[0m
+[32m            ],[0m
+[32m            "istio_annotation_action": true,[0m
+[32m            "istio_injection_action": true,[0m
+[32m            "istio_upgrade_action": false,[0m
+[32m            "ui_defaults": {[0m
+[32m                "graph": {[0m
+[32m                    "find_options": [[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Find: slow edges (> 1s)",[0m
+[32m                            "expression": "rt > 1000"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Find: unhealthy nodes",[0m
+[32m                            "expression": "! healthy"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Find: unknown nodes",[0m
+[32m                            "expression": "name = unknown"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Find: nodes with the 2 top rankings",[0m
+[32m                            "expression": "rank <= 2"[0m
+[32m                        }[0m
+[32m                    ],[0m
+[32m                    "hide_options": [[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Hide: healthy nodes",[0m
+[32m                            "expression": "healthy"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Hide: unknown nodes",[0m
+[32m                            "expression": "name = unknown"[0m
+[32m                        },[0m
+[32m                        {[0m
+[32m                            "auto_select": false,[0m
+[32m                            "description": "Hide: nodes ranked lower than the 2 top rankings",[0m
+[32m                            "expression": "rank > 2"[0m
+[32m                        }[0m
+[32m                    ],[0m
+[32m                    "settings": {[0m
+[32m                        "font_label": 13,[0m
+[32m                        "min_font_badge": 7,[0m
+[32m                        "min_font_label": 10[0m
+[32m                    },[0m
+[32m                    "traffic": {[0m
+[32m                        "grpc": "requests",[0m
+[32m                        "http": "requests",[0m
+[32m                        "tcp": "sent"[0m
+[32m                    }[0m
+[32m                },[0m
+[32m                "list": {[0m
+[32m                    "include_health": true,[0m
+[32m                    "include_istio_resources": true,[0m
+[32m                    "include_validations": true,[0m
+[32m                    "show_include_toggles": false[0m
+[32m                },[0m
+[32m                "metrics_inbound": {[0m
+[32m                    "aggregations": [][0m
+[32m                },[0m
+[32m                "metrics_outbound": {[0m
+[32m                    "aggregations": [][0m
+[32m                },[0m
+[32m                "metrics_per_refresh": "1m",[0m
+[32m                "namespaces": [],[0m
+[32m                "refresh_interval": "60s"[0m
+[32m            },[0m
+[32m            "validations": {[0m
+[32m                "ignore": [[0m
+[32m                    "KIA1301"[0m
+[32m                ],[0m
+[32m                "skip_wildcard_gateway_hosts": false[0m
+[32m            }[0m
+[32m        },[0m
+[32m        "kubernetes_config": {[0m
+[32m            "burst": 200,[0m
+[32m            "cache_duration": 300,[0m
+[32m            "cache_token_namespace_duration": 10,[0m
+[32m            "cluster_name": "",[0m
+[32m            "excluded_workloads": [[0m
+[32m                "CronJob",[0m
+[32m                "DeploymentConfig",[0m
+[32m                "Job",[0m
+[32m                "ReplicationController"[0m
+[32m            ],[0m
+[32m            "qps": 175[0m
+[32m        },[0m
+[32m        "login_token": {[0m
+[32m            "expiration_seconds": 86400,[0m
+[32m            "signing_key": "qazxsw0123456789"[0m
+[32m        },[0m
+[32m        "server": {[0m
+[32m            "address": "",[0m
+[32m            "audit_log": true,[0m
+[32m            "cors_allow_all": false,[0m
+[32m            "gzip_enabled": true,[0m
+[32m            "observability": {[0m
+[32m                "metrics": {[0m
+[32m                    "enabled": true,[0m
+[32m                    "port": 9090[0m
+[32m                },[0m
+[32m                "tracing": {[0m
+[32m                    "collector_url": "http://jaeger-collector.istio-system:14268/api/traces",[0m
+[32m                    "enabled": false[0m
+[32m                }[0m
+[32m            },[0m
+[32m            "port": 20001,[0m
+[32m            "web_fqdn": "",[0m
+[32m            "web_history_mode": "",[0m
+[32m            "web_port": "",[0m
+[32m            "web_root": "/kiali",[0m
+[32m            "web_schema": ""[0m
+[32m        },[0m
+[32m        "version": "default"[0m
+[32m    }[0m
+[32m}[0m
+
+TASK [Make sure version_label was truncated properly] **************************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Make sure the custom health config made it to the config map] ************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Make sure the host aliases made it to the pod] ***************************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Make sure the custom secrets made it to the pod] *************************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Test the default deployment.resources is now empty] **********************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Test the signing key is set] *********************************************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Make sure the configmap annotations made it to the configmap] ************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Get Kiali Role] **********************************************************
+[32mok: [localhost][0m
+
+TASK [Make sure Kiali Role has disabled access to pods/log] ********************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Make sure the security context was overridden and as expected] ***********
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Get the new Kiali OAuthClient if on OpenShift] ***************************
+[36mskipping: [localhost][0m
+
+TASK [Test the OAuthClient now has the new customized timeouts] ****************
+[36mskipping: [localhost][0m
+
+PLAY RECAP *********************************************************************
+[33mlocalhost[0m                  : [32mok=61  [0m [33mchanged=1   [0m unreachable=0    failed=0    [36mskipped=14  [0m rescued=0    ignored=0
+
+[34mINFO    [0m [2;36mRunning [0m[2;32mconfig-values-test[0m[2;36m > [0m[2;32mdestroy[0m
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m
+ANSIBLE_CONFIG: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mansible.cfg[0m
+ANSIBLE_FILTER_PLUGINS: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m
+ANSIBLE_FORCE_COLOR: [32m'1'[0m
+ANSIBLE_LIBRARY: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m
+ANSIBLE_ROLES_PATH: [32m'/home/runner/.cache/molecule/operator/config-values-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles:'[0m
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: kind
+MOLECULE_DEBUG: [32m'True'[0m
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: [32m'true'[0m
+MOLECULE_ENV_FILE: [35m/tmp/molecule/operator/[0m[95m.env.yml[0m
+MOLECULE_EPHEMERAL_DIRECTORY: [35m/home/runner/.cache/molecule/operator/[0m[95mconfig-values-test[0m
+MOLECULE_FILE: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mmolecule.yml[0m
+MOLECULE_HELM_CHARTS_REPO: [35m/tmp/molecule/[0m[95mhelm-charts-repo[0m
+MOLECULE_INSTANCE_CONFIG: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95minstance_config.yml[0m
+MOLECULE_INVENTORY_FILE: [35m/home/runner/.cache/molecule/operator/config-values-test/inventory/[0m[95mansible_inventory.yml[0m
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_KIND_IP: [32m''[0m
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: [32m'true'[0m
+MOLECULE_PROJECT_DIRECTORY: [35m/tmp/molecule/[0m[95moperator[0m
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: [35m/tmp/molecule/operator/molecule/[0m[95mconfig-values-test[0m
+MOLECULE_SCENARIO_NAME: config-values-test
+MOLECULE_STATE_FILE: [35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mstate.yml[0m
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: [35m/tmp/molecule/operator/molecule/config-values-test/[0m[95mtests[0m
+MOLECULE_WAIT_RETRIES: [32m'120'[0m
+
+DEBUG: SHELL REPLAY:
+[33mANSIBLE_COLLECTIONS_PATH[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m [33mANSIBLE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mansible.cfg[0m [33mANSIBLE_FILTER_PLUGINS[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m [33mANSIBLE_FORCE_COLOR[0m=[1;36m1[0m [33mANSIBLE_LIBRARY[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m [33mANSIBLE_ROLES_PATH[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mroles[0m:[35m/tmp/[0m[95mmolecule[0m:[35m/home/runner/.ansible/[0m[95mroles[0m:[35m/usr/share/ansible/[0m[95mroles[0m:[35m/etc/ansible/[0m[95mroles[0m: [33mMOLECULE_CLUSTER_TYPE[0m=[35mkind[0m [33mMOLECULE_DEBUG[0m=[3;92mTrue[0m [33mMOLECULE_DEPENDENCY_NAME[0m=[35mgalaxy[0m [33mMOLECULE_DRIVER_NAME[0m=[35mpodman[0m [33mMOLECULE_DUMP_LOGS_ON_ERROR[0m=[35mtrue[0m [33mMOLECULE_ENV_FILE[0m=[35m/tmp/molecule/operator/[0m[95m.env.yml[0m [33mMOLECULE_EPHEMERAL_DIRECTORY[0m=[35m/home/runner/.cache/molecule/operator/[0m[95mconfig-values-test[0m [33mMOLECULE_FILE[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mmolecule.yml[0m [33mMOLECULE_HELM_CHARTS_REPO[0m=[35m/tmp/molecule/[0m[95mhelm-charts-repo[0m [33mMOLECULE_INSTANCE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95minstance_config.yml[0m [33mMOLECULE_INVENTORY_FILE[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/inventory/[0m[95mansible_inventory.yml[0m [33mMOLECULE_KIALI_CR_SPEC_VERSION[0m=[35mdefault[0m [33mMOLECULE_KIND_IP[0m= [33mMOLECULE_OPERATOR_INSTALLER[0m=[35mhelm[0m [33mMOLECULE_OPERATOR_PROFILER_ENABLED[0m=[35mtrue[0m [33mMOLECULE_PROJECT_DIRECTORY[0m=[35m/tmp/molecule/[0m[95moperator[0m [33mMOLECULE_PROVISIONER_NAME[0m=[35mansible[0m [33mMOLECULE_SCENARIO_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/[0m[95mconfig-values-test[0m [33mMOLECULE_SCENARIO_NAME[0m=[35mconfig[0m-values-test [33mMOLECULE_STATE_FILE[0m=[35m/home/runner/.cache/molecule/operator/config-values-test/[0m[95mstate.yml[0m [33mMOLECULE_VERIFIER_NAME[0m=[35mansible[0m [33mMOLECULE_VERIFIER_TEST_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/config-values-test/[0m[95mtests[0m [33mMOLECULE_WAIT_RETRIES[0m=[1;36m120[0m
+
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[32mok: [localhost][0m
+
+TASK [Get information about the cluster] ***************************************
+[32mok: [localhost][0m
+
+TASK [Determine the cluster type] **********************************************
+[32mok: [localhost][0m
+
+TASK [Determine the Istio implementation] **************************************
+[32mok: [localhost][0m
+
+TASK [Determine if the operator installation is managed externally or not] *****
+[32mok: [localhost][0m
+
+TASK [Remove Kiali CR] *********************************************************
+[33mchanged: [localhost][0m
+
+TASK [Wait for Kiali ConfigMap to be uninstalled] ******************************
+[32mok: [localhost][0m
+
+TASK [Process NetworkPolicy needed to access the Kiali UI when in Maistra environment [state=absent]] ***
+[36mskipping: [localhost][0m
+
+TASK [Uninstall Operator via Helm] *********************************************
+[33mchanged: [localhost][0m
+
+TASK [Remove CRDs] *************************************************************
+[33mchanged: [localhost][0m
+
+TASK [Removing Operator namespace] *********************************************
+[33mchanged: [localhost][0m
+
+TASK [Removing CR namespace if it is different than control plane and operator namespace] ***
+[36mskipping: [localhost][0m
+
+PLAY RECAP *********************************************************************
+[33mlocalhost[0m                  : [32mok=10  [0m [33mchanged=4   [0m unreachable=0    failed=0    [36mskipped=2   [0m rescued=0    ignored=0
+
+[34mINFO    [0m Pruning extra files from scenario ephemeral directory
+podman volume rm molecule-tests-volume
+molecule-tests-volume

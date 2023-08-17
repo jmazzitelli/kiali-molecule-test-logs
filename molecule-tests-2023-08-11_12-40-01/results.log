@@ -1,0 +1,53 @@
+Docker is no longer supported by the molecule tests. This argument will largely be ignored and podman used instead.
+========== SETTINGS ==========
+DORP=podman
+KIALI_SRC_HOME=/tmp/KIALI-GIT-KIND/kiali
+ALL_TESTS=default
+SKIP_TESTS=header-auth-test openid-test os-console-links-test openshift-auth-test
+CLUSTER_TYPE=kind
+MOLECULE_USE_DEFAULT_SERVER_IMAGE=false
+MOLECULE_USE_DEV_IMAGES=false
+MOLECULE_DEBUG=true
+MOLECULE_DESTROY_NEVER=false
+MOLECULE_KIALI_CR_SPEC_VERSION=default
+MOLECULE_OPERATOR_INSTALLER=helm
+MOLECULE_OPERATOR_PROFILER_ENABLED=true
+TEST_LOGS_DIR=/tmp/KIALI-GIT-KIND/kiali-molecule-test-logs/molecule-tests-2023-08-11_12-40-01
+JUNIT_XML_FILE=/tmp/KIALI-GIT-KIND/kiali-molecule-test-logs/molecule-tests-2023-08-11_12-40-01/results.xml
+TEST_CLIENT_EXE=/home/jmazzite/bin/kubectl
+COLOR=false
+MINIKUBE_EXE=
+MINIKUBE_PROFILE=
+KIND_NAME=ci
+HELM_CHARTS_REPO=/tmp/KIALI-GIT-KIND/helm-charts
+CI=false
+==============================
+All molecule test logs will go here: /tmp/KIALI-GIT-KIND/kiali-molecule-test-logs/molecule-tests-2023-08-11_12-40-01
+
+=========================
+=== BUILD HELM CHARTS ===
+=========================
+
+make: Entering directory '/tmp/KIALI-GIT-KIND/helm-charts'
+The binary will be downloaded to /tmp/KIALI-GIT-KIND/helm-charts/_output/helm-install/helm
+Will use this helm executable: /tmp/KIALI-GIT-KIND/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-operator-1.73.0-SNAPSHOT.tgz
+Building Helm Chart for Kiali server
+==> Linting /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-server
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-server-1.73.0-SNAPSHOT.tgz
+make: Leaving directory '/tmp/KIALI-GIT-KIND/helm-charts'
+
+=====================
+=== TEST RESULTS: ===
+=====================
+
+                                 default... FAILURE [0m 1s]
+
+Test logs can be found at: /tmp/KIALI-GIT-KIND/kiali-molecule-test-logs/molecule-tests-2023-08-11_12-40-01
+

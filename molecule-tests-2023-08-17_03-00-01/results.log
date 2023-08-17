@@ -1,0 +1,90 @@
+Docker is no longer supported by the molecule tests. This argument will largely be ignored and podman used instead.
+========== SETTINGS ==========
+DORP=podman
+KIALI_SRC_HOME=/tmp/KIALI-GIT-KIND/kiali
+ALL_TESTS=accessible-namespaces-test
+affinity-tolerations-resources-test
+cluster-wide-access-test
+config-values-test
+default-namespace-test
+grafana-test
+header-auth-test
+instance-name-test
+jaeger-test
+metrics-test
+null-cr-values-test
+only-view-only-mode-test
+openid-test
+openshift-auth-test
+os-console-links-test
+read-certs-secrets-test
+roles-test
+rolling-restart-test
+token-test
+SKIP_TESTS=header-auth-test openid-test os-console-links-test openshift-auth-test
+CLUSTER_TYPE=kind
+MOLECULE_USE_DEFAULT_SERVER_IMAGE=false
+MOLECULE_USE_DEV_IMAGES=false
+MOLECULE_DEBUG=true
+MOLECULE_DESTROY_NEVER=false
+MOLECULE_KIALI_CR_SPEC_VERSION=default
+MOLECULE_OPERATOR_INSTALLER=helm
+MOLECULE_OPERATOR_PROFILER_ENABLED=true
+TEST_LOGS_DIR=/tmp/KIALI-GIT-KIND/kiali-molecule-test-logs/molecule-tests-2023-08-17_03-00-01
+JUNIT_XML_FILE=/tmp/KIALI-GIT-KIND/kiali-molecule-test-logs/molecule-tests-2023-08-17_03-00-01/results.xml
+TEST_CLIENT_EXE=/home/jmazzite/bin/kubectl
+COLOR=false
+MINIKUBE_EXE=
+MINIKUBE_PROFILE=
+KIND=/home/jmazzite/bin/kind
+KIND_NAME=ci
+HELM_CHARTS_REPO=/tmp/KIALI-GIT-KIND/helm-charts
+CI=false
+==============================
+All molecule test logs will go here: /tmp/KIALI-GIT-KIND/kiali-molecule-test-logs/molecule-tests-2023-08-17_03-00-01
+
+=========================
+=== BUILD HELM CHARTS ===
+=========================
+
+make: Entering directory '/tmp/KIALI-GIT-KIND/helm-charts'
+The binary will be downloaded to /tmp/KIALI-GIT-KIND/helm-charts/_output/helm-install/helm
+Will use this helm executable: /tmp/KIALI-GIT-KIND/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-operator-1.73.0-SNAPSHOT.tgz
+Building Helm Chart for Kiali server
+==> Linting /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-server
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-server-1.73.0-SNAPSHOT.tgz
+make: Leaving directory '/tmp/KIALI-GIT-KIND/helm-charts'
+
+=====================
+=== TEST RESULTS: ===
+=====================
+
+              accessible-namespaces-test... success [9m 12s]
+     affinity-tolerations-resources-test... success [3m 30s]
+                cluster-wide-access-test... success [8m 41s]
+                      config-values-test... success [2m 37s]
+                  default-namespace-test... success [1m 50s]
+                            grafana-test... success [3m 20s]
+                        header-auth-test... skipped
+                      instance-name-test... success [2m 18s]
+                             jaeger-test... success [2m 39s]
+                            metrics-test... success [3m 39s]
+                     null-cr-values-test... success [1m 38s]
+                only-view-only-mode-test... success [2m 32s]
+                             openid-test... skipped
+                     openshift-auth-test... skipped
+                   os-console-links-test... skipped
+                 read-certs-secrets-test... success [1m 39s]
+                              roles-test... success [5m 30s]
+                    rolling-restart-test... success [2m 36s]
+                              token-test... success [2m 0s]
+
+Test logs can be found at: /tmp/KIALI-GIT-KIND/kiali-molecule-test-logs/molecule-tests-2023-08-17_03-00-01
+

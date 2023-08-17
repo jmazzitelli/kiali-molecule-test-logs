@@ -1,0 +1,13 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT-KIND/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT-KIND/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT-KIND/helm-charts'
+Will use this helm executable: /tmp/KIALI-GIT-KIND/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-operator-1.73.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT-KIND/helm-charts'
+Missing 'kind'
+make: *** [Makefile:229: .ensure-kind-exists] Error 1

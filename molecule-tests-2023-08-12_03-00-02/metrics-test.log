@@ -1,0 +1,668 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT-KIND/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT-KIND/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT-KIND/helm-charts'
+Will use this helm executable: /tmp/KIALI-GIT-KIND/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT-KIND/helm-charts/_output/charts/kiali-operator-1.73.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT-KIND/helm-charts'
+Will auto-detect hosts to add based on the CLUSTER_REPO: 
+Auto-detected add host args: 
+Will not rebuild kiali-molecule image.
+podman volume exists molecule-tests-volume && echo "Podman volume already exists; deleting it" && podman volume rm molecule-tests-volume || true
+podman volume create molecule-tests-volume
+molecule-tests-volume
+podman create -v molecule-tests-volume:/data --name molecule-volume-helper docker.io/busybox true
+8049e63a67cb21d0a4c9457799d1fe83fd9024bd3a05703ceb3049e6ea79f1e9
+podman cp "/tmp/KIALI-GIT-KIND/helm-charts" molecule-volume-helper:/data/helm-charts-repo
+podman cp "/tmp/KIALI-GIT-KIND/kiali/operator/" molecule-volume-helper:/data/operator
+podman cp "/home/jmazzite/.kube/config" molecule-volume-helper:/data/kubeconfig
+podman rm molecule-volume-helper
+molecule-volume-helper
+Error: no such object: "ci-control-plane"
+for msn in metrics-test; do podman run --rm  --env KUBECONFIG="/tmp/molecule/kubeconfig" --env K8S_AUTH_KUBECONFIG="/tmp/molecule/kubeconfig" --env MOLECULE_CLUSTER_TYPE="kind" --env MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo -v molecule-tests-volume:/tmp/molecule   --env MOLECULE_KIND_IP= -w /tmp/molecule/operator --network="host"  --add-host="api.crc.testing:192.168.130.11" --add-host="kiali-istio-system.apps-crc.testing:192.168.130.11" --add-host="prometheus-istio-system.apps-crc.testing:192.168.130.11" --env DORP=podman --env OPERATOR_IMAGE_PULL_SECRET_NAME= --env MOLECULE_KIALI_CR_SPEC_VERSION=default  --env MOLECULE_OPERATOR_PROFILER_ENABLED=true --env MOLECULE_OPERATOR_INSTALLER=helm --env MOLECULE_DUMP_LOGS_ON_ERROR=true  --env MOLECULE_WAIT_RETRIES=120 localhost/kiali-molecule:latest molecule --debug test  --scenario-name ${msn}; if [ "$?" != "0" ]; then echo "Molecule test failed: ${msn}"; podman volume rm molecule-tests-volume; exit 1; fi; done
+[2;37mDEBUG   [0m Validating schema [35m/tmp/molecule/operator/molecule/metrics-test/[0m[95mmolecule.yml.[0m
+[34mINFO    [0m metrics-test scenario test matrix: prepare, converge, destroy
+[34mINFO    [0m Performing prerun[33m...[0m
+[34mINFO    [0m Running ansible-galaxy collection install -vr requirements.yml -p [35m/home/runner/.cache/ansible-compat/06e55b/[0m[95mcollections[0m
+[34mINFO    [0m Set [33mANSIBLE_LIBRARY[0m=[35m/home/runner/.cache/ansible-compat/06e55b/[0m[95mmodules[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m
+[34mINFO    [0m Set [33mANSIBLE_COLLECTIONS_PATH[0m=[35m/home/runner/.cache/ansible-compat/06e55b/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m
+[34mINFO    [0m Set [33mANSIBLE_ROLES_PATH[0m=[35m/home/runner/.cache/ansible-compat/06e55b/[0m[95mroles[0m:roles:[35m/home/runner/.ansible/[0m[95mroles[0m:[35m/usr/share/ansible/[0m[95mroles[0m:[35m/etc/ansible/[0m[95mroles[0m
+[34mINFO    [0m [2;36mRunning [0m[2;32mmetrics-test[0m[2;36m > [0m[2;32mprepare[0m
+[34mINFO    [0m Sanity checks: [32m'podman'[0m
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m
+ANSIBLE_CONFIG: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mansible.cfg[0m
+ANSIBLE_FILTER_PLUGINS: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m
+ANSIBLE_FORCE_COLOR: [32m'1'[0m
+ANSIBLE_LIBRARY: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m
+ANSIBLE_ROLES_PATH: [32m'/home/runner/.cache/molecule/operator/metrics-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles:'[0m
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: kind
+MOLECULE_DEBUG: [32m'True'[0m
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: [32m'true'[0m
+MOLECULE_ENV_FILE: [35m/tmp/molecule/operator/[0m[95m.env.yml[0m
+MOLECULE_EPHEMERAL_DIRECTORY: [35m/home/runner/.cache/molecule/operator/[0m[95mmetrics-test[0m
+MOLECULE_FILE: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mmolecule.yml[0m
+MOLECULE_HELM_CHARTS_REPO: [35m/tmp/molecule/[0m[95mhelm-charts-repo[0m
+MOLECULE_INSTANCE_CONFIG: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95minstance_config.yml[0m
+MOLECULE_INVENTORY_FILE: [35m/home/runner/.cache/molecule/operator/metrics-test/inventory/[0m[95mansible_inventory.yml[0m
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_KIND_IP: [32m''[0m
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: [32m'true'[0m
+MOLECULE_PROJECT_DIRECTORY: [35m/tmp/molecule/[0m[95moperator[0m
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: [35m/tmp/molecule/operator/molecule/[0m[95mmetrics-test[0m
+MOLECULE_SCENARIO_NAME: metrics-test
+MOLECULE_STATE_FILE: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mstate.yml[0m
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: [35m/tmp/molecule/operator/molecule/metrics-test/[0m[95mtests[0m
+MOLECULE_WAIT_RETRIES: [32m'120'[0m
+
+DEBUG: SHELL REPLAY:
+[33mANSIBLE_COLLECTIONS_PATH[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m [33mANSIBLE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mansible.cfg[0m [33mANSIBLE_FILTER_PLUGINS[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m [33mANSIBLE_FORCE_COLOR[0m=[1;36m1[0m [33mANSIBLE_LIBRARY[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m [33mANSIBLE_ROLES_PATH[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mroles[0m:[35m/tmp/[0m[95mmolecule[0m:[35m/home/runner/.ansible/[0m[95mroles[0m:[35m/usr/share/ansible/[0m[95mroles[0m:[35m/etc/ansible/[0m[95mroles[0m: [33mMOLECULE_CLUSTER_TYPE[0m=[35mkind[0m [33mMOLECULE_DEBUG[0m=[3;92mTrue[0m [33mMOLECULE_DEPENDENCY_NAME[0m=[35mgalaxy[0m [33mMOLECULE_DRIVER_NAME[0m=[35mpodman[0m [33mMOLECULE_DUMP_LOGS_ON_ERROR[0m=[35mtrue[0m [33mMOLECULE_ENV_FILE[0m=[35m/tmp/molecule/operator/[0m[95m.env.yml[0m [33mMOLECULE_EPHEMERAL_DIRECTORY[0m=[35m/home/runner/.cache/molecule/operator/[0m[95mmetrics-test[0m [33mMOLECULE_FILE[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mmolecule.yml[0m [33mMOLECULE_HELM_CHARTS_REPO[0m=[35m/tmp/molecule/[0m[95mhelm-charts-repo[0m [33mMOLECULE_INSTANCE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95minstance_config.yml[0m [33mMOLECULE_INVENTORY_FILE[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/inventory/[0m[95mansible_inventory.yml[0m [33mMOLECULE_KIALI_CR_SPEC_VERSION[0m=[35mdefault[0m [33mMOLECULE_KIND_IP[0m= [33mMOLECULE_OPERATOR_INSTALLER[0m=[35mhelm[0m [33mMOLECULE_OPERATOR_PROFILER_ENABLED[0m=[35mtrue[0m [33mMOLECULE_PROJECT_DIRECTORY[0m=[35m/tmp/molecule/[0m[95moperator[0m [33mMOLECULE_PROVISIONER_NAME[0m=[35mansible[0m [33mMOLECULE_SCENARIO_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/[0m[95mmetrics-test[0m [33mMOLECULE_SCENARIO_NAME[0m=[35mmetrics[0m-test [33mMOLECULE_STATE_FILE[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mstate.yml[0m [33mMOLECULE_VERIFIER_NAME[0m=[35mansible[0m [33mMOLECULE_VERIFIER_TEST_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/metrics-test/[0m[95mtests[0m [33mMOLECULE_WAIT_RETRIES[0m=[1;36m120[0m
+
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[32mok: [localhost][0m
+
+TASK [Get information about the cluster] ***************************************
+[32mok: [localhost][0m
+
+TASK [Determine the cluster type] **********************************************
+[32mok: [localhost][0m
+
+TASK [Determine the Istio implementation] **************************************
+[32mok: [localhost][0m
+
+TASK [Determine if the operator installation is managed externally or not] *****
+[32mok: [localhost][0m
+
+TASK [Get the SMCP name if on Maistra] *****************************************
+[36mskipping: [localhost][0m
+
+TASK [set_fact] ****************************************************************
+[36mskipping: [localhost][0m
+
+TASK [See if we have Maistra htpasswd secret for accessing external services like Prometheus] ***
+[36mskipping: [localhost][0m
+
+TASK [set_fact] ****************************************************************
+[36mskipping: [localhost][0m
+
+TASK [Make sure the operator namespace exists] *********************************
+[33mchanged: [localhost][0m
+
+TASK [Find the latest Operator Helm Chart] *************************************
+[33mchanged: [localhost][0m
+
+TASK [set_fact] ****************************************************************
+[32mok: [localhost][0m
+
+TASK [fail] ********************************************************************
+[36mskipping: [localhost][0m
+
+TASK [Install Operator via Helm] ***********************************************
+[33mchanged: [localhost][0m
+
+TASK [Make sure the CR namespace exists] ***************************************
+[32mok: [localhost][0m
+
+TASK [Process NetworkPolicy needed to access the Kiali UI when in Maistra environment [state=present]] ***
+[36mskipping: [localhost][0m
+
+TASK [Wait for the CRD to be established] **************************************
+[32mok: [localhost][0m
+
+TASK [Prepare initial Kiali CR definition based solely on the template] ********
+[32mok: [localhost][0m
+
+TASK [Modify the Kiali CR definition with specific Maistra config for Prometheus, Tracing, Grafana and Istio] ***
+[36mskipping: [localhost][0m
+
+TASK [Create Kiali CR] *********************************************************
+[33mchanged: [localhost][0m
+
+TASK [Asserting that Kiali is Deployed] ****************************************
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (120 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (119 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (118 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (117 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (116 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (115 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (114 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (113 retries left).[0m
+[32mok: [localhost][0m
+
+PLAY RECAP *********************************************************************
+[33mlocalhost[0m                  : [32mok=14  [0m [33mchanged=4   [0m unreachable=0    failed=0    [36mskipped=7   [0m rescued=0    ignored=0
+
+[34mINFO    [0m [2;36mRunning [0m[2;32mmetrics-test[0m[2;36m > [0m[2;32mconverge[0m
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m
+ANSIBLE_CONFIG: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mansible.cfg[0m
+ANSIBLE_FILTER_PLUGINS: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m
+ANSIBLE_FORCE_COLOR: [32m'1'[0m
+ANSIBLE_LIBRARY: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m
+ANSIBLE_ROLES_PATH: [32m'/home/runner/.cache/molecule/operator/metrics-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles:'[0m
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: kind
+MOLECULE_DEBUG: [32m'True'[0m
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: [32m'true'[0m
+MOLECULE_ENV_FILE: [35m/tmp/molecule/operator/[0m[95m.env.yml[0m
+MOLECULE_EPHEMERAL_DIRECTORY: [35m/home/runner/.cache/molecule/operator/[0m[95mmetrics-test[0m
+MOLECULE_FILE: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mmolecule.yml[0m
+MOLECULE_HELM_CHARTS_REPO: [35m/tmp/molecule/[0m[95mhelm-charts-repo[0m
+MOLECULE_INSTANCE_CONFIG: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95minstance_config.yml[0m
+MOLECULE_INVENTORY_FILE: [35m/home/runner/.cache/molecule/operator/metrics-test/inventory/[0m[95mansible_inventory.yml[0m
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_KIND_IP: [32m''[0m
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: [32m'true'[0m
+MOLECULE_PROJECT_DIRECTORY: [35m/tmp/molecule/[0m[95moperator[0m
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: [35m/tmp/molecule/operator/molecule/[0m[95mmetrics-test[0m
+MOLECULE_SCENARIO_NAME: metrics-test
+MOLECULE_STATE_FILE: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mstate.yml[0m
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: [35m/tmp/molecule/operator/molecule/metrics-test/[0m[95mtests[0m
+MOLECULE_WAIT_RETRIES: [32m'120'[0m
+
+DEBUG: SHELL REPLAY:
+[33mANSIBLE_COLLECTIONS_PATH[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m [33mANSIBLE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mansible.cfg[0m [33mANSIBLE_FILTER_PLUGINS[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m [33mANSIBLE_FORCE_COLOR[0m=[1;36m1[0m [33mANSIBLE_LIBRARY[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m [33mANSIBLE_ROLES_PATH[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mroles[0m:[35m/tmp/[0m[95mmolecule[0m:[35m/home/runner/.ansible/[0m[95mroles[0m:[35m/usr/share/ansible/[0m[95mroles[0m:[35m/etc/ansible/[0m[95mroles[0m: [33mMOLECULE_CLUSTER_TYPE[0m=[35mkind[0m [33mMOLECULE_DEBUG[0m=[3;92mTrue[0m [33mMOLECULE_DEPENDENCY_NAME[0m=[35mgalaxy[0m [33mMOLECULE_DRIVER_NAME[0m=[35mpodman[0m [33mMOLECULE_DUMP_LOGS_ON_ERROR[0m=[35mtrue[0m [33mMOLECULE_ENV_FILE[0m=[35m/tmp/molecule/operator/[0m[95m.env.yml[0m [33mMOLECULE_EPHEMERAL_DIRECTORY[0m=[35m/home/runner/.cache/molecule/operator/[0m[95mmetrics-test[0m [33mMOLECULE_FILE[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mmolecule.yml[0m [33mMOLECULE_HELM_CHARTS_REPO[0m=[35m/tmp/molecule/[0m[95mhelm-charts-repo[0m [33mMOLECULE_INSTANCE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95minstance_config.yml[0m [33mMOLECULE_INVENTORY_FILE[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/inventory/[0m[95mansible_inventory.yml[0m [33mMOLECULE_KIALI_CR_SPEC_VERSION[0m=[35mdefault[0m [33mMOLECULE_KIND_IP[0m= [33mMOLECULE_OPERATOR_INSTALLER[0m=[35mhelm[0m [33mMOLECULE_OPERATOR_PROFILER_ENABLED[0m=[35mtrue[0m [33mMOLECULE_PROJECT_DIRECTORY[0m=[35m/tmp/molecule/[0m[95moperator[0m [33mMOLECULE_PROVISIONER_NAME[0m=[35mansible[0m [33mMOLECULE_SCENARIO_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/[0m[95mmetrics-test[0m [33mMOLECULE_SCENARIO_NAME[0m=[35mmetrics[0m-test [33mMOLECULE_STATE_FILE[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mstate.yml[0m [33mMOLECULE_VERIFIER_NAME[0m=[35mansible[0m [33mMOLECULE_VERIFIER_TEST_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/metrics-test/[0m[95mtests[0m [33mMOLECULE_WAIT_RETRIES[0m=[1;36m120[0m
+
+
+PLAY [Tests] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[32mok: [localhost][0m
+
+TASK [Get information about the cluster] ***************************************
+[32mok: [localhost][0m
+
+TASK [Determine the cluster type] **********************************************
+[32mok: [localhost][0m
+
+TASK [Determine the Istio implementation] **************************************
+[32mok: [localhost][0m
+
+TASK [Get SMCP if running in Maistra environment] ******************************
+[36mskipping: [localhost][0m
+
+TASK [There must one and only one SMCP already installed in the control plane] ***
+[36mskipping: [localhost][0m
+
+TASK [Get Kiali CR if present] *************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Operator Pod] **************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Pod] ***********************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Configmap] *****************************************************
+[32mok: [localhost][0m
+
+TASK [Format Configmap] ********************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Deployment] ****************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Service] *******************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Route] *********************************************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Ingress URL on minikube] *****************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Ingress URL on kind] *********************************
+[32mok: [localhost][0m
+
+TASK [Assert Kiali Pod is Running and there is only one] ***********************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Send a request into Kiali to ensure metrics from this will not be collected] ***
+[32mok: [localhost][0m
+
+TASK [Waiting a few seconds to make sure metrics aren't being collected] *******
+Pausing for 30 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+[32mok: [localhost][0m
+
+TASK [set_fact] ****************************************************************
+[32mok: [localhost][0m
+
+TASK [set_fact] ****************************************************************
+[32mok: [localhost][0m
+
+TASK [Tell user to ensure minikube has the correct time otherwise the metric tests will fail] ***
+[36mskipping: [localhost][0m
+
+TASK [Query Prometheus from Kiali Operator Pod] ********************************
+[35m[DEPRECATION WARNING]: The 'return_code' return key is being renamed to 'rc'. [0m
+[35mBoth keys are being returned for now to allow users to migrate their [0m
+[35mautomation. This feature will be removed from kubernetes.core in version 4.0.0.[0m
+[35m Deprecation warnings can be disabled by setting deprecation_warnings=False in [0m
+[35mansible.cfg.[0m
+[31mfatal: [localhost]: FAILED! => {"changed": true, "rc": 3, "return_code": 3, "stderr": "", "stderr_lines": [], "stdout": "{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-controller\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.73.0-SNAPSHOT\"},\"value\":[1691825981,\"1\"]},{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"namespace-controller\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.73.0-SNAPSHOT\"},\"value\":[1691825981,\"8\"]}]}}", "stdout_lines": ["{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-controller\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.73.0-SNAPSHOT\"},\"value\":[1691825981,\"1\"]},{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"namespace-controller\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.73.0-SNAPSHOT\"},\"value\":[1691825981,\"8\"]}]}}"]}[0m
+[36m...ignoring[0m
+
+TASK [Raw Prometheus query results] ********************************************
+[32mok: [localhost] => {[0m
+[32m    "msg": "URL: http://prometheus.istio-system:9090/api/v1/query }}; Request: {'query': 'workqueue_work_duration_seconds_count{app=\\\\\"kiali-operator\\\\\",namespace=\\\\\"kiali-operator\\\\\"}', 'time': '2023-08-12T07:39:41Z'}; Results: {'changed': True, 'stdout': '{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-controller\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.73.0-SNAPSHOT\"},\"value\":[1691825981,\"1\"]},{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"namespace-controller\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.73.0-SNAPSHOT\"},\"value\":[1691825981,\"8\"]}]}}', 'stderr': '', 'rc': 3, 'return_code': 3, 'deprecations': [{'msg': \"The 'return_code' return key is being renamed to 'rc'. Both keys are being returned for now to allow users to migrate their automation.\", 'version': '4.0.0', 'collection_name': 'kubernetes.core'}], 'stdout_lines': ['{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-controller\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.73.0-SNAPSHOT\"},\"value\":[1691825981,\"1\"]},{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"namespace-controller\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.73.0-SNAPSHOT\"},\"value\":[1691825981,\"8\"]}]}}'], 'stderr_lines': [], 'failed': True}"[0m
+[32m}[0m
+
+TASK [set_fact] ****************************************************************
+[32mok: [localhost][0m
+
+TASK [fail] ********************************************************************
+[36mskipping: [localhost][0m
+
+TASK [assert] ******************************************************************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Tell user to ensure minikube has the correct time otherwise the metric tests will fail] ***
+[36mskipping: [localhost][0m
+
+TASK [Query Prometheus from Kiali Operator Pod] ********************************
+[31mfatal: [localhost]: FAILED! => {"changed": true, "rc": 3, "return_code": 3, "stderr": "", "stderr_lines": [], "stdout": "{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"ansible_operator_build_info\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"commit\":\"484013d1865c35df2bc5dfea0ab6ea6b434adefa\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-operator\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.28.0\"},\"value\":[1691825981,\"1\"]}]}}", "stdout_lines": ["{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"ansible_operator_build_info\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"commit\":\"484013d1865c35df2bc5dfea0ab6ea6b434adefa\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-operator\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.28.0\"},\"value\":[1691825981,\"1\"]}]}}"]}[0m
+[36m...ignoring[0m
+
+TASK [Raw Prometheus query results] ********************************************
+[32mok: [localhost] => {[0m
+[32m    "msg": "URL: http://prometheus.istio-system:9090/api/v1/query }}; Request: {'query': 'ansible_operator_build_info', 'time': '2023-08-12T07:39:41Z'}; Results: {'changed': True, 'stdout': '{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"ansible_operator_build_info\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"commit\":\"484013d1865c35df2bc5dfea0ab6ea6b434adefa\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-operator\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.28.0\"},\"value\":[1691825981,\"1\"]}]}}', 'stderr': '', 'rc': 3, 'return_code': 3, 'deprecations': [{'msg': \"The 'return_code' return key is being renamed to 'rc'. Both keys are being returned for now to allow users to migrate their automation.\", 'version': '4.0.0', 'collection_name': 'kubernetes.core'}], 'stdout_lines': ['{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"ansible_operator_build_info\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_managed_by\":\"Helm\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v1.73.0-SNAPSHOT\",\"commit\":\"484013d1865c35df2bc5dfea0ab6ea6b434adefa\",\"helm_sh_chart\":\"kiali-operator-1.73.0-SNAPSHOT\",\"instance\":\"10.244.1.48:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-operator\",\"namespace\":\"kiali-operator\",\"pod\":\"kiali-operator-6fb8d9d55f-6jk4v\",\"pod_template_hash\":\"6fb8d9d55f\",\"version\":\"v1.28.0\"},\"value\":[1691825981,\"1\"]}]}}'], 'stderr_lines': [], 'failed': True}"[0m
+[32m}[0m
+
+TASK [set_fact] ****************************************************************
+[32mok: [localhost][0m
+
+TASK [fail] ********************************************************************
+[36mskipping: [localhost][0m
+
+TASK [assert] ******************************************************************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Tell user to ensure minikube has the correct time otherwise the metric tests will fail] ***
+[36mskipping: [localhost][0m
+
+TASK [Query Prometheus from Kiali Operator Pod] ********************************
+[31mfatal: [localhost]: FAILED! => {"changed": true, "rc": 3, "return_code": 3, "stderr": "", "stderr_lines": [], "stdout": "{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[]}}", "stdout_lines": ["{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[]}}"]}[0m
+[36m...ignoring[0m
+
+TASK [Raw Prometheus query results] ********************************************
+[32mok: [localhost] => {[0m
+[32m    "msg": "URL: http://prometheus.istio-system:9090/api/v1/query }}; Request: {'query': 'kiali_api_processing_duration_seconds_count{app=\\\\\"kiali\\\\\",namespace=\\\\\"istio-system\\\\\"}', 'time': '2023-08-12T07:39:41Z'}; Results: {'changed': True, 'stdout': '{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[]}}', 'stderr': '', 'rc': 3, 'return_code': 3, 'deprecations': [{'msg': \"The 'return_code' return key is being renamed to 'rc'. Both keys are being returned for now to allow users to migrate their automation.\", 'version': '4.0.0', 'collection_name': 'kubernetes.core'}], 'stdout_lines': ['{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[]}}'], 'stderr_lines': [], 'failed': True}"[0m
+[32m}[0m
+
+TASK [set_fact] ****************************************************************
+[32mok: [localhost][0m
+
+TASK [fail] ********************************************************************
+[36mskipping: [localhost][0m
+
+TASK [assert] ******************************************************************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Purging all data from Prometheus] ****************************************
+[33mchanged: [localhost] => (item={'metadata': {'name': 'prometheus-5d5d6d6fc-dnrjw', 'generateName': 'prometheus-5d5d6d6fc-', 'namespace': 'istio-system', 'uid': 'f5963742-9dae-4dd5-a919-cc7601f0a2ed', 'resourceVersion': '1100', 'creationTimestamp': '2023-08-12T07:01:51Z', 'labels': {'app': 'prometheus', 'chart': 'prometheus-19.6.1', 'component': 'server', 'heritage': 'Helm', 'pod-template-hash': '5d5d6d6fc', 'release': 'prometheus', 'sidecar.istio.io/inject': 'false'}, 'ownerReferences': [{'apiVersion': 'apps/v1', 'kind': 'ReplicaSet', 'name': 'prometheus-5d5d6d6fc', 'uid': 'eb381202-516d-4e96-b33c-a46c2441dd66', 'controller': True, 'blockOwnerDeletion': True}], 'managedFields': [{'manager': 'kube-controller-manager', 'operation': 'Update', 'apiVersion': 'v1', 'time': '2023-08-12T07:01:51Z', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:metadata': {'f:generateName': {}, 'f:labels': {'.': {}, 'f:app': {}, 'f:chart': {}, 'f:component': {}, 'f:heritage': {}, 'f:pod-template-hash': {}, 'f:release': {}, 'f:sidecar.istio.io/inject': {}}, 'f:ownerReferences': {'.': {}, 'k:{"uid":"eb381202-516d-4e96-b33c-a46c2441dd66"}': {}}}, 'f:spec': {'f:containers': {'k:{"name":"prometheus-server"}': {'.': {}, 'f:args': {}, 'f:image': {}, 'f:imagePullPolicy': {}, 'f:livenessProbe': {'.': {}, 'f:failureThreshold': {}, 'f:httpGet': {'.': {}, 'f:path': {}, 'f:port': {}, 'f:scheme': {}}, 'f:initialDelaySeconds': {}, 'f:periodSeconds': {}, 'f:successThreshold': {}, 'f:timeoutSeconds': {}}, 'f:name': {}, 'f:ports': {'.': {}, 'k:{"containerPort":9090,"protocol":"TCP"}': {'.': {}, 'f:containerPort': {}, 'f:protocol': {}}}, 'f:readinessProbe': {'.': {}, 'f:failureThreshold': {}, 'f:httpGet': {'.': {}, 'f:path': {}, 'f:port': {}, 'f:scheme': {}}, 'f:periodSeconds': {}, 'f:successThreshold': {}, 'f:timeoutSeconds': {}}, 'f:resources': {}, 'f:terminationMessagePath': {}, 'f:terminationMessagePolicy': {}, 'f:volumeMounts': {'.': {}, 'k:{"mountPath":"/data"}': {'.': {}, 'f:mountPath': {}, 'f:name': {}}, 'k:{"mountPath":"/etc/config"}': {'.': {}, 'f:mountPath': {}, 'f:name': {}}}}, 'k:{"name":"prometheus-server-configmap-reload"}': {'.': {}, 'f:args': {}, 'f:image': {}, 'f:imagePullPolicy': {}, 'f:name': {}, 'f:resources': {}, 'f:terminationMessagePath': {}, 'f:terminationMessagePolicy': {}, 'f:volumeMounts': {'.': {}, 'k:{"mountPath":"/etc/config"}': {'.': {}, 'f:mountPath': {}, 'f:name': {}, 'f:readOnly': {}}}}}, 'f:dnsPolicy': {}, 'f:enableServiceLinks': {}, 'f:restartPolicy': {}, 'f:schedulerName': {}, 'f:securityContext': {'.': {}, 'f:fsGroup': {}, 'f:runAsGroup': {}, 'f:runAsNonRoot': {}, 'f:runAsUser': {}}, 'f:serviceAccount': {}, 'f:serviceAccountName': {}, 'f:terminationGracePeriodSeconds': {}, 'f:volumes': {'.': {}, 'k:{"name":"config-volume"}': {'.': {}, 'f:configMap': {'.': {}, 'f:defaultMode': {}, 'f:name': {}}, 'f:name': {}}, 'k:{"name":"storage-volume"}': {'.': {}, 'f:emptyDir': {}, 'f:name': {}}}}}}, {'manager': 'kubelet', 'operation': 'Update', 'apiVersion': 'v1', 'time': '2023-08-12T07:02:36Z', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'f:conditions': {'k:{"type":"ContainersReady"}': {'.': {}, 'f:lastProbeTime': {}, 'f:lastTransitionTime': {}, 'f:status': {}, 'f:type': {}}, 'k:{"type":"Initialized"}': {'.': {}, 'f:lastProbeTime': {}, 'f:lastTransitionTime': {}, 'f:status': {}, 'f:type': {}}, 'k:{"type":"Ready"}': {'.': {}, 'f:lastProbeTime': {}, 'f:lastTransitionTime': {}, 'f:status': {}, 'f:type': {}}}, 'f:containerStatuses': {}, 'f:hostIP': {}, 'f:phase': {}, 'f:podIP': {}, 'f:podIPs': {'.': {}, 'k:{"ip":"10.244.1.6"}': {'.': {}, 'f:ip': {}}}, 'f:startTime': {}}}, 'subresource': 'status'}]}, 'spec': {'volumes': [{'name': 'config-volume', 'configMap': {'name': 'prometheus', 'defaultMode': 420}}, {'name': 'storage-volume', 'emptyDir': {}}, {'name': 'kube-api-access-f9gtl', 'projected': {'sources': [{'serviceAccountToken': {'expirationSeconds': 3607, 'path': 'token'}}, {'configMap': {'name': 'kube-root-ca.crt', 'items': [{'key': 'ca.crt', 'path': 'ca.crt'}]}}, {'downwardAPI': {'items': [{'path': 'namespace', 'fieldRef': {'apiVersion': 'v1', 'fieldPath': 'metadata.namespace'}}]}}], 'defaultMode': 420}}], 'containers': [{'name': 'prometheus-server-configmap-reload', 'image': 'jimmidyson/configmap-reload:v0.8.0', 'args': ['--volume-dir=/etc/config', '--webhook-url=http://127.0.0.1:9090/-/reload'], 'resources': {}, 'volumeMounts': [{'name': 'config-volume', 'readOnly': True, 'mountPath': '/etc/config'}, {'name': 'kube-api-access-f9gtl', 'readOnly': True, 'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount'}], 'terminationMessagePath': '/dev/termination-log', 'terminationMessagePolicy': 'File', 'imagePullPolicy': 'IfNotPresent'}, {'name': 'prometheus-server', 'image': 'prom/prometheus:v2.41.0', 'args': ['--storage.tsdb.retention.time=15d', '--config.file=/etc/config/prometheus.yml', '--storage.tsdb.path=/data', '--web.console.libraries=/etc/prometheus/console_libraries', '--web.console.templates=/etc/prometheus/consoles', '--web.enable-lifecycle'], 'ports': [{'containerPort': 9090, 'protocol': 'TCP'}], 'resources': {}, 'volumeMounts': [{'name': 'config-volume', 'mountPath': '/etc/config'}, {'name': 'storage-volume', 'mountPath': '/data'}, {'name': 'kube-api-access-f9gtl', 'readOnly': True, 'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount'}], 'livenessProbe': {'httpGet': {'path': '/-/healthy', 'port': 9090, 'scheme': 'HTTP'}, 'initialDelaySeconds': 30, 'timeoutSeconds': 10, 'periodSeconds': 15, 'successThreshold': 1, 'failureThreshold': 3}, 'readinessProbe': {'httpGet': {'path': '/-/ready', 'port': 9090, 'scheme': 'HTTP'}, 'timeoutSeconds': 4, 'periodSeconds': 5, 'successThreshold': 1, 'failureThreshold': 3}, 'terminationMessagePath': '/dev/termination-log', 'terminationMessagePolicy': 'File', 'imagePullPolicy': 'IfNotPresent'}], 'restartPolicy': 'Always', 'terminationGracePeriodSeconds': 300, 'dnsPolicy': 'ClusterFirst', 'serviceAccountName': 'prometheus', 'serviceAccount': 'prometheus', 'nodeName': 'ci-worker', 'securityContext': {'runAsUser': 65534, 'runAsGroup': 65534, 'runAsNonRoot': True, 'fsGroup': 65534}, 'schedulerName': 'default-scheduler', 'tolerations': [{'key': 'node.kubernetes.io/not-ready', 'operator': 'Exists', 'effect': 'NoExecute', 'tolerationSeconds': 300}, {'key': 'node.kubernetes.io/unreachable', 'operator': 'Exists', 'effect': 'NoExecute', 'tolerationSeconds': 300}], 'priority': 0, 'enableServiceLinks': True, 'preemptionPolicy': 'PreemptLowerPriority'}, 'status': {'phase': 'Running', 'conditions': [{'type': 'Initialized', 'status': 'True', 'lastProbeTime': None, 'lastTransitionTime': '2023-08-12T07:01:51Z'}, {'type': 'Ready', 'status': 'True', 'lastProbeTime': None, 'lastTransitionTime': '2023-08-12T07:02:36Z'}, {'type': 'ContainersReady', 'status': 'True', 'lastProbeTime': None, 'lastTransitionTime': '2023-08-12T07:02:36Z'}, {'type': 'PodScheduled', 'status': 'True', 'lastProbeTime': None, 'lastTransitionTime': '2023-08-12T07:01:51Z'}], 'hostIP': '172.18.0.2', 'podIP': '10.244.1.6', 'podIPs': [{'ip': '10.244.1.6'}], 'startTime': '2023-08-12T07:01:51Z', 'containerStatuses': [{'name': 'prometheus-server', 'state': {'running': {'startedAt': '2023-08-12T07:02:36Z'}}, 'lastState': {}, 'ready': True, 'restartCount': 0, 'image': 'docker.io/prom/prometheus:v2.41.0', 'imageID': 'docker.io/prom/prometheus@sha256:1a3e9a878e50cd339ae7cf5718fda08381dda2d4ccd28e94bbaa3190d1a566c2', 'containerID': 'containerd://dd7ed8ad64941f3803ce6d74444bc91c63f8531dbef4ecc0c28de425a93d3eb4', 'started': True}, {'name': 'prometheus-server-configmap-reload', 'state': {'running': {'startedAt': '2023-08-12T07:01:54Z'}}, 'lastState': {}, 'ready': True, 'restartCount': 0, 'image': 'docker.io/jimmidyson/configmap-reload:v0.8.0', 'imageID': 'docker.io/jimmidyson/configmap-reload@sha256:5af9d3041d12a3e63f115125f89b66d2ba981fe82e64302ac370c5496055059c', 'containerID': 'containerd://e8d42bc2c2185f2ac7bf54dff7f68e67b75f0c1753d2b3b0840f95183f10fd64', 'started': True}], 'qosClass': 'BestEffort'}, 'apiVersion': 'v1', 'kind': 'Pod'})[0m
+
+TASK [Wait for the Prometheus pod to be back up running and that there is only one] ***
+[1;30mFAILED - RETRYING: [localhost]: Wait for the Prometheus pod to be back up running and that there is only one (120 retries left).[0m
+[32mok: [localhost][0m
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+[32mok: [localhost][0m
+
+TASK [Enable metrics in current Kiali CR] **************************************
+[32mok: [localhost][0m
+
+TASK [Change Kiali CR with new Kiali CR] ***************************************
+[31m--- before[0m
+[32m+++ after[0m
+[36m@@ -1,52 +1,7 @@[0m
+ {
+     "metadata": {
+[31m-        "generation": 1,[0m
+[32m+        "generation": 2,[0m
+         "managedFields": [
+[31m-            {[0m
+[31m-                "apiVersion": "kiali.io/v1alpha1",[0m
+[31m-                "fieldsType": "FieldsV1",[0m
+[31m-                "fieldsV1": {[0m
+[31m-                    "f:spec": {[0m
+[31m-                        ".": {},[0m
+[31m-                        "f:auth": {[0m
+[31m-                            ".": {},[0m
+[31m-                            "f:strategy": {}[0m
+[31m-                        },[0m
+[31m-                        "f:deployment": {[0m
+[31m-                            ".": {},[0m
+[31m-                            "f:accessible_namespaces": {},[0m
+[31m-                            "f:image_name": {},[0m
+[31m-                            "f:image_pull_policy": {},[0m
+[31m-                            "f:image_version": {},[0m
+[31m-                            "f:ingress": {[0m
+[31m-                                ".": {},[0m
+[31m-                                "f:enabled": {}[0m
+[31m-                            },[0m
+[31m-                            "f:logger": {[0m
+[31m-                                ".": {},[0m
+[31m-                                "f:log_level": {}[0m
+[31m-                            },[0m
+[31m-                            "f:namespace": {},[0m
+[31m-                            "f:service_type": {}[0m
+[31m-                        },[0m
+[31m-                        "f:istio_namespace": {},[0m
+[31m-                        "f:server": {[0m
+[31m-                            ".": {},[0m
+[31m-                            "f:observability": {[0m
+[31m-                                ".": {},[0m
+[31m-                                "f:metrics": {[0m
+[31m-                                    ".": {},[0m
+[31m-                                    "f:enabled": {}[0m
+[31m-                                }[0m
+[31m-                            }[0m
+[31m-                        },[0m
+[31m-                        "f:version": {}[0m
+[31m-                    }[0m
+[31m-                },[0m
+[31m-                "manager": "OpenAPI-Generator",[0m
+[31m-                "operation": "Update",[0m
+[31m-                "time": "2023-08-12T07:38:53Z"[0m
+[31m-            },[0m
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+                 "fieldsType": "FieldsV1",
+[36m@@ -105,15 +60,60 @@[0m
+                 "operation": "Update",
+                 "subresource": "status",
+                 "time": "2023-08-12T07:39:08Z"
+[32m+            },[0m
+[32m+            {[0m
+[32m+                "apiVersion": "kiali.io/v1alpha1",[0m
+[32m+                "fieldsType": "FieldsV1",[0m
+[32m+                "fieldsV1": {[0m
+[32m+                    "f:spec": {[0m
+[32m+                        ".": {},[0m
+[32m+                        "f:auth": {[0m
+[32m+                            ".": {},[0m
+[32m+                            "f:strategy": {}[0m
+[32m+                        },[0m
+[32m+                        "f:deployment": {[0m
+[32m+                            ".": {},[0m
+[32m+                            "f:accessible_namespaces": {},[0m
+[32m+                            "f:image_name": {},[0m
+[32m+                            "f:image_pull_policy": {},[0m
+[32m+                            "f:image_version": {},[0m
+[32m+                            "f:ingress": {[0m
+[32m+                                ".": {},[0m
+[32m+                                "f:enabled": {}[0m
+[32m+                            },[0m
+[32m+                            "f:logger": {[0m
+[32m+                                ".": {},[0m
+[32m+                                "f:log_level": {}[0m
+[32m+                            },[0m
+[32m+                            "f:namespace": {},[0m
+[32m+                            "f:service_type": {}[0m
+[32m+                        },[0m
+[32m+                        "f:istio_namespace": {},[0m
+[32m+                        "f:server": {[0m
+[32m+                            ".": {},[0m
+[32m+                            "f:observability": {[0m
+[32m+                                ".": {},[0m
+[32m+                                "f:metrics": {[0m
+[32m+                                    ".": {},[0m
+[32m+                                    "f:enabled": {}[0m
+[32m+                                }[0m
+[32m+                            }[0m
+[32m+                        },[0m
+[32m+                        "f:version": {}[0m
+[32m+                    }[0m
+[32m+                },[0m
+[32m+                "manager": "OpenAPI-Generator",[0m
+[32m+                "operation": "Update",[0m
+[32m+                "time": "2023-08-12T07:40:26Z"[0m
+             }
+         ],
+[31m-        "resourceVersion": "8003"[0m
+[32m+        "resourceVersion": "8196"[0m
+     },
+     "spec": {
+         "server": {
+             "observability": {
+                 "metrics": {
+[31m-                    "enabled": false[0m
+[32m+                    "enabled": true[0m
+                 }
+             }
+         }
+
+[33mchanged: [localhost][0m
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+[1;30mFAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (120 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (119 retries left).[0m
+[1;30mFAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (118 retries left).[0m
+[32mok: [localhost][0m
+
+TASK [Asserting that Kiali Pod exists and there is only one] *******************
+[32mok: [localhost][0m
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+[1;30mFAILED - RETRYING: [localhost]: Wait for Kiali to be running and accepting requests (120 retries left).[0m
+[32mok: [localhost][0m
+
+TASK [Get information about the cluster] ***************************************
+[32mok: [localhost][0m
+
+TASK [Determine the cluster type] **********************************************
+[32mok: [localhost][0m
+
+TASK [Determine the Istio implementation] **************************************
+[32mok: [localhost][0m
+
+TASK [Get SMCP if running in Maistra environment] ******************************
+[36mskipping: [localhost][0m
+
+TASK [There must one and only one SMCP already installed in the control plane] ***
+[36mskipping: [localhost][0m
+
+TASK [Get Kiali CR if present] *************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Operator Pod] **************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Pod] ***********************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Configmap] *****************************************************
+[32mok: [localhost][0m
+
+TASK [Format Configmap] ********************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Deployment] ****************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Service] *******************************************************
+[32mok: [localhost][0m
+
+TASK [Get Kiali Route] *********************************************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Ingress URL on minikube] *****************************
+[36mskipping: [localhost][0m
+
+TASK [Determine the Kiali Ingress URL on kind] *********************************
+[32mok: [localhost][0m
+
+TASK [Assert Kiali Pod is Running and there is only one] ***********************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+TASK [Send a request into Kiali to build up metrics] ***************************
+[32mok: [localhost][0m
+
+TASK [Waiting a few seconds for metrics to be collected] ***********************
+Pausing for 30 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+[32mok: [localhost][0m
+
+TASK [Tell user to ensure minikube has the correct time otherwise the metric tests will fail] ***
+[36mskipping: [localhost][0m
+
+TASK [Query Prometheus from Kiali Operator Pod] ********************************
+[31mfatal: [localhost]: FAILED! => {"changed": true, "rc": 3, "return_code": 3, "stderr": "", "stderr_lines": [], "stdout": "{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.1.52:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"pod\":\"kiali-5dd6768c68-h9sv9\",\"pod_template_hash\":\"5dd6768c68\",\"route\":\"Healthz\",\"version\":\"master\"},\"value\":[1691826106.517,\"2\"]},{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.1.52:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"pod\":\"kiali-5dd6768c68-h9sv9\",\"pod_template_hash\":\"5dd6768c68\",\"route\":\"Root\",\"version\":\"master\"},\"value\":[1691826106.517,\"2\"]}]}}", "stdout_lines": ["{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.1.52:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"pod\":\"kiali-5dd6768c68-h9sv9\",\"pod_template_hash\":\"5dd6768c68\",\"route\":\"Healthz\",\"version\":\"master\"},\"value\":[1691826106.517,\"2\"]},{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.1.52:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"pod\":\"kiali-5dd6768c68-h9sv9\",\"pod_template_hash\":\"5dd6768c68\",\"route\":\"Root\",\"version\":\"master\"},\"value\":[1691826106.517,\"2\"]}]}}"]}[0m
+[36m...ignoring[0m
+
+TASK [Raw Prometheus query results] ********************************************
+[32mok: [localhost] => {[0m
+[32m    "msg": "URL: http://prometheus.istio-system:9090/api/v1/query }}; Request: {'query': 'kiali_api_processing_duration_seconds_count{app=\\\\\"kiali\\\\\",namespace=\\\\\"istio-system\\\\\"}', 'time': ''}; Results: {'changed': True, 'stdout': '{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.1.52:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"pod\":\"kiali-5dd6768c68-h9sv9\",\"pod_template_hash\":\"5dd6768c68\",\"route\":\"Healthz\",\"version\":\"master\"},\"value\":[1691826106.517,\"2\"]},{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.1.52:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"pod\":\"kiali-5dd6768c68-h9sv9\",\"pod_template_hash\":\"5dd6768c68\",\"route\":\"Root\",\"version\":\"master\"},\"value\":[1691826106.517,\"2\"]}]}}', 'stderr': '', 'rc': 3, 'return_code': 3, 'deprecations': [{'msg': \"The 'return_code' return key is being renamed to 'rc'. Both keys are being returned for now to allow users to migrate their automation.\", 'version': '4.0.0', 'collection_name': 'kubernetes.core'}], 'stdout_lines': ['{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.1.52:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"pod\":\"kiali-5dd6768c68-h9sv9\",\"pod_template_hash\":\"5dd6768c68\",\"route\":\"Healthz\",\"version\":\"master\"},\"value\":[1691826106.517,\"2\"]},{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.1.52:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"pod\":\"kiali-5dd6768c68-h9sv9\",\"pod_template_hash\":\"5dd6768c68\",\"route\":\"Root\",\"version\":\"master\"},\"value\":[1691826106.517,\"2\"]}]}}'], 'stderr_lines': [], 'failed': True}"[0m
+[32m}[0m
+
+TASK [set_fact] ****************************************************************
+[32mok: [localhost][0m
+
+TASK [fail] ********************************************************************
+[36mskipping: [localhost][0m
+
+TASK [assert] ******************************************************************
+[32mok: [localhost] => {[0m
+[32m    "changed": false,[0m
+[32m    "msg": "All assertions passed"[0m
+[32m}[0m
+
+PLAY RECAP *********************************************************************
+[33mlocalhost[0m                  : [32mok=57  [0m [33mchanged=6   [0m unreachable=0    failed=0    [36mskipped=18  [0m rescued=0    [1;35mignored=4[0m
+
+[34mINFO    [0m [2;36mRunning [0m[2;32mmetrics-test[0m[2;36m > [0m[2;32mdestroy[0m
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m
+ANSIBLE_CONFIG: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mansible.cfg[0m
+ANSIBLE_FILTER_PLUGINS: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m
+ANSIBLE_FORCE_COLOR: [32m'1'[0m
+ANSIBLE_LIBRARY: [35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m
+ANSIBLE_ROLES_PATH: [32m'/home/runner/.cache/molecule/operator/metrics-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles:'[0m
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: kind
+MOLECULE_DEBUG: [32m'True'[0m
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: [32m'true'[0m
+MOLECULE_ENV_FILE: [35m/tmp/molecule/operator/[0m[95m.env.yml[0m
+MOLECULE_EPHEMERAL_DIRECTORY: [35m/home/runner/.cache/molecule/operator/[0m[95mmetrics-test[0m
+MOLECULE_FILE: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mmolecule.yml[0m
+MOLECULE_HELM_CHARTS_REPO: [35m/tmp/molecule/[0m[95mhelm-charts-repo[0m
+MOLECULE_INSTANCE_CONFIG: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95minstance_config.yml[0m
+MOLECULE_INVENTORY_FILE: [35m/home/runner/.cache/molecule/operator/metrics-test/inventory/[0m[95mansible_inventory.yml[0m
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_KIND_IP: [32m''[0m
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: [32m'true'[0m
+MOLECULE_PROJECT_DIRECTORY: [35m/tmp/molecule/[0m[95moperator[0m
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: [35m/tmp/molecule/operator/molecule/[0m[95mmetrics-test[0m
+MOLECULE_SCENARIO_NAME: metrics-test
+MOLECULE_STATE_FILE: [35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mstate.yml[0m
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: [35m/tmp/molecule/operator/molecule/metrics-test/[0m[95mtests[0m
+MOLECULE_WAIT_RETRIES: [32m'120'[0m
+
+DEBUG: SHELL REPLAY:
+[33mANSIBLE_COLLECTIONS_PATH[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mcollections[0m:[35m/home/runner/.ansible/[0m[95mcollections[0m:[35m/usr/share/ansible/[0m[95mcollections[0m:[35m/etc/ansible/[0m[95mcollections[0m [33mANSIBLE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mansible.cfg[0m [33mANSIBLE_FILTER_PLUGINS[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mfilter[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/plugins/[0m[95mfilter[0m:[35m/tmp/molecule/operator/plugins/[0m[95mfilter[0m:[35m/home/runner/.ansible/plugins/[0m[95mfilter[0m:[35m/usr/share/ansible/plugins/[0m[95mfilter[0m [33mANSIBLE_FORCE_COLOR[0m=[1;36m1[0m [33mANSIBLE_LIBRARY[0m=[35m/usr/local/lib/python3.8/site-packages/molecule/provisioner/ansible/plugins/[0m[95mmodules[0m:[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mlibrary[0m:[35m/tmp/molecule/operator/[0m[95mlibrary[0m:[35m/home/runner/.ansible/plugins/[0m[95mmodules[0m:[35m/usr/share/ansible/plugins/[0m[95mmodules[0m [33mANSIBLE_ROLES_PATH[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mroles[0m:[35m/tmp/[0m[95mmolecule[0m:[35m/home/runner/.ansible/[0m[95mroles[0m:[35m/usr/share/ansible/[0m[95mroles[0m:[35m/etc/ansible/[0m[95mroles[0m: [33mMOLECULE_CLUSTER_TYPE[0m=[35mkind[0m [33mMOLECULE_DEBUG[0m=[3;92mTrue[0m [33mMOLECULE_DEPENDENCY_NAME[0m=[35mgalaxy[0m [33mMOLECULE_DRIVER_NAME[0m=[35mpodman[0m [33mMOLECULE_DUMP_LOGS_ON_ERROR[0m=[35mtrue[0m [33mMOLECULE_ENV_FILE[0m=[35m/tmp/molecule/operator/[0m[95m.env.yml[0m [33mMOLECULE_EPHEMERAL_DIRECTORY[0m=[35m/home/runner/.cache/molecule/operator/[0m[95mmetrics-test[0m [33mMOLECULE_FILE[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mmolecule.yml[0m [33mMOLECULE_HELM_CHARTS_REPO[0m=[35m/tmp/molecule/[0m[95mhelm-charts-repo[0m [33mMOLECULE_INSTANCE_CONFIG[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95minstance_config.yml[0m [33mMOLECULE_INVENTORY_FILE[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/inventory/[0m[95mansible_inventory.yml[0m [33mMOLECULE_KIALI_CR_SPEC_VERSION[0m=[35mdefault[0m [33mMOLECULE_KIND_IP[0m= [33mMOLECULE_OPERATOR_INSTALLER[0m=[35mhelm[0m [33mMOLECULE_OPERATOR_PROFILER_ENABLED[0m=[35mtrue[0m [33mMOLECULE_PROJECT_DIRECTORY[0m=[35m/tmp/molecule/[0m[95moperator[0m [33mMOLECULE_PROVISIONER_NAME[0m=[35mansible[0m [33mMOLECULE_SCENARIO_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/[0m[95mmetrics-test[0m [33mMOLECULE_SCENARIO_NAME[0m=[35mmetrics[0m-test [33mMOLECULE_STATE_FILE[0m=[35m/home/runner/.cache/molecule/operator/metrics-test/[0m[95mstate.yml[0m [33mMOLECULE_VERIFIER_NAME[0m=[35mansible[0m [33mMOLECULE_VERIFIER_TEST_DIRECTORY[0m=[35m/tmp/molecule/operator/molecule/metrics-test/[0m[95mtests[0m [33mMOLECULE_WAIT_RETRIES[0m=[1;36m120[0m
+
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[32mok: [localhost][0m
+
+TASK [Get information about the cluster] ***************************************
+[32mok: [localhost][0m
+
+TASK [Determine the cluster type] **********************************************
+[32mok: [localhost][0m
+
+TASK [Determine the Istio implementation] **************************************
+[32mok: [localhost][0m
+
+TASK [Determine if the operator installation is managed externally or not] *****
+[32mok: [localhost][0m
+
+TASK [Remove Kiali CR] *********************************************************
+[33mchanged: [localhost][0m
+
+TASK [Wait for Kiali ConfigMap to be uninstalled] ******************************
+[32mok: [localhost][0m
+
+TASK [Process NetworkPolicy needed to access the Kiali UI when in Maistra environment [state=absent]] ***
+[36mskipping: [localhost][0m
+
+TASK [Uninstall Operator via Helm] *********************************************
+[33mchanged: [localhost][0m
+
+TASK [Remove CRDs] *************************************************************
+[33mchanged: [localhost][0m
+
+TASK [Removing Operator namespace] *********************************************
+[33mchanged: [localhost][0m
+
+TASK [Removing CR namespace if it is different than control plane and operator namespace] ***
+[36mskipping: [localhost][0m
+
+PLAY RECAP *********************************************************************
+[33mlocalhost[0m                  : [32mok=10  [0m [33mchanged=4   [0m unreachable=0    failed=0    [36mskipped=2   [0m rescued=0    ignored=0
+
+[34mINFO    [0m Pruning extra files from scenario ephemeral directory
+podman volume rm molecule-tests-volume
+molecule-tests-volume
