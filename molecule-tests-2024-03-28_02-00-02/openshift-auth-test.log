@@ -1,0 +1,470 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT/helm-charts'
+Will use this helm executable: /tmp/KIALI-GIT/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator-1.83.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT/helm-charts'
+OCP repos: external=[default-route-openshift-image-registry.apps.ocp4.local] internal=[image-registry.openshift-image-registry.svc:5000]
+
+Will auto-detect hosts to add based on the CLUSTER_REPO: default-route-openshift-image-registry.apps.ocp4.local
+Auto-detected add host args: --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.2 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.2 --add-host=api.ocp4.local:192.168.122.2 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.2
+Will not rebuild kiali-molecule image.
+podman volume exists molecule-tests-volume && echo "Podman volume already exists; deleting it" && podman volume rm molecule-tests-volume || true
+podman volume create molecule-tests-volume
+molecule-tests-volume
+podman create -v molecule-tests-volume:/data --name molecule-volume-helper docker.io/busybox true
+dd4bdd15301bd21299f3cbcb5837c8ea121bd14080ec2ccd8d46295c9d73d3d0
+podman cp "/tmp/KIALI-GIT/helm-charts" molecule-volume-helper:/data/helm-charts-repo
+podman cp "/tmp/KIALI-GIT/kiali/operator/" molecule-volume-helper:/data/operator
+podman cp "/home/jmazzite/.kube/config" molecule-volume-helper:/data/kubeconfig
+podman rm molecule-volume-helper
+molecule-volume-helper
+namespace/kiali-operator created
+secret/kiali-operator-pull-secret created
+secret/kiali-operator-pull-secret labeled
+for msn in openshift-auth-test; do podman run --rm  --env KUBECONFIG="/tmp/molecule/kubeconfig" --env K8S_AUTH_KUBECONFIG="/tmp/molecule/kubeconfig" --env MOLECULE_CLUSTER_TYPE="openshift" --env MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo -v molecule-tests-volume:/tmp/molecule    -w /tmp/molecule/operator --network="host" --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.2 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.2 --add-host=api.ocp4.local:192.168.122.2 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.2 --add-host="api.crc.testing:192.168.130.11" --add-host="kiali-istio-system.apps-crc.testing:192.168.130.11" --add-host="prometheus-istio-system.apps-crc.testing:192.168.130.11" --env DORP=podman --env OPERATOR_IMAGE_PULL_SECRET_NAME=kiali-operator-pull-secret --env MOLECULE_KIALI_CR_SPEC_VERSION=default --env PLUGIN_IMAGE_PULL_SECRET_JSON="" --env MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION="default"  --env MOLECULE_OPERATOR_PROFILER_ENABLED=true --env MOLECULE_OPERATOR_INSTALLER=helm --env MOLECULE_DUMP_LOGS_ON_ERROR=true  --env MOLECULE_WAIT_RETRIES=360 localhost/kiali-molecule:latest molecule --debug test  --scenario-name ${msn}; if [ "$?" != "0" ]; then echo "Molecule test failed: ${msn}"; podman volume rm molecule-tests-volume; exit 1; fi; done
+DEBUG    Validating schema /tmp/molecule/operator/molecule/openshift-auth-test/molecule.yml.
+WARNING  Driver podman does not provide a schema.
+INFO     openshift-auth-test scenario test matrix: prepare, converge, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Running ansible-galaxy collection install -v -r requirements.yml
+INFO     Set ANSIBLE_ROLES_PATH=roles:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Running openshift-auth-test > prepare
+INFO     Sanity checks: 'podman'
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/openshift-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/openshift-auth-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/openshift-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/openshift-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/openshift-auth-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/openshift-auth-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/openshift-auth-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/openshift-auth-test
+MOLECULE_SCENARIO_NAME: openshift-auth-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/openshift-auth-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/openshift-auth-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/openshift-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/openshift-auth-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/openshift-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/openshift-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/openshift-auth-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/openshift-auth-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/openshift-auth-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/openshift-auth-test MOLECULE_SCENARIO_NAME=openshift-auth-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/openshift-auth-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/openshift-auth-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Make sure the operator namespace exists] *********************************
+ok: [localhost]
+
+TASK [Find the latest Operator Helm Chart] *************************************
+changed: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [Install Operator via Helm] ***********************************************
+changed: [localhost]
+
+TASK [Make sure the CR namespace exists] ***************************************
+ok: [localhost]
+
+TASK [Wait for the CRD to be established] **************************************
+ok: [localhost]
+
+TASK [Prepare initial Kiali CR definition based solely on the template] ********
+ok: [localhost]
+
+TASK [Create Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Asserting that Kiali is Deployed] ****************************************
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (360 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (359 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (358 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (357 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (356 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (355 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (354 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (353 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (352 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (351 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (350 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (349 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (348 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (347 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (346 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (345 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (344 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (343 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (342 retries left).
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=13   changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Running openshift-auth-test > converge
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/openshift-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/openshift-auth-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/openshift-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/openshift-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/openshift-auth-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/openshift-auth-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/openshift-auth-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/openshift-auth-test
+MOLECULE_SCENARIO_NAME: openshift-auth-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/openshift-auth-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/openshift-auth-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/openshift-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/openshift-auth-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/openshift-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/openshift-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/openshift-auth-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/openshift-auth-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/openshift-auth-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/openshift-auth-test MOLECULE_SCENARIO_NAME=openshift-auth-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/openshift-auth-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/openshift-auth-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Tests] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Configmap] *****************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+ok: [localhost]
+
+TASK [Determine the Kiali Ingress URL on minikube] *****************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Ingress URL on kind] *********************************
+skipping: [localhost]
+
+TASK [Assert Kiali Pod is Running and there is only one] ***********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Asserting that Kiali Pod exists and there is only one] *******************
+ok: [localhost]
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+ok: [localhost]
+
+TASK [Make sure the test set the strategy to openshift] ************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert that we can access Kiali console login screen that does not need authentication] ***
+ok: [localhost]
+
+TASK [Try to access Kiali api endpoint that requires authentication (should return 401)] ***
+ok: [localhost]
+
+TASK [Attempt login with invalid credentials] **********************************
+ok: [localhost]
+
+TASK [Attempt login with good credentials but not logging in via OpenShift OAuth] ***
+ok: [localhost]
+
+TASK [Get the current list of access tokens so we know what sessions already exist before we log in] ***
+ok: [localhost]
+
+TASK [Get /api/auth/info from Kiali Server] ************************************
+ok: [localhost]
+
+TASK [Assert that the auth info is for openshift and we have expected data] ****
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Set the auth endpoint we are being redirected to and assume our test credentials are for the htpasswd provider] ***
+ok: [localhost]
+
+TASK [Send request to oauth-openshift /oauth/authorize endpoint] ***************
+ok: [localhost]
+
+TASK [Assert that the auth endpoint returned valid data] ***********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Determine next auth2 endpoint (strip some weirdness off the location - why is ansible doing that?)] ***
+ok: [localhost]
+
+TASK [Send request to auth2 endpoint /login/htpasswd which is the OpenShift login screen] ***
+ok: [localhost]
+
+TASK [Assert that the auth2 endpoint returned valid data] **********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Set post login endpoint by stripping query string and extract data needed for the next request] ***
+ok: [localhost]
+
+TASK [Send login post request to OpenShift login screen endpoint /login/htpasswd] ***
+ok: [localhost]
+
+TASK [Assert that the login endpoint returned valid data] **********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Extract the preliminary ssn cookie] **************************************
+ok: [localhost]
+
+TASK [Set the final approval endpoint] *****************************************
+ok: [localhost]
+
+TASK [Send request to final approval endpoint to complete login] ***************
+ok: [localhost]
+
+TASK [Assert that the final approval endpoint returned valid data] *************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Extract the final ssn cookie and the Kiali endpoint containing our token data] ***
+ok: [localhost]
+
+TASK [Extract the token data from the Kiali endpoint we are being redirected to] ***
+ok: [localhost]
+
+TASK [Now logged in - confirm by going to the redirected Kiali endpoint] *******
+ok: [localhost]
+
+TASK [Now get our Kiali token via /api/authenticate] ***************************
+ok: [localhost]
+
+TASK [Assert that the Kiali token was returned] ********************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Get Kiali token from output] *********************************************
+ok: [localhost]
+
+TASK [With the Kiali token, make a Kiali API request that requires authentication (should now return 200)] ***
+ok: [localhost]
+
+TASK [Assert that we were able to get the list of namespaces] ******************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Get the new list of access tokens - our login session should be in here now] ***
+ok: [localhost]
+
+TASK [Obtain our login oauth access token from the list] ***********************
+ok: [localhost]
+
+TASK [Assert that we see a new login access token exists and it is as expected] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "OAuthAccessToken name: sha256~HyktGCdUaXQaOcPjCrYlk3ULdy0RKWe6EOGK8tGiKU0"
+}
+
+TASK [Now log out] *************************************************************
+ok: [localhost]
+
+TASK [Our login session should be gone from the list of OAuthAccessTokens] *****
+ok: [localhost]
+
+TASK [Assert that we no longer see our login access token] *********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=52   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0
+
+INFO     Running openshift-auth-test > destroy
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/openshift-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/openshift-auth-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/openshift-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/openshift-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/openshift-auth-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/openshift-auth-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/openshift-auth-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/openshift-auth-test
+MOLECULE_SCENARIO_NAME: openshift-auth-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/openshift-auth-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/openshift-auth-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/openshift-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/openshift-auth-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/openshift-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/openshift-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/openshift-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/openshift-auth-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/openshift-auth-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/openshift-auth-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/openshift-auth-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/openshift-auth-test MOLECULE_SCENARIO_NAME=openshift-auth-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/openshift-auth-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/openshift-auth-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Remove Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Wait for Kiali ConfigMap to be uninstalled] ******************************
+ok: [localhost]
+
+TASK [Uninstall Operator via Helm] *********************************************
+changed: [localhost]
+
+TASK [Remove CRDs] *************************************************************
+changed: [localhost]
+
+TASK [Removing Operator namespace] *********************************************
+changed: [localhost]
+
+TASK [Removing CR namespace if it is different than control plane and operator namespace] ***
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=9    changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
+podman volume rm molecule-tests-volume
+molecule-tests-volume

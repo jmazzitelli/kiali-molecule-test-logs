@@ -1,0 +1,24 @@
+<testsuites  id="0" name="kiali molecule tests" tests="18" failures="1" time="10216">
+  <testsuite id="0" name="kiali molecule tests" tests="18" failures="1" time="10216">
+    <testcase id="accessible-namespaces-test" name="accessible-namespaces-test" classname="accessible-namespaces-test" time="1450"></testcase>
+    <testcase id="affinity-tolerations-resources-test" name="affinity-tolerations-resources-test" classname="affinity-tolerations-resources-test" time="600"></testcase>
+    <testcase id="cluster-wide-access-test" name="cluster-wide-access-test" classname="cluster-wide-access-test" time="1539"></testcase>
+    <testcase id="config-values-test" name="config-values-test" classname="config-values-test" time="473"></testcase>
+    <testcase id="default-namespace-test" name="default-namespace-test" classname="default-namespace-test" time="297"></testcase>
+    <testcase id="grafana-test" name="grafana-test" classname="grafana-test" time="585"></testcase>
+    <testcase id="instance-name-test" name="instance-name-test" classname="instance-name-test" time="479"></testcase>
+    <testcase id="jaeger-test" name="jaeger-test" classname="jaeger-test" time="463"></testcase>
+    <testcase id="metrics-test" name="metrics-test" classname="metrics-test" time="526"></testcase>
+    <testcase id="null-cr-values-test" name="null-cr-values-test" classname="null-cr-values-test" time="293"></testcase>
+    <testcase id="only-view-only-mode-test" name="only-view-only-mode-test" classname="only-view-only-mode-test" time="435"></testcase>
+    <testcase id="openshift-auth-test" name="openshift-auth-test" classname="openshift-auth-test" time="305"></testcase>
+    <testcase id="os-console-links-test" name="os-console-links-test" classname="os-console-links-test" time="361">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2024-03-23_02-00-03/os-console-links-test.log"/>
+    </testcase>
+    <testcase id="ossmconsole-config-values-test" name="ossmconsole-config-values-test" classname="ossmconsole-config-values-test" time="441"></testcase>
+    <testcase id="read-certs-secrets-test" name="read-certs-secrets-test" classname="read-certs-secrets-test" time="296"></testcase>
+    <testcase id="roles-test" name="roles-test" classname="roles-test" time="896"></testcase>
+    <testcase id="rolling-restart-test" name="rolling-restart-test" classname="rolling-restart-test" time="408"></testcase>
+    <testcase id="token-test" name="token-test" classname="token-test" time="369"></testcase>
+  </testsuite>
+</testsuites>

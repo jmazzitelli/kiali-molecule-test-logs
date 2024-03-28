@@ -1,0 +1,506 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT/helm-charts'
+Will use this helm executable: /tmp/KIALI-GIT/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator-1.83.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT/helm-charts'
+OCP repos: external=[default-route-openshift-image-registry.apps.ocp4.local] internal=[image-registry.openshift-image-registry.svc:5000]
+
+Will auto-detect hosts to add based on the CLUSTER_REPO: default-route-openshift-image-registry.apps.ocp4.local
+Auto-detected add host args: --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.2 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.2 --add-host=api.ocp4.local:192.168.122.2 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.2
+Will not rebuild kiali-molecule image.
+podman volume exists molecule-tests-volume && echo "Podman volume already exists; deleting it" && podman volume rm molecule-tests-volume || true
+podman volume create molecule-tests-volume
+molecule-tests-volume
+podman create -v molecule-tests-volume:/data --name molecule-volume-helper docker.io/busybox true
+34facd83e58d59a5d5754e13b89876d035aa77ffa0a387cfec6bb3a32b8c0bc0
+podman cp "/tmp/KIALI-GIT/helm-charts" molecule-volume-helper:/data/helm-charts-repo
+podman cp "/tmp/KIALI-GIT/kiali/operator/" molecule-volume-helper:/data/operator
+podman cp "/home/jmazzite/.kube/config" molecule-volume-helper:/data/kubeconfig
+podman rm molecule-volume-helper
+molecule-volume-helper
+namespace/kiali-operator created
+secret/kiali-operator-pull-secret created
+secret/kiali-operator-pull-secret labeled
+for msn in rolling-restart-test; do podman run --rm  --env KUBECONFIG="/tmp/molecule/kubeconfig" --env K8S_AUTH_KUBECONFIG="/tmp/molecule/kubeconfig" --env MOLECULE_CLUSTER_TYPE="openshift" --env MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo -v molecule-tests-volume:/tmp/molecule    -w /tmp/molecule/operator --network="host" --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.2 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.2 --add-host=api.ocp4.local:192.168.122.2 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.2 --add-host="api.crc.testing:192.168.130.11" --add-host="kiali-istio-system.apps-crc.testing:192.168.130.11" --add-host="prometheus-istio-system.apps-crc.testing:192.168.130.11" --env DORP=podman --env OPERATOR_IMAGE_PULL_SECRET_NAME=kiali-operator-pull-secret --env MOLECULE_KIALI_CR_SPEC_VERSION=default --env PLUGIN_IMAGE_PULL_SECRET_JSON="" --env MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION="default"  --env MOLECULE_OPERATOR_PROFILER_ENABLED=true --env MOLECULE_OPERATOR_INSTALLER=helm --env MOLECULE_DUMP_LOGS_ON_ERROR=true  --env MOLECULE_WAIT_RETRIES=360 localhost/kiali-molecule:latest molecule --debug test  --scenario-name ${msn}; if [ "$?" != "0" ]; then echo "Molecule test failed: ${msn}"; podman volume rm molecule-tests-volume; exit 1; fi; done
+DEBUG    Validating schema /tmp/molecule/operator/molecule/rolling-restart-test/molecule.yml.
+WARNING  Driver podman does not provide a schema.
+INFO     rolling-restart-test scenario test matrix: prepare, converge, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Running ansible-galaxy collection install -v -r requirements.yml
+INFO     Set ANSIBLE_ROLES_PATH=roles:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Running rolling-restart-test > prepare
+INFO     Sanity checks: 'podman'
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/rolling-restart-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/rolling-restart-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/rolling-restart-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/rolling-restart-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/rolling-restart-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/rolling-restart-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/rolling-restart-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/rolling-restart-test
+MOLECULE_SCENARIO_NAME: rolling-restart-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/rolling-restart-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/rolling-restart-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/rolling-restart-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/rolling-restart-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/rolling-restart-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/rolling-restart-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/rolling-restart-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/rolling-restart-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/rolling-restart-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/rolling-restart-test MOLECULE_SCENARIO_NAME=rolling-restart-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/rolling-restart-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/rolling-restart-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Make sure the operator namespace exists] *********************************
+ok: [localhost]
+
+TASK [Find the latest Operator Helm Chart] *************************************
+changed: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [Install Operator via Helm] ***********************************************
+changed: [localhost]
+
+TASK [Make sure the CR namespace exists] ***************************************
+ok: [localhost]
+
+TASK [Wait for the CRD to be established] **************************************
+ok: [localhost]
+
+TASK [Prepare initial Kiali CR definition based solely on the template] ********
+ok: [localhost]
+
+TASK [Create Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Asserting that Kiali is Deployed] ****************************************
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (360 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (359 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (358 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (357 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (356 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (355 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (354 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (353 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (352 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (351 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (350 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (349 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (348 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (347 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (346 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (345 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (344 retries left).
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=13   changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Running rolling-restart-test > converge
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/rolling-restart-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/rolling-restart-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/rolling-restart-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/rolling-restart-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/rolling-restart-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/rolling-restart-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/rolling-restart-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/rolling-restart-test
+MOLECULE_SCENARIO_NAME: rolling-restart-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/rolling-restart-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/rolling-restart-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/rolling-restart-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/rolling-restart-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/rolling-restart-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/rolling-restart-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/rolling-restart-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/rolling-restart-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/rolling-restart-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/rolling-restart-test MOLECULE_SCENARIO_NAME=rolling-restart-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/rolling-restart-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/rolling-restart-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Tests] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Configmap] *****************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+ok: [localhost]
+
+TASK [Determine the Kiali Ingress URL on minikube] *****************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Ingress URL on kind] *********************************
+skipping: [localhost]
+
+TASK [Assert Kiali Pod is Running and there is only one] ***********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Attempt unauthorized access to api endpoint] *****************************
+ok: [localhost]
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+ok: [localhost]
+
+TASK [Set auth_strategy to anonymous in current Kiali CR] **********************
+ok: [localhost]
+
+TASK [Change Kiali CR with new Kiali CR] ***************************************
+--- before
++++ after
+@@ -1,42 +1,7 @@
+ {
+     "metadata": {
+-        "generation": 1,
++        "generation": 2,
+         "managedFields": [
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:spec": {
+-                        ".": {},
+-                        "f:auth": {
+-                            ".": {},
+-                            "f:strategy": {}
+-                        },
+-                        "f:deployment": {
+-                            ".": {},
+-                            "f:accessible_namespaces": {},
+-                            "f:image_name": {},
+-                            "f:image_pull_policy": {},
+-                            "f:image_version": {},
+-                            "f:ingress": {
+-                                ".": {},
+-                                "f:enabled": {}
+-                            },
+-                            "f:logger": {
+-                                ".": {},
+-                                "f:log_level": {}
+-                            },
+-                            "f:namespace": {},
+-                            "f:service_type": {}
+-                        },
+-                        "f:istio_namespace": {},
+-                        "f:version": {}
+-                    }
+-                },
+-                "manager": "OpenAPI-Generator",
+-                "operation": "Update",
+-                "time": "2024-03-28T08:10:49Z"
+-            },
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+                 "fieldsType": "FieldsV1",
+@@ -96,13 +61,48 @@
+                 "operation": "Update",
+                 "subresource": "status",
+                 "time": "2024-03-28T08:12:34Z"
++            },
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:spec": {
++                        ".": {},
++                        "f:auth": {
++                            ".": {},
++                            "f:strategy": {}
++                        },
++                        "f:deployment": {
++                            ".": {},
++                            "f:accessible_namespaces": {},
++                            "f:image_name": {},
++                            "f:image_pull_policy": {},
++                            "f:image_version": {},
++                            "f:ingress": {
++                                ".": {},
++                                "f:enabled": {}
++                            },
++                            "f:logger": {
++                                ".": {},
++                                "f:log_level": {}
++                            },
++                            "f:namespace": {},
++                            "f:service_type": {}
++                        },
++                        "f:istio_namespace": {},
++                        "f:version": {}
++                    }
++                },
++                "manager": "OpenAPI-Generator",
++                "operation": "Update",
++                "time": "2024-03-28T08:13:21Z"
+             }
+         ],
+-        "resourceVersion": "7018059"
++        "resourceVersion": "7018395"
+     },
+     "spec": {
+         "auth": {
+-            "strategy": "token"
++            "strategy": "anonymous"
+         }
+     }
+ }
+
+changed: [localhost]
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (360 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (359 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (358 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (357 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (356 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (355 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (354 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (353 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (352 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (351 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (350 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (349 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (348 retries left).
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Configmap] *****************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+ok: [localhost]
+
+TASK [Determine the Kiali Ingress URL on minikube] *****************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Ingress URL on kind] *********************************
+skipping: [localhost]
+
+TASK [Asserting that Kiali Pod exists and there is only one] *******************
+FAILED - RETRYING: [localhost]: Asserting that Kiali Pod exists and there is only one (360 retries left).
+ok: [localhost]
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+ok: [localhost]
+
+TASK [Attempt authorized anonymous access to api endpoint] *********************
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=33   changed=1    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0
+
+INFO     Running rolling-restart-test > destroy
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/rolling-restart-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/rolling-restart-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/rolling-restart-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/rolling-restart-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/rolling-restart-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/rolling-restart-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/rolling-restart-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/rolling-restart-test
+MOLECULE_SCENARIO_NAME: rolling-restart-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/rolling-restart-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/rolling-restart-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/rolling-restart-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/rolling-restart-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/rolling-restart-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/rolling-restart-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/rolling-restart-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/rolling-restart-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/rolling-restart-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/rolling-restart-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/rolling-restart-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/rolling-restart-test MOLECULE_SCENARIO_NAME=rolling-restart-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/rolling-restart-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/rolling-restart-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Remove Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Wait for Kiali ConfigMap to be uninstalled] ******************************
+ok: [localhost]
+
+TASK [Uninstall Operator via Helm] *********************************************
+changed: [localhost]
+
+TASK [Remove CRDs] *************************************************************
+changed: [localhost]
+
+TASK [Removing Operator namespace] *********************************************
+changed: [localhost]
+
+TASK [Removing CR namespace if it is different than control plane and operator namespace] ***
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=9    changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
+podman volume rm molecule-tests-volume
+molecule-tests-volume

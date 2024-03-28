@@ -1,0 +1,1080 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT/helm-charts'
+Will use this helm executable: /tmp/KIALI-GIT/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator-1.82.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT/helm-charts'
+OCP repos: external=[default-route-openshift-image-registry.apps.ocp4.local] internal=[image-registry.openshift-image-registry.svc:5000]
+
+Will auto-detect hosts to add based on the CLUSTER_REPO: default-route-openshift-image-registry.apps.ocp4.local
+Auto-detected add host args: --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.2 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.2 --add-host=api.ocp4.local:192.168.122.2 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.2
+Will not rebuild kiali-molecule image.
+podman volume exists molecule-tests-volume && echo "Podman volume already exists; deleting it" && podman volume rm molecule-tests-volume || true
+podman volume create molecule-tests-volume
+molecule-tests-volume
+podman create -v molecule-tests-volume:/data --name molecule-volume-helper docker.io/busybox true
+37e831b745a52b4afa1aa455b8a3174117a84d2679447f14312cf7f926dcc9c0
+podman cp "/tmp/KIALI-GIT/helm-charts" molecule-volume-helper:/data/helm-charts-repo
+podman cp "/tmp/KIALI-GIT/kiali/operator/" molecule-volume-helper:/data/operator
+podman cp "/home/jmazzite/.kube/config" molecule-volume-helper:/data/kubeconfig
+podman rm molecule-volume-helper
+molecule-volume-helper
+namespace/kiali-operator created
+secret/kiali-operator-pull-secret created
+secret/kiali-operator-pull-secret labeled
+for msn in ossmconsole-config-values-test; do podman run --rm  --env KUBECONFIG="/tmp/molecule/kubeconfig" --env K8S_AUTH_KUBECONFIG="/tmp/molecule/kubeconfig" --env MOLECULE_CLUSTER_TYPE="openshift" --env MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo -v molecule-tests-volume:/tmp/molecule    -w /tmp/molecule/operator --network="host" --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.2 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.2 --add-host=api.ocp4.local:192.168.122.2 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.2 --add-host="api.crc.testing:192.168.130.11" --add-host="kiali-istio-system.apps-crc.testing:192.168.130.11" --add-host="prometheus-istio-system.apps-crc.testing:192.168.130.11" --env DORP=podman --env OPERATOR_IMAGE_PULL_SECRET_NAME=kiali-operator-pull-secret --env MOLECULE_KIALI_CR_SPEC_VERSION=default --env PLUGIN_IMAGE_PULL_SECRET_JSON="" --env MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION="default"  --env MOLECULE_OPERATOR_PROFILER_ENABLED=true --env MOLECULE_OPERATOR_INSTALLER=helm --env MOLECULE_DUMP_LOGS_ON_ERROR=true  --env MOLECULE_WAIT_RETRIES=360 localhost/kiali-molecule:latest molecule --debug test  --scenario-name ${msn}; if [ "$?" != "0" ]; then echo "Molecule test failed: ${msn}"; podman volume rm molecule-tests-volume; exit 1; fi; done
+DEBUG    Validating schema /tmp/molecule/operator/molecule/ossmconsole-config-values-test/molecule.yml.
+WARNING  Driver podman does not provide a schema.
+INFO     ossmconsole-config-values-test scenario test matrix: prepare, converge, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Running ansible-galaxy collection install -v -r requirements.yml
+INFO     Set ANSIBLE_ROLES_PATH=roles:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Running ossmconsole-config-values-test > prepare
+INFO     Sanity checks: 'podman'
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-config-values-test
+MOLECULE_SCENARIO_NAME: ossmconsole-config-values-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-config-values-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-config-values-test MOLECULE_SCENARIO_NAME=ossmconsole-config-values-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-config-values-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [meta] ********************************************************************
+skipping: [localhost]
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Make sure the operator namespace exists] *********************************
+ok: [localhost]
+
+TASK [Find the latest Operator Helm Chart] *************************************
+changed: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [Install Operator via Helm] ***********************************************
+changed: [localhost]
+
+TASK [Make sure the CR namespace exists] ***************************************
+ok: [localhost]
+
+TASK [Wait for the CRD to be established] **************************************
+ok: [localhost]
+
+TASK [Prepare initial Kiali CR definition based solely on the template] ********
+ok: [localhost]
+
+TASK [Create Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Asserting that Kiali is Deployed] ****************************************
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (360 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (359 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (358 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (357 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (356 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (355 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (354 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (353 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (352 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (351 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (350 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (349 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (348 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (347 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (346 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (345 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (344 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (343 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (342 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (341 retries left).
+ok: [localhost]
+
+PLAY [Install OSSMConsole] *****************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [meta] ********************************************************************
+skipping: [localhost]
+
+TASK [Make sure the OSSMConsole CR namespace exists] ***************************
+ok: [localhost]
+
+TASK [Make sure the OSSMConsole install namespace exists] **********************
+skipping: [localhost]
+
+TASK [Define the name of the pull secret if a secret is needed to pull the plugin image from the internal image registry] ***
+skipping: [localhost]
+
+TASK [Create the secret that will be used by the plugin pod to pull the image from the internal registry when needed] ***
+skipping: [localhost]
+
+TASK [Wait for the OSSMConsole CRD to be established] **************************
+ok: [localhost]
+
+TASK [Prepare initial OSSMConsole CR definition based solely on the template] ***
+ok: [localhost]
+
+TASK [Create OSSMConsole CR] ***************************************************
+changed: [localhost]
+
+TASK [Asserting that OSSMConsole plugin is Deployed] ***************************
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (360 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (359 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (358 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (357 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (356 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (355 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (354 retries left).
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=24   changed=4    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0
+
+INFO     Running ossmconsole-config-values-test > converge
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-config-values-test
+MOLECULE_SCENARIO_NAME: ossmconsole-config-values-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-config-values-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-config-values-test MOLECULE_SCENARIO_NAME=ossmconsole-config-values-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-config-values-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Tests] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [meta] ********************************************************************
+skipping: [localhost]
+
+TASK [Get OSSMConsole CR if present] *******************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Get OSSMConsole Pod] *****************************************************
+ok: [localhost]
+
+TASK [Get OSSMConsole Deployment] **********************************************
+ok: [localhost]
+
+TASK [Get OSSMConsole ConfigMap] ***********************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Format OSSMConsole ConfigMap] ********************************************
+ok: [localhost]
+
+TASK [Dump OSSMConsole ConfigMap] **********************************************
+ok: [localhost] => {
+    "msg": {
+        "graph": {
+            "impl": "pf"
+        }
+    }
+}
+
+TASK [Get OSSMConsole ConsolePlugin] *******************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Dump OSSMConsole ConsolePlugin] ******************************************
+ok: [localhost] => {
+    "msg": {
+        "apiVersion": "console.openshift.io/v1alpha1",
+        "kind": "ConsolePlugin",
+        "metadata": {
+            "annotations": {
+                "operator-sdk/primary-resource": "kiali-operator/ossmconsole",
+                "operator-sdk/primary-resource-type": "OSSMConsole.kiali.io"
+            },
+            "creationTimestamp": "2024-03-26T09:00:47Z",
+            "generation": 1,
+            "labels": {
+                "app": "ossmconsole",
+                "app.kubernetes.io/instance": "ossmconsole",
+                "app.kubernetes.io/name": "ossmconsole",
+                "app.kubernetes.io/part-of": "ossmconsole",
+                "app.kubernetes.io/version": "latest",
+                "version": "latest"
+            },
+            "managedFields": [
+                {
+                    "apiVersion": "console.openshift.io/v1alpha1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": {
+                        "f:metadata": {
+                            "f:annotations": {
+                                ".": {},
+                                "f:operator-sdk/primary-resource": {},
+                                "f:operator-sdk/primary-resource-type": {}
+                            },
+                            "f:labels": {
+                                ".": {},
+                                "f:app": {},
+                                "f:app.kubernetes.io/instance": {},
+                                "f:app.kubernetes.io/name": {},
+                                "f:app.kubernetes.io/part-of": {},
+                                "f:app.kubernetes.io/version": {},
+                                "f:version": {}
+                            }
+                        },
+                        "f:spec": {
+                            ".": {},
+                            "f:displayName": {},
+                            "f:proxy": {},
+                            "f:service": {
+                                ".": {},
+                                "f:basePath": {},
+                                "f:name": {},
+                                "f:namespace": {},
+                                "f:port": {}
+                            }
+                        }
+                    },
+                    "manager": "OpenAPI-Generator",
+                    "operation": "Update",
+                    "time": "2024-03-26T09:00:47Z"
+                }
+            ],
+            "name": "ossmconsole",
+            "resourceVersion": "5710468",
+            "uid": "72a125a6-b9be-4519-84e6-744336bf4f29"
+        },
+        "spec": {
+            "displayName": "OpenShift Service Mesh Console",
+            "proxy": [
+                {
+                    "alias": "kiali",
+                    "authorize": true,
+                    "service": {
+                        "name": "kiali",
+                        "namespace": "istio-system",
+                        "port": 20001
+                    },
+                    "type": "Service"
+                }
+            ],
+            "service": {
+                "basePath": "/",
+                "name": "ossmconsole",
+                "namespace": "kiali-operator",
+                "port": 9443
+            }
+        }
+    }
+}
+
+TASK [Wait for OSSMConsole CR changes to take effect] **************************
+ok: [localhost]
+
+TASK [set_fact] ****************************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [The current CR to be used as the base of the test] ***********************
+ok: [localhost] => {
+    "msg": {
+        "apiVersion": "kiali.io/v1alpha1",
+        "kind": "OSSMConsole",
+        "metadata": {
+            "creationTimestamp": "2024-03-26T08:59:58Z",
+            "finalizers": [
+                "kiali.io/finalizer"
+            ],
+            "generation": 1,
+            "managedFields": [
+                {
+                    "apiVersion": "kiali.io/v1alpha1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": {
+                        "f:spec": {
+                            ".": {},
+                            "f:deployment": {
+                                ".": {},
+                                "f:imageName": {},
+                                "f:imagePullPolicy": {},
+                                "f:imagePullSecrets": {},
+                                "f:imageVersion": {}
+                            },
+                            "f:version": {}
+                        }
+                    },
+                    "manager": "OpenAPI-Generator",
+                    "operation": "Update",
+                    "time": "2024-03-26T08:59:58Z"
+                },
+                {
+                    "apiVersion": "kiali.io/v1alpha1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": {
+                        "f:metadata": {
+                            "f:finalizers": {
+                                ".": {},
+                                "v:\"kiali.io/finalizer\"": {}
+                            }
+                        }
+                    },
+                    "manager": "ansible-operator",
+                    "operation": "Update",
+                    "time": "2024-03-26T08:59:58Z"
+                },
+                {
+                    "apiVersion": "kiali.io/v1alpha1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": {
+                        "f:status": {
+                            "f:deployment": {
+                                ".": {},
+                                "f:namespace": {}
+                            },
+                            "f:environment": {
+                                ".": {},
+                                "f:kialiVersion": {},
+                                "f:kubernetesVersion": {},
+                                "f:openshiftVersion": {},
+                                "f:operatorVersion": {}
+                            },
+                            "f:kiali": {
+                                ".": {},
+                                "f:serviceName": {},
+                                "f:serviceNamespace": {},
+                                "f:servicePort": {}
+                            },
+                            "f:progress": {
+                                ".": {},
+                                "f:duration": {},
+                                "f:message": {}
+                            },
+                            "f:specVersion": {}
+                        }
+                    },
+                    "manager": "OpenAPI-Generator",
+                    "operation": "Update",
+                    "subresource": "status",
+                    "time": "2024-03-26T09:00:55Z"
+                },
+                {
+                    "apiVersion": "kiali.io/v1alpha1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": {
+                        "f:status": {
+                            ".": {},
+                            "f:conditions": {}
+                        }
+                    },
+                    "manager": "ansible-operator",
+                    "operation": "Update",
+                    "subresource": "status",
+                    "time": "2024-03-26T09:00:56Z"
+                }
+            ],
+            "name": "ossmconsole",
+            "namespace": "kiali-operator",
+            "resourceVersion": "5710580",
+            "uid": "40498998-c4d7-471e-bde7-70162dd28a04"
+        },
+        "spec": {
+            "deployment": {
+                "imageName": "quay.io/kiali/ossmconsole",
+                "imagePullPolicy": "Always",
+                "imagePullSecrets": [],
+                "imageVersion": "latest"
+            },
+            "version": "default"
+        },
+        "status": {
+            "conditions": [
+                {
+                    "ansibleResult": {
+                        "changed": 7,
+                        "completion": "2024-03-26T09:00:56.179407",
+                        "failures": 0,
+                        "ok": 55,
+                        "skipped": 24
+                    },
+                    "lastTransitionTime": "2024-03-26T08:59:58Z",
+                    "message": "Awaiting next reconciliation",
+                    "reason": "Successful",
+                    "status": "True",
+                    "type": "Running"
+                },
+                {
+                    "lastTransitionTime": "2024-03-26T09:00:56Z",
+                    "message": "Last reconciliation succeeded",
+                    "reason": "Successful",
+                    "status": "True",
+                    "type": "Successful"
+                },
+                {
+                    "lastTransitionTime": "2024-03-26T09:00:56Z",
+                    "message": "",
+                    "reason": "",
+                    "status": "False",
+                    "type": "Failure"
+                }
+            ],
+            "deployment": {
+                "namespace": "kiali-operator"
+            },
+            "environment": {
+                "kialiVersion": "v1.82.0-SNAPSHOT",
+                "kubernetesVersion": "1.27.10+c79e5e2",
+                "openshiftVersion": "4.14.15",
+                "operatorVersion": "v1.82.0-SNAPSHOT"
+            },
+            "kiali": {
+                "serviceName": "kiali",
+                "serviceNamespace": "istio-system",
+                "servicePort": "20001"
+            },
+            "progress": {
+                "duration": "0:00:47",
+                "message": "5. Finished"
+            },
+            "specVersion": "default"
+        }
+    }
+}
+
+TASK [Confirm the Kiali Service Name is as expected] ***************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Confirm the Kiali Service Namespace is as expected] **********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Confirm the Kiali Service Port is as expected] ***************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Confirm the Kiali Graph Impl is the expected default in the ConfigMap] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Set to use cy graph impl] ************************************************
+ok: [localhost]
+
+TASK [The new CR to be applied and tested] *************************************
+ok: [localhost] => {
+    "msg": {
+        "apiVersion": "kiali.io/v1alpha1",
+        "kind": "OSSMConsole",
+        "metadata": {
+            "creationTimestamp": "2024-03-26T08:59:58Z",
+            "finalizers": [
+                "kiali.io/finalizer"
+            ],
+            "generation": 1,
+            "managedFields": [
+                {
+                    "apiVersion": "kiali.io/v1alpha1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": {
+                        "f:spec": {
+                            ".": {},
+                            "f:deployment": {
+                                ".": {},
+                                "f:imageName": {},
+                                "f:imagePullPolicy": {},
+                                "f:imagePullSecrets": {},
+                                "f:imageVersion": {}
+                            },
+                            "f:version": {}
+                        }
+                    },
+                    "manager": "OpenAPI-Generator",
+                    "operation": "Update",
+                    "time": "2024-03-26T08:59:58Z"
+                },
+                {
+                    "apiVersion": "kiali.io/v1alpha1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": {
+                        "f:metadata": {
+                            "f:finalizers": {
+                                ".": {},
+                                "v:\"kiali.io/finalizer\"": {}
+                            }
+                        }
+                    },
+                    "manager": "ansible-operator",
+                    "operation": "Update",
+                    "time": "2024-03-26T08:59:58Z"
+                },
+                {
+                    "apiVersion": "kiali.io/v1alpha1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": {
+                        "f:status": {
+                            "f:deployment": {
+                                ".": {},
+                                "f:namespace": {}
+                            },
+                            "f:environment": {
+                                ".": {},
+                                "f:kialiVersion": {},
+                                "f:kubernetesVersion": {},
+                                "f:openshiftVersion": {},
+                                "f:operatorVersion": {}
+                            },
+                            "f:kiali": {
+                                ".": {},
+                                "f:serviceName": {},
+                                "f:serviceNamespace": {},
+                                "f:servicePort": {}
+                            },
+                            "f:progress": {
+                                ".": {},
+                                "f:duration": {},
+                                "f:message": {}
+                            },
+                            "f:specVersion": {}
+                        }
+                    },
+                    "manager": "OpenAPI-Generator",
+                    "operation": "Update",
+                    "subresource": "status",
+                    "time": "2024-03-26T09:00:55Z"
+                },
+                {
+                    "apiVersion": "kiali.io/v1alpha1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": {
+                        "f:status": {
+                            ".": {},
+                            "f:conditions": {}
+                        }
+                    },
+                    "manager": "ansible-operator",
+                    "operation": "Update",
+                    "subresource": "status",
+                    "time": "2024-03-26T09:00:56Z"
+                }
+            ],
+            "name": "ossmconsole",
+            "namespace": "kiali-operator",
+            "resourceVersion": "5710580",
+            "uid": "40498998-c4d7-471e-bde7-70162dd28a04"
+        },
+        "spec": {
+            "deployment": {
+                "imageName": "quay.io/kiali/ossmconsole",
+                "imagePullPolicy": "Always",
+                "imagePullSecrets": [],
+                "imageVersion": "latest"
+            },
+            "kiali": {
+                "graph": {
+                    "impl": "cy"
+                }
+            },
+            "version": "default"
+        },
+        "status": {
+            "conditions": [
+                {
+                    "ansibleResult": {
+                        "changed": 7,
+                        "completion": "2024-03-26T09:00:56.179407",
+                        "failures": 0,
+                        "ok": 55,
+                        "skipped": 24
+                    },
+                    "lastTransitionTime": "2024-03-26T08:59:58Z",
+                    "message": "Awaiting next reconciliation",
+                    "reason": "Successful",
+                    "status": "True",
+                    "type": "Running"
+                },
+                {
+                    "lastTransitionTime": "2024-03-26T09:00:56Z",
+                    "message": "Last reconciliation succeeded",
+                    "reason": "Successful",
+                    "status": "True",
+                    "type": "Successful"
+                },
+                {
+                    "lastTransitionTime": "2024-03-26T09:00:56Z",
+                    "message": "",
+                    "reason": "",
+                    "status": "False",
+                    "type": "Failure"
+                }
+            ],
+            "deployment": {
+                "namespace": "kiali-operator"
+            },
+            "environment": {
+                "kialiVersion": "v1.82.0-SNAPSHOT",
+                "kubernetesVersion": "1.27.10+c79e5e2",
+                "openshiftVersion": "4.14.15",
+                "operatorVersion": "v1.82.0-SNAPSHOT"
+            },
+            "kiali": {
+                "serviceName": "kiali",
+                "serviceNamespace": "istio-system",
+                "servicePort": "20001"
+            },
+            "progress": {
+                "duration": "0:00:47",
+                "message": "5. Finished"
+            },
+            "specVersion": "default"
+        }
+    }
+}
+
+TASK [Change OSSMConsole CR with new OSSMConsole CR] ***************************
+--- before
++++ after
+@@ -1,27 +1,7 @@
+ {
+     "metadata": {
+-        "generation": 1,
++        "generation": 2,
+         "managedFields": [
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:spec": {
+-                        ".": {},
+-                        "f:deployment": {
+-                            ".": {},
+-                            "f:imageName": {},
+-                            "f:imagePullPolicy": {},
+-                            "f:imagePullSecrets": {},
+-                            "f:imageVersion": {}
+-                        },
+-                        "f:version": {}
+-                    }
+-                },
+-                "manager": "OpenAPI-Generator",
+-                "operation": "Update",
+-                "time": "2024-03-26T08:59:58Z"
+-            },
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+                 "fieldsType": "FieldsV1",
+@@ -85,9 +65,42 @@
+                 "operation": "Update",
+                 "subresource": "status",
+                 "time": "2024-03-26T09:00:56Z"
++            },
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:spec": {
++                        ".": {},
++                        "f:deployment": {
++                            ".": {},
++                            "f:imageName": {},
++                            "f:imagePullPolicy": {},
++                            "f:imagePullSecrets": {},
++                            "f:imageVersion": {}
++                        },
++                        "f:kiali": {
++                            ".": {},
++                            "f:graph": {
++                                ".": {},
++                                "f:impl": {}
++                            }
++                        },
++                        "f:version": {}
++                    }
++                },
++                "manager": "OpenAPI-Generator",
++                "operation": "Update",
++                "time": "2024-03-26T09:01:17Z"
+             }
+         ],
+-        "resourceVersion": "5710580"
++        "resourceVersion": "5710787"
+     },
+-    "spec": {}
++    "spec": {
++        "kiali": {
++            "graph": {
++                "impl": "cy"
++            }
++        }
++    }
+ }
+
+changed: [localhost]
+
+TASK [Wait for OSSMConsole CR changes to take effect] **************************
+FAILED - RETRYING: [localhost]: Wait for OSSMConsole CR changes to take effect (360 retries left).
+FAILED - RETRYING: [localhost]: Wait for OSSMConsole CR changes to take effect (359 retries left).
+FAILED - RETRYING: [localhost]: Wait for OSSMConsole CR changes to take effect (358 retries left).
+FAILED - RETRYING: [localhost]: Wait for OSSMConsole CR changes to take effect (357 retries left).
+FAILED - RETRYING: [localhost]: Wait for OSSMConsole CR changes to take effect (356 retries left).
+FAILED - RETRYING: [localhost]: Wait for OSSMConsole CR changes to take effect (355 retries left).
+FAILED - RETRYING: [localhost]: Wait for OSSMConsole CR changes to take effect (354 retries left).
+ok: [localhost]
+
+TASK [Get OSSMConsole CR if present] *******************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Get OSSMConsole Pod] *****************************************************
+ok: [localhost]
+
+TASK [Get OSSMConsole Deployment] **********************************************
+ok: [localhost]
+
+TASK [Get OSSMConsole ConfigMap] ***********************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Format OSSMConsole ConfigMap] ********************************************
+ok: [localhost]
+
+TASK [Dump OSSMConsole ConfigMap] **********************************************
+ok: [localhost] => {
+    "msg": {
+        "graph": {
+            "impl": "cy"
+        }
+    }
+}
+
+TASK [Get OSSMConsole ConsolePlugin] *******************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Dump OSSMConsole ConsolePlugin] ******************************************
+ok: [localhost] => {
+    "msg": {
+        "apiVersion": "console.openshift.io/v1alpha1",
+        "kind": "ConsolePlugin",
+        "metadata": {
+            "annotations": {
+                "operator-sdk/primary-resource": "kiali-operator/ossmconsole",
+                "operator-sdk/primary-resource-type": "OSSMConsole.kiali.io"
+            },
+            "creationTimestamp": "2024-03-26T09:00:47Z",
+            "generation": 1,
+            "labels": {
+                "app": "ossmconsole",
+                "app.kubernetes.io/instance": "ossmconsole",
+                "app.kubernetes.io/name": "ossmconsole",
+                "app.kubernetes.io/part-of": "ossmconsole",
+                "app.kubernetes.io/version": "latest",
+                "version": "latest"
+            },
+            "managedFields": [
+                {
+                    "apiVersion": "console.openshift.io/v1alpha1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": {
+                        "f:metadata": {
+                            "f:annotations": {
+                                ".": {},
+                                "f:operator-sdk/primary-resource": {},
+                                "f:operator-sdk/primary-resource-type": {}
+                            },
+                            "f:labels": {
+                                ".": {},
+                                "f:app": {},
+                                "f:app.kubernetes.io/instance": {},
+                                "f:app.kubernetes.io/name": {},
+                                "f:app.kubernetes.io/part-of": {},
+                                "f:app.kubernetes.io/version": {},
+                                "f:version": {}
+                            }
+                        },
+                        "f:spec": {
+                            ".": {},
+                            "f:displayName": {},
+                            "f:proxy": {},
+                            "f:service": {
+                                ".": {},
+                                "f:basePath": {},
+                                "f:name": {},
+                                "f:namespace": {},
+                                "f:port": {}
+                            }
+                        }
+                    },
+                    "manager": "OpenAPI-Generator",
+                    "operation": "Update",
+                    "time": "2024-03-26T09:00:47Z"
+                }
+            ],
+            "name": "ossmconsole",
+            "resourceVersion": "5710468",
+            "uid": "72a125a6-b9be-4519-84e6-744336bf4f29"
+        },
+        "spec": {
+            "displayName": "OpenShift Service Mesh Console",
+            "proxy": [
+                {
+                    "alias": "kiali",
+                    "authorize": true,
+                    "service": {
+                        "name": "kiali",
+                        "namespace": "istio-system",
+                        "port": 20001
+                    },
+                    "type": "Service"
+                }
+            ],
+            "service": {
+                "basePath": "/",
+                "name": "ossmconsole",
+                "namespace": "kiali-operator",
+                "port": 9443
+            }
+        }
+    }
+}
+
+TASK [Confirm the Kiali Graph Impl is now changed to use the "cy" impl] ********
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=31   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Running ossmconsole-config-values-test > destroy
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-config-values-test
+MOLECULE_SCENARIO_NAME: ossmconsole-config-values-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-config-values-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-config-values-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-config-values-test MOLECULE_SCENARIO_NAME=ossmconsole-config-values-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-config-values-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-config-values-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [meta] ********************************************************************
+skipping: [localhost]
+
+PLAY [Remove OSSMConsole] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [meta] ********************************************************************
+skipping: [localhost]
+
+TASK [Remove OSSMConsole CR] ***************************************************
+changed: [localhost]
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Remove Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Wait for Kiali ConfigMap to be uninstalled] ******************************
+ok: [localhost]
+
+TASK [Uninstall Operator via Helm] *********************************************
+changed: [localhost]
+
+TASK [Remove CRDs] *************************************************************
+changed: [localhost]
+
+TASK [Removing Operator namespace] *********************************************
+changed: [localhost]
+
+TASK [Removing CR namespace if it is different than control plane and operator namespace] ***
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=16   changed=5    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
+podman volume rm molecule-tests-volume
+molecule-tests-volume

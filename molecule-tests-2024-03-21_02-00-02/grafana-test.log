@@ -1,0 +1,938 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT/helm-charts'
+Will use this helm executable: /tmp/KIALI-GIT/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator-1.82.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT/helm-charts'
+OCP repos: external=[default-route-openshift-image-registry.apps.ocp4.local] internal=[image-registry.openshift-image-registry.svc:5000]
+
+Will auto-detect hosts to add based on the CLUSTER_REPO: default-route-openshift-image-registry.apps.ocp4.local
+Auto-detected add host args: --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.2 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.2 --add-host=api.ocp4.local:192.168.122.2 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.2
+Will not rebuild kiali-molecule image.
+podman volume exists molecule-tests-volume && echo "Podman volume already exists; deleting it" && podman volume rm molecule-tests-volume || true
+podman volume create molecule-tests-volume
+molecule-tests-volume
+podman create -v molecule-tests-volume:/data --name molecule-volume-helper docker.io/busybox true
+93d9ebb7a85b7bd58d9842863c5eb081bc92d821ad60d9fe1f9032155f87c348
+podman cp "/tmp/KIALI-GIT/helm-charts" molecule-volume-helper:/data/helm-charts-repo
+podman cp "/tmp/KIALI-GIT/kiali/operator/" molecule-volume-helper:/data/operator
+podman cp "/home/jmazzite/.kube/config" molecule-volume-helper:/data/kubeconfig
+podman rm molecule-volume-helper
+molecule-volume-helper
+namespace/kiali-operator created
+secret/kiali-operator-pull-secret created
+secret/kiali-operator-pull-secret labeled
+for msn in grafana-test; do podman run --rm  --env KUBECONFIG="/tmp/molecule/kubeconfig" --env K8S_AUTH_KUBECONFIG="/tmp/molecule/kubeconfig" --env MOLECULE_CLUSTER_TYPE="openshift" --env MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo -v molecule-tests-volume:/tmp/molecule    -w /tmp/molecule/operator --network="host" --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.2 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.2 --add-host=api.ocp4.local:192.168.122.2 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.2 --add-host="api.crc.testing:192.168.130.11" --add-host="kiali-istio-system.apps-crc.testing:192.168.130.11" --add-host="prometheus-istio-system.apps-crc.testing:192.168.130.11" --env DORP=podman --env OPERATOR_IMAGE_PULL_SECRET_NAME=kiali-operator-pull-secret --env MOLECULE_KIALI_CR_SPEC_VERSION=default --env PLUGIN_IMAGE_PULL_SECRET_JSON="" --env MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION="default"  --env MOLECULE_OPERATOR_PROFILER_ENABLED=true --env MOLECULE_OPERATOR_INSTALLER=helm --env MOLECULE_DUMP_LOGS_ON_ERROR=true  --env MOLECULE_WAIT_RETRIES=360 localhost/kiali-molecule:latest molecule --debug test  --scenario-name ${msn}; if [ "$?" != "0" ]; then echo "Molecule test failed: ${msn}"; podman volume rm molecule-tests-volume; exit 1; fi; done
+DEBUG    Validating schema /tmp/molecule/operator/molecule/grafana-test/molecule.yml.
+WARNING  Driver podman does not provide a schema.
+INFO     grafana-test scenario test matrix: prepare, converge, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Running ansible-galaxy collection install -v -r requirements.yml
+INFO     Set ANSIBLE_ROLES_PATH=roles:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Running grafana-test > prepare
+INFO     Sanity checks: 'podman'
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/grafana-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/grafana-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/grafana-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/grafana-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/grafana-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/grafana-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/grafana-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/grafana-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/grafana-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/grafana-test
+MOLECULE_SCENARIO_NAME: grafana-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/grafana-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/grafana-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/grafana-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/grafana-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/grafana-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/grafana-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/grafana-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/grafana-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/grafana-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/grafana-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/grafana-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/grafana-test MOLECULE_SCENARIO_NAME=grafana-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/grafana-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/grafana-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Make sure the operator namespace exists] *********************************
+ok: [localhost]
+
+TASK [Find the latest Operator Helm Chart] *************************************
+changed: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [Install Operator via Helm] ***********************************************
+changed: [localhost]
+
+TASK [Make sure the CR namespace exists] ***************************************
+ok: [localhost]
+
+TASK [Wait for the CRD to be established] **************************************
+ok: [localhost]
+
+TASK [Prepare initial Kiali CR definition based solely on the template] ********
+ok: [localhost]
+
+TASK [Create Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Asserting that Kiali is Deployed] ****************************************
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (360 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (359 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (358 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (357 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (356 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (355 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (354 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (353 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (352 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (351 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (350 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (349 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (348 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (347 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (346 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (345 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (344 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (343 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (342 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (341 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (340 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (339 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (338 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (337 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (336 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (335 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (334 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (333 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (332 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (331 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (330 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (329 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (328 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (327 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (326 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (325 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (324 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (323 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (322 retries left).
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=13   changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Running grafana-test > converge
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/grafana-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/grafana-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/grafana-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/grafana-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/grafana-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/grafana-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/grafana-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/grafana-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/grafana-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/grafana-test
+MOLECULE_SCENARIO_NAME: grafana-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/grafana-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/grafana-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/grafana-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/grafana-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/grafana-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/grafana-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/grafana-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/grafana-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/grafana-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/grafana-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/grafana-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/grafana-test MOLECULE_SCENARIO_NAME=grafana-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/grafana-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/grafana-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Tests] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Configmap] *****************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+ok: [localhost]
+
+TASK [Determine the Kiali Ingress URL on minikube] *****************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Ingress URL on kind] *********************************
+skipping: [localhost]
+
+TASK [Assert Kiali Pod is Running and there is only one] ***********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Asserting that Kiali Pod exists and there is only one] *******************
+ok: [localhost]
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+ok: [localhost]
+
+TASK [Remember the good in_cluster_url] ****************************************
+ok: [localhost]
+
+TASK [Get statuses from Istio components] **************************************
+ok: [localhost]
+
+TASK [Results: /api/istio/status] **********************************************
+ok: [localhost] => {
+    "msg": [
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-k7wg9",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-7962x",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-p2pkb",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-mfjxp",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-4vq8h",
+            "status": "Healthy"
+        }
+    ]
+}
+
+TASK [Check if Grafana status is present] **************************************
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-k7wg9', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-7962x', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-p2pkb', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-mfjxp', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-4vq8h', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost]
+
+TASK [Assert that there is no error related to Grafana] ************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+ok: [localhost]
+
+TASK [Update Grafana URL] ******************************************************
+ok: [localhost]
+
+TASK [Change Kiali CR with new Kiali CR] ***************************************
+--- before
++++ after
+@@ -1,42 +1,7 @@
+ {
+     "metadata": {
+-        "generation": 1,
++        "generation": 2,
+         "managedFields": [
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:spec": {
+-                        ".": {},
+-                        "f:auth": {
+-                            ".": {},
+-                            "f:strategy": {}
+-                        },
+-                        "f:deployment": {
+-                            ".": {},
+-                            "f:accessible_namespaces": {},
+-                            "f:image_name": {},
+-                            "f:image_pull_policy": {},
+-                            "f:image_version": {},
+-                            "f:ingress": {
+-                                ".": {},
+-                                "f:enabled": {}
+-                            },
+-                            "f:logger": {
+-                                ".": {},
+-                                "f:log_level": {}
+-                            },
+-                            "f:namespace": {},
+-                            "f:service_type": {}
+-                        },
+-                        "f:istio_namespace": {},
+-                        "f:version": {}
+-                    }
+-                },
+-                "manager": "OpenAPI-Generator",
+-                "operation": "Update",
+-                "time": "2024-03-21T07:46:17Z"
+-            },
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+                 "fieldsType": "FieldsV1",
+@@ -96,9 +61,57 @@
+                 "operation": "Update",
+                 "subresource": "status",
+                 "time": "2024-03-21T07:51:20Z"
++            },
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:spec": {
++                        ".": {},
++                        "f:auth": {
++                            ".": {},
++                            "f:strategy": {}
++                        },
++                        "f:deployment": {
++                            ".": {},
++                            "f:accessible_namespaces": {},
++                            "f:image_name": {},
++                            "f:image_pull_policy": {},
++                            "f:image_version": {},
++                            "f:ingress": {
++                                ".": {},
++                                "f:enabled": {}
++                            },
++                            "f:logger": {
++                                ".": {},
++                                "f:log_level": {}
++                            },
++                            "f:namespace": {},
++                            "f:service_type": {}
++                        },
++                        "f:external_services": {
++                            ".": {},
++                            "f:grafana": {
++                                ".": {},
++                                "f:in_cluster_url": {}
++                            }
++                        },
++                        "f:istio_namespace": {},
++                        "f:version": {}
++                    }
++                },
++                "manager": "OpenAPI-Generator",
++                "operation": "Update",
++                "time": "2024-03-21T07:51:39Z"
+             }
+         ],
+-        "resourceVersion": "3183292"
++        "resourceVersion": "3183396"
+     },
+-    "spec": {}
++    "spec": {
++        "external_services": {
++            "grafana": {
++                "in_cluster_url": "http://wrong.url"
++            }
++        }
++    }
+ }
+
+changed: [localhost]
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (360 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (359 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (358 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (357 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (356 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (355 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (354 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (353 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (352 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (351 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (350 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (349 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (348 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (347 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (346 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (345 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (344 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (343 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (342 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (341 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (340 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (339 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (338 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (337 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (336 retries left).
+ok: [localhost]
+
+TASK [Asserting that Kiali Pod exists and there is only one] *******************
+FAILED - RETRYING: [localhost]: Asserting that Kiali Pod exists and there is only one (360 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali Pod exists and there is only one (359 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali Pod exists and there is only one (358 retries left).
+ok: [localhost]
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Configmap] *****************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+ok: [localhost]
+
+TASK [Determine the Kiali Ingress URL on minikube] *****************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Ingress URL on kind] *********************************
+skipping: [localhost]
+
+TASK [Assert Kiali Pod is Running and there is only one] ***********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Get statuses from Istio components] **************************************
+ok: [localhost]
+
+TASK [Results: /api/istio/status] **********************************************
+ok: [localhost] => {
+    "msg": [
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-mfjxp",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-4vq8h",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-p2pkb",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-k7wg9",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-7962x",
+            "status": "Healthy"
+        },
+        {
+            "is_core": false,
+            "name": "grafana",
+            "status": "Unreachable"
+        }
+    ]
+}
+
+TASK [set_fact] ****************************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Check if Grafana status is present] **************************************
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-mfjxp', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-4vq8h', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-p2pkb', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-k7wg9', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-7962x', 'status': 'Healthy', 'is_core': True})
+ok: [localhost] => (item={'name': 'grafana', 'status': 'Unreachable', 'is_core': False})
+
+TASK [Assert that there is an error related to Grafana] ************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+ok: [localhost]
+
+TASK [Update Grafana Health URL] ***********************************************
+ok: [localhost]
+
+TASK [Change Kiali CR with new Kiali CR] ***************************************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+     "metadata": {
+-        "generation": 2,
++        "generation": 3,
+         "managedFields": [
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+@@ -16,48 +16,6 @@
+                 "manager": "ansible-operator",
+                 "operation": "Update",
+                 "time": "2024-03-21T07:46:17Z"
+-            },
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:spec": {
+-                        ".": {},
+-                        "f:auth": {
+-                            ".": {},
+-                            "f:strategy": {}
+-                        },
+-                        "f:deployment": {
+-                            ".": {},
+-                            "f:accessible_namespaces": {},
+-                            "f:image_name": {},
+-                            "f:image_pull_policy": {},
+-                            "f:image_version": {},
+-                            "f:ingress": {
+-                                ".": {},
+-                                "f:enabled": {}
+-                            },
+-                            "f:logger": {
+-                                ".": {},
+-                                "f:log_level": {}
+-                            },
+-                            "f:namespace": {},
+-                            "f:service_type": {}
+-                        },
+-                        "f:external_services": {
+-                            ".": {},
+-                            "f:grafana": {
+-                                ".": {},
+-                                "f:in_cluster_url": {}
+-                            }
+-                        },
+-                        "f:istio_namespace": {},
+-                        "f:version": {}
+-                    }
+-                },
+-                "manager": "OpenAPI-Generator",
+-                "operation": "Update",
+-                "time": "2024-03-21T07:51:39Z"
+             },
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+@@ -103,14 +61,58 @@
+                 "operation": "Update",
+                 "subresource": "status",
+                 "time": "2024-03-21T07:54:41Z"
++            },
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:spec": {
++                        ".": {},
++                        "f:auth": {
++                            ".": {},
++                            "f:strategy": {}
++                        },
++                        "f:deployment": {
++                            ".": {},
++                            "f:accessible_namespaces": {},
++                            "f:image_name": {},
++                            "f:image_pull_policy": {},
++                            "f:image_version": {},
++                            "f:ingress": {
++                                ".": {},
++                                "f:enabled": {}
++                            },
++                            "f:logger": {
++                                ".": {},
++                                "f:log_level": {}
++                            },
++                            "f:namespace": {},
++                            "f:service_type": {}
++                        },
++                        "f:external_services": {
++                            ".": {},
++                            "f:grafana": {
++                                ".": {},
++                                "f:health_check_url": {},
++                                "f:in_cluster_url": {}
++                            }
++                        },
++                        "f:istio_namespace": {},
++                        "f:version": {}
++                    }
++                },
++                "manager": "OpenAPI-Generator",
++                "operation": "Update",
++                "time": "2024-03-21T07:55:42Z"
+             }
+         ],
+-        "resourceVersion": "3184451"
++        "resourceVersion": "3184809"
+     },
+     "spec": {
+         "external_services": {
+             "grafana": {
+-                "in_cluster_url": "http://wrong.url"
++                "health_check_url": "http://grafana.istio-system:3000",
++                "in_cluster_url": "http://grafana.istio-system:3000"
+             }
+         }
+     }
+
+changed: [localhost]
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (360 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (359 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (358 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (357 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (356 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (355 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (354 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (353 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (352 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (351 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (350 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (349 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (348 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (347 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (346 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (345 retries left).
+ok: [localhost]
+
+TASK [Asserting that Kiali Pod exists and there is only one] *******************
+FAILED - RETRYING: [localhost]: Asserting that Kiali Pod exists and there is only one (360 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali Pod exists and there is only one (359 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali Pod exists and there is only one (358 retries left).
+ok: [localhost]
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Configmap] *****************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+ok: [localhost]
+
+TASK [Determine the Kiali Ingress URL on minikube] *****************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Ingress URL on kind] *********************************
+skipping: [localhost]
+
+TASK [Assert Kiali Pod is Running and there is only one] ***********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Get statuses from Istio components] **************************************
+ok: [localhost]
+
+TASK [Results: /api/istio/status] **********************************************
+ok: [localhost] => {
+    "msg": [
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-mfjxp",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-k7wg9",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-4vq8h",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-p2pkb",
+            "status": "Healthy"
+        },
+        {
+            "is_core": true,
+            "name": "istiod-7c675d8696-7962x",
+            "status": "Healthy"
+        }
+    ]
+}
+
+TASK [Check if Grafana status is present] **************************************
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-mfjxp', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-k7wg9', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-4vq8h', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-p2pkb', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost] => (item={'name': 'istiod-7c675d8696-7962x', 'status': 'Healthy', 'is_core': True})
+skipping: [localhost]
+
+TASK [Assert that there is no error related to Grafana] ************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=66   changed=2    unreachable=0    failed=0    skipped=11   rescued=0    ignored=0
+
+INFO     Running grafana-test > destroy
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/grafana-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/grafana-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/grafana-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/grafana-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/grafana-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/grafana-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/grafana-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/grafana-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/grafana-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/grafana-test
+MOLECULE_SCENARIO_NAME: grafana-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/grafana-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/grafana-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/grafana-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/grafana-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/grafana-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/grafana-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/grafana-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/grafana-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/grafana-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/grafana-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/grafana-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/grafana-test MOLECULE_SCENARIO_NAME=grafana-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/grafana-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/grafana-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Remove Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Wait for Kiali ConfigMap to be uninstalled] ******************************
+ok: [localhost]
+
+TASK [Uninstall Operator via Helm] *********************************************
+changed: [localhost]
+
+TASK [Remove CRDs] *************************************************************
+changed: [localhost]
+
+TASK [Removing Operator namespace] *********************************************
+changed: [localhost]
+
+TASK [Removing CR namespace if it is different than control plane and operator namespace] ***
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=9    changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
+podman volume rm molecule-tests-volume
+molecule-tests-volume

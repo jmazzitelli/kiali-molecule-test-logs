@@ -1,0 +1,22 @@
+<testsuites  id="0" name="kiali molecule tests" tests="18" failures="0" time="18425">
+  <testsuite id="0" name="kiali molecule tests" tests="18" failures="0" time="18425">
+    <testcase id="accessible-namespaces-test" name="accessible-namespaces-test" classname="accessible-namespaces-test" time="1952"></testcase>
+    <testcase id="affinity-tolerations-resources-test" name="affinity-tolerations-resources-test" classname="affinity-tolerations-resources-test" time="952"></testcase>
+    <testcase id="cluster-wide-access-test" name="cluster-wide-access-test" classname="cluster-wide-access-test" time="2033"></testcase>
+    <testcase id="config-values-test" name="config-values-test" classname="config-values-test" time="692"></testcase>
+    <testcase id="default-namespace-test" name="default-namespace-test" classname="default-namespace-test" time="562"></testcase>
+    <testcase id="grafana-test" name="grafana-test" classname="grafana-test" time="870"></testcase>
+    <testcase id="instance-name-test" name="instance-name-test" classname="instance-name-test" time="804"></testcase>
+    <testcase id="jaeger-test" name="jaeger-test" classname="jaeger-test" time="751"></testcase>
+    <testcase id="metrics-test" name="metrics-test" classname="metrics-test" time="846"></testcase>
+    <testcase id="null-cr-values-test" name="null-cr-values-test" classname="null-cr-values-test" time="676"></testcase>
+    <testcase id="only-view-only-mode-test" name="only-view-only-mode-test" classname="only-view-only-mode-test" time="933"></testcase>
+    <testcase id="openshift-auth-test" name="openshift-auth-test" classname="openshift-auth-test" time="673"></testcase>
+    <testcase id="os-console-links-test" name="os-console-links-test" classname="os-console-links-test" time="1794"></testcase>
+    <testcase id="ossmconsole-config-values-test" name="ossmconsole-config-values-test" classname="ossmconsole-config-values-test" time="987"></testcase>
+    <testcase id="read-certs-secrets-test" name="read-certs-secrets-test" classname="read-certs-secrets-test" time="703"></testcase>
+    <testcase id="roles-test" name="roles-test" classname="roles-test" time="1598"></testcase>
+    <testcase id="rolling-restart-test" name="rolling-restart-test" classname="rolling-restart-test" time="846"></testcase>
+    <testcase id="token-test" name="token-test" classname="token-test" time="753"></testcase>
+  </testsuite>
+</testsuites>

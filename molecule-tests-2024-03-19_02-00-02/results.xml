@@ -1,0 +1,42 @@
+<testsuites  id="0" name="kiali molecule tests" tests="18" failures="10" time="8012">
+  <testsuite id="0" name="kiali molecule tests" tests="18" failures="10" time="8012">
+    <testcase id="accessible-namespaces-test" name="accessible-namespaces-test" classname="accessible-namespaces-test" time="1842"></testcase>
+    <testcase id="affinity-tolerations-resources-test" name="affinity-tolerations-resources-test" classname="affinity-tolerations-resources-test" time="739"></testcase>
+    <testcase id="cluster-wide-access-test" name="cluster-wide-access-test" classname="cluster-wide-access-test" time="1817"></testcase>
+    <testcase id="config-values-test" name="config-values-test" classname="config-values-test" time="635"></testcase>
+    <testcase id="default-namespace-test" name="default-namespace-test" classname="default-namespace-test" time="395"></testcase>
+    <testcase id="grafana-test" name="grafana-test" classname="grafana-test" time="748"></testcase>
+    <testcase id="instance-name-test" name="instance-name-test" classname="instance-name-test" time="663"></testcase>
+    <testcase id="jaeger-test" name="jaeger-test" classname="jaeger-test" time="538"></testcase>
+    <testcase id="metrics-test" name="metrics-test" classname="metrics-test" time="626">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2024-03-19_02-00-02/metrics-test.log"/>
+    </testcase>
+    <testcase id="null-cr-values-test" name="null-cr-values-test" classname="null-cr-values-test" time="1">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2024-03-19_02-00-02/null-cr-values-test.log"/>
+    </testcase>
+    <testcase id="only-view-only-mode-test" name="only-view-only-mode-test" classname="only-view-only-mode-test" time="1">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2024-03-19_02-00-02/only-view-only-mode-test.log"/>
+    </testcase>
+    <testcase id="openshift-auth-test" name="openshift-auth-test" classname="openshift-auth-test" time="1">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2024-03-19_02-00-02/openshift-auth-test.log"/>
+    </testcase>
+    <testcase id="os-console-links-test" name="os-console-links-test" classname="os-console-links-test" time="1">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2024-03-19_02-00-02/os-console-links-test.log"/>
+    </testcase>
+    <testcase id="ossmconsole-config-values-test" name="ossmconsole-config-values-test" classname="ossmconsole-config-values-test" time="1">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2024-03-19_02-00-02/ossmconsole-config-values-test.log"/>
+    </testcase>
+    <testcase id="read-certs-secrets-test" name="read-certs-secrets-test" classname="read-certs-secrets-test" time="1">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2024-03-19_02-00-02/read-certs-secrets-test.log"/>
+    </testcase>
+    <testcase id="roles-test" name="roles-test" classname="roles-test" time="1">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2024-03-19_02-00-02/roles-test.log"/>
+    </testcase>
+    <testcase id="rolling-restart-test" name="rolling-restart-test" classname="rolling-restart-test" time="1">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2024-03-19_02-00-02/rolling-restart-test.log"/>
+    </testcase>
+    <testcase id="token-test" name="token-test" classname="token-test" time="1">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2024-03-19_02-00-02/token-test.log"/>
+    </testcase>
+  </testsuite>
+</testsuites>

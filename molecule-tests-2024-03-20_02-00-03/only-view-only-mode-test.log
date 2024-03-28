@@ -1,0 +1,835 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT/helm-charts'
+Will use this helm executable: /tmp/KIALI-GIT/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator-1.82.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT/helm-charts'
+OCP repos: external=[default-route-openshift-image-registry.apps.ocp4.local] internal=[image-registry.openshift-image-registry.svc:5000]
+
+Will auto-detect hosts to add based on the CLUSTER_REPO: default-route-openshift-image-registry.apps.ocp4.local
+Auto-detected add host args: --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.2 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.2 --add-host=api.ocp4.local:192.168.122.2 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.2
+Will not rebuild kiali-molecule image.
+podman volume exists molecule-tests-volume && echo "Podman volume already exists; deleting it" && podman volume rm molecule-tests-volume || true
+podman volume create molecule-tests-volume
+molecule-tests-volume
+podman create -v molecule-tests-volume:/data --name molecule-volume-helper docker.io/busybox true
+977ec2ad3b866b2dcff023449cddf18ce70cb870637a2ed3423265d98843f15c
+podman cp "/tmp/KIALI-GIT/helm-charts" molecule-volume-helper:/data/helm-charts-repo
+podman cp "/tmp/KIALI-GIT/kiali/operator/" molecule-volume-helper:/data/operator
+podman cp "/home/jmazzite/.kube/config" molecule-volume-helper:/data/kubeconfig
+podman rm molecule-volume-helper
+molecule-volume-helper
+namespace/kiali-operator created
+secret/kiali-operator-pull-secret created
+secret/kiali-operator-pull-secret labeled
+for msn in only-view-only-mode-test; do podman run --rm  --env KUBECONFIG="/tmp/molecule/kubeconfig" --env K8S_AUTH_KUBECONFIG="/tmp/molecule/kubeconfig" --env MOLECULE_CLUSTER_TYPE="openshift" --env MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo -v molecule-tests-volume:/tmp/molecule    -w /tmp/molecule/operator --network="host" --add-host=kiali-istio-system.apps.ocp4.local:192.168.122.2 --add-host=prometheus-istio-system.apps.ocp4.local:192.168.122.2 --add-host=api.ocp4.local:192.168.122.2 --add-host=oauth-openshift.apps.ocp4.local:192.168.122.2 --add-host="api.crc.testing:192.168.130.11" --add-host="kiali-istio-system.apps-crc.testing:192.168.130.11" --add-host="prometheus-istio-system.apps-crc.testing:192.168.130.11" --env DORP=podman --env OPERATOR_IMAGE_PULL_SECRET_NAME=kiali-operator-pull-secret --env MOLECULE_KIALI_CR_SPEC_VERSION=default --env PLUGIN_IMAGE_PULL_SECRET_JSON="" --env MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION="default"  --env MOLECULE_OPERATOR_PROFILER_ENABLED=true --env MOLECULE_OPERATOR_INSTALLER=helm --env MOLECULE_DUMP_LOGS_ON_ERROR=true  --env MOLECULE_WAIT_RETRIES=360 localhost/kiali-molecule:latest molecule --debug test  --scenario-name ${msn}; if [ "$?" != "0" ]; then echo "Molecule test failed: ${msn}"; podman volume rm molecule-tests-volume; exit 1; fi; done
+DEBUG    Validating schema /tmp/molecule/operator/molecule/only-view-only-mode-test/molecule.yml.
+WARNING  Driver podman does not provide a schema.
+INFO     only-view-only-mode-test scenario test matrix: prepare, converge, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Running ansible-galaxy collection install -v -r requirements.yml
+INFO     Set ANSIBLE_ROLES_PATH=roles:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Running only-view-only-mode-test > prepare
+INFO     Sanity checks: 'podman'
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/only-view-only-mode-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/only-view-only-mode-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/only-view-only-mode-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/only-view-only-mode-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/only-view-only-mode-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/only-view-only-mode-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/only-view-only-mode-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/only-view-only-mode-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/only-view-only-mode-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/only-view-only-mode-test
+MOLECULE_SCENARIO_NAME: only-view-only-mode-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/only-view-only-mode-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/only-view-only-mode-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/only-view-only-mode-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/only-view-only-mode-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/only-view-only-mode-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/only-view-only-mode-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/only-view-only-mode-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/only-view-only-mode-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/only-view-only-mode-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/only-view-only-mode-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/only-view-only-mode-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/only-view-only-mode-test MOLECULE_SCENARIO_NAME=only-view-only-mode-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/only-view-only-mode-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/only-view-only-mode-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Make sure the operator namespace exists] *********************************
+ok: [localhost]
+
+TASK [Find the latest Operator Helm Chart] *************************************
+changed: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [Install Operator via Helm] ***********************************************
+changed: [localhost]
+
+TASK [Make sure the CR namespace exists] ***************************************
+ok: [localhost]
+
+TASK [Wait for the CRD to be established] **************************************
+ok: [localhost]
+
+TASK [Prepare initial Kiali CR definition based solely on the template] ********
+ok: [localhost]
+
+TASK [Create Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Asserting that Kiali is Deployed] ****************************************
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (360 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (359 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (358 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (357 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (356 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (355 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (354 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (353 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (352 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (351 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (350 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (349 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (348 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (347 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (346 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (345 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (344 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (343 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (342 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (341 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (340 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (339 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (338 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (337 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (336 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (335 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (334 retries left).
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=13   changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Running only-view-only-mode-test > converge
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/only-view-only-mode-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/only-view-only-mode-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/only-view-only-mode-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/only-view-only-mode-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/only-view-only-mode-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/only-view-only-mode-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/only-view-only-mode-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/only-view-only-mode-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/only-view-only-mode-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/only-view-only-mode-test
+MOLECULE_SCENARIO_NAME: only-view-only-mode-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/only-view-only-mode-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/only-view-only-mode-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/only-view-only-mode-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/only-view-only-mode-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/only-view-only-mode-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/only-view-only-mode-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/only-view-only-mode-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/only-view-only-mode-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/only-view-only-mode-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/only-view-only-mode-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/only-view-only-mode-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/only-view-only-mode-test MOLECULE_SCENARIO_NAME=only-view-only-mode-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/only-view-only-mode-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/only-view-only-mode-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Tests] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Configmap] *****************************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+ok: [localhost]
+
+TASK [Determine the Kiali Ingress URL on minikube] *****************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Ingress URL on kind] *********************************
+skipping: [localhost]
+
+TASK [Assert Kiali Configmap has the correct Auth Strategy] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Configmap has the correct Image Version if we know what the version should be] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Configmap has the correct Image Pull Policy] ****************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Configmap has the correct Istio Namespace] ******************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Configmap has the correct Root Namespace] *******************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Configmap has the correct Prometheus Url for Upstream Istio installs] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Configmap has the correct Grafana Url for Upstream Istio installs] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Configmap has correct Version Url for Upstream Istio installs] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Actual Kiali Accessible namespace list should be the same as the CR] *****
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running and there is only one] ***********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Get roles] ***************************************************************
+ok: [localhost] => (item=['istio-system', 'kiali-viewer'])
+
+TASK [Assert that namespaces have the correct roles] ***************************
+ok: [localhost] => (item={'changed': False, 'resources': [{'kind': 'Role', 'apiVersion': 'rbac.authorization.k8s.io/v1', 'metadata': {'name': 'kiali-viewer', 'namespace': 'istio-system', 'uid': '738abce1-db43-4a3f-82f9-5eeb3471b346', 'resourceVersion': '2715681', 'creationTimestamp': '2024-03-20T08:22:59Z', 'labels': {'app': 'kiali', 'app.kubernetes.io/instance': 'kiali', 'app.kubernetes.io/name': 'kiali', 'app.kubernetes.io/part-of': 'kiali', 'app.kubernetes.io/version': 'master', 'version': 'master'}, 'annotations': {'operator-sdk/primary-resource': 'kiali-operator/kiali', 'operator-sdk/primary-resource-type': 'Kiali.kiali.io'}, 'managedFields': [{'manager': 'OpenAPI-Generator', 'operation': 'Update', 'apiVersion': 'rbac.authorization.k8s.io/v1', 'time': '2024-03-20T08:22:59Z', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:metadata': {'f:annotations': {'.': {}, 'f:operator-sdk/primary-resource': {}, 'f:operator-sdk/primary-resource-type': {}}, 'f:labels': {'.': {}, 'f:app': {}, 'f:app.kubernetes.io/instance': {}, 'f:app.kubernetes.io/name': {}, 'f:app.kubernetes.io/part-of': {}, 'f:app.kubernetes.io/version': {}, 'f:version': {}}}, 'f:rules': {}}}]}, 'rules': [{'verbs': ['get', 'list', 'watch'], 'apiGroups': [''], 'resources': ['configmaps', 'endpoints', 'pods/log']}, {'verbs': ['get', 'list', 'watch'], 'apiGroups': [''], 'resources': ['namespaces', 'pods', 'replicationcontrollers', 'services']}, {'verbs': ['create', 'post'], 'apiGroups': [''], 'resources': ['pods/portforward']}, {'verbs': ['get', 'list', 'watch'], 'apiGroups': ['extensions', 'apps'], 'resources': ['daemonsets', 'deployments', 'replicasets', 'statefulsets']}, {'verbs': ['get', 'list', 'watch'], 'apiGroups': ['batch'], 'resources': ['cronjobs', 'jobs']}, {'verbs': ['get', 'list', 'watch'], 'apiGroups': ['networking.istio.io', 'security.istio.io', 'extensions.istio.io', 'telemetry.istio.io', 'gateway.networking.k8s.io'], 'resources': ['*']}, {'verbs': ['get', 'list', 'watch'], 'apiGroups': ['apps.openshift.io'], 'resources': ['deploymentconfigs']}, {'verbs': ['get'], 'apiGroups': ['project.openshift.io'], 'resources': ['projects']}, {'verbs': ['get'], 'apiGroups': ['route.openshift.io'], 'resources': ['routes']}, {'verbs': ['create'], 'apiGroups': ['authentication.k8s.io'], 'resources': ['tokenreviews']}]}], 'api_found': True, 'invocation': {'module_args': {'api_version': 'rbac.authorization.k8s.io/v1', 'kind': 'Role', 'namespace': 'istio-system', 'name': 'kiali-viewer', 'wait': False, 'wait_sleep': 5, 'wait_timeout': 120, 'label_selectors': [], 'field_selectors': [], 'kubeconfig': None, 'context': None, 'host': None, 'api_key': None, 'username': None, 'password': None, 'validate_certs': None, 'ca_cert': None, 'client_cert': None, 'client_key': None, 'proxy': None, 'proxy_headers': None, 'persist_config': None, 'wait_condition': None}}, 'failed': False, 'item': ['istio-system', 'kiali-viewer'], 'ansible_loop_var': 'item'}) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "api_found": true,
+        "changed": false,
+        "failed": false,
+        "invocation": {
+            "module_args": {
+                "api_key": null,
+                "api_version": "rbac.authorization.k8s.io/v1",
+                "ca_cert": null,
+                "client_cert": null,
+                "client_key": null,
+                "context": null,
+                "field_selectors": [],
+                "host": null,
+                "kind": "Role",
+                "kubeconfig": null,
+                "label_selectors": [],
+                "name": "kiali-viewer",
+                "namespace": "istio-system",
+                "password": null,
+                "persist_config": null,
+                "proxy": null,
+                "proxy_headers": null,
+                "username": null,
+                "validate_certs": null,
+                "wait": false,
+                "wait_condition": null,
+                "wait_sleep": 5,
+                "wait_timeout": 120
+            }
+        },
+        "item": [
+            "istio-system",
+            "kiali-viewer"
+        ],
+        "resources": [
+            {
+                "apiVersion": "rbac.authorization.k8s.io/v1",
+                "kind": "Role",
+                "metadata": {
+                    "annotations": {
+                        "operator-sdk/primary-resource": "kiali-operator/kiali",
+                        "operator-sdk/primary-resource-type": "Kiali.kiali.io"
+                    },
+                    "creationTimestamp": "2024-03-20T08:22:59Z",
+                    "labels": {
+                        "app": "kiali",
+                        "app.kubernetes.io/instance": "kiali",
+                        "app.kubernetes.io/name": "kiali",
+                        "app.kubernetes.io/part-of": "kiali",
+                        "app.kubernetes.io/version": "master",
+                        "version": "master"
+                    },
+                    "managedFields": [
+                        {
+                            "apiVersion": "rbac.authorization.k8s.io/v1",
+                            "fieldsType": "FieldsV1",
+                            "fieldsV1": {
+                                "f:metadata": {
+                                    "f:annotations": {
+                                        ".": {},
+                                        "f:operator-sdk/primary-resource": {},
+                                        "f:operator-sdk/primary-resource-type": {}
+                                    },
+                                    "f:labels": {
+                                        ".": {},
+                                        "f:app": {},
+                                        "f:app.kubernetes.io/instance": {},
+                                        "f:app.kubernetes.io/name": {},
+                                        "f:app.kubernetes.io/part-of": {},
+                                        "f:app.kubernetes.io/version": {},
+                                        "f:version": {}
+                                    }
+                                },
+                                "f:rules": {}
+                            },
+                            "manager": "OpenAPI-Generator",
+                            "operation": "Update",
+                            "time": "2024-03-20T08:22:59Z"
+                        }
+                    ],
+                    "name": "kiali-viewer",
+                    "namespace": "istio-system",
+                    "resourceVersion": "2715681",
+                    "uid": "738abce1-db43-4a3f-82f9-5eeb3471b346"
+                },
+                "rules": [
+                    {
+                        "apiGroups": [
+                            ""
+                        ],
+                        "resources": [
+                            "configmaps",
+                            "endpoints",
+                            "pods/log"
+                        ],
+                        "verbs": [
+                            "get",
+                            "list",
+                            "watch"
+                        ]
+                    },
+                    {
+                        "apiGroups": [
+                            ""
+                        ],
+                        "resources": [
+                            "namespaces",
+                            "pods",
+                            "replicationcontrollers",
+                            "services"
+                        ],
+                        "verbs": [
+                            "get",
+                            "list",
+                            "watch"
+                        ]
+                    },
+                    {
+                        "apiGroups": [
+                            ""
+                        ],
+                        "resources": [
+                            "pods/portforward"
+                        ],
+                        "verbs": [
+                            "create",
+                            "post"
+                        ]
+                    },
+                    {
+                        "apiGroups": [
+                            "extensions",
+                            "apps"
+                        ],
+                        "resources": [
+                            "daemonsets",
+                            "deployments",
+                            "replicasets",
+                            "statefulsets"
+                        ],
+                        "verbs": [
+                            "get",
+                            "list",
+                            "watch"
+                        ]
+                    },
+                    {
+                        "apiGroups": [
+                            "batch"
+                        ],
+                        "resources": [
+                            "cronjobs",
+                            "jobs"
+                        ],
+                        "verbs": [
+                            "get",
+                            "list",
+                            "watch"
+                        ]
+                    },
+                    {
+                        "apiGroups": [
+                            "networking.istio.io",
+                            "security.istio.io",
+                            "extensions.istio.io",
+                            "telemetry.istio.io",
+                            "gateway.networking.k8s.io"
+                        ],
+                        "resources": [
+                            "*"
+                        ],
+                        "verbs": [
+                            "get",
+                            "list",
+                            "watch"
+                        ]
+                    },
+                    {
+                        "apiGroups": [
+                            "apps.openshift.io"
+                        ],
+                        "resources": [
+                            "deploymentconfigs"
+                        ],
+                        "verbs": [
+                            "get",
+                            "list",
+                            "watch"
+                        ]
+                    },
+                    {
+                        "apiGroups": [
+                            "project.openshift.io"
+                        ],
+                        "resources": [
+                            "projects"
+                        ],
+                        "verbs": [
+                            "get"
+                        ]
+                    },
+                    {
+                        "apiGroups": [
+                            "route.openshift.io"
+                        ],
+                        "resources": [
+                            "routes"
+                        ],
+                        "verbs": [
+                            "get"
+                        ]
+                    },
+                    {
+                        "apiGroups": [
+                            "authentication.k8s.io"
+                        ],
+                        "resources": [
+                            "tokenreviews"
+                        ],
+                        "verbs": [
+                            "create"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "msg": "All assertions passed"
+}
+
+TASK [Get role binding] ********************************************************
+ok: [localhost] => (item=['istio-system', 'kiali'])
+
+TASK [Assert the role binding provides the read-only viewer role] **************
+ok: [localhost] => (item={'changed': False, 'resources': [{'kind': 'RoleBinding', 'apiVersion': 'rbac.authorization.k8s.io/v1', 'metadata': {'name': 'kiali', 'namespace': 'istio-system', 'uid': '4fdccdd1-b027-488a-81e4-b062308ac173', 'resourceVersion': '2715689', 'creationTimestamp': '2024-03-20T08:23:00Z', 'labels': {'app': 'kiali', 'app.kubernetes.io/instance': 'kiali', 'app.kubernetes.io/name': 'kiali', 'app.kubernetes.io/part-of': 'kiali', 'app.kubernetes.io/version': 'master', 'version': 'master'}, 'annotations': {'operator-sdk/primary-resource': 'kiali-operator/kiali', 'operator-sdk/primary-resource-type': 'Kiali.kiali.io'}, 'managedFields': [{'manager': 'OpenAPI-Generator', 'operation': 'Update', 'apiVersion': 'rbac.authorization.k8s.io/v1', 'time': '2024-03-20T08:23:00Z', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:metadata': {'f:annotations': {'.': {}, 'f:operator-sdk/primary-resource': {}, 'f:operator-sdk/primary-resource-type': {}}, 'f:labels': {'.': {}, 'f:app': {}, 'f:app.kubernetes.io/instance': {}, 'f:app.kubernetes.io/name': {}, 'f:app.kubernetes.io/part-of': {}, 'f:app.kubernetes.io/version': {}, 'f:version': {}}}, 'f:roleRef': {}, 'f:subjects': {}}}]}, 'subjects': [{'kind': 'ServiceAccount', 'name': 'kiali-service-account', 'namespace': 'istio-system'}], 'roleRef': {'apiGroup': 'rbac.authorization.k8s.io', 'kind': 'Role', 'name': 'kiali-viewer'}}], 'api_found': True, 'invocation': {'module_args': {'api_version': 'rbac.authorization.k8s.io/v1', 'kind': 'RoleBinding', 'namespace': 'istio-system', 'name': 'kiali', 'wait': False, 'wait_sleep': 5, 'wait_timeout': 120, 'label_selectors': [], 'field_selectors': [], 'kubeconfig': None, 'context': None, 'host': None, 'api_key': None, 'username': None, 'password': None, 'validate_certs': None, 'ca_cert': None, 'client_cert': None, 'client_key': None, 'proxy': None, 'proxy_headers': None, 'persist_config': None, 'wait_condition': None}}, 'failed': False, 'item': ['istio-system', 'kiali'], 'ansible_loop_var': 'item'}) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "api_found": true,
+        "changed": false,
+        "failed": false,
+        "invocation": {
+            "module_args": {
+                "api_key": null,
+                "api_version": "rbac.authorization.k8s.io/v1",
+                "ca_cert": null,
+                "client_cert": null,
+                "client_key": null,
+                "context": null,
+                "field_selectors": [],
+                "host": null,
+                "kind": "RoleBinding",
+                "kubeconfig": null,
+                "label_selectors": [],
+                "name": "kiali",
+                "namespace": "istio-system",
+                "password": null,
+                "persist_config": null,
+                "proxy": null,
+                "proxy_headers": null,
+                "username": null,
+                "validate_certs": null,
+                "wait": false,
+                "wait_condition": null,
+                "wait_sleep": 5,
+                "wait_timeout": 120
+            }
+        },
+        "item": [
+            "istio-system",
+            "kiali"
+        ],
+        "resources": [
+            {
+                "apiVersion": "rbac.authorization.k8s.io/v1",
+                "kind": "RoleBinding",
+                "metadata": {
+                    "annotations": {
+                        "operator-sdk/primary-resource": "kiali-operator/kiali",
+                        "operator-sdk/primary-resource-type": "Kiali.kiali.io"
+                    },
+                    "creationTimestamp": "2024-03-20T08:23:00Z",
+                    "labels": {
+                        "app": "kiali",
+                        "app.kubernetes.io/instance": "kiali",
+                        "app.kubernetes.io/name": "kiali",
+                        "app.kubernetes.io/part-of": "kiali",
+                        "app.kubernetes.io/version": "master",
+                        "version": "master"
+                    },
+                    "managedFields": [
+                        {
+                            "apiVersion": "rbac.authorization.k8s.io/v1",
+                            "fieldsType": "FieldsV1",
+                            "fieldsV1": {
+                                "f:metadata": {
+                                    "f:annotations": {
+                                        ".": {},
+                                        "f:operator-sdk/primary-resource": {},
+                                        "f:operator-sdk/primary-resource-type": {}
+                                    },
+                                    "f:labels": {
+                                        ".": {},
+                                        "f:app": {},
+                                        "f:app.kubernetes.io/instance": {},
+                                        "f:app.kubernetes.io/name": {},
+                                        "f:app.kubernetes.io/part-of": {},
+                                        "f:app.kubernetes.io/version": {},
+                                        "f:version": {}
+                                    }
+                                },
+                                "f:roleRef": {},
+                                "f:subjects": {}
+                            },
+                            "manager": "OpenAPI-Generator",
+                            "operation": "Update",
+                            "time": "2024-03-20T08:23:00Z"
+                        }
+                    ],
+                    "name": "kiali",
+                    "namespace": "istio-system",
+                    "resourceVersion": "2715689",
+                    "uid": "4fdccdd1-b027-488a-81e4-b062308ac173"
+                },
+                "roleRef": {
+                    "apiGroup": "rbac.authorization.k8s.io",
+                    "kind": "Role",
+                    "name": "kiali-viewer"
+                },
+                "subjects": [
+                    {
+                        "kind": "ServiceAccount",
+                        "name": "kiali-service-account",
+                        "namespace": "istio-system"
+                    }
+                ]
+            }
+        ]
+    },
+    "msg": "All assertions passed"
+}
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/only-view-only-mode-test/../common/../common/wait_for_kiali_cr_changes.yml for localhost
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+ok: [localhost]
+
+TASK [Unset accessible namespace (defaults to ** behavior) in current Kiali CR] ***
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+     "metadata": {
+-        "generation": 1,
++        "generation": 2,
+         "managedFields": [
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+@@ -14,7 +14,6 @@
+                         },
+                         "f:deployment": {
+                             ".": {},
+-                            "f:accessible_namespaces": {},
+                             "f:image_name": {},
+                             "f:image_pull_policy": {},
+                             "f:image_version": {},
+@@ -99,13 +98,9 @@
+                 "time": "2024-03-20T08:23:45Z"
+             }
+         ],
+-        "resourceVersion": "2715971"
++        "resourceVersion": "2716135"
+     },
+     "spec": {
+-        "deployment": {
+-            "accessible_namespaces": [
+-                "istio-system"
+-            ]
+-        }
++        "deployment": {}
+     }
+ }
+
+changed: [localhost]
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (360 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (359 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (358 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (357 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (356 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (355 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (354 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (353 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (352 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (351 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (350 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (349 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (348 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (347 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (346 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (345 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (344 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (343 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (342 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (341 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (340 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (339 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (338 retries left).
+ok: [localhost]
+
+TASK [Asserting that Kiali Pod exists and there is only one] *******************
+FAILED - RETRYING: [localhost]: Asserting that Kiali Pod exists and there is only one (360 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali Pod exists and there is only one (359 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali Pod exists and there is only one (358 retries left).
+ok: [localhost]
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+ok: [localhost]
+
+TASK [Get cluster roles] *******************************************************
+ok: [localhost]
+
+TASK [Assert that cluster roles exist] *****************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Get cluster role binding] ************************************************
+ok: [localhost]
+
+TASK [Assert the cluster role binding provides the read-only viewer role] ******
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=37   changed=1    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0
+
+INFO     Running only-view-only-mode-test > destroy
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/only-view-only-mode-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/only-view-only-mode-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/only-view-only-mode-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/only-view-only-mode-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/only-view-only-mode-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/only-view-only-mode-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/only-view-only-mode-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/only-view-only-mode-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/only-view-only-mode-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/only-view-only-mode-test
+MOLECULE_SCENARIO_NAME: only-view-only-mode-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/only-view-only-mode-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/only-view-only-mode-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/only-view-only-mode-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/only-view-only-mode-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/only-view-only-mode-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/only-view-only-mode-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/only-view-only-mode-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/only-view-only-mode-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/only-view-only-mode-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/only-view-only-mode-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/only-view-only-mode-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/only-view-only-mode-test MOLECULE_SCENARIO_NAME=only-view-only-mode-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/only-view-only-mode-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/only-view-only-mode-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+/usr/local/lib/python3.11/site-packages/urllib3/connectionpool.py:1095: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.ocp4.local'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Remove Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Wait for Kiali ConfigMap to be uninstalled] ******************************
+ok: [localhost]
+
+TASK [Uninstall Operator via Helm] *********************************************
+changed: [localhost]
+
+TASK [Remove CRDs] *************************************************************
+changed: [localhost]
+
+TASK [Removing Operator namespace] *********************************************
+changed: [localhost]
+
+TASK [Removing CR namespace if it is different than control plane and operator namespace] ***
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=9    changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
+podman volume rm molecule-tests-volume
+molecule-tests-volume
