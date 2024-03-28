@@ -1,0 +1,6 @@
+<testsuites  id="0" name="kiali molecule tests" tests="2" failures="0" time="233">
+  <testsuite id="0" name="kiali molecule tests" tests="2" failures="0" time="233">
+    <testcase id="header-auth-test" name="header-auth-test" classname="header-auth-test" time="145"></testcase>
+    <testcase id="openid-test" name="openid-test" classname="openid-test" time="88"></testcase>
+  </testsuite>
+</testsuites>

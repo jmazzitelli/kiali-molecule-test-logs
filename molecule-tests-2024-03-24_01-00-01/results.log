@@ -1,0 +1,55 @@
+Docker is no longer supported by the molecule tests. This argument will largely be ignored and podman used instead.
+========== SETTINGS ==========
+DORP=podman
+KIALI_SRC_HOME=/home/jmazzite/source/kiali/kiali
+ALL_TESTS=header-auth-test openid-test
+SKIP_TESTS=os-console-links-test openshift-auth-test ossmconsole-config-values-test
+CLUSTER_TYPE=minikube
+MOLECULE_USE_DEFAULT_IMAGES=false
+MOLECULE_USE_DEV_IMAGES=false
+MOLECULE_DEBUG=true
+MOLECULE_DESTROY_NEVER=false
+MOLECULE_KIALI_CR_SPEC_VERSION=default
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default
+MOLECULE_OPERATOR_INSTALLER=helm
+MOLECULE_OPERATOR_PROFILER_ENABLED=true
+TEST_LOGS_DIR=/home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2024-03-24_01-00-01
+JUNIT_XML_FILE=/home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2024-03-24_01-00-01/results.xml
+TEST_CLIENT_EXE=/home/jmazzite/bin/kubectl
+COLOR=false
+MINIKUBE_EXE=/home/jmazzite/bin/minikube
+MINIKUBE_PROFILE=ci
+KIND=
+KIND_NAME=
+HELM_CHARTS_REPO=/home/jmazzite/source/kiali/helm-charts
+CI=false
+==============================
+All molecule test logs will go here: /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2024-03-24_01-00-01
+
+=========================
+=== BUILD HELM CHARTS ===
+=========================
+
+make: Entering directory '/home/jmazzite/source/kiali/helm-charts'
+Will use this helm executable: /home/jmazzite/source/kiali/helm-charts/_output/helm-install/helm
+Building Helm Chart for Kiali operator
+==> Linting /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-operator-1.82.0-SNAPSHOT.tgz
+Building Helm Chart for Kiali server
+==> Linting /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-server
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-server-1.82.0-SNAPSHOT.tgz
+make: Leaving directory '/home/jmazzite/source/kiali/helm-charts'
+
+=====================
+=== TEST RESULTS: ===
+=====================
+
+                        header-auth-test... success [2m 26s]
+                             openid-test... success [1m 29s]
+
+Test logs can be found at: /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2024-03-24_01-00-01
+
