@@ -1,0 +1,20 @@
+rolebinding.rbac.authorization.k8s.io/openid-rolebinding-istio-system created
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /home/jmazzite/source/kiali/helm-charts
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=<remote>/<branch> 9787-oauth-client-followup
+
+==========
+Failed to update your local helm chart repo.
+You can either attempt to correct the error mentioned above,
+or set 'HELM_CHARTS_REPO_PULL=false' and try again.
+==========
+make: *** [make/Makefile.helm.mk:16: .ensure-helm-charts-repo-exists] Error 1
+rolebinding.rbac.authorization.k8s.io "openid-rolebinding-istio-system" deleted from istio-system namespace

@@ -1,0 +1,64 @@
+<testsuites  id="0" name="kiali molecule tests" tests="20" failures="20" time="32">
+  <testsuite id="0" name="kiali molecule tests" tests="20" failures="20" time="32">
+    <testcase id="accessible-namespaces-test" name="accessible-namespaces-test" classname="accessible-namespaces-test" time="4">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/accessible-namespaces-test.log"/>
+    </testcase>
+    <testcase id="affinity-tolerations-resources-test" name="affinity-tolerations-resources-test" classname="affinity-tolerations-resources-test" time="6">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/affinity-tolerations-resources-test.log"/>
+    </testcase>
+    <testcase id="api-test" name="api-test" classname="api-test" time="3">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/api-test.log"/>
+    </testcase>
+    <testcase id="cluster-wide-access-test" name="cluster-wide-access-test" classname="cluster-wide-access-test" time="0">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/cluster-wide-access-test.log"/>
+    </testcase>
+    <testcase id="config-values-test" name="config-values-test" classname="config-values-test" time="1">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/config-values-test.log"/>
+    </testcase>
+    <testcase id="containers-test" name="containers-test" classname="containers-test" time="1">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/containers-test.log"/>
+    </testcase>
+    <testcase id="default-namespace-test" name="default-namespace-test" classname="default-namespace-test" time="1">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/default-namespace-test.log"/>
+    </testcase>
+    <testcase id="external-auth-rotation-test" name="external-auth-rotation-test" classname="external-auth-rotation-test" time="0">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/external-auth-rotation-test.log"/>
+    </testcase>
+    <testcase id="grafana-test" name="grafana-test" classname="grafana-test" time="1">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/grafana-test.log"/>
+    </testcase>
+    <testcase id="header-auth-test" name="header-auth-test" classname="header-auth-test" time="1">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/header-auth-test.log"/>
+    </testcase>
+    <testcase id="instance-name-test" name="instance-name-test" classname="instance-name-test" time="0">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/instance-name-test.log"/>
+    </testcase>
+    <testcase id="jaeger-test" name="jaeger-test" classname="jaeger-test" time="5">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/jaeger-test.log"/>
+    </testcase>
+    <testcase id="metrics-test" name="metrics-test" classname="metrics-test" time="1">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/metrics-test.log"/>
+    </testcase>
+    <testcase id="null-cr-values-test" name="null-cr-values-test" classname="null-cr-values-test" time="0">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/null-cr-values-test.log"/>
+    </testcase>
+    <testcase id="only-view-only-mode-test" name="only-view-only-mode-test" classname="only-view-only-mode-test" time="1">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/only-view-only-mode-test.log"/>
+    </testcase>
+    <testcase id="openid-test" name="openid-test" classname="openid-test" time="2">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/openid-test.log"/>
+    </testcase>
+    <testcase id="remote-cluster-resources-test" name="remote-cluster-resources-test" classname="remote-cluster-resources-test" time="1">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/remote-cluster-resources-test.log"/>
+    </testcase>
+    <testcase id="roles-test" name="roles-test" classname="roles-test" time="1">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/roles-test.log"/>
+    </testcase>
+    <testcase id="rolling-restart-test" name="rolling-restart-test" classname="rolling-restart-test" time="2">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/rolling-restart-test.log"/>
+    </testcase>
+    <testcase id="token-test" name="token-test" classname="token-test" time="1">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/token-test.log"/>
+    </testcase>
+  </testsuite>
+</testsuites>

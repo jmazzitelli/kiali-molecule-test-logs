@@ -1,0 +1,1147 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /home/jmazzite/source/kiali/helm-charts
+Git repo for the helm charts is found here: /home/jmazzite/source/kiali/helm-charts
+make[1]: Entering directory '/home/jmazzite/source/kiali/helm-charts'
+Using helm from PATH: /home/jmazzite/bin/helm
+Will use this helm executable: helm
+helm version
+version.BuildInfo{Version:"v3.10.1", GitCommit:"9f88ccb6aee40b9a0535fcc7efea6055e1ef72c9", GitTreeState:"clean", GoVersion:"go1.18.7"}
+Building Helm Chart for Kiali operator
+==> Linting /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-operator-2.27.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/home/jmazzite/source/kiali/helm-charts'
+Minikube repos: external=[192.168.39.128:5000] internal=[localhost:5000]
+│ [32mregistry[0m                    │ [32mci[0m      │ [32menabled ✅[0m │ [32mminikube[0m                               │
+Will not auto-detect any hosts for non-OpenShift clusters.
+Will not rebuild kiali-molecule image.
+Cleaning up previous molecule resources and prepare volumes for a new run
+podman volume rm molecule-tests-volume 2>/dev/null || ( \
+	for c in $(podman ps -a --filter volume=molecule-tests-volume --format '{{.ID}}'); do \
+		podman kill "$c"; \
+		podman rm "$c"; \
+	done && \
+	podman volume exists molecule-tests-volume && echo "Podman volume already exists; deleting it" && podman volume rm molecule-tests-volume || true \
+	)
+podman volume create molecule-tests-volume
+molecule-tests-volume
+podman create -v molecule-tests-volume:/data --name molecule-volume-helper quay.io/fedora/fedora-minimal:latest sleep infinity
+dd69dd34719590d307c3d65b6d5a17aad16f64afaa408c9cd27b09cb7b904cb6
+podman start molecule-volume-helper
+molecule-volume-helper
+podman run --rm -v molecule-tests-volume:/data -v "/home/jmazzite/source/kiali/helm-charts":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/helm-charts-repo
+podman run --rm -v molecule-tests-volume:/data -v "$(realpath /home/jmazzite/source/kiali/kiali/operator)":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/operator
+podman run --rm -v molecule-tests-volume:/data -v "/home/jmazzite/.kube/config":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/kubeconfig
+podman stop molecule-volume-helper
+time="2026-05-30T01:50:32-04:00" level=warning msg="StopSignal SIGTERM failed to stop container molecule-volume-helper in 10 seconds, resorting to SIGKILL"
+molecule-volume-helper
+podman rm molecule-volume-helper
+molecule-volume-helper
+podman run       --rm              --env KUBECONFIG=/tmp/molecule/kubeconfig       --env K8S_AUTH_KUBECONFIG=/tmp/molecule/kubeconfig       --env MOLECULE_CLUSTER_TYPE=minikube       --env MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo       -v molecule-tests-volume:/tmp/molecule       -v /home/jmazzite/.minikube/logs/lastStart.txt:/home/jmazzite/.minikube/logs/lastStart.txt:Z -v /home/jmazzite/.minikube/logs/audit.json:/home/jmazzite/.minikube/logs/audit.json:Z -v /home/jmazzite/.minikube/certs/ca.pem:/home/jmazzite/.minikube/certs/ca.pem:Z -v /home/jmazzite/.minikube/certs/ca-key.pem:/home/jmazzite/.minikube/certs/ca-key.pem:Z -v /home/jmazzite/.minikube/certs/cert.pem:/home/jmazzite/.minikube/certs/cert.pem:Z -v /home/jmazzite/.minikube/certs/key.pem:/home/jmazzite/.minikube/certs/key.pem:Z -v /home/jmazzite/.minikube/machines/server.pem:/home/jmazzite/.minikube/machines/server.pem:Z -v /home/jmazzite/.minikube/machines/server-key.pem:/home/jmazzite/.minikube/machines/server-key.pem:Z -v /home/jmazzite/.minikube/machines/ci/id_rsa:/home/jmazzite/.minikube/machines/ci/id_rsa:Z -v /home/jmazzite/.minikube/machines/ci/id_rsa.pub:/home/jmazzite/.minikube/machines/ci/id_rsa.pub:Z -v /home/jmazzite/.minikube/machines/ci/config.json:/home/jmazzite/.minikube/machines/ci/config.json:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.31.0-docker-overlay2-amd64.tar.lz4:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.31.0-docker-overlay2-amd64.tar.lz4:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.31.0-docker-overlay2-amd64.tar.lz4.checksum:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.31.0-docker-overlay2-amd64.tar.lz4.checksum:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.33.1-docker-overlay2-amd64.tar.lz4:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.33.1-docker-overlay2-amd64.tar.lz4:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.33.1-docker-overlay2-amd64.tar.lz4.checksum:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.33.1-docker-overlay2-amd64.tar.lz4.checksum:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.34.0-docker-overlay2-amd64.tar.lz4:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.34.0-docker-overlay2-amd64.tar.lz4:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.34.0-docker-overlay2-amd64.tar.lz4.checksum:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.34.0-docker-overlay2-amd64.tar.lz4.checksum:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.35.0-docker-overlay2-amd64.tar.lz4:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.35.0-docker-overlay2-amd64.tar.lz4:Z -v /home/jmazzite/.minikube/cache/linux/amd64/v1.31.0/kubectl:/home/jmazzite/.minikube/cache/linux/amd64/v1.31.0/kubectl:Z -v /home/jmazzite/.minikube/cache/linux/amd64/v1.33.1/kubectl:/home/jmazzite/.minikube/cache/linux/amd64/v1.33.1/kubectl:Z -v /home/jmazzite/.minikube/cache/linux/amd64/v1.34.0/kubectl:/home/jmazzite/.minikube/cache/linux/amd64/v1.34.0/kubectl:Z -v /home/jmazzite/.minikube/cache/linux/amd64/v1.35.0/kubectl:/home/jmazzite/.minikube/cache/linux/amd64/v1.35.0/kubectl:Z -v /home/jmazzite/.minikube/cache/kic/amd64/kicbase_v0.0.47@sha256_6ed579c9292b4370177b7ef3c42cc4b4a6dcd0735a1814916cbc22c8bf38412b.tar:/home/jmazzite/.minikube/cache/kic/amd64/kicbase_v0.0.47@sha256_6ed579c9292b4370177b7ef3c42cc4b4a6dcd0735a1814916cbc22c8bf38412b.tar:Z -v /home/jmazzite/.minikube/config/config.json:/home/jmazzite/.minikube/config/config.json:Z -v /home/jmazzite/.minikube/profiles/ci/events.json:/home/jmazzite/.minikube/profiles/ci/events.json:Z -v /home/jmazzite/.minikube/profiles/ci/client.crt:/home/jmazzite/.minikube/profiles/ci/client.crt:Z -v /home/jmazzite/.minikube/profiles/ci/client.key:/home/jmazzite/.minikube/profiles/ci/client.key:Z -v /home/jmazzite/.minikube/profiles/ci/apiserver.crt.d8673231:/home/jmazzite/.minikube/profiles/ci/apiserver.crt.d8673231:Z -v /home/jmazzite/.minikube/profiles/ci/apiserver.key.d8673231:/home/jmazzite/.minikube/profiles/ci/apiserver.key.d8673231:Z -v /home/jmazzite/.minikube/profiles/ci/apiserver.crt:/home/jmazzite/.minikube/profiles/ci/apiserver.crt:Z -v /home/jmazzite/.minikube/profiles/ci/apiserver.key:/home/jmazzite/.minikube/profiles/ci/apiserver.key:Z -v /home/jmazzite/.minikube/profiles/ci/proxy-client.crt:/home/jmazzite/.minikube/profiles/ci/proxy-client.crt:Z -v /home/jmazzite/.minikube/profiles/ci/proxy-client.key:/home/jmazzite/.minikube/profiles/ci/proxy-client.key:Z -v /home/jmazzite/.minikube/profiles/ci/config.json:/home/jmazzite/.minikube/profiles/ci/config.json:Z -v /home/jmazzite/.minikube/last_update_check:/home/jmazzite/.minikube/last_update_check:Z -v /home/jmazzite/.minikube/bin/docker-machine-driver-kvm2:/home/jmazzite/.minikube/bin/docker-machine-driver-kvm2:Z -v /home/jmazzite/.minikube/ca.crt:/home/jmazzite/.minikube/ca.crt:Z -v /home/jmazzite/.minikube/ca.key:/home/jmazzite/.minikube/ca.key:Z -v /home/jmazzite/.minikube/proxy-client-ca.crt:/home/jmazzite/.minikube/proxy-client-ca.crt:Z -v /home/jmazzite/.minikube/proxy-client-ca.key:/home/jmazzite/.minikube/proxy-client-ca.key:Z -v /home/jmazzite/.minikube/machine_client.lock:/home/jmazzite/.minikube/machine_client.lock:Z -v /home/jmazzite/.minikube/ca.pem:/home/jmazzite/.minikube/ca.pem:Z -v /home/jmazzite/.minikube/cert.pem:/home/jmazzite/.minikube/cert.pem:Z -v /home/jmazzite/.minikube/key.pem:/home/jmazzite/.minikube/key.pem:Z       --env MOLECULE_MINIKUBE_IP=192.168.39.128              -w /tmp/molecule/operator       --network=host              --env DORP=podman       --env OPERATOR_IMAGE_PULL_SECRET_NAME=       --env MOLECULE_KIALI_CR_SPEC_VERSION=default       --env PLUGIN_IMAGE_PULL_SECRET_JSON=       --env MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default              --env MOLECULE_OPERATOR_PROFILER_ENABLED=true       --env MOLECULE_OPERATOR_INSTALLER=helm       --env MOLECULE_DUMP_LOGS_ON_ERROR=true              --env MOLECULE_WAIT_RETRIES=120       localhost/kiali-molecule:latest molecule       --debug       test              --scenario-name metrics-test
+Running molecule test: scenario=metrics-test (attempt=1)
+DEBUG    Validating schema /tmp/molecule/operator/molecule/metrics-test/molecule.yml.
+WARNING  Driver podman does not provide a schema.
+INFO     metrics-test scenario test matrix: prepare, converge, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Adding '--pre' to ansible-galaxy collection install because we detected one collection being sourced from git.
+INFO     Running ansible-galaxy collection install -v --pre -r requirements.yml
+INFO     Set ANSIBLE_ROLES_PATH=roles:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Running metrics-test > prepare
+INFO     Sanity checks: 'podman'
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/metrics-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/metrics-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/metrics-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/metrics-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/metrics-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: minikube
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/metrics-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/metrics-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/metrics-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/metrics-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_MINIKUBE_IP: 192.168.39.128
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/metrics-test
+MOLECULE_SCENARIO_NAME: metrics-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/metrics-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/metrics-test/tests
+MOLECULE_WAIT_RETRIES: '120'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/metrics-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/metrics-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/metrics-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/metrics-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/metrics-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=minikube MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/metrics-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/metrics-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/metrics-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/metrics-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_MINIKUBE_IP=192.168.39.128 MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/metrics-test MOLECULE_SCENARIO_NAME=metrics-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/metrics-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/metrics-test/tests MOLECULE_WAIT_RETRIES=120
+
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Make sure the operator namespace exists] *********************************
+changed: [localhost]
+
+TASK [Find the latest Operator Helm Chart] *************************************
+changed: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [Install Operator via Helm] ***********************************************
+changed: [localhost]
+
+TASK [Make sure the CR namespace exists] ***************************************
+ok: [localhost]
+
+TASK [Wait for the CRD to be established] **************************************
+ok: [localhost]
+
+TASK [Prepare initial Kiali CR definition based solely on the template] ********
+ok: [localhost]
+
+TASK [Create Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Asserting that Kiali is Deployed] ****************************************
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (120 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (119 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (118 retries left).
+ok: [localhost]
+
+PLAY [Configure Prometheus for HTTPS metrics scraping] *************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get current Prometheus ConfigMap] ****************************************
+skipping: [localhost]
+
+TASK [Save original Prometheus ConfigMap data to file for restoration during destroy] ***
+skipping: [localhost]
+
+TASK [Parse prometheus.yml from ConfigMap] *************************************
+skipping: [localhost]
+
+TASK [Add tls_config to kubernetes-pods scrape jobs] ***************************
+skipping: [localhost]
+
+TASK [Build updated prometheus configuration] **********************************
+skipping: [localhost]
+
+TASK [Build updated ConfigMap data preserving original values] *****************
+skipping: [localhost]
+
+TASK [Update Prometheus ConfigMap with TLS config for HTTPS scraping] **********
+skipping: [localhost]
+
+TASK [Wait for Prometheus config reloader to pick up changes] ******************
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=22   changed=4    unreachable=0    failed=0    skipped=9    rescued=0    ignored=0
+
+INFO     Running metrics-test > converge
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/metrics-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/metrics-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/metrics-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/metrics-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/metrics-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: minikube
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/metrics-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/metrics-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/metrics-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/metrics-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_MINIKUBE_IP: 192.168.39.128
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/metrics-test
+MOLECULE_SCENARIO_NAME: metrics-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/metrics-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/metrics-test/tests
+MOLECULE_WAIT_RETRIES: '120'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/metrics-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/metrics-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/metrics-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/metrics-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/metrics-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=minikube MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/metrics-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/metrics-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/metrics-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/metrics-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_MINIKUBE_IP=192.168.39.128 MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/metrics-test MOLECULE_SCENARIO_NAME=metrics-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/metrics-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/metrics-test/tests MOLECULE_WAIT_RETRIES=120
+
+
+PLAY [Tests] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/metrics-test/../common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali CR: {'apiVersion': 'kiali.io/v1alpha1', 'kind': 'Kiali', 'metadata': {'creationTimestamp': '2026-05-30T05:51:31Z', 'finalizers': ['kiali.io/finalizer'], 'generation': 1, 'managedFields': [{'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:spec': {'.': {}, 'f:auth': {'.': {}, 'f:strategy': {}}, 'f:deployment': {'.': {}, 'f:cluster_wide_access': {}, 'f:image_digest': {}, 'f:image_name': {}, 'f:image_pull_policy': {}, 'f:image_version': {}, 'f:ingress': {'.': {}, 'f:class_name': {}, 'f:enabled': {}}, 'f:instance_name': {}, 'f:logger': {'.': {}, 'f:log_format': {}, 'f:log_level': {}, 'f:sampler_rate': {}, 'f:time_field_format': {}}, 'f:namespace': {}, 'f:probes': {'.': {}, 'f:liveness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:readiness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:startup': {'.': {}, 'f:failure_threshold': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}}, 'f:remote_cluster_resources_only': {}, 'f:replicas': {}, 'f:secret_name': {}, 'f:service_type': {}, 'f:view_only_mode': {}}, 'f:server': {'.': {}, 'f:audit_log': {}, 'f:cors_allow_all': {}, 'f:gzip_enabled': {}, 'f:observability': {'.': {}, 'f:metrics': {'.': {}, 'f:enabled': {}, 'f:port': {}}}, 'f:port': {}, 'f:require_auth': {}, 'f:web_history_mode': {}, 'f:write_timeout': {}}, 'f:version': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'time': '2026-05-30T05:51:31Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:metadata': {'f:finalizers': {'.': {}, 'v:\"kiali.io/finalizer\"': {}}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'time': '2026-05-30T05:51:31Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'f:deployment': {'.': {}, 'f:instanceName': {}, 'f:namespace': {}, 'f:remoteClusterResourcesOnly': {}}, 'f:environment': {'.': {}, 'f:isKubernetes': {}, 'f:kubernetesVersion': {}, 'f:operatorVersion': {}}, 'f:progress': {'.': {}, 'f:duration': {}, 'f:message': {}}, 'f:specVersion': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-05-30T05:51:43Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'.': {}, 'f:conditions': {}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-05-30T05:51:43Z'}], 'name': 'kiali', 'namespace': 'kiali-operator', 'resourceVersion': '10158', 'uid': '0cb23567-c971-4274-8f2e-04da8fc5b911'}, 'spec': {'auth': {'strategy': 'anonymous'}, 'deployment': {'cluster_wide_access': True, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_version': 'latest', 'ingress': {'class_name': 'nginx', 'enabled': True}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'debug', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'secret_name': 'kiali', 'service_type': 'NodePort', 'view_only_mode': False}, 'server': {'audit_log': True, 'cors_allow_all': False, 'gzip_enabled': True, 'observability': {'metrics': {'enabled': False, 'port': 9090}}, 'port': 20001, 'require_auth': False, 'web_history_mode': 'browser', 'write_timeout': '60s'}, 'version': 'default'}, 'status': {'conditions': [{'ansibleResult': {'changed': 11, 'completion': '2026-05-30T05:51:43.578235+00:00', 'failures': 0, 'ok': 75, 'skipped': 69}, 'lastTransitionTime': '2026-05-30T05:51:31Z', 'message': 'Awaiting next reconciliation', 'reason': 'Successful', 'status': 'True', 'type': 'Running'}, {'lastTransitionTime': '2026-05-30T05:51:43Z', 'message': 'Last reconciliation succeeded', 'reason': 'Successful', 'status': 'True', 'type': 'Successful'}, {'lastTransitionTime': '2026-05-30T05:51:43Z', 'message': '', 'reason': '', 'status': 'False', 'type': 'Failure'}], 'deployment': {'instanceName': 'kiali', 'namespace': 'istio-system', 'remoteClusterResourcesOnly': False}, 'environment': {'isKubernetes': True, 'kubernetesVersion': '1.35.0', 'operatorVersion': 'v2.27.0-SNAPSHOT'}, 'progress': {'duration': '0:00:11', 'message': '6. Finished all resource creation'}, 'specVersion': 'default'}}"
+}
+
+TASK [Get Kiali Configmap] *****************************************************
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali ConfigMap: {'additional_display_details': [{'annotation': 'kiali.io/api-spec', 'icon_annotation': 'kiali.io/api-type', 'title': 'API Documentation'}], 'auth': {'openid': {'additional_request_params': {}, 'allowed_domains': [], 'api_proxy': '', 'api_proxy_ca_data': '', 'api_token': 'id_token', 'authentication_timeout': 300, 'authorization_endpoint': '', 'client_id': '', 'disable_rbac': False, 'discovery_override': {'authorization_endpoint': '', 'jwks_uri': '', 'token_endpoint': '', 'userinfo_endpoint': ''}, 'http_proxy': '', 'https_proxy': '', 'insecure_skip_verify_tls': False, 'issuer_uri': '', 'scopes': ['openid', 'profile', 'email'], 'username_claim': 'sub'}, 'openshift': {'insecure_skip_verify_tls': False}, 'strategy': 'anonymous'}, 'chat_ai': {'default_provider': '', 'enabled': False, 'providers': [], 'store_config': {'enabled': True, 'inactivity_timeout': '30m', 'max_cache_memory_mb': 1024, 'reduce_threshold': 15, 'reduce_with_ai': False}}, 'clustering': {'autodetect_secrets': {'enabled': True, 'label': 'kiali.io/multiCluster=true'}, 'clusters': [], 'enable_exec_provider': False, 'ignore_home_cluster': False, 'kiali_urls': []}, 'custom_dashboards': [], 'deployment': {'additional_pod_containers_yaml': [], 'additional_pod_init_containers_yaml': [], 'affinity': {'node': {}, 'pod': {}, 'pod_anti': {}}, 'cluster_wide_access': True, 'configmap_annotations': {}, 'custom_envs': [], 'custom_secrets': [], 'discovery_selectors': {}, 'dns': {'config': {}, 'policy': ''}, 'extra_labels': {}, 'host_aliases': [], 'hpa': {'api_version': 'autoscaling/v2', 'spec': {}}, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_pull_secrets': [], 'image_version': 'latest', 'ingress': {'additional_labels': {}, 'class_name': 'nginx', 'enabled': True}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'debug', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'network_policy': {'enabled': True}, 'node_selector': {}, 'pod_annotations': {'proxy.istio.io/config': '{ \"holdApplicationUntilProxyStarts\": true }'}, 'pod_disruption_budget': {'api_version': 'policy/v1', 'spec': {}}, 'pod_labels': {}, 'priority_class_name': '', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'resources': {'limits': {'memory': '1Gi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}, 'secret_name': 'kiali', 'security_context': {}, 'service_annotations': {}, 'service_type': 'NodePort', 'strategy': {}, 'tls_config': {'cipher_suites': [], 'max_version': '', 'min_version': '', 'source': 'config'}, 'tolerations': [], 'topology_spread_constraints': [], 'version_label': 'master', 'view_only_mode': False}, 'extensions': [], 'external_services': {'custom_dashboards': {'discovery_auto_threshold': 10, 'discovery_enabled': 'auto', 'enabled': True, 'is_core': False, 'namespace_label': 'namespace', 'prometheus': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': ''}}, 'grafana': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard'}, {'name': 'Istio Control Plane Dashboard'}, {'name': 'Istio Performance Dashboard'}, {'name': 'Istio Wasm Extension Dashboard'}], 'datasource_uid': '', 'enabled': True, 'external_url': '', 'health_check_url': '', 'internal_url': 'http://grafana.istio-system:3000', 'is_core': False}, 'istio': {'component_status': {'components': [], 'enabled': True}, 'gateway_api_classes': [], 'gateway_api_classes_label_selector': '', 'istio_api_enabled': True, 'istio_identity_domain': '', 'istiod_polling_interval_seconds': 20, 'validation_change_detection_enabled': True, 'validation_reconcile_interval': '1m'}, 'perses': {'auth': {'insecure_skip_verify': False, 'password': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard'}, {'name': 'Istio Control Plane Dashboard'}, {'name': 'Istio Performance Dashboard'}, {'name': 'Istio Wasm Extension Dashboard'}], 'enabled': False, 'external_url': '', 'health_check_url': '', 'internal_url': '', 'is_core': False, 'project': 'istio', 'url_format': ''}, 'prometheus': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'enabled': True, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': 'http://prometheus.istio-system:9090'}, 'tracing': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'custom_headers': {}, 'disable_version_check': False, 'enabled': False, 'external_url': '', 'grpc_port': 9095, 'health_check_url': '', 'internal_url': 'http://tracing.istio-system:16685/jaeger', 'is_core': False, 'namespace_selector': True, 'provider': 'jaeger', 'query_scope': {}, 'query_timeout': 5, 'tempo_config': {'cache_capacity': 200, 'cache_enabled': True, 'datasource_uid': '', 'name': '', 'namespace': '', 'org_id': '', 'tenant': '', 'url_format': 'grafana'}, 'use_grpc': True, 'use_waypoint_name': False, 'whitelist_istio_system': ['jaeger-query', 'istio-ingressgateway']}}, 'health_config': {'compute': {'duration': '5m', 'refresh_interval': '3m', 'timeout': '10m'}, 'rate': []}, 'identity': {'cert_file': '', 'private_key_file': ''}, 'installation_tag': '', 'istio_labels': {'app_label_name': '', 'version_label_name': ''}, 'kiali_feature_flags': {'authz': {'require_namespace_get': False}, 'clustering': {'enable_exec_provider': False}, 'custom_workload_types': [], 'disabled_features': [], 'istio_annotation_action': True, 'istio_injection_action': True, 'istio_upgrade_action': False, 'ui_defaults': {'graph': {'find_options': [{'auto_select': False, 'description': 'Find: slow edges (> 1s)', 'expression': 'rt > 1000'}, {'auto_select': False, 'description': 'Find: unhealthy nodes', 'expression': '! healthy'}, {'auto_select': False, 'description': 'Find: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Find: nodes with the 2 top rankings', 'expression': 'rank <= 2'}], 'hide_options': [{'auto_select': False, 'description': 'Hide: healthy nodes', 'expression': 'healthy'}, {'auto_select': False, 'description': 'Hide: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Hide: nodes ranked lower than the 2 top rankings', 'expression': 'rank > 2'}], 'settings': {'animation': 'point'}, 'traffic': {'ambient': 'total', 'grpc': 'requests', 'http': 'requests', 'tcp': 'sent'}}, 'i18n': {'show_selector': False}, 'list': {'include_health': True, 'include_istio_resources': True, 'include_validations': True, 'show_include_toggles': False}, 'mesh': {'find_options': [{'description': 'Find: unhealthy nodes', 'expression': '! healthy'}], 'hide_options': [{'description': 'Hide: healthy nodes', 'expression': 'healthy'}]}, 'metrics_inbound': {'aggregations': []}, 'metrics_outbound': {'aggregations': []}, 'metrics_per_refresh': '1m', 'namespaces': [], 'refresh_interval': '1m', 'tracing': {'limit': 100}}, 'validations': {'ignore': ['KIA1301'], 'skip_wildcard_gateway_hosts': False}}, 'kiali_internal': {}, 'kubernetes_config': {'burst': 200, 'cache_duration': 300, 'cache_token_namespace_duration': 10, 'cluster_name': '', 'excluded_workloads': ['CronJob', 'DeploymentConfig', 'Job', 'ReplicationController'], 'qps': 175}, 'login_token': {'expiration_seconds': 86400, 'signing_key': 'secret:kiali-signing-key:key'}, 'server': {'address': '', 'audit_log': True, 'cors_allow_all': False, 'gzip_enabled': True, 'observability': {'metrics': {'enabled': False, 'health_status': {'enabled': False, 'max_consecutive_na': 3}, 'port': 9090}, 'tracing': {'collector_type': 'otel', 'collector_url': 'jaeger-collector.istio-system:4318', 'enabled': False, 'otel': {'ca_name': '', 'protocol': 'http', 'skip_verify': False, 'tls_enabled': False}, 'sampling_rate': 0.5}}, 'port': 20001, 'profiler': {'enabled': False}, 'require_auth': False, 'web_fqdn': '', 'web_history_mode': 'browser', 'web_port': '', 'web_root': '/kiali', 'web_schema': '', 'write_timeout': '60s'}, 'version': 'default'}"
+}
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+skipping: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+ok: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+skipping: [localhost]
+
+TASK [Determine the Kiali URL on minikube] *************************************
+ok: [localhost]
+
+TASK [Determine the Kiali URL on kind] *****************************************
+skipping: [localhost]
+
+TASK [Assert Kiali Pod(s) are Running] *****************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Send a request into Kiali to ensure metrics from this will not be collected] ***
+ok: [localhost]
+
+TASK [Waiting a few seconds to make sure metrics aren't being collected] *******
+Pausing for 30 seconds
+ok: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [Tell user to ensure minikube has the correct time otherwise the metric tests will fail] ***
+ok: [localhost] => {
+    "msg": "If a metric test fails, run this to ensure the clock is reset: minikube ssh -- sudo date -u $(date -u +%m%d%H%M%Y.%S)"
+}
+
+TASK [Query Prometheus from Kiali Operator Pod] ********************************
+fatal: [localhost]: FAILED! => {"changed": true, "rc": 3, "return_code": 3, "stderr": "", "stderr_lines": [], "stdout": "{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"controller\":\"kiali-controller\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-controller\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v2.27.0-SNAPSHOT\"},\"value\":[1780120309,\"1\"]},{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"controller\":\"secret-controller\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"secret-controller\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v2.27.0-SNAPSHOT\"},\"value\":[1780120309,\"0\"]}]}}", "stdout_lines": ["{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"controller\":\"kiali-controller\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-controller\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v2.27.0-SNAPSHOT\"},\"value\":[1780120309,\"1\"]},{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"controller\":\"secret-controller\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"secret-controller\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v2.27.0-SNAPSHOT\"},\"value\":[1780120309,\"0\"]}]}}"]}
+...ignoring
+
+TASK [Raw Prometheus query results] ********************************************
+ok: [localhost] => {
+    "msg": "URL: http://prometheus.istio-system:9090/api/v1/query }}; Request: {'query': 'workqueue_work_duration_seconds_count{app=\\\\\"kiali-operator\\\\\",namespace=\\\\\"kiali-operator\\\\\"}', 'time': '2026-05-30T05:51:49Z'}; Results: {'changed': True, 'stdout': '{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"controller\":\"kiali-controller\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-controller\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v2.27.0-SNAPSHOT\"},\"value\":[1780120309,\"1\"]},{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"controller\":\"secret-controller\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"secret-controller\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v2.27.0-SNAPSHOT\"},\"value\":[1780120309,\"0\"]}]}}', 'stderr': '', 'rc': 3, 'return_code': 3, 'stdout_lines': ['{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"controller\":\"kiali-controller\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-controller\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v2.27.0-SNAPSHOT\"},\"value\":[1780120309,\"1\"]},{\"metric\":{\"__name__\":\"workqueue_work_duration_seconds_count\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"controller\":\"secret-controller\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"secret-controller\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v2.27.0-SNAPSHOT\"},\"value\":[1780120309,\"0\"]}]}}'], 'stderr_lines': [], 'failed': True}"
+}
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [assert] ******************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Tell user to ensure minikube has the correct time otherwise the metric tests will fail] ***
+ok: [localhost] => {
+    "msg": "If a metric test fails, run this to ensure the clock is reset: minikube ssh -- sudo date -u $(date -u +%m%d%H%M%Y.%S)"
+}
+
+TASK [Query Prometheus from Kiali Operator Pod] ********************************
+fatal: [localhost]: FAILED! => {"changed": true, "rc": 3, "return_code": 3, "stderr": "", "stderr_lines": [], "stdout": "{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"ansible_operator_build_info\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"commit\":\"dc6090705b01925cfa130b25bf7ca1d7ff7a5430\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-operator\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v1.37.2\"},\"value\":[1780120309,\"1\"]}]}}", "stdout_lines": ["{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"ansible_operator_build_info\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"commit\":\"dc6090705b01925cfa130b25bf7ca1d7ff7a5430\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-operator\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v1.37.2\"},\"value\":[1780120309,\"1\"]}]}}"]}
+...ignoring
+
+TASK [Raw Prometheus query results] ********************************************
+ok: [localhost] => {
+    "msg": "URL: http://prometheus.istio-system:9090/api/v1/query }}; Request: {'query': 'ansible_operator_build_info', 'time': '2026-05-30T05:51:49Z'}; Results: {'changed': True, 'stdout': '{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"ansible_operator_build_info\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"commit\":\"dc6090705b01925cfa130b25bf7ca1d7ff7a5430\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-operator\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v1.37.2\"},\"value\":[1780120309,\"1\"]}]}}', 'stderr': '', 'rc': 3, 'return_code': 3, 'stdout_lines': ['{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"ansible_operator_build_info\",\"app\":\"kiali-operator\",\"app_kubernetes_io_instance\":\"kiali-operator\",\"app_kubernetes_io_name\":\"kiali-operator\",\"app_kubernetes_io_part_of\":\"kiali-operator\",\"app_kubernetes_io_version\":\"v2.27.0-SNAPSHOT\",\"commit\":\"dc6090705b01925cfa130b25bf7ca1d7ff7a5430\",\"helm_sh_chart\":\"kiali-operator-2.27.0-SNAPSHOT\",\"instance\":\"10.244.0.87:8080\",\"job\":\"kubernetes-pods\",\"name\":\"kiali-operator\",\"namespace\":\"kiali-operator\",\"node\":\"ci\",\"pod\":\"kiali-operator-c7568db44-8bg5l\",\"pod_template_hash\":\"c7568db44\",\"version\":\"v1.37.2\"},\"value\":[1780120309,\"1\"]}]}}'], 'stderr_lines': [], 'failed': True}"
+}
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [assert] ******************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Tell user to ensure minikube has the correct time otherwise the metric tests will fail] ***
+ok: [localhost] => {
+    "msg": "If a metric test fails, run this to ensure the clock is reset: minikube ssh -- sudo date -u $(date -u +%m%d%H%M%Y.%S)"
+}
+
+TASK [Query Prometheus from Kiali Operator Pod] ********************************
+fatal: [localhost]: FAILED! => {"changed": true, "rc": 3, "return_code": 3, "stderr": "", "stderr_lines": [], "stdout": "{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[]}}", "stdout_lines": ["{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[]}}"]}
+...ignoring
+
+TASK [Raw Prometheus query results] ********************************************
+ok: [localhost] => {
+    "msg": "URL: http://prometheus.istio-system:9090/api/v1/query }}; Request: {'query': 'kiali_api_processing_duration_seconds_count{app=\\\\\"kiali\\\\\",namespace=\\\\\"istio-system\\\\\"}', 'time': '2026-05-30T05:51:49Z'}; Results: {'changed': True, 'stdout': '{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[]}}', 'stderr': '', 'rc': 3, 'return_code': 3, 'stdout_lines': ['{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[]}}'], 'stderr_lines': [], 'failed': True}"
+}
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [assert] ******************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Purging all data from Prometheus] ****************************************
+changed: [localhost] => (item={'metadata': {'name': 'prometheus-65c465688f-md2lg', 'generateName': 'prometheus-65c465688f-', 'namespace': 'istio-system', 'uid': '0b7d4d14-a6d2-4f32-8cda-8f3318fbae45', 'resourceVersion': '1947', 'generation': 1, 'creationTimestamp': '2026-05-30T05:06:14Z', 'labels': {'app.kubernetes.io/component': 'server', 'app.kubernetes.io/instance': 'prometheus', 'app.kubernetes.io/name': 'prometheus', 'app.kubernetes.io/part-of': 'prometheus', 'app.kubernetes.io/version': 'v3.10.0', 'helm.sh/chart': 'prometheus-28.13.0', 'pod-template-hash': '65c465688f', 'sidecar.istio.io/inject': 'false'}, 'ownerReferences': [{'apiVersion': 'apps/v1', 'kind': 'ReplicaSet', 'name': 'prometheus-65c465688f', 'uid': '579ca369-5f27-4ce2-9046-68f35f40114c', 'controller': True, 'blockOwnerDeletion': True}], 'managedFields': [{'manager': 'kube-controller-manager', 'operation': 'Update', 'apiVersion': 'v1', 'time': '2026-05-30T05:06:14Z', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:metadata': {'f:generateName': {}, 'f:labels': {'.': {}, 'f:app.kubernetes.io/component': {}, 'f:app.kubernetes.io/instance': {}, 'f:app.kubernetes.io/name': {}, 'f:app.kubernetes.io/part-of': {}, 'f:app.kubernetes.io/version': {}, 'f:helm.sh/chart': {}, 'f:pod-template-hash': {}, 'f:sidecar.istio.io/inject': {}}, 'f:ownerReferences': {'.': {}, 'k:{"uid":"579ca369-5f27-4ce2-9046-68f35f40114c"}': {}}}, 'f:spec': {'f:containers': {'k:{"name":"prometheus-server"}': {'.': {}, 'f:args': {}, 'f:image': {}, 'f:imagePullPolicy': {}, 'f:livenessProbe': {'.': {}, 'f:failureThreshold': {}, 'f:httpGet': {'.': {}, 'f:path': {}, 'f:port': {}, 'f:scheme': {}}, 'f:initialDelaySeconds': {}, 'f:periodSeconds': {}, 'f:successThreshold': {}, 'f:timeoutSeconds': {}}, 'f:name': {}, 'f:ports': {'.': {}, 'k:{"containerPort":9090,"protocol":"TCP"}': {'.': {}, 'f:containerPort': {}, 'f:protocol': {}}}, 'f:readinessProbe': {'.': {}, 'f:failureThreshold': {}, 'f:httpGet': {'.': {}, 'f:path': {}, 'f:port': {}, 'f:scheme': {}}, 'f:periodSeconds': {}, 'f:successThreshold': {}, 'f:timeoutSeconds': {}}, 'f:resources': {}, 'f:terminationMessagePath': {}, 'f:terminationMessagePolicy': {}, 'f:volumeMounts': {'.': {}, 'k:{"mountPath":"/data"}': {'.': {}, 'f:mountPath': {}, 'f:name': {}}, 'k:{"mountPath":"/etc/config"}': {'.': {}, 'f:mountPath': {}, 'f:name': {}}}}, 'k:{"name":"prometheus-server-configmap-reload"}': {'.': {}, 'f:args': {}, 'f:image': {}, 'f:imagePullPolicy': {}, 'f:livenessProbe': {'.': {}, 'f:failureThreshold': {}, 'f:httpGet': {'.': {}, 'f:path': {}, 'f:port': {}, 'f:scheme': {}}, 'f:initialDelaySeconds': {}, 'f:periodSeconds': {}, 'f:successThreshold': {}, 'f:timeoutSeconds': {}}, 'f:name': {}, 'f:ports': {'.': {}, 'k:{"containerPort":8080,"protocol":"TCP"}': {'.': {}, 'f:containerPort': {}, 'f:name': {}, 'f:protocol': {}}}, 'f:readinessProbe': {'.': {}, 'f:failureThreshold': {}, 'f:httpGet': {'.': {}, 'f:path': {}, 'f:port': {}, 'f:scheme': {}}, 'f:periodSeconds': {}, 'f:successThreshold': {}, 'f:timeoutSeconds': {}}, 'f:resources': {}, 'f:terminationMessagePath': {}, 'f:terminationMessagePolicy': {}, 'f:volumeMounts': {'.': {}, 'k:{"mountPath":"/etc/config"}': {'.': {}, 'f:mountPath': {}, 'f:name': {}, 'f:readOnly': {}}}}}, 'f:dnsPolicy': {}, 'f:enableServiceLinks': {}, 'f:restartPolicy': {}, 'f:schedulerName': {}, 'f:securityContext': {}, 'f:serviceAccount': {}, 'f:serviceAccountName': {}, 'f:terminationGracePeriodSeconds': {}, 'f:volumes': {'.': {}, 'k:{"name":"config-volume"}': {'.': {}, 'f:configMap': {'.': {}, 'f:defaultMode': {}, 'f:name': {}}, 'f:name': {}}, 'k:{"name":"storage-volume"}': {'.': {}, 'f:emptyDir': {}, 'f:name': {}}}}}}, {'manager': 'kubelet', 'operation': 'Update', 'apiVersion': 'v1', 'time': '2026-05-30T05:07:14Z', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'f:conditions': {'k:{"type":"ContainersReady"}': {'.': {}, 'f:lastProbeTime': {}, 'f:lastTransitionTime': {}, 'f:observedGeneration': {}, 'f:status': {}, 'f:type': {}}, 'k:{"type":"Initialized"}': {'.': {}, 'f:lastProbeTime': {}, 'f:lastTransitionTime': {}, 'f:observedGeneration': {}, 'f:status': {}, 'f:type': {}}, 'k:{"type":"PodReadyToStartContainers"}': {'.': {}, 'f:lastProbeTime': {}, 'f:lastTransitionTime': {}, 'f:observedGeneration': {}, 'f:status': {}, 'f:type': {}}, 'k:{"type":"PodScheduled"}': {'f:observedGeneration': {}}, 'k:{"type":"Ready"}': {'.': {}, 'f:lastProbeTime': {}, 'f:lastTransitionTime': {}, 'f:observedGeneration': {}, 'f:status': {}, 'f:type': {}}}, 'f:containerStatuses': {}, 'f:hostIP': {}, 'f:hostIPs': {}, 'f:observedGeneration': {}, 'f:phase': {}, 'f:podIP': {}, 'f:podIPs': {'.': {}, 'k:{"ip":"10.244.0.27"}': {'.': {}, 'f:ip': {}}}, 'f:startTime': {}}}, 'subresource': 'status'}]}, 'spec': {'volumes': [{'name': 'config-volume', 'configMap': {'name': 'prometheus', 'defaultMode': 420}}, {'name': 'storage-volume', 'emptyDir': {}}, {'name': 'kube-api-access-sgfvj', 'projected': {'sources': [{'serviceAccountToken': {'expirationSeconds': 3607, 'path': 'token'}}, {'configMap': {'name': 'kube-root-ca.crt', 'items': [{'key': 'ca.crt', 'path': 'ca.crt'}]}}, {'downwardAPI': {'items': [{'path': 'namespace', 'fieldRef': {'apiVersion': 'v1', 'fieldPath': 'metadata.namespace'}}]}}], 'defaultMode': 420}}], 'containers': [{'name': 'prometheus-server-configmap-reload', 'image': 'ghcr.io/prometheus-operator/prometheus-config-reloader:v0.89.0', 'args': ['--watched-dir=/etc/config', '--listen-address=0.0.0.0:8080', '--reload-url=http://127.0.0.1:9090/-/reload'], 'ports': [{'name': 'metrics', 'containerPort': 8080, 'protocol': 'TCP'}], 'resources': {}, 'volumeMounts': [{'name': 'config-volume', 'readOnly': True, 'mountPath': '/etc/config'}, {'name': 'kube-api-access-sgfvj', 'readOnly': True, 'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount'}], 'livenessProbe': {'httpGet': {'path': '/healthz', 'port': 'metrics', 'scheme': 'HTTP'}, 'initialDelaySeconds': 2, 'timeoutSeconds': 1, 'periodSeconds': 10, 'successThreshold': 1, 'failureThreshold': 3}, 'readinessProbe': {'httpGet': {'path': '/healthz', 'port': 'metrics', 'scheme': 'HTTP'}, 'timeoutSeconds': 1, 'periodSeconds': 10, 'successThreshold': 1, 'failureThreshold': 3}, 'terminationMessagePath': '/dev/termination-log', 'terminationMessagePolicy': 'File', 'imagePullPolicy': 'IfNotPresent'}, {'name': 'prometheus-server', 'image': 'docker.io/prom/prometheus:v3.10.0', 'args': ['--storage.tsdb.retention.time=15d', '--config.file=/etc/config/prometheus.yml', '--storage.tsdb.path=/data', '--web.console.libraries=/etc/prometheus/console_libraries', '--web.console.templates=/etc/prometheus/consoles', '--web.enable-lifecycle'], 'ports': [{'containerPort': 9090, 'protocol': 'TCP'}], 'resources': {}, 'volumeMounts': [{'name': 'config-volume', 'mountPath': '/etc/config'}, {'name': 'storage-volume', 'mountPath': '/data'}, {'name': 'kube-api-access-sgfvj', 'readOnly': True, 'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount'}], 'livenessProbe': {'httpGet': {'path': '/-/healthy', 'port': 9090, 'scheme': 'HTTP'}, 'initialDelaySeconds': 30, 'timeoutSeconds': 10, 'periodSeconds': 15, 'successThreshold': 1, 'failureThreshold': 3}, 'readinessProbe': {'httpGet': {'path': '/-/ready', 'port': 9090, 'scheme': 'HTTP'}, 'timeoutSeconds': 4, 'periodSeconds': 5, 'successThreshold': 1, 'failureThreshold': 3}, 'terminationMessagePath': '/dev/termination-log', 'terminationMessagePolicy': 'File', 'imagePullPolicy': 'IfNotPresent'}], 'restartPolicy': 'Always', 'terminationGracePeriodSeconds': 300, 'dnsPolicy': 'ClusterFirst', 'serviceAccountName': 'prometheus', 'serviceAccount': 'prometheus', 'nodeName': 'ci', 'securityContext': {}, 'schedulerName': 'default-scheduler', 'tolerations': [{'key': 'node.kubernetes.io/not-ready', 'operator': 'Exists', 'effect': 'NoExecute', 'tolerationSeconds': 300}, {'key': 'node.kubernetes.io/unreachable', 'operator': 'Exists', 'effect': 'NoExecute', 'tolerationSeconds': 300}], 'priority': 0, 'enableServiceLinks': True, 'preemptionPolicy': 'PreemptLowerPriority'}, 'status': {'observedGeneration': 1, 'phase': 'Running', 'conditions': [{'type': 'PodReadyToStartContainers', 'observedGeneration': 1, 'status': 'True', 'lastProbeTime': None, 'lastTransitionTime': '2026-05-30T05:07:13Z'}, {'type': 'Initialized', 'observedGeneration': 1, 'status': 'True', 'lastProbeTime': None, 'lastTransitionTime': '2026-05-30T05:06:14Z'}, {'type': 'Ready', 'observedGeneration': 1, 'status': 'True', 'lastProbeTime': None, 'lastTransitionTime': '2026-05-30T05:07:14Z'}, {'type': 'ContainersReady', 'observedGeneration': 1, 'status': 'True', 'lastProbeTime': None, 'lastTransitionTime': '2026-05-30T05:07:14Z'}, {'type': 'PodScheduled', 'observedGeneration': 1, 'status': 'True', 'lastProbeTime': None, 'lastTransitionTime': '2026-05-30T05:06:14Z'}], 'hostIP': '192.168.39.128', 'hostIPs': [{'ip': '192.168.39.128'}], 'podIP': '10.244.0.27', 'podIPs': [{'ip': '10.244.0.27'}], 'startTime': '2026-05-30T05:06:14Z', 'containerStatuses': [{'name': 'prometheus-server', 'state': {'running': {'startedAt': '2026-05-30T05:07:12Z'}}, 'lastState': {}, 'ready': True, 'restartCount': 0, 'image': 'prom/prometheus:v3.10.0', 'imageID': 'docker-pullable://prom/prometheus@sha256:4a61322ac1103a0e3aea2a61ef1718422a48fa046441f299d71e660a3bc71ae9', 'containerID': 'docker://0541ac1c859ef29a71dc6acbbb1f68c0ba09828facb008277d6963572c0b34b7', 'started': True, 'resources': {}, 'volumeMounts': [{'name': 'config-volume', 'mountPath': '/etc/config'}, {'name': 'storage-volume', 'mountPath': '/data'}, {'name': 'kube-api-access-sgfvj', 'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}]}, {'name': 'prometheus-server-configmap-reload', 'state': {'running': {'startedAt': '2026-05-30T05:06:19Z'}}, 'lastState': {}, 'ready': True, 'restartCount': 0, 'image': 'ghcr.io/prometheus-operator/prometheus-config-reloader:v0.89.0', 'imageID': 'docker-pullable://ghcr.io/prometheus-operator/prometheus-config-reloader@sha256:cb4ac6a56555bef0e202bec11e367dfe07ffb241cf4d30566b12b864692607a8', 'containerID': 'docker://e0532b614c9f740bbbac14e4108ee3c7b7c44b09b30462c2dd11837797efa948', 'started': True, 'resources': {}, 'volumeMounts': [{'name': 'config-volume', 'mountPath': '/etc/config', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'kube-api-access-sgfvj', 'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}]}], 'qosClass': 'BestEffort'}, 'apiVersion': 'v1', 'kind': 'Pod'})
+
+TASK [Wait for the Prometheus pod to be back up running and that there is only one] ***
+FAILED - RETRYING: [localhost]: Wait for the Prometheus pod to be back up running and that there is only one (120 retries left).
+ok: [localhost]
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+ok: [localhost]
+
+TASK [Enable metrics in current Kiali CR] **************************************
+ok: [localhost]
+
+TASK [Change Kiali CR with new Kiali CR] ***************************************
+--- before
++++ after
+@@ -1,7 +1,66 @@
+ {
+     "metadata": {
+-        "generation": 1,
++        "generation": 2,
+         "managedFields": [
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:metadata": {
++                        "f:finalizers": {
++                            ".": {},
++                            "v:\"kiali.io/finalizer\"": {}
++                        }
++                    }
++                },
++                "manager": "ansible-operator",
++                "operation": "Update",
++                "time": "2026-05-30T05:51:31Z"
++            },
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:status": {
++                        "f:deployment": {
++                            ".": {},
++                            "f:instanceName": {},
++                            "f:namespace": {},
++                            "f:remoteClusterResourcesOnly": {}
++                        },
++                        "f:environment": {
++                            ".": {},
++                            "f:isKubernetes": {},
++                            "f:kubernetesVersion": {},
++                            "f:operatorVersion": {}
++                        },
++                        "f:progress": {
++                            ".": {},
++                            "f:duration": {},
++                            "f:message": {}
++                        },
++                        "f:specVersion": {}
++                    }
++                },
++                "manager": "OpenAPI-Generator",
++                "operation": "Update",
++                "subresource": "status",
++                "time": "2026-05-30T05:51:43Z"
++            },
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:status": {
++                        ".": {},
++                        "f:conditions": {}
++                    }
++                },
++                "manager": "ansible-operator",
++                "operation": "Update",
++                "subresource": "status",
++                "time": "2026-05-30T05:51:43Z"
++            },
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+                 "fieldsType": "FieldsV1",
+@@ -81,75 +140,16 @@
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+-                "time": "2026-05-30T05:51:31Z"
+-            },
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:metadata": {
+-                        "f:finalizers": {
+-                            ".": {},
+-                            "v:\"kiali.io/finalizer\"": {}
+-                        }
+-                    }
+-                },
+-                "manager": "ansible-operator",
+-                "operation": "Update",
+-                "time": "2026-05-30T05:51:31Z"
+-            },
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:status": {
+-                        "f:deployment": {
+-                            ".": {},
+-                            "f:instanceName": {},
+-                            "f:namespace": {},
+-                            "f:remoteClusterResourcesOnly": {}
+-                        },
+-                        "f:environment": {
+-                            ".": {},
+-                            "f:isKubernetes": {},
+-                            "f:kubernetesVersion": {},
+-                            "f:operatorVersion": {}
+-                        },
+-                        "f:progress": {
+-                            ".": {},
+-                            "f:duration": {},
+-                            "f:message": {}
+-                        },
+-                        "f:specVersion": {}
+-                    }
+-                },
+-                "manager": "OpenAPI-Generator",
+-                "operation": "Update",
+-                "subresource": "status",
+-                "time": "2026-05-30T05:51:43Z"
+-            },
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:status": {
+-                        ".": {},
+-                        "f:conditions": {}
+-                    }
+-                },
+-                "manager": "ansible-operator",
+-                "operation": "Update",
+-                "subresource": "status",
+-                "time": "2026-05-30T05:51:43Z"
++                "time": "2026-05-30T05:52:33Z"
+             }
+         ],
+-        "resourceVersion": "10158"
++        "resourceVersion": "10289"
+     },
+     "spec": {
+         "server": {
+             "observability": {
+                 "metrics": {
+-                    "enabled": false
++                    "enabled": true
+                 }
+             }
+         }
+
+changed: [localhost]
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (120 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (119 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (118 retries left).
+ok: [localhost]
+
+TASK [Wait for Kiali Deployment rollout to complete] ***************************
+ok: [localhost]
+
+TASK [Asserting that Kiali Pod(s) are running and ready] ***********************
+ok: [localhost]
+
+TASK [Debug pod readiness snapshot (for diagnostics)] **************************
+ok: [localhost] => {
+    "msg": [
+        "Kiali pod names: ['kiali-6b9d44f46f-rp9nj']",
+        "Kiali pod phases: ['Running']",
+        "Kiali container readiness: [[{'name': 'kiali', 'state': {'running': {'startedAt': '2026-05-30T05:52:46Z'}}, 'lastState': {}, 'ready': True, 'restartCount': 0, 'image': 'quay.io/kiali/kiali:latest', 'imageID': 'docker-pullable://quay.io/kiali/kiali@sha256:73b3ea31a1b25cf2ab6acb2e3bf3f1258659dccf49817de3c9db0f96d442a0a9', 'containerID': 'docker://b48e6ea8711d7d04336af82c0829a39a4123dad81efe5a4f3bc6d531955f3e2b', 'started': True, 'allocatedResources': {'cpu': '10m', 'memory': '64Mi'}, 'resources': {'limits': {'memory': '1Gi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}, 'volumeMounts': [{'name': 'kiali-configuration', 'mountPath': '/kiali-configuration'}, {'name': 'kiali-secret', 'mountPath': '/kiali-secret'}, {'name': 'kiali-cabundle', 'mountPath': '/kiali-cabundle'}, {'name': 'login-token-signing-key', 'mountPath': '/kiali-override-secrets/login-token-signing-key', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'kiali-multi-cluster-secret', 'mountPath': '/kiali-remote-cluster-secrets/kiali-multi-cluster-secret', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'kube-api-access-ssh2z', 'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}]}]]"
+    ]
+}
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/metrics-test/../common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali CR: {'apiVersion': 'kiali.io/v1alpha1', 'kind': 'Kiali', 'metadata': {'creationTimestamp': '2026-05-30T05:51:31Z', 'finalizers': ['kiali.io/finalizer'], 'generation': 2, 'managedFields': [{'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:metadata': {'f:finalizers': {'.': {}, 'v:\"kiali.io/finalizer\"': {}}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'time': '2026-05-30T05:51:31Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:spec': {'.': {}, 'f:auth': {'.': {}, 'f:strategy': {}}, 'f:deployment': {'.': {}, 'f:cluster_wide_access': {}, 'f:image_digest': {}, 'f:image_name': {}, 'f:image_pull_policy': {}, 'f:image_version': {}, 'f:ingress': {'.': {}, 'f:class_name': {}, 'f:enabled': {}}, 'f:instance_name': {}, 'f:logger': {'.': {}, 'f:log_format': {}, 'f:log_level': {}, 'f:sampler_rate': {}, 'f:time_field_format': {}}, 'f:namespace': {}, 'f:probes': {'.': {}, 'f:liveness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:readiness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:startup': {'.': {}, 'f:failure_threshold': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}}, 'f:remote_cluster_resources_only': {}, 'f:replicas': {}, 'f:secret_name': {}, 'f:service_type': {}, 'f:view_only_mode': {}}, 'f:server': {'.': {}, 'f:audit_log': {}, 'f:cors_allow_all': {}, 'f:gzip_enabled': {}, 'f:observability': {'.': {}, 'f:metrics': {'.': {}, 'f:enabled': {}, 'f:port': {}}}, 'f:port': {}, 'f:require_auth': {}, 'f:web_history_mode': {}, 'f:write_timeout': {}}, 'f:version': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'time': '2026-05-30T05:52:33Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'f:deployment': {'.': {}, 'f:instanceName': {}, 'f:namespace': {}, 'f:remoteClusterResourcesOnly': {}}, 'f:environment': {'.': {}, 'f:isKubernetes': {}, 'f:kubernetesVersion': {}, 'f:operatorVersion': {}}, 'f:progress': {'.': {}, 'f:duration': {}, 'f:message': {}}, 'f:specVersion': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-05-30T05:52:46Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'.': {}, 'f:conditions': {}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-05-30T05:52:46Z'}], 'name': 'kiali', 'namespace': 'kiali-operator', 'resourceVersion': '10387', 'uid': '0cb23567-c971-4274-8f2e-04da8fc5b911'}, 'spec': {'auth': {'strategy': 'anonymous'}, 'deployment': {'cluster_wide_access': True, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_version': 'latest', 'ingress': {'class_name': 'nginx', 'enabled': True}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'debug', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'secret_name': 'kiali', 'service_type': 'NodePort', 'view_only_mode': False}, 'server': {'audit_log': True, 'cors_allow_all': False, 'gzip_enabled': True, 'observability': {'metrics': {'enabled': True, 'port': 9090}}, 'port': 20001, 'require_auth': False, 'web_history_mode': 'browser', 'write_timeout': '60s'}, 'version': 'default'}, 'status': {'conditions': [{'ansibleResult': {'changed': 10, 'completion': '2026-05-30T05:52:46.38267+00:00', 'failures': 0, 'ok': 76, 'skipped': 68}, 'lastTransitionTime': '2026-05-30T05:51:31Z', 'message': 'Awaiting next reconciliation', 'reason': 'Successful', 'status': 'True', 'type': 'Running'}, {'lastTransitionTime': '2026-05-30T05:52:46Z', 'message': 'Last reconciliation succeeded', 'reason': 'Successful', 'status': 'True', 'type': 'Successful'}, {'lastTransitionTime': '2026-05-30T05:51:43Z', 'message': '', 'reason': '', 'status': 'False', 'type': 'Failure'}], 'deployment': {'instanceName': 'kiali', 'namespace': 'istio-system', 'remoteClusterResourcesOnly': False}, 'environment': {'isKubernetes': True, 'kubernetesVersion': '1.35.0', 'operatorVersion': 'v2.27.0-SNAPSHOT'}, 'progress': {'duration': '0:00:11', 'message': '6. Finished all resource creation'}, 'specVersion': 'default'}}"
+}
+
+TASK [Get Kiali Configmap] *****************************************************
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali ConfigMap: {'additional_display_details': [{'annotation': 'kiali.io/api-spec', 'icon_annotation': 'kiali.io/api-type', 'title': 'API Documentation'}], 'auth': {'openid': {'additional_request_params': {}, 'allowed_domains': [], 'api_proxy': '', 'api_proxy_ca_data': '', 'api_token': 'id_token', 'authentication_timeout': 300, 'authorization_endpoint': '', 'client_id': '', 'disable_rbac': False, 'discovery_override': {'authorization_endpoint': '', 'jwks_uri': '', 'token_endpoint': '', 'userinfo_endpoint': ''}, 'http_proxy': '', 'https_proxy': '', 'insecure_skip_verify_tls': False, 'issuer_uri': '', 'scopes': ['openid', 'profile', 'email'], 'username_claim': 'sub'}, 'openshift': {'insecure_skip_verify_tls': False}, 'strategy': 'anonymous'}, 'chat_ai': {'default_provider': '', 'enabled': False, 'providers': [], 'store_config': {'enabled': True, 'inactivity_timeout': '30m', 'max_cache_memory_mb': 1024, 'reduce_threshold': 15, 'reduce_with_ai': False}}, 'clustering': {'autodetect_secrets': {'enabled': True, 'label': 'kiali.io/multiCluster=true'}, 'clusters': [], 'enable_exec_provider': False, 'ignore_home_cluster': False, 'kiali_urls': []}, 'custom_dashboards': [], 'deployment': {'additional_pod_containers_yaml': [], 'additional_pod_init_containers_yaml': [], 'affinity': {'node': {}, 'pod': {}, 'pod_anti': {}}, 'cluster_wide_access': True, 'configmap_annotations': {}, 'custom_envs': [], 'custom_secrets': [], 'discovery_selectors': {}, 'dns': {'config': {}, 'policy': ''}, 'extra_labels': {}, 'host_aliases': [], 'hpa': {'api_version': 'autoscaling/v2', 'spec': {}}, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_pull_secrets': [], 'image_version': 'latest', 'ingress': {'additional_labels': {}, 'class_name': 'nginx', 'enabled': True}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'debug', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'network_policy': {'enabled': True}, 'node_selector': {}, 'pod_annotations': {'proxy.istio.io/config': '{ \"holdApplicationUntilProxyStarts\": true }'}, 'pod_disruption_budget': {'api_version': 'policy/v1', 'spec': {}}, 'pod_labels': {}, 'priority_class_name': '', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'resources': {'limits': {'memory': '1Gi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}, 'secret_name': 'kiali', 'security_context': {}, 'service_annotations': {}, 'service_type': 'NodePort', 'strategy': {}, 'tls_config': {'cipher_suites': [], 'max_version': '', 'min_version': '', 'source': 'config'}, 'tolerations': [], 'topology_spread_constraints': [], 'version_label': 'master', 'view_only_mode': False}, 'extensions': [], 'external_services': {'custom_dashboards': {'discovery_auto_threshold': 10, 'discovery_enabled': 'auto', 'enabled': True, 'is_core': False, 'namespace_label': 'namespace', 'prometheus': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': ''}}, 'grafana': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard'}, {'name': 'Istio Control Plane Dashboard'}, {'name': 'Istio Performance Dashboard'}, {'name': 'Istio Wasm Extension Dashboard'}], 'datasource_uid': '', 'enabled': True, 'external_url': '', 'health_check_url': '', 'internal_url': 'http://grafana.istio-system:3000', 'is_core': False}, 'istio': {'component_status': {'components': [], 'enabled': True}, 'gateway_api_classes': [], 'gateway_api_classes_label_selector': '', 'istio_api_enabled': True, 'istio_identity_domain': '', 'istiod_polling_interval_seconds': 20, 'validation_change_detection_enabled': True, 'validation_reconcile_interval': '1m'}, 'perses': {'auth': {'insecure_skip_verify': False, 'password': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard'}, {'name': 'Istio Control Plane Dashboard'}, {'name': 'Istio Performance Dashboard'}, {'name': 'Istio Wasm Extension Dashboard'}], 'enabled': False, 'external_url': '', 'health_check_url': '', 'internal_url': '', 'is_core': False, 'project': 'istio', 'url_format': ''}, 'prometheus': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'enabled': True, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': 'http://prometheus.istio-system:9090'}, 'tracing': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'custom_headers': {}, 'disable_version_check': False, 'enabled': False, 'external_url': '', 'grpc_port': 9095, 'health_check_url': '', 'internal_url': 'http://tracing.istio-system:16685/jaeger', 'is_core': False, 'namespace_selector': True, 'provider': 'jaeger', 'query_scope': {}, 'query_timeout': 5, 'tempo_config': {'cache_capacity': 200, 'cache_enabled': True, 'datasource_uid': '', 'name': '', 'namespace': '', 'org_id': '', 'tenant': '', 'url_format': 'grafana'}, 'use_grpc': True, 'use_waypoint_name': False, 'whitelist_istio_system': ['jaeger-query', 'istio-ingressgateway']}}, 'health_config': {'compute': {'duration': '5m', 'refresh_interval': '3m', 'timeout': '10m'}, 'rate': []}, 'identity': {'cert_file': '', 'private_key_file': ''}, 'installation_tag': '', 'istio_labels': {'app_label_name': '', 'version_label_name': ''}, 'kiali_feature_flags': {'authz': {'require_namespace_get': False}, 'clustering': {'enable_exec_provider': False}, 'custom_workload_types': [], 'disabled_features': [], 'istio_annotation_action': True, 'istio_injection_action': True, 'istio_upgrade_action': False, 'ui_defaults': {'graph': {'find_options': [{'auto_select': False, 'description': 'Find: slow edges (> 1s)', 'expression': 'rt > 1000'}, {'auto_select': False, 'description': 'Find: unhealthy nodes', 'expression': '! healthy'}, {'auto_select': False, 'description': 'Find: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Find: nodes with the 2 top rankings', 'expression': 'rank <= 2'}], 'hide_options': [{'auto_select': False, 'description': 'Hide: healthy nodes', 'expression': 'healthy'}, {'auto_select': False, 'description': 'Hide: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Hide: nodes ranked lower than the 2 top rankings', 'expression': 'rank > 2'}], 'settings': {'animation': 'point'}, 'traffic': {'ambient': 'total', 'grpc': 'requests', 'http': 'requests', 'tcp': 'sent'}}, 'i18n': {'show_selector': False}, 'list': {'include_health': True, 'include_istio_resources': True, 'include_validations': True, 'show_include_toggles': False}, 'mesh': {'find_options': [{'description': 'Find: unhealthy nodes', 'expression': '! healthy'}], 'hide_options': [{'description': 'Hide: healthy nodes', 'expression': 'healthy'}]}, 'metrics_inbound': {'aggregations': []}, 'metrics_outbound': {'aggregations': []}, 'metrics_per_refresh': '1m', 'namespaces': [], 'refresh_interval': '1m', 'tracing': {'limit': 100}}, 'validations': {'ignore': ['KIA1301'], 'skip_wildcard_gateway_hosts': False}}, 'kiali_internal': {}, 'kubernetes_config': {'burst': 200, 'cache_duration': 300, 'cache_token_namespace_duration': 10, 'cluster_name': '', 'excluded_workloads': ['CronJob', 'DeploymentConfig', 'Job', 'ReplicationController'], 'qps': 175}, 'login_token': {'expiration_seconds': 86400, 'signing_key': 'secret:kiali-signing-key:key'}, 'server': {'address': '', 'audit_log': True, 'cors_allow_all': False, 'gzip_enabled': True, 'observability': {'metrics': {'enabled': True, 'health_status': {'enabled': False, 'max_consecutive_na': 3}, 'port': 9090}, 'tracing': {'collector_type': 'otel', 'collector_url': 'jaeger-collector.istio-system:4318', 'enabled': False, 'otel': {'ca_name': '', 'protocol': 'http', 'skip_verify': False, 'tls_enabled': False}, 'sampling_rate': 0.5}}, 'port': 20001, 'profiler': {'enabled': False}, 'require_auth': False, 'web_fqdn': '', 'web_history_mode': 'browser', 'web_port': '', 'web_root': '/kiali', 'web_schema': '', 'write_timeout': '60s'}, 'version': 'default'}"
+}
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+skipping: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+ok: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+skipping: [localhost]
+
+TASK [Determine the Kiali URL on minikube] *************************************
+ok: [localhost]
+
+TASK [Determine the Kiali URL on kind] *****************************************
+skipping: [localhost]
+
+TASK [Assert Kiali Pod(s) are Running] *****************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Send a request into Kiali to build up metrics] ***************************
+ok: [localhost]
+
+TASK [Waiting a few seconds for metrics to be collected] ***********************
+Pausing for 30 seconds
+ok: [localhost]
+
+TASK [Tell user to ensure minikube has the correct time otherwise the metric tests will fail] ***
+ok: [localhost] => {
+    "msg": "If a metric test fails, run this to ensure the clock is reset: minikube ssh -- sudo date -u $(date -u +%m%d%H%M%Y.%S)"
+}
+
+TASK [Query Prometheus from Kiali Operator Pod] ********************************
+fatal: [localhost]: FAILED! => {"changed": true, "rc": 3, "return_code": 3, "stderr": "", "stderr_lines": [], "stdout": "{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.0.91:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"node\":\"ci\",\"pod\":\"kiali-6b9d44f46f-rp9nj\",\"pod_template_hash\":\"6b9d44f46f\",\"route\":\"Healthz\",\"version\":\"master\"},\"value\":[1780120406.584,\"75\"]},{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.0.91:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"node\":\"ci\",\"pod\":\"kiali-6b9d44f46f-rp9nj\",\"pod_template_hash\":\"6b9d44f46f\",\"route\":\"Root\",\"version\":\"master\"},\"value\":[1780120406.584,\"2\"]}]}}", "stdout_lines": ["{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.0.91:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"node\":\"ci\",\"pod\":\"kiali-6b9d44f46f-rp9nj\",\"pod_template_hash\":\"6b9d44f46f\",\"route\":\"Healthz\",\"version\":\"master\"},\"value\":[1780120406.584,\"75\"]},{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.0.91:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"node\":\"ci\",\"pod\":\"kiali-6b9d44f46f-rp9nj\",\"pod_template_hash\":\"6b9d44f46f\",\"route\":\"Root\",\"version\":\"master\"},\"value\":[1780120406.584,\"2\"]}]}}"]}
+...ignoring
+
+TASK [Raw Prometheus query results] ********************************************
+ok: [localhost] => {
+    "msg": "URL: http://prometheus.istio-system:9090/api/v1/query }}; Request: {'query': 'kiali_api_processing_duration_seconds_count{app=\\\\\"kiali\\\\\",namespace=\\\\\"istio-system\\\\\"}', 'time': ''}; Results: {'changed': True, 'stdout': '{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.0.91:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"node\":\"ci\",\"pod\":\"kiali-6b9d44f46f-rp9nj\",\"pod_template_hash\":\"6b9d44f46f\",\"route\":\"Healthz\",\"version\":\"master\"},\"value\":[1780120406.584,\"75\"]},{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.0.91:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"node\":\"ci\",\"pod\":\"kiali-6b9d44f46f-rp9nj\",\"pod_template_hash\":\"6b9d44f46f\",\"route\":\"Root\",\"version\":\"master\"},\"value\":[1780120406.584,\"2\"]}]}}', 'stderr': '', 'rc': 3, 'return_code': 3, 'stdout_lines': ['{\"status\":\"success\",\"data\":{\"resultType\":\"vector\",\"result\":[{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.0.91:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"node\":\"ci\",\"pod\":\"kiali-6b9d44f46f-rp9nj\",\"pod_template_hash\":\"6b9d44f46f\",\"route\":\"Healthz\",\"version\":\"master\"},\"value\":[1780120406.584,\"75\"]},{\"metric\":{\"__name__\":\"kiali_api_processing_duration_seconds_count\",\"app\":\"kiali\",\"app_kubernetes_io_instance\":\"kiali\",\"app_kubernetes_io_name\":\"kiali\",\"app_kubernetes_io_part_of\":\"kiali\",\"app_kubernetes_io_version\":\"master\",\"instance\":\"10.244.0.91:9090\",\"job\":\"kubernetes-pods\",\"namespace\":\"istio-system\",\"node\":\"ci\",\"pod\":\"kiali-6b9d44f46f-rp9nj\",\"pod_template_hash\":\"6b9d44f46f\",\"route\":\"Root\",\"version\":\"master\"},\"value\":[1780120406.584,\"2\"]}]}}'], 'stderr_lines': [], 'failed': True}"
+}
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [assert] ******************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Get /api/config (baseline)] **********************************************
+ok: [localhost]
+
+TASK [assert] ******************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert graph endpoint returns 200 (baseline)] ****************************
+ok: [localhost]
+
+TASK [Get istio status (baseline)] *********************************************
+ok: [localhost]
+
+TASK [Check Prometheus is reported as healthy (baseline)] **********************
+skipping: [localhost] => (item={'cluster': 'ci', 'name': 'istiod', 'status': 'Healthy', 'isCore': True, 'meshId': 'cluster.local'})
+skipping: [localhost] => (item={'cluster': 'ci', 'name': 'istio-egressgateway', 'status': 'Healthy', 'isCore': False, 'meshId': 'cluster.local'})
+skipping: [localhost] => (item={'cluster': 'ci', 'name': 'istio-ingressgateway', 'status': 'Healthy', 'isCore': False, 'meshId': 'cluster.local'})
+ok: [localhost] => (item={'cluster': 'ci', 'name': 'prometheus', 'status': 'Healthy', 'isCore': True})
+skipping: [localhost] => (item={'cluster': 'ci', 'name': 'custom dashboards', 'status': 'Healthy', 'isCore': False})
+skipping: [localhost] => (item={'cluster': 'ci', 'name': 'grafana', 'status': 'Healthy', 'isCore': False})
+
+TASK [assert] ******************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Get mesh graph (baseline)] ***********************************************
+ok: [localhost]
+
+TASK [Check Prometheus node exists in mesh graph (baseline)] *******************
+skipping: [localhost] => (item={'data': {'id': '04b96bc7e6d09e01d9b779a543a30df5418bace97018d0b35a4c4b0c90a52a46', 'cluster': 'ci', 'infraName': 'ci', 'infraType': 'cluster', 'namespace': '', 'nodeType': 'box', 'healthData': 'Healthy', 'infraData': {'accessible': True, 'apiEndpoint': 'https://10.96.0.1:443', 'isKialiHome': True, 'kialiInstances': [{'namespace': 'istio-system', 'operatorResource': '', 'serviceName': 'kiali', 'url': '', 'version': 'master'}], 'name': 'ci', 'secretName': ''}, 'isBox': 'cluster', 'version': 'v1.35.0'}})
+skipping: [localhost] => (item={'data': {'id': '785b24b5be1cc900216241f7d6b5ff62af7702bdc4ea9e36006b036c8fa40f10', 'parent': '04b96bc7e6d09e01d9b779a543a30df5418bace97018d0b35a4c4b0c90a52a46', 'cluster': 'ci', 'infraName': 'istio-system', 'infraType': 'namespace', 'namespace': 'istio-system', 'nodeType': 'box', 'healthData': None, 'isBox': 'namespace'}})
+skipping: [localhost] => (item={'data': {'id': '132c7274d1d371441a994181d40de134e0ec1872670914e0c936763f3a0cbb02', 'parent': '785b24b5be1cc900216241f7d6b5ff62af7702bdc4ea9e36006b036c8fa40f10', 'cluster': 'ci', 'infraName': 'Grafana', 'infraType': 'grafana', 'namespace': 'istio-system', 'nodeType': 'infra', 'healthData': 'Healthy', 'infraData': {'auth': {'certFile': 'xxx', 'insecureSkipVerify': False, 'keyFile': 'xxx', 'password': 'xxx', 'token': 'xxx', 'type': 'none', 'useKialiToken': False, 'username': 'xxx'}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard', 'variables': {}}, {'name': 'Istio Control Plane Dashboard', 'variables': {}}, {'name': 'Istio Performance Dashboard', 'variables': {}}, {'name': 'Istio Wasm Extension Dashboard', 'variables': {}}], 'enabled': True, 'externalURL': '', 'internalURL': 'http://grafana.istio-system:3000'}, 'version': '12.0.1'}})
+skipping: [localhost] => (item={'data': {'id': '4fdca73e80166bc884b66a4b11eb1296176e2f1d2625b0a0cd98907efc3be936', 'parent': '785b24b5be1cc900216241f7d6b5ff62af7702bdc4ea9e36006b036c8fa40f10', 'cluster': 'ci', 'infraName': 'istiod', 'infraType': 'istiod', 'namespace': 'istio-system', 'nodeType': 'infra', 'healthData': 'Healthy', 'infraData': {'cluster': {'accessible': True, 'apiEndpoint': 'https://10.96.0.1:443', 'isKialiHome': True, 'kialiInstances': [{'namespace': 'istio-system', 'operatorResource': '', 'serviceName': 'kiali', 'url': '', 'version': 'master'}], 'name': 'ci', 'secretName': ''}, 'config': {'certificates': [{'dnsNames': None, 'configMapName': 'istio-ca-root-cert', 'issuer': 'O=cluster.local', 'notBefore': '2026-05-30T05:06:01Z', 'notAfter': '2036-05-27T05:06:01Z', 'error': '', 'accessible': True, 'cluster': ''}], 'effectiveConfig': {'configMap': {'mesh': {'enableTracing': True, 'accessLogFile': '/dev/stdout', 'defaultConfig': {'discoveryAddress': 'istiod.istio-system.svc:15012', 'tracing': {'zipkin': {'address': 'zipkin.istio-system:9411'}, 'sampling': 100}, 'proxyMetadata': {'DISABLE_IPV6': 'true', 'ENABLE_INBOUND_IPV6': 'false'}}, 'enableAutoMtls': True, 'trustDomain': 'cluster.local', 'rootNamespace': 'istio-system', 'enablePrometheusMerge': True, 'extensionProviders': [{'name': 'otel', 'envoyOtelAls': {'service': 'opentelemetry-collector.observability.svc.cluster.local', 'port': 4317}}, {'name': 'skywalking', 'skywalking': {'service': 'tracing.istio-system.svc.cluster.local', 'port': 11800}}, {'name': 'otel-tracing', 'opentelemetry': {'service': 'opentelemetry-collector.observability.svc.cluster.local', 'port': 4317}}, {'name': 'jaeger', 'opentelemetry': {'service': 'jaeger-collector.istio-system.svc.cluster.local', 'port': 4317}}], 'defaultProviders': {'tracing': ['jaeger'], 'metrics': ['prometheus']}}, 'meshNetworks': {}}}, 'standardConfig': {'cluster': 'ci', 'configMap': {'mesh': {'enableTracing': True, 'accessLogFile': '/dev/stdout', 'defaultConfig': {'discoveryAddress': 'istiod.istio-system.svc:15012', 'tracing': {'zipkin': {'address': 'zipkin.istio-system:9411'}, 'sampling': 100}, 'proxyMetadata': {'DISABLE_IPV6': 'true', 'ENABLE_INBOUND_IPV6': 'false'}}, 'enableAutoMtls': True, 'trustDomain': 'cluster.local', 'rootNamespace': 'istio-system', 'enablePrometheusMerge': True, 'extensionProviders': [{'name': 'otel', 'envoyOtelAls': {'service': 'opentelemetry-collector.observability.svc.cluster.local', 'port': 4317}}, {'name': 'skywalking', 'skywalking': {'service': 'tracing.istio-system.svc.cluster.local', 'port': 11800}}, {'name': 'otel-tracing', 'opentelemetry': {'service': 'opentelemetry-collector.observability.svc.cluster.local', 'port': 4317}}, {'name': 'jaeger', 'opentelemetry': {'service': 'jaeger-collector.istio-system.svc.cluster.local', 'port': 4317}}], 'defaultProviders': {'tracing': ['jaeger'], 'metrics': ['prometheus']}}, 'meshNetworks': {}}, 'name': 'istio', 'namespace': 'istio-system'}}, 'externalControlPlane': False, 'id': 'ci', 'istiodName': 'istiod', 'istiodNamespace': 'istio-system', 'managedClusters': [{'accessible': True, 'apiEndpoint': 'https://10.96.0.1:443', 'isKialiHome': True, 'kialiInstances': [{'namespace': 'istio-system', 'operatorResource': '', 'serviceName': 'kiali', 'url': '', 'version': 'master'}], 'name': 'ci', 'secretName': ''}], 'managesExternal': False, 'managedNamespaces': None, 'monitoringPort': 15014, 'resources': {'requests': {'cpu': '10m', 'memory': '100Mi'}}, 'revision': 'default', 'rootNamespace': 'istio-system', 'status': 'Healthy', 'tag': {'cluster': 'ci', 'name': 'default', 'revision': 'default'}, 'thresholds': {'memory': 0, 'cpu': 0}, 'version': {'name': 'Istio', 'version': '1.30.0', 'tempoConfig': {}}}, 'version': '1.30.0'}})
+ok: [localhost] => (item={'data': {'id': 'a05fab4dcb96f2e96bf938e2a18d3a86ed3d37302fd78776154d810ee77d2ff8', 'parent': '785b24b5be1cc900216241f7d6b5ff62af7702bdc4ea9e36006b036c8fa40f10', 'cluster': 'ci', 'infraName': 'Prometheus', 'infraType': 'metricStore', 'namespace': 'istio-system', 'nodeType': 'infra', 'healthData': 'Healthy', 'infraData': {'auth': {'certFile': 'xxx', 'insecureSkipVerify': False, 'keyFile': 'xxx', 'password': 'xxx', 'token': 'xxx', 'type': 'none', 'useKialiToken': False, 'username': 'xxx'}, 'cacheDuration': 7, 'cacheEnabled': True, 'cacheExpiration': 300, 'enabled': True, 'isCore': True, 'thanosProxy': {'retentionPeriod': '7d', 'scrapeInterval': '30s'}, 'url': 'http://prometheus.istio-system:9090'}, 'version': '3.10.0'}})
+skipping: [localhost] => (item={'data': {'id': 'bda60929a0f2ed9f62da8a89e8b3103977c2d91f1ff4150e8ca17333bab2a5f6', 'parent': '785b24b5be1cc900216241f7d6b5ff62af7702bdc4ea9e36006b036c8fa40f10', 'cluster': 'ci', 'infraName': 'kiali', 'infraType': 'kiali', 'namespace': 'istio-system', 'nodeType': 'infra', 'healthData': 'Healthy', 'infraData': {'componentStatuses': {'enabled': True}, 'istioApiEnabled': True, 'istiodPollingIntervalSeconds': 20, 'validationChangeDetectionEnabled': True, 'validationReconcileInterval': 60000000000}, 'version': 'master'}})
+
+TASK [assert] ******************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Disable external_services.prometheus] ************************************
+ok: [localhost]
+
+TASK [Change Kiali CR with new Kiali CR] ***************************************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+     "metadata": {
+-        "generation": 2,
++        "generation": 3,
+         "managedFields": [
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+@@ -16,6 +16,50 @@
+                 "manager": "ansible-operator",
+                 "operation": "Update",
+                 "time": "2026-05-30T05:51:31Z"
++            },
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:status": {
++                        "f:deployment": {
++                            ".": {},
++                            "f:instanceName": {},
++                            "f:namespace": {},
++                            "f:remoteClusterResourcesOnly": {}
++                        },
++                        "f:environment": {
++                            ".": {},
++                            "f:isKubernetes": {},
++                            "f:kubernetesVersion": {},
++                            "f:operatorVersion": {}
++                        },
++                        "f:progress": {
++                            ".": {},
++                            "f:duration": {},
++                            "f:message": {}
++                        },
++                        "f:specVersion": {}
++                    }
++                },
++                "manager": "OpenAPI-Generator",
++                "operation": "Update",
++                "subresource": "status",
++                "time": "2026-05-30T05:52:46Z"
++            },
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:status": {
++                        ".": {},
++                        "f:conditions": {}
++                    }
++                },
++                "manager": "ansible-operator",
++                "operation": "Update",
++                "subresource": "status",
++                "time": "2026-05-30T05:52:46Z"
+             },
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+@@ -73,6 +117,17 @@
+                             "f:service_type": {},
+                             "f:view_only_mode": {}
+                         },
++                        "f:external_services": {
++                            ".": {},
++                            "f:prometheus": {
++                                ".": {},
++                                "f:cache_duration": {},
++                                "f:cache_enabled": {},
++                                "f:cache_expiration": {},
++                                "f:enabled": {},
++                                "f:is_core": {}
++                            }
++                        },
+                         "f:server": {
+                             ".": {},
+                             "f:audit_log": {},
+@@ -96,54 +151,20 @@
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+-                "time": "2026-05-30T05:52:33Z"
+-            },
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:status": {
+-                        "f:deployment": {
+-                            ".": {},
+-                            "f:instanceName": {},
+-                            "f:namespace": {},
+-                            "f:remoteClusterResourcesOnly": {}
+-                        },
+-                        "f:environment": {
+-                            ".": {},
+-                            "f:isKubernetes": {},
+-                            "f:kubernetesVersion": {},
+-                            "f:operatorVersion": {}
+-                        },
+-                        "f:progress": {
+-                            ".": {},
+-                            "f:duration": {},
+-                            "f:message": {}
+-                        },
+-                        "f:specVersion": {}
+-                    }
+-                },
+-                "manager": "OpenAPI-Generator",
+-                "operation": "Update",
+-                "subresource": "status",
+-                "time": "2026-05-30T05:52:46Z"
+-            },
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:status": {
+-                        ".": {},
+-                        "f:conditions": {}
+-                    }
+-                },
+-                "manager": "ansible-operator",
+-                "operation": "Update",
+-                "subresource": "status",
+-                "time": "2026-05-30T05:52:46Z"
++                "time": "2026-05-30T05:53:28Z"
+             }
+         ],
+-        "resourceVersion": "10387"
++        "resourceVersion": "10467"
+     },
+-    "spec": {}
++    "spec": {
++        "external_services": {
++            "prometheus": {
++                "cache_duration": 7,
++                "cache_enabled": true,
++                "cache_expiration": 300,
++                "enabled": false,
++                "is_core": true
++            }
++        }
++    }
+ }
+
+changed: [localhost]
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (120 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (119 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (118 retries left).
+ok: [localhost]
+
+TASK [Wait for Kiali Deployment rollout to complete] ***************************
+ok: [localhost]
+
+TASK [Asserting that Kiali Pod(s) are running and ready] ***********************
+ok: [localhost]
+
+TASK [Debug pod readiness snapshot (for diagnostics)] **************************
+ok: [localhost] => {
+    "msg": [
+        "Kiali pod names: ['kiali-7867bf9b5f-xkfmt']",
+        "Kiali pod phases: ['Running']",
+        "Kiali container readiness: [[{'name': 'kiali', 'state': {'running': {'startedAt': '2026-05-30T05:53:40Z'}}, 'lastState': {}, 'ready': True, 'restartCount': 0, 'image': 'quay.io/kiali/kiali:latest', 'imageID': 'docker-pullable://quay.io/kiali/kiali@sha256:73b3ea31a1b25cf2ab6acb2e3bf3f1258659dccf49817de3c9db0f96d442a0a9', 'containerID': 'docker://4aa4879437074b0682090e48804f014d8ea5e08c0d40fd6f13bd0e51f9196866', 'started': True, 'allocatedResources': {'cpu': '10m', 'memory': '64Mi'}, 'resources': {'limits': {'memory': '1Gi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}, 'volumeMounts': [{'name': 'kiali-configuration', 'mountPath': '/kiali-configuration'}, {'name': 'kiali-secret', 'mountPath': '/kiali-secret'}, {'name': 'kiali-cabundle', 'mountPath': '/kiali-cabundle'}, {'name': 'login-token-signing-key', 'mountPath': '/kiali-override-secrets/login-token-signing-key', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'kiali-multi-cluster-secret', 'mountPath': '/kiali-remote-cluster-secrets/kiali-multi-cluster-secret', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'kube-api-access-j89kk', 'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}]}]]"
+    ]
+}
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/metrics-test/../common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali CR: {'apiVersion': 'kiali.io/v1alpha1', 'kind': 'Kiali', 'metadata': {'creationTimestamp': '2026-05-30T05:51:31Z', 'finalizers': ['kiali.io/finalizer'], 'generation': 3, 'managedFields': [{'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:metadata': {'f:finalizers': {'.': {}, 'v:\"kiali.io/finalizer\"': {}}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'time': '2026-05-30T05:51:31Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:spec': {'.': {}, 'f:auth': {'.': {}, 'f:strategy': {}}, 'f:deployment': {'.': {}, 'f:cluster_wide_access': {}, 'f:image_digest': {}, 'f:image_name': {}, 'f:image_pull_policy': {}, 'f:image_version': {}, 'f:ingress': {'.': {}, 'f:class_name': {}, 'f:enabled': {}}, 'f:instance_name': {}, 'f:logger': {'.': {}, 'f:log_format': {}, 'f:log_level': {}, 'f:sampler_rate': {}, 'f:time_field_format': {}}, 'f:namespace': {}, 'f:probes': {'.': {}, 'f:liveness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:readiness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:startup': {'.': {}, 'f:failure_threshold': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}}, 'f:remote_cluster_resources_only': {}, 'f:replicas': {}, 'f:secret_name': {}, 'f:service_type': {}, 'f:view_only_mode': {}}, 'f:external_services': {'.': {}, 'f:prometheus': {'.': {}, 'f:cache_duration': {}, 'f:cache_enabled': {}, 'f:cache_expiration': {}, 'f:enabled': {}, 'f:is_core': {}}}, 'f:server': {'.': {}, 'f:audit_log': {}, 'f:cors_allow_all': {}, 'f:gzip_enabled': {}, 'f:observability': {'.': {}, 'f:metrics': {'.': {}, 'f:enabled': {}, 'f:port': {}}}, 'f:port': {}, 'f:require_auth': {}, 'f:web_history_mode': {}, 'f:write_timeout': {}}, 'f:version': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'time': '2026-05-30T05:53:28Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'f:deployment': {'.': {}, 'f:instanceName': {}, 'f:namespace': {}, 'f:remoteClusterResourcesOnly': {}}, 'f:environment': {'.': {}, 'f:isKubernetes': {}, 'f:kubernetesVersion': {}, 'f:operatorVersion': {}}, 'f:progress': {'.': {}, 'f:duration': {}, 'f:message': {}}, 'f:specVersion': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-05-30T05:53:40Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'.': {}, 'f:conditions': {}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-05-30T05:53:40Z'}], 'name': 'kiali', 'namespace': 'kiali-operator', 'resourceVersion': '10528', 'uid': '0cb23567-c971-4274-8f2e-04da8fc5b911'}, 'spec': {'auth': {'strategy': 'anonymous'}, 'deployment': {'cluster_wide_access': True, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_version': 'latest', 'ingress': {'class_name': 'nginx', 'enabled': True}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'debug', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'secret_name': 'kiali', 'service_type': 'NodePort', 'view_only_mode': False}, 'external_services': {'prometheus': {'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'enabled': False, 'is_core': True}}, 'server': {'audit_log': True, 'cors_allow_all': False, 'gzip_enabled': True, 'observability': {'metrics': {'enabled': True, 'port': 9090}}, 'port': 20001, 'require_auth': False, 'web_history_mode': 'browser', 'write_timeout': '60s'}, 'version': 'default'}, 'status': {'conditions': [{'ansibleResult': {'changed': 10, 'completion': '2026-05-30T05:53:40.514309+00:00', 'failures': 0, 'ok': 76, 'skipped': 68}, 'lastTransitionTime': '2026-05-30T05:51:31Z', 'message': 'Awaiting next reconciliation', 'reason': 'Successful', 'status': 'True', 'type': 'Running'}, {'lastTransitionTime': '2026-05-30T05:53:40Z', 'message': 'Last reconciliation succeeded', 'reason': 'Successful', 'status': 'True', 'type': 'Successful'}, {'lastTransitionTime': '2026-05-30T05:51:43Z', 'message': '', 'reason': '', 'status': 'False', 'type': 'Failure'}], 'deployment': {'instanceName': 'kiali', 'namespace': 'istio-system', 'remoteClusterResourcesOnly': False}, 'environment': {'isKubernetes': True, 'kubernetesVersion': '1.35.0', 'operatorVersion': 'v2.27.0-SNAPSHOT'}, 'progress': {'duration': '0:00:11', 'message': '6. Finished all resource creation'}, 'specVersion': 'default'}}"
+}
+
+TASK [Get Kiali Configmap] *****************************************************
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali ConfigMap: {'additional_display_details': [{'annotation': 'kiali.io/api-spec', 'icon_annotation': 'kiali.io/api-type', 'title': 'API Documentation'}], 'auth': {'openid': {'additional_request_params': {}, 'allowed_domains': [], 'api_proxy': '', 'api_proxy_ca_data': '', 'api_token': 'id_token', 'authentication_timeout': 300, 'authorization_endpoint': '', 'client_id': '', 'disable_rbac': False, 'discovery_override': {'authorization_endpoint': '', 'jwks_uri': '', 'token_endpoint': '', 'userinfo_endpoint': ''}, 'http_proxy': '', 'https_proxy': '', 'insecure_skip_verify_tls': False, 'issuer_uri': '', 'scopes': ['openid', 'profile', 'email'], 'username_claim': 'sub'}, 'openshift': {'insecure_skip_verify_tls': False}, 'strategy': 'anonymous'}, 'chat_ai': {'default_provider': '', 'enabled': False, 'providers': [], 'store_config': {'enabled': True, 'inactivity_timeout': '30m', 'max_cache_memory_mb': 1024, 'reduce_threshold': 15, 'reduce_with_ai': False}}, 'clustering': {'autodetect_secrets': {'enabled': True, 'label': 'kiali.io/multiCluster=true'}, 'clusters': [], 'enable_exec_provider': False, 'ignore_home_cluster': False, 'kiali_urls': []}, 'custom_dashboards': [], 'deployment': {'additional_pod_containers_yaml': [], 'additional_pod_init_containers_yaml': [], 'affinity': {'node': {}, 'pod': {}, 'pod_anti': {}}, 'cluster_wide_access': True, 'configmap_annotations': {}, 'custom_envs': [], 'custom_secrets': [], 'discovery_selectors': {}, 'dns': {'config': {}, 'policy': ''}, 'extra_labels': {}, 'host_aliases': [], 'hpa': {'api_version': 'autoscaling/v2', 'spec': {}}, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_pull_secrets': [], 'image_version': 'latest', 'ingress': {'additional_labels': {}, 'class_name': 'nginx', 'enabled': True}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'debug', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'network_policy': {'enabled': True}, 'node_selector': {}, 'pod_annotations': {'proxy.istio.io/config': '{ \"holdApplicationUntilProxyStarts\": true }'}, 'pod_disruption_budget': {'api_version': 'policy/v1', 'spec': {}}, 'pod_labels': {}, 'priority_class_name': '', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'resources': {'limits': {'memory': '1Gi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}, 'secret_name': 'kiali', 'security_context': {}, 'service_annotations': {}, 'service_type': 'NodePort', 'strategy': {}, 'tls_config': {'cipher_suites': [], 'max_version': '', 'min_version': '', 'source': 'config'}, 'tolerations': [], 'topology_spread_constraints': [], 'version_label': 'master', 'view_only_mode': False}, 'extensions': [], 'external_services': {'custom_dashboards': {'discovery_auto_threshold': 10, 'discovery_enabled': 'auto', 'enabled': True, 'is_core': False, 'namespace_label': 'namespace', 'prometheus': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': ''}}, 'grafana': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard'}, {'name': 'Istio Control Plane Dashboard'}, {'name': 'Istio Performance Dashboard'}, {'name': 'Istio Wasm Extension Dashboard'}], 'datasource_uid': '', 'enabled': True, 'external_url': '', 'health_check_url': '', 'internal_url': 'http://grafana.istio-system:3000', 'is_core': False}, 'istio': {'component_status': {'components': [], 'enabled': True}, 'gateway_api_classes': [], 'gateway_api_classes_label_selector': '', 'istio_api_enabled': True, 'istio_identity_domain': '', 'istiod_polling_interval_seconds': 20, 'validation_change_detection_enabled': True, 'validation_reconcile_interval': '1m'}, 'perses': {'auth': {'insecure_skip_verify': False, 'password': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard'}, {'name': 'Istio Control Plane Dashboard'}, {'name': 'Istio Performance Dashboard'}, {'name': 'Istio Wasm Extension Dashboard'}], 'enabled': False, 'external_url': '', 'health_check_url': '', 'internal_url': '', 'is_core': False, 'project': 'istio', 'url_format': ''}, 'prometheus': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'enabled': False, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': ''}, 'tracing': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'custom_headers': {}, 'disable_version_check': False, 'enabled': False, 'external_url': '', 'grpc_port': 9095, 'health_check_url': '', 'internal_url': 'http://tracing.istio-system:16685/jaeger', 'is_core': False, 'namespace_selector': True, 'provider': 'jaeger', 'query_scope': {}, 'query_timeout': 5, 'tempo_config': {'cache_capacity': 200, 'cache_enabled': True, 'datasource_uid': '', 'name': '', 'namespace': '', 'org_id': '', 'tenant': '', 'url_format': 'grafana'}, 'use_grpc': True, 'use_waypoint_name': False, 'whitelist_istio_system': ['jaeger-query', 'istio-ingressgateway']}}, 'health_config': {'compute': {'duration': '5m', 'refresh_interval': '3m', 'timeout': '10m'}, 'rate': []}, 'identity': {'cert_file': '', 'private_key_file': ''}, 'installation_tag': '', 'istio_labels': {'app_label_name': '', 'version_label_name': ''}, 'kiali_feature_flags': {'authz': {'require_namespace_get': False}, 'clustering': {'enable_exec_provider': False}, 'custom_workload_types': [], 'disabled_features': [], 'istio_annotation_action': True, 'istio_injection_action': True, 'istio_upgrade_action': False, 'ui_defaults': {'graph': {'find_options': [{'auto_select': False, 'description': 'Find: slow edges (> 1s)', 'expression': 'rt > 1000'}, {'auto_select': False, 'description': 'Find: unhealthy nodes', 'expression': '! healthy'}, {'auto_select': False, 'description': 'Find: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Find: nodes with the 2 top rankings', 'expression': 'rank <= 2'}], 'hide_options': [{'auto_select': False, 'description': 'Hide: healthy nodes', 'expression': 'healthy'}, {'auto_select': False, 'description': 'Hide: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Hide: nodes ranked lower than the 2 top rankings', 'expression': 'rank > 2'}], 'settings': {'animation': 'point'}, 'traffic': {'ambient': 'total', 'grpc': 'requests', 'http': 'requests', 'tcp': 'sent'}}, 'i18n': {'show_selector': False}, 'list': {'include_health': True, 'include_istio_resources': True, 'include_validations': True, 'show_include_toggles': False}, 'mesh': {'find_options': [{'description': 'Find: unhealthy nodes', 'expression': '! healthy'}], 'hide_options': [{'description': 'Hide: healthy nodes', 'expression': 'healthy'}]}, 'metrics_inbound': {'aggregations': []}, 'metrics_outbound': {'aggregations': []}, 'metrics_per_refresh': '1m', 'namespaces': [], 'refresh_interval': '1m', 'tracing': {'limit': 100}}, 'validations': {'ignore': ['KIA1301'], 'skip_wildcard_gateway_hosts': False}}, 'kiali_internal': {}, 'kubernetes_config': {'burst': 200, 'cache_duration': 300, 'cache_token_namespace_duration': 10, 'cluster_name': '', 'excluded_workloads': ['CronJob', 'DeploymentConfig', 'Job', 'ReplicationController'], 'qps': 175}, 'login_token': {'expiration_seconds': 86400, 'signing_key': 'secret:kiali-signing-key:key'}, 'server': {'address': '', 'audit_log': True, 'cors_allow_all': False, 'gzip_enabled': True, 'observability': {'metrics': {'enabled': True, 'health_status': {'enabled': False, 'max_consecutive_na': 3}, 'port': 9090}, 'tracing': {'collector_type': 'otel', 'collector_url': 'jaeger-collector.istio-system:4318', 'enabled': False, 'otel': {'ca_name': '', 'protocol': 'http', 'skip_verify': False, 'tls_enabled': False}, 'sampling_rate': 0.5}}, 'port': 20001, 'profiler': {'enabled': False}, 'require_auth': False, 'web_fqdn': '', 'web_history_mode': 'browser', 'web_port': '', 'web_root': '/kiali', 'web_schema': '', 'write_timeout': '60s'}, 'version': 'default'}"
+}
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+skipping: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+ok: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+skipping: [localhost]
+
+TASK [Determine the Kiali URL on minikube] *************************************
+ok: [localhost]
+
+TASK [Determine the Kiali URL on kind] *****************************************
+skipping: [localhost]
+
+TASK [Assert Kiali Pod(s) are Running] *****************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert /api/config shows prometheus.enabled is false] ********************
+ok: [localhost]
+
+TASK [assert] ******************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert non-metrics endpoint still works when Prometheus is disabled (graceful degradation)] ***
+ok: [localhost]
+
+TASK [Assert graph endpoint returns 200 with empty graph when Prometheus is disabled] ***
+ok: [localhost]
+
+TASK [Get istio status with Prometheus disabled] *******************************
+ok: [localhost]
+
+TASK [Check Prometheus is not reported as unhealthy] ***************************
+skipping: [localhost] => (item={'cluster': 'ci', 'name': 'istiod', 'status': 'Healthy', 'isCore': True, 'meshId': 'cluster.local'})
+skipping: [localhost] => (item={'cluster': 'ci', 'name': 'istio-egressgateway', 'status': 'Healthy', 'isCore': False, 'meshId': 'cluster.local'})
+skipping: [localhost] => (item={'cluster': 'ci', 'name': 'istio-ingressgateway', 'status': 'Healthy', 'isCore': False, 'meshId': 'cluster.local'})
+skipping: [localhost] => (item={'cluster': 'ci', 'name': 'custom dashboards', 'status': 'Unreachable', 'isCore': False})
+skipping: [localhost] => (item={'cluster': 'ci', 'name': 'grafana', 'status': 'Healthy', 'isCore': False})
+skipping: [localhost]
+
+TASK [assert] ******************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Get mesh graph with Prometheus disabled] *********************************
+ok: [localhost]
+
+TASK [Check Prometheus node is absent from mesh graph] *************************
+skipping: [localhost] => (item={'data': {'id': '04b96bc7e6d09e01d9b779a543a30df5418bace97018d0b35a4c4b0c90a52a46', 'cluster': 'ci', 'infraName': 'ci', 'infraType': 'cluster', 'namespace': '', 'nodeType': 'box', 'healthData': 'Healthy', 'infraData': {'accessible': True, 'apiEndpoint': 'https://10.96.0.1:443', 'isKialiHome': True, 'kialiInstances': [{'namespace': 'istio-system', 'operatorResource': '', 'serviceName': 'kiali', 'url': '', 'version': 'master'}], 'name': 'ci', 'secretName': ''}, 'isBox': 'cluster', 'version': 'v1.35.0'}})
+skipping: [localhost] => (item={'data': {'id': '785b24b5be1cc900216241f7d6b5ff62af7702bdc4ea9e36006b036c8fa40f10', 'parent': '04b96bc7e6d09e01d9b779a543a30df5418bace97018d0b35a4c4b0c90a52a46', 'cluster': 'ci', 'infraName': 'istio-system', 'infraType': 'namespace', 'namespace': 'istio-system', 'nodeType': 'box', 'healthData': None, 'isBox': 'namespace'}})
+skipping: [localhost] => (item={'data': {'id': '132c7274d1d371441a994181d40de134e0ec1872670914e0c936763f3a0cbb02', 'parent': '785b24b5be1cc900216241f7d6b5ff62af7702bdc4ea9e36006b036c8fa40f10', 'cluster': 'ci', 'infraName': 'Grafana', 'infraType': 'grafana', 'namespace': 'istio-system', 'nodeType': 'infra', 'healthData': 'Healthy', 'infraData': {'auth': {'certFile': 'xxx', 'insecureSkipVerify': False, 'keyFile': 'xxx', 'password': 'xxx', 'token': 'xxx', 'type': 'none', 'useKialiToken': False, 'username': 'xxx'}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard', 'variables': {}}, {'name': 'Istio Control Plane Dashboard', 'variables': {}}, {'name': 'Istio Performance Dashboard', 'variables': {}}, {'name': 'Istio Wasm Extension Dashboard', 'variables': {}}], 'enabled': True, 'externalURL': '', 'internalURL': 'http://grafana.istio-system:3000'}, 'version': '12.0.1'}})
+skipping: [localhost] => (item={'data': {'id': '4fdca73e80166bc884b66a4b11eb1296176e2f1d2625b0a0cd98907efc3be936', 'parent': '785b24b5be1cc900216241f7d6b5ff62af7702bdc4ea9e36006b036c8fa40f10', 'cluster': 'ci', 'infraName': 'istiod', 'infraType': 'istiod', 'namespace': 'istio-system', 'nodeType': 'infra', 'healthData': 'Healthy', 'infraData': {'cluster': {'accessible': True, 'apiEndpoint': 'https://10.96.0.1:443', 'isKialiHome': True, 'kialiInstances': [{'namespace': 'istio-system', 'operatorResource': '', 'serviceName': 'kiali', 'url': '', 'version': 'master'}], 'name': 'ci', 'secretName': ''}, 'config': {'certificates': [{'dnsNames': None, 'configMapName': 'istio-ca-root-cert', 'issuer': 'O=cluster.local', 'notBefore': '2026-05-30T05:06:01Z', 'notAfter': '2036-05-27T05:06:01Z', 'error': '', 'accessible': True, 'cluster': ''}], 'effectiveConfig': {'configMap': {'mesh': {'enableTracing': True, 'accessLogFile': '/dev/stdout', 'defaultConfig': {'discoveryAddress': 'istiod.istio-system.svc:15012', 'tracing': {'zipkin': {'address': 'zipkin.istio-system:9411'}, 'sampling': 100}, 'proxyMetadata': {'DISABLE_IPV6': 'true', 'ENABLE_INBOUND_IPV6': 'false'}}, 'enableAutoMtls': True, 'trustDomain': 'cluster.local', 'rootNamespace': 'istio-system', 'enablePrometheusMerge': True, 'extensionProviders': [{'name': 'otel', 'envoyOtelAls': {'service': 'opentelemetry-collector.observability.svc.cluster.local', 'port': 4317}}, {'name': 'skywalking', 'skywalking': {'service': 'tracing.istio-system.svc.cluster.local', 'port': 11800}}, {'name': 'otel-tracing', 'opentelemetry': {'service': 'opentelemetry-collector.observability.svc.cluster.local', 'port': 4317}}, {'name': 'jaeger', 'opentelemetry': {'service': 'jaeger-collector.istio-system.svc.cluster.local', 'port': 4317}}], 'defaultProviders': {'tracing': ['jaeger'], 'metrics': ['prometheus']}}, 'meshNetworks': {}}}, 'standardConfig': {'cluster': 'ci', 'configMap': {'mesh': {'enableTracing': True, 'accessLogFile': '/dev/stdout', 'defaultConfig': {'discoveryAddress': 'istiod.istio-system.svc:15012', 'tracing': {'zipkin': {'address': 'zipkin.istio-system:9411'}, 'sampling': 100}, 'proxyMetadata': {'DISABLE_IPV6': 'true', 'ENABLE_INBOUND_IPV6': 'false'}}, 'enableAutoMtls': True, 'trustDomain': 'cluster.local', 'rootNamespace': 'istio-system', 'enablePrometheusMerge': True, 'extensionProviders': [{'name': 'otel', 'envoyOtelAls': {'service': 'opentelemetry-collector.observability.svc.cluster.local', 'port': 4317}}, {'name': 'skywalking', 'skywalking': {'service': 'tracing.istio-system.svc.cluster.local', 'port': 11800}}, {'name': 'otel-tracing', 'opentelemetry': {'service': 'opentelemetry-collector.observability.svc.cluster.local', 'port': 4317}}, {'name': 'jaeger', 'opentelemetry': {'service': 'jaeger-collector.istio-system.svc.cluster.local', 'port': 4317}}], 'defaultProviders': {'tracing': ['jaeger'], 'metrics': ['prometheus']}}, 'meshNetworks': {}}, 'name': 'istio', 'namespace': 'istio-system'}}, 'externalControlPlane': False, 'id': 'ci', 'istiodName': 'istiod', 'istiodNamespace': 'istio-system', 'managedClusters': [{'accessible': True, 'apiEndpoint': 'https://10.96.0.1:443', 'isKialiHome': True, 'kialiInstances': [{'namespace': 'istio-system', 'operatorResource': '', 'serviceName': 'kiali', 'url': '', 'version': 'master'}], 'name': 'ci', 'secretName': ''}], 'managesExternal': False, 'managedNamespaces': None, 'monitoringPort': 15014, 'resources': {'requests': {'cpu': '10m', 'memory': '100Mi'}}, 'revision': 'default', 'rootNamespace': 'istio-system', 'status': 'Healthy', 'tag': {'cluster': 'ci', 'name': 'default', 'revision': 'default'}, 'thresholds': {'memory': 0, 'cpu': 0}, 'version': {'name': 'Istio', 'version': '1.30.0', 'tempoConfig': {}}}, 'version': '1.30.0'}})
+skipping: [localhost] => (item={'data': {'id': 'bda60929a0f2ed9f62da8a89e8b3103977c2d91f1ff4150e8ca17333bab2a5f6', 'parent': '785b24b5be1cc900216241f7d6b5ff62af7702bdc4ea9e36006b036c8fa40f10', 'cluster': 'ci', 'infraName': 'kiali', 'infraType': 'kiali', 'namespace': 'istio-system', 'nodeType': 'infra', 'healthData': 'Healthy', 'infraData': {'componentStatuses': {'enabled': True}, 'istioApiEnabled': True, 'istiodPollingIntervalSeconds': 20, 'validationChangeDetectionEnabled': True, 'validationReconcileInterval': 60000000000}, 'version': 'master'}})
+skipping: [localhost]
+
+TASK [assert] ******************************************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=109  changed=7    unreachable=0    failed=0    skipped=15   rescued=0    ignored=4
+
+INFO     Running metrics-test > destroy
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/metrics-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/metrics-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/metrics-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/metrics-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/metrics-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: minikube
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/metrics-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/metrics-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/metrics-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/metrics-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_MINIKUBE_IP: 192.168.39.128
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/metrics-test
+MOLECULE_SCENARIO_NAME: metrics-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/metrics-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/metrics-test/tests
+MOLECULE_WAIT_RETRIES: '120'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/metrics-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/metrics-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/metrics-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/metrics-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/metrics-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=minikube MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/metrics-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/metrics-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/metrics-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/metrics-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_MINIKUBE_IP=192.168.39.128 MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/metrics-test MOLECULE_SCENARIO_NAME=metrics-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/metrics-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/metrics-test/tests MOLECULE_WAIT_RETRIES=120
+
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+PLAY [Restore Prometheus configuration] ****************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Check if saved Prometheus ConfigMap exists] ******************************
+ok: [localhost]
+
+TASK [Load saved Prometheus ConfigMap data] ************************************
+skipping: [localhost]
+
+TASK [Restore the original Prometheus ConfigMap] *******************************
+skipping: [localhost]
+
+TASK [Wait for Prometheus config reloader to pick up restored config] **********
+skipping: [localhost]
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Remove Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Wait for Kiali ConfigMap to be uninstalled] ******************************
+ok: [localhost]
+
+TASK [Uninstall Operator via Helm] *********************************************
+changed: [localhost]
+
+TASK [Remove CRDs] *************************************************************
+changed: [localhost]
+
+TASK [Removing Operator namespace] *********************************************
+changed: [localhost]
+
+TASK [Removing CR namespace if it is different than control plane and operator namespace] ***
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=19   changed=4    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
+Molecule test passed: metrics-test
+
+molecule-tests-volume

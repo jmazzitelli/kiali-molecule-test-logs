@@ -1,0 +1,9 @@
+<testsuites  id="0" name="kiali molecule tests" tests="3" failures="1" time="1027">
+  <testsuite id="0" name="kiali molecule tests" tests="3" failures="1" time="1027">
+    <testcase id="header-auth-test" name="header-auth-test" classname="header-auth-test" time="70"></testcase>
+    <testcase id="openid-test" name="openid-test" classname="openid-test" time="113"></testcase>
+    <testcase id="config-values-test" name="config-values-test" classname="config-values-test" time="844">
+      <failure type="error" message="For details, see /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-10_01-00-00/config-values-test.log"/>
+    </testcase>
+  </testsuite>
+</testsuites>

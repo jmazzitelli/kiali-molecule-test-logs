@@ -1,0 +1,10 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /home/jmazzite/source/kiali/helm-charts
+Your configuration specifies to merge with the ref 'refs/heads/9836-perm-audit'
+from the remote, but no such ref was fetched.
+==========
+Failed to update your local helm chart repo.
+You can either attempt to correct the error mentioned above,
+or set 'HELM_CHARTS_REPO_PULL=false' and try again.
+==========
+make: *** [make/Makefile.helm.mk:16: .ensure-helm-charts-repo-exists] Error 1

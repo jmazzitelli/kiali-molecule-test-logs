@@ -1,0 +1,591 @@
+rolebinding.rbac.authorization.k8s.io/openid-rolebinding-istio-system created
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /home/jmazzite/source/kiali/helm-charts
+Git repo for the helm charts is found here: /home/jmazzite/source/kiali/helm-charts
+make[1]: Entering directory '/home/jmazzite/source/kiali/helm-charts'
+Using helm from PATH: /home/jmazzite/bin/helm
+Will use this helm executable: helm
+helm version
+version.BuildInfo{Version:"v3.10.1", GitCommit:"9f88ccb6aee40b9a0535fcc7efea6055e1ef72c9", GitTreeState:"clean", GoVersion:"go1.18.7"}
+Building Helm Chart for Kiali operator
+==> Linting /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-operator-2.27.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/home/jmazzite/source/kiali/helm-charts'
+Minikube repos: external=[192.168.39.128:5000] internal=[localhost:5000]
+│ [32mregistry[0m                    │ [32mci[0m      │ [32menabled ✅[0m │ [32mminikube[0m                               │
+Will not auto-detect any hosts for non-OpenShift clusters.
+Will not rebuild kiali-molecule image.
+Cleaning up previous molecule resources and prepare volumes for a new run
+podman volume rm molecule-tests-volume 2>/dev/null || ( \
+	for c in $(podman ps -a --filter volume=molecule-tests-volume --format '{{.ID}}'); do \
+		podman kill "$c"; \
+		podman rm "$c"; \
+	done && \
+	podman volume exists molecule-tests-volume && echo "Podman volume already exists; deleting it" && podman volume rm molecule-tests-volume || true \
+	)
+podman volume create molecule-tests-volume
+molecule-tests-volume
+podman create -v molecule-tests-volume:/data --name molecule-volume-helper quay.io/fedora/fedora-minimal:latest sleep infinity
+eb1a645b4b47cb7c28fdc7acfcb4554a9c2938fc5f4a4183b9d4c6ee58878f64
+podman start molecule-volume-helper
+molecule-volume-helper
+podman run --rm -v molecule-tests-volume:/data -v "/home/jmazzite/source/kiali/helm-charts":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/helm-charts-repo
+podman run --rm -v molecule-tests-volume:/data -v "$(realpath /home/jmazzite/source/kiali/kiali/operator)":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/operator
+podman run --rm -v molecule-tests-volume:/data -v "/home/jmazzite/.kube/config":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/kubeconfig
+podman stop molecule-volume-helper
+time="2026-05-30T01:40:15-04:00" level=warning msg="StopSignal SIGTERM failed to stop container molecule-volume-helper in 10 seconds, resorting to SIGKILL"
+molecule-volume-helper
+podman rm molecule-volume-helper
+molecule-volume-helper
+podman run       --rm              --env KUBECONFIG=/tmp/molecule/kubeconfig       --env K8S_AUTH_KUBECONFIG=/tmp/molecule/kubeconfig       --env MOLECULE_CLUSTER_TYPE=minikube       --env MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo       -v molecule-tests-volume:/tmp/molecule       -v /home/jmazzite/.minikube/logs/lastStart.txt:/home/jmazzite/.minikube/logs/lastStart.txt:Z -v /home/jmazzite/.minikube/logs/audit.json:/home/jmazzite/.minikube/logs/audit.json:Z -v /home/jmazzite/.minikube/certs/ca.pem:/home/jmazzite/.minikube/certs/ca.pem:Z -v /home/jmazzite/.minikube/certs/ca-key.pem:/home/jmazzite/.minikube/certs/ca-key.pem:Z -v /home/jmazzite/.minikube/certs/cert.pem:/home/jmazzite/.minikube/certs/cert.pem:Z -v /home/jmazzite/.minikube/certs/key.pem:/home/jmazzite/.minikube/certs/key.pem:Z -v /home/jmazzite/.minikube/machines/server.pem:/home/jmazzite/.minikube/machines/server.pem:Z -v /home/jmazzite/.minikube/machines/server-key.pem:/home/jmazzite/.minikube/machines/server-key.pem:Z -v /home/jmazzite/.minikube/machines/ci/id_rsa:/home/jmazzite/.minikube/machines/ci/id_rsa:Z -v /home/jmazzite/.minikube/machines/ci/id_rsa.pub:/home/jmazzite/.minikube/machines/ci/id_rsa.pub:Z -v /home/jmazzite/.minikube/machines/ci/config.json:/home/jmazzite/.minikube/machines/ci/config.json:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.31.0-docker-overlay2-amd64.tar.lz4:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.31.0-docker-overlay2-amd64.tar.lz4:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.31.0-docker-overlay2-amd64.tar.lz4.checksum:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.31.0-docker-overlay2-amd64.tar.lz4.checksum:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.33.1-docker-overlay2-amd64.tar.lz4:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.33.1-docker-overlay2-amd64.tar.lz4:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.33.1-docker-overlay2-amd64.tar.lz4.checksum:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.33.1-docker-overlay2-amd64.tar.lz4.checksum:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.34.0-docker-overlay2-amd64.tar.lz4:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.34.0-docker-overlay2-amd64.tar.lz4:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.34.0-docker-overlay2-amd64.tar.lz4.checksum:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.34.0-docker-overlay2-amd64.tar.lz4.checksum:Z -v /home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.35.0-docker-overlay2-amd64.tar.lz4:/home/jmazzite/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.35.0-docker-overlay2-amd64.tar.lz4:Z -v /home/jmazzite/.minikube/cache/linux/amd64/v1.31.0/kubectl:/home/jmazzite/.minikube/cache/linux/amd64/v1.31.0/kubectl:Z -v /home/jmazzite/.minikube/cache/linux/amd64/v1.33.1/kubectl:/home/jmazzite/.minikube/cache/linux/amd64/v1.33.1/kubectl:Z -v /home/jmazzite/.minikube/cache/linux/amd64/v1.34.0/kubectl:/home/jmazzite/.minikube/cache/linux/amd64/v1.34.0/kubectl:Z -v /home/jmazzite/.minikube/cache/linux/amd64/v1.35.0/kubectl:/home/jmazzite/.minikube/cache/linux/amd64/v1.35.0/kubectl:Z -v /home/jmazzite/.minikube/cache/kic/amd64/kicbase_v0.0.47@sha256_6ed579c9292b4370177b7ef3c42cc4b4a6dcd0735a1814916cbc22c8bf38412b.tar:/home/jmazzite/.minikube/cache/kic/amd64/kicbase_v0.0.47@sha256_6ed579c9292b4370177b7ef3c42cc4b4a6dcd0735a1814916cbc22c8bf38412b.tar:Z -v /home/jmazzite/.minikube/config/config.json:/home/jmazzite/.minikube/config/config.json:Z -v /home/jmazzite/.minikube/profiles/ci/events.json:/home/jmazzite/.minikube/profiles/ci/events.json:Z -v /home/jmazzite/.minikube/profiles/ci/client.crt:/home/jmazzite/.minikube/profiles/ci/client.crt:Z -v /home/jmazzite/.minikube/profiles/ci/client.key:/home/jmazzite/.minikube/profiles/ci/client.key:Z -v /home/jmazzite/.minikube/profiles/ci/apiserver.crt.d8673231:/home/jmazzite/.minikube/profiles/ci/apiserver.crt.d8673231:Z -v /home/jmazzite/.minikube/profiles/ci/apiserver.key.d8673231:/home/jmazzite/.minikube/profiles/ci/apiserver.key.d8673231:Z -v /home/jmazzite/.minikube/profiles/ci/apiserver.crt:/home/jmazzite/.minikube/profiles/ci/apiserver.crt:Z -v /home/jmazzite/.minikube/profiles/ci/apiserver.key:/home/jmazzite/.minikube/profiles/ci/apiserver.key:Z -v /home/jmazzite/.minikube/profiles/ci/proxy-client.crt:/home/jmazzite/.minikube/profiles/ci/proxy-client.crt:Z -v /home/jmazzite/.minikube/profiles/ci/proxy-client.key:/home/jmazzite/.minikube/profiles/ci/proxy-client.key:Z -v /home/jmazzite/.minikube/profiles/ci/config.json:/home/jmazzite/.minikube/profiles/ci/config.json:Z -v /home/jmazzite/.minikube/last_update_check:/home/jmazzite/.minikube/last_update_check:Z -v /home/jmazzite/.minikube/bin/docker-machine-driver-kvm2:/home/jmazzite/.minikube/bin/docker-machine-driver-kvm2:Z -v /home/jmazzite/.minikube/ca.crt:/home/jmazzite/.minikube/ca.crt:Z -v /home/jmazzite/.minikube/ca.key:/home/jmazzite/.minikube/ca.key:Z -v /home/jmazzite/.minikube/proxy-client-ca.crt:/home/jmazzite/.minikube/proxy-client-ca.crt:Z -v /home/jmazzite/.minikube/proxy-client-ca.key:/home/jmazzite/.minikube/proxy-client-ca.key:Z -v /home/jmazzite/.minikube/machine_client.lock:/home/jmazzite/.minikube/machine_client.lock:Z -v /home/jmazzite/.minikube/ca.pem:/home/jmazzite/.minikube/ca.pem:Z -v /home/jmazzite/.minikube/cert.pem:/home/jmazzite/.minikube/cert.pem:Z -v /home/jmazzite/.minikube/key.pem:/home/jmazzite/.minikube/key.pem:Z       --env MOLECULE_MINIKUBE_IP=192.168.39.128              -w /tmp/molecule/operator       --network=host              --env DORP=podman       --env OPERATOR_IMAGE_PULL_SECRET_NAME=       --env MOLECULE_KIALI_CR_SPEC_VERSION=default       --env PLUGIN_IMAGE_PULL_SECRET_JSON=       --env MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default              --env MOLECULE_OPERATOR_PROFILER_ENABLED=true       --env MOLECULE_OPERATOR_INSTALLER=helm       --env MOLECULE_DUMP_LOGS_ON_ERROR=true              --env MOLECULE_WAIT_RETRIES=120       localhost/kiali-molecule:latest molecule       --debug       test              --scenario-name header-auth-test
+Running molecule test: scenario=header-auth-test (attempt=1)
+DEBUG    Validating schema /tmp/molecule/operator/molecule/header-auth-test/molecule.yml.
+WARNING  Driver podman does not provide a schema.
+INFO     header-auth-test scenario test matrix: prepare, converge, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Adding '--pre' to ansible-galaxy collection install because we detected one collection being sourced from git.
+INFO     Running ansible-galaxy collection install -v --pre -r requirements.yml
+INFO     Set ANSIBLE_ROLES_PATH=roles:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Running header-auth-test > prepare
+INFO     Sanity checks: 'podman'
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/header-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/header-auth-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/header-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/header-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/header-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: minikube
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/header-auth-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/header-auth-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/header-auth-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/header-auth-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_MINIKUBE_IP: 192.168.39.128
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/header-auth-test
+MOLECULE_SCENARIO_NAME: header-auth-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/header-auth-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/header-auth-test/tests
+MOLECULE_WAIT_RETRIES: '120'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/header-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/header-auth-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/header-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/header-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/header-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=minikube MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/header-auth-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/header-auth-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/header-auth-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/header-auth-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_MINIKUBE_IP=192.168.39.128 MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/header-auth-test MOLECULE_SCENARIO_NAME=header-auth-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/header-auth-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/header-auth-test/tests MOLECULE_WAIT_RETRIES=120
+
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Make sure the operator namespace exists] *********************************
+changed: [localhost]
+
+TASK [Find the latest Operator Helm Chart] *************************************
+changed: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [Install Operator via Helm] ***********************************************
+changed: [localhost]
+
+TASK [Make sure the CR namespace exists] ***************************************
+ok: [localhost]
+
+TASK [Wait for the CRD to be established] **************************************
+ok: [localhost]
+
+TASK [Prepare initial Kiali CR definition based solely on the template] ********
+ok: [localhost]
+
+TASK [Create Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Asserting that Kiali is Deployed] ****************************************
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (120 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (119 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (118 retries left).
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=14   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Running header-auth-test > converge
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/header-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/header-auth-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/header-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/header-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/header-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: minikube
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/header-auth-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/header-auth-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/header-auth-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/header-auth-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_MINIKUBE_IP: 192.168.39.128
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/header-auth-test
+MOLECULE_SCENARIO_NAME: header-auth-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/header-auth-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/header-auth-test/tests
+MOLECULE_WAIT_RETRIES: '120'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/header-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/header-auth-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/header-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/header-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/header-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=minikube MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/header-auth-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/header-auth-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/header-auth-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/header-auth-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_MINIKUBE_IP=192.168.39.128 MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/header-auth-test MOLECULE_SCENARIO_NAME=header-auth-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/header-auth-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/header-auth-test/tests MOLECULE_WAIT_RETRIES=120
+
+
+PLAY [Tests] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/header-auth-test/../common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali CR: {'apiVersion': 'kiali.io/v1alpha1', 'kind': 'Kiali', 'metadata': {'creationTimestamp': '2026-05-30T05:41:03Z', 'finalizers': ['kiali.io/finalizer'], 'generation': 1, 'managedFields': [{'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:spec': {'.': {}, 'f:auth': {'.': {}, 'f:strategy': {}}, 'f:deployment': {'.': {}, 'f:cluster_wide_access': {}, 'f:image_digest': {}, 'f:image_name': {}, 'f:image_pull_policy': {}, 'f:image_version': {}, 'f:ingress': {'.': {}, 'f:class_name': {}, 'f:enabled': {}}, 'f:instance_name': {}, 'f:logger': {'.': {}, 'f:log_format': {}, 'f:log_level': {}, 'f:sampler_rate': {}, 'f:time_field_format': {}}, 'f:namespace': {}, 'f:probes': {'.': {}, 'f:liveness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:readiness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:startup': {'.': {}, 'f:failure_threshold': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}}, 'f:remote_cluster_resources_only': {}, 'f:replicas': {}, 'f:secret_name': {}, 'f:service_type': {}, 'f:view_only_mode': {}}, 'f:server': {'.': {}, 'f:audit_log': {}, 'f:cors_allow_all': {}, 'f:gzip_enabled': {}, 'f:node_port': {}, 'f:port': {}, 'f:require_auth': {}, 'f:web_history_mode': {}, 'f:write_timeout': {}}, 'f:version': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'time': '2026-05-30T05:41:03Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:metadata': {'f:finalizers': {'.': {}, 'v:\"kiali.io/finalizer\"': {}}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'time': '2026-05-30T05:41:03Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'f:deployment': {'.': {}, 'f:instanceName': {}, 'f:namespace': {}, 'f:remoteClusterResourcesOnly': {}}, 'f:environment': {'.': {}, 'f:isKubernetes': {}, 'f:kubernetesVersion': {}, 'f:operatorVersion': {}}, 'f:progress': {'.': {}, 'f:duration': {}, 'f:message': {}}, 'f:specVersion': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-05-30T05:41:15Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'.': {}, 'f:conditions': {}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-05-30T05:41:16Z'}], 'name': 'kiali', 'namespace': 'kiali-operator', 'resourceVersion': '8372', 'uid': 'fa9f2d7a-f56a-42e9-be6e-f0b4cca97b44'}, 'spec': {'auth': {'strategy': 'header'}, 'deployment': {'cluster_wide_access': True, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_version': 'latest', 'ingress': {'class_name': 'nginx', 'enabled': False}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'trace', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'secret_name': 'kiali', 'service_type': 'NodePort', 'view_only_mode': False}, 'server': {'audit_log': True, 'cors_allow_all': False, 'gzip_enabled': True, 'node_port': 32080, 'port': 20001, 'require_auth': False, 'web_history_mode': 'browser', 'write_timeout': '60s'}, 'version': 'default'}, 'status': {'conditions': [{'ansibleResult': {'changed': 11, 'completion': '2026-05-30T05:41:15.938176+00:00', 'failures': 0, 'ok': 76, 'skipped': 68}, 'lastTransitionTime': '2026-05-30T05:41:03Z', 'message': 'Awaiting next reconciliation', 'reason': 'Successful', 'status': 'True', 'type': 'Running'}, {'lastTransitionTime': '2026-05-30T05:41:16Z', 'message': 'Last reconciliation succeeded', 'reason': 'Successful', 'status': 'True', 'type': 'Successful'}, {'lastTransitionTime': '2026-05-30T05:41:16Z', 'message': '', 'reason': '', 'status': 'False', 'type': 'Failure'}], 'deployment': {'instanceName': 'kiali', 'namespace': 'istio-system', 'remoteClusterResourcesOnly': False}, 'environment': {'isKubernetes': True, 'kubernetesVersion': '1.35.0', 'operatorVersion': 'v2.27.0-SNAPSHOT'}, 'progress': {'duration': '0:00:11', 'message': '6. Finished all resource creation'}, 'specVersion': 'default'}}"
+}
+
+TASK [Get Kiali Configmap] *****************************************************
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali ConfigMap: {'additional_display_details': [{'annotation': 'kiali.io/api-spec', 'icon_annotation': 'kiali.io/api-type', 'title': 'API Documentation'}], 'auth': {'openid': {'additional_request_params': {}, 'allowed_domains': [], 'api_proxy': '', 'api_proxy_ca_data': '', 'api_token': 'id_token', 'authentication_timeout': 300, 'authorization_endpoint': '', 'client_id': '', 'disable_rbac': False, 'discovery_override': {'authorization_endpoint': '', 'jwks_uri': '', 'token_endpoint': '', 'userinfo_endpoint': ''}, 'http_proxy': '', 'https_proxy': '', 'insecure_skip_verify_tls': False, 'issuer_uri': '', 'scopes': ['openid', 'profile', 'email'], 'username_claim': 'sub'}, 'openshift': {'insecure_skip_verify_tls': False}, 'strategy': 'header'}, 'chat_ai': {'default_provider': '', 'enabled': False, 'providers': [], 'store_config': {'enabled': True, 'inactivity_timeout': '30m', 'max_cache_memory_mb': 1024, 'reduce_threshold': 15, 'reduce_with_ai': False}}, 'clustering': {'autodetect_secrets': {'enabled': True, 'label': 'kiali.io/multiCluster=true'}, 'clusters': [], 'enable_exec_provider': False, 'ignore_home_cluster': False, 'kiali_urls': []}, 'custom_dashboards': [], 'deployment': {'additional_pod_containers_yaml': [], 'additional_pod_init_containers_yaml': [], 'affinity': {'node': {}, 'pod': {}, 'pod_anti': {}}, 'cluster_wide_access': True, 'configmap_annotations': {}, 'custom_envs': [], 'custom_secrets': [], 'discovery_selectors': {}, 'dns': {'config': {}, 'policy': ''}, 'extra_labels': {}, 'host_aliases': [], 'hpa': {'api_version': 'autoscaling/v2', 'spec': {}}, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_pull_secrets': [], 'image_version': 'latest', 'ingress': {'additional_labels': {}, 'class_name': 'nginx', 'enabled': False}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'trace', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'network_policy': {'enabled': True}, 'node_selector': {}, 'pod_annotations': {'proxy.istio.io/config': '{ \"holdApplicationUntilProxyStarts\": true }'}, 'pod_disruption_budget': {'api_version': 'policy/v1', 'spec': {}}, 'pod_labels': {}, 'priority_class_name': '', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'resources': {'limits': {'memory': '1Gi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}, 'secret_name': 'kiali', 'security_context': {}, 'service_annotations': {}, 'service_type': 'NodePort', 'strategy': {}, 'tls_config': {'cipher_suites': [], 'max_version': '', 'min_version': '', 'source': 'config'}, 'tolerations': [], 'topology_spread_constraints': [], 'version_label': 'master', 'view_only_mode': False}, 'extensions': [], 'external_services': {'custom_dashboards': {'discovery_auto_threshold': 10, 'discovery_enabled': 'auto', 'enabled': True, 'is_core': False, 'namespace_label': 'namespace', 'prometheus': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': ''}}, 'grafana': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard'}, {'name': 'Istio Control Plane Dashboard'}, {'name': 'Istio Performance Dashboard'}, {'name': 'Istio Wasm Extension Dashboard'}], 'datasource_uid': '', 'enabled': True, 'external_url': '', 'health_check_url': '', 'internal_url': 'http://grafana.istio-system:3000', 'is_core': False}, 'istio': {'component_status': {'components': [], 'enabled': True}, 'gateway_api_classes': [], 'gateway_api_classes_label_selector': '', 'istio_api_enabled': True, 'istio_identity_domain': '', 'istiod_polling_interval_seconds': 20, 'validation_change_detection_enabled': True, 'validation_reconcile_interval': '1m'}, 'perses': {'auth': {'insecure_skip_verify': False, 'password': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard'}, {'name': 'Istio Control Plane Dashboard'}, {'name': 'Istio Performance Dashboard'}, {'name': 'Istio Wasm Extension Dashboard'}], 'enabled': False, 'external_url': '', 'health_check_url': '', 'internal_url': '', 'is_core': False, 'project': 'istio', 'url_format': ''}, 'prometheus': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'enabled': True, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': 'http://prometheus.istio-system:9090'}, 'tracing': {'auth': {'insecure_skip_verify': False, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'custom_headers': {}, 'disable_version_check': False, 'enabled': False, 'external_url': '', 'grpc_port': 9095, 'health_check_url': '', 'internal_url': 'http://tracing.istio-system:16685/jaeger', 'is_core': False, 'namespace_selector': True, 'provider': 'jaeger', 'query_scope': {}, 'query_timeout': 5, 'tempo_config': {'cache_capacity': 200, 'cache_enabled': True, 'datasource_uid': '', 'name': '', 'namespace': '', 'org_id': '', 'tenant': '', 'url_format': 'grafana'}, 'use_grpc': True, 'use_waypoint_name': False, 'whitelist_istio_system': ['jaeger-query', 'istio-ingressgateway']}}, 'health_config': {'compute': {'duration': '5m', 'refresh_interval': '3m', 'timeout': '10m'}, 'rate': []}, 'identity': {'cert_file': '', 'private_key_file': ''}, 'installation_tag': '', 'istio_labels': {'app_label_name': '', 'version_label_name': ''}, 'kiali_feature_flags': {'authz': {'require_namespace_get': False}, 'clustering': {'enable_exec_provider': False}, 'custom_workload_types': [], 'disabled_features': [], 'istio_annotation_action': True, 'istio_injection_action': True, 'istio_upgrade_action': False, 'ui_defaults': {'graph': {'find_options': [{'auto_select': False, 'description': 'Find: slow edges (> 1s)', 'expression': 'rt > 1000'}, {'auto_select': False, 'description': 'Find: unhealthy nodes', 'expression': '! healthy'}, {'auto_select': False, 'description': 'Find: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Find: nodes with the 2 top rankings', 'expression': 'rank <= 2'}], 'hide_options': [{'auto_select': False, 'description': 'Hide: healthy nodes', 'expression': 'healthy'}, {'auto_select': False, 'description': 'Hide: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Hide: nodes ranked lower than the 2 top rankings', 'expression': 'rank > 2'}], 'settings': {'animation': 'point'}, 'traffic': {'ambient': 'total', 'grpc': 'requests', 'http': 'requests', 'tcp': 'sent'}}, 'i18n': {'show_selector': False}, 'list': {'include_health': True, 'include_istio_resources': True, 'include_validations': True, 'show_include_toggles': False}, 'mesh': {'find_options': [{'description': 'Find: unhealthy nodes', 'expression': '! healthy'}], 'hide_options': [{'description': 'Hide: healthy nodes', 'expression': 'healthy'}]}, 'metrics_inbound': {'aggregations': []}, 'metrics_outbound': {'aggregations': []}, 'metrics_per_refresh': '1m', 'namespaces': [], 'refresh_interval': '1m', 'tracing': {'limit': 100}}, 'validations': {'ignore': ['KIA1301'], 'skip_wildcard_gateway_hosts': False}}, 'kiali_internal': {}, 'kubernetes_config': {'burst': 200, 'cache_duration': 300, 'cache_token_namespace_duration': 10, 'cluster_name': '', 'excluded_workloads': ['CronJob', 'DeploymentConfig', 'Job', 'ReplicationController'], 'qps': 175}, 'login_token': {'expiration_seconds': 86400, 'signing_key': 'secret:kiali-signing-key:key'}, 'server': {'address': '', 'audit_log': True, 'cors_allow_all': False, 'gzip_enabled': True, 'node_port': 32080, 'observability': {'metrics': {'enabled': True, 'health_status': {'enabled': False, 'max_consecutive_na': 3}, 'port': 9090}, 'tracing': {'collector_type': 'otel', 'collector_url': 'jaeger-collector.istio-system:4318', 'enabled': False, 'otel': {'ca_name': '', 'protocol': 'http', 'skip_verify': False, 'tls_enabled': False}, 'sampling_rate': 0.5}}, 'port': 20001, 'profiler': {'enabled': False}, 'require_auth': False, 'web_fqdn': '', 'web_history_mode': 'browser', 'web_port': '', 'web_root': '/kiali', 'web_schema': '', 'write_timeout': '60s'}, 'version': 'default'}"
+}
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+skipping: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+ok: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+skipping: [localhost]
+
+TASK [Determine the Kiali URL on minikube] *************************************
+ok: [localhost]
+
+TASK [Determine the Kiali URL on kind] *****************************************
+skipping: [localhost]
+
+TASK [Assert Kiali Pod(s) are Running] *****************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Wait for Kiali Deployment rollout to complete] ***************************
+ok: [localhost]
+
+TASK [Asserting that Kiali Pod(s) are running and ready] ***********************
+ok: [localhost]
+
+TASK [Debug pod readiness snapshot (for diagnostics)] **************************
+ok: [localhost] => {
+    "msg": [
+        "Kiali pod names: ['kiali-d7fff78c5-7hq98']",
+        "Kiali pod phases: ['Running']",
+        "Kiali container readiness: [[{'name': 'kiali', 'state': {'running': {'startedAt': '2026-05-30T05:41:15Z'}}, 'lastState': {}, 'ready': True, 'restartCount': 0, 'image': 'quay.io/kiali/kiali:latest', 'imageID': 'docker-pullable://quay.io/kiali/kiali@sha256:73b3ea31a1b25cf2ab6acb2e3bf3f1258659dccf49817de3c9db0f96d442a0a9', 'containerID': 'docker://526d5136b1b8cae1995f122b991cc07b5abcb36fe2c5d9582ebdf99e1964b25f', 'started': True, 'allocatedResources': {'cpu': '10m', 'memory': '64Mi'}, 'resources': {'limits': {'memory': '1Gi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}, 'volumeMounts': [{'name': 'kiali-configuration', 'mountPath': '/kiali-configuration'}, {'name': 'kiali-secret', 'mountPath': '/kiali-secret'}, {'name': 'kiali-cabundle', 'mountPath': '/kiali-cabundle'}, {'name': 'login-token-signing-key', 'mountPath': '/kiali-override-secrets/login-token-signing-key', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'kiali-multi-cluster-secret', 'mountPath': '/kiali-remote-cluster-secrets/kiali-multi-cluster-secret', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'kube-api-access-94mqt', 'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}]}]]"
+    ]
+}
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+ok: [localhost]
+
+TASK [Make sure the test set the strategy to header] ***************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert that we can access Kiali console login screen that does not need authentication] ***
+ok: [localhost]
+
+TASK [Try to access Kiali api endpoint that requires authentication (should return error - we did not login yet)] ***
+ok: [localhost]
+
+TASK [DEBUG: Show test environment details] ************************************
+ok: [localhost] => {
+    "msg": [
+        "Kiali base URL: http://192.168.39.128:32080/kiali",
+        "OAuth2 Proxy URL: http://kiali-proxy.192-168-39-128.nip.io:30805",
+        "Proxy username: admin@example.com",
+        "MOLECULE_MINIKUBE_IP: 192.168.39.128",
+        "Expected Hydra public endpoint: https://192-168-39-128.nip.io:30967",
+        "Expected Hydra admin endpoint: https://192-168-39-128.nip.io:30448"
+    ]
+}
+
+TASK [Step 1: Start OAuth2 flow with OAuth2 proxy] *****************************
+ok: [localhost]
+
+TASK [Step 1: DEBUG: OAuth2 proxy start response] ******************************
+ok: [localhost] => {
+    "msg": [
+        "Request URL: http://kiali-proxy.192-168-39-128.nip.io:30805/oauth2/start?rd=%2F",
+        "Response status: 302",
+        "Response location: https://192-168-39-128.nip.io:30967/oauth2/auth?approval_prompt=force&client_id=kiali-app&redirect_uri=http%3A%2F%2Fkiali-proxy.192-168-39-128.nip.io%3A30805%2Foauth2%2Fcallback&response_type=code&scope=openid+email+profile&state=bQB0-fxJ_XXgerz5iDNzH1FNO3_cWNYFn1Al5gNnXlM%3A%2F",
+        "Response cookies: _oauth2_proxy_csrf=kVfz6Jy3im3N9Ua0W5svnCs-W_m-ulaPCcgjSMwVr2jSG1vEhGnPIhDg-Z1RKCAF1RM6AhaWxDddt7oxpBXtC5KzuRwfl778wzAqSCAfWfdhO6ZtnSe_qD4=|1780119687|frdWvZbHA9Rl7yl8VTHiBh-dO50KvFTgRjMN-8SXR0c=; Path=/; Expires=Sat, 30 May 2026 05:56:27 GMT; HttpOnly"
+    ]
+}
+
+TASK [Step 1: Assert OAuth2 proxy returned redirect] ***************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [Step 2: Follow redirect to Hydra authorization endpoint] *****************
+ok: [localhost]
+
+TASK [Step 2: DEBUG: Hydra authorization response] *****************************
+ok: [localhost] => {
+    "msg": [
+        "Request URL: https://192-168-39-128.nip.io:30967/oauth2/auth?approval_prompt=force&client_id=kiali-app&redirect_uri=http%3A%2F%2Fkiali-proxy.192-168-39-128.nip.io%3A30805%2Foauth2%2Fcallback&response_type=code&scope=openid+email+profile&state=bQB0-fxJ_XXgerz5iDNzH1FNO3_cWNYFn1Al5gNnXlM%3A%2F",
+        "Response status: 302",
+        "Response location: https://192-168-39-128.nip.io:30800/login?login_challenge=K5ou2mb4xBntlOOF1yijCYvOEYSoDxcIwK1Pe-6lpVsGMkfhjKUeyOkV0j0-Yj-ACTf0w0D-YRPpJCs020K6JsHETbOyB7Hk19be5NTYp6DgVNnGcVtjTrGcp1QJ1dmqVJOv-D6CW3DzPG970PxoOGzy6g8LtM7DPawkc7K3F3nH7-AxYZc5p4e-il52li-1KArFJDe34RtpzEQ26oo6727BMq52bHme7skkC1HE1ud-qhzTJRp94tvb2dBUQFFCcrrCasbtAjvEpdHr-1-a0qyVaE_9g0W_jxxB3cPtqh1mXPFEyyJYYQvWWuYQj1Z6XnWJ06992M0ozpxAUmoiwyLPdFJyQjXagvvY3smrUde1-fpnJhqhloYyoyYN3wpazvDK8iwzirJCE7fvpb3HihHE2thw8Fr1AKeQacgHtaYcamaaoG7hUUxFkPBYtkfCEyBXCfAn95IP7NotrenJjZ-aPkIK7L_0OvgubvSyJsKPLawgAOsMiLerUDqvcxQIzWei1YqJo8CmwkIpoLORcIu35F--v2RCnbgWoB33vmDTYYs7l5pnwJ29lRlVgAqPQBVYJAUakj9YYaTT2QetkACFaA2ws7XdUJ-RJMaKrand1nSYU5y5oBl4s2669QDn2uRo0AL7W9iGalUOhK3xgazEFNI1gPZobZO3uj5UdqlJJ9OPwYPVvwOGUQBy2H5EjRrqU9UdaZYNLeLsWyqMwNC0xFg4TlfwenY_sftIY2QOfrt1rb2TBLF9NAFNVFyqs7RSQtSl_X4nnBC2iDVLy37NBFnbyO5wMw1pxitA-tQQDSgnVFpIx6zNztLHBWetgnnTETK9yG0IMcxM0zUnOB94ozBWrWahYkoX4EwNQtPPfIzO1_Ns-Zc1AH-Nh66jLZJypWN9Pi62M-uuO1L1Yt6I8MQFyOj6cmVjWYWLw-W-vJz7XLT4zU-vgW9vVnTgWyXQFaihUqrgZt5aY4Yhr53_O-TA7VAdPYaBUjmWHZWTGlNd-4SSQWyzKEYZL-rerLlc02w7sKRRyDoSItNm8DAl1HVTETLYncG9AeDr6OfY2_l2-QjRJf4xbl8wtGb37GI7A5aukR_7zelCMYRDqG7kFKih_E4a9H-Bdqza3Q1S47jTGFsvqxTgSctZhlXSUJN1vrOc5Ndl_p0uNRbSGhNxPG5zU5kHZZvoyNSCwaPxC2w6H_BkS1gSHHHRg_cOiZmc7ROY2xsPP7_F40yZb7nbefFNq_dP1QSaUJzZRZxBznCUneK-BaK_M2Iop3O0aGdG8G3bwuXOStRuQPcQX_fUDRevoCuSvqoSIn1wSZI_stckiPjvpXs_3yS0Si9YCLRkIr9S7_m_uhQizE7eQZlEkCAkRXOpLxa_A2mHSc8QM-h-KyXkKLhh-WBReEhzV4GBl9k8EMnmH62u6yb7LYNwAUSi7BY7LwsG_igmdvQwpha6bicrz4zTSmPqLAL_UlJzMccmNCOIbVBF3rlzC7NyOEjjIxFaIQ4MFIfCXA-CxGp6LioN5E3cEiTtM9DwRAkcEByhkBCEdk8GbTOETN5EzQ%3D%3D",
+        "Response cookies: ory_hydra_login_csrf_dev_59910954=MTc4MDExOTY4OHxBWF8ySFBzaWZoUHZ6Nllsc3NRWE13YnB0OHltLWQ2azdHVmFtMUxyaUFqc3lUTFZTR25JN0FiX0xiNUE1aDJTNUtNdngyaGRvTmZLWFlad1Y4MExIV3JZRDYyM09DcmVJd2VQNm16NmdMWWxnWVdfanpRajR0OUhFWW1yfCskKTR-aXQIi-N3drpuXLbML0qDt8Io2KjagOVLNrjf; Path=/; Expires=Sat, 30 May 2026 06:11:28 GMT; Max-Age=1800; HttpOnly; SameSite=None"
+    ]
+}
+
+TASK [Step 2: Assert Hydra returned login challenge redirect] ******************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [Step 3: Get login form from Hydra UI] ************************************
+ok: [localhost]
+
+TASK [Step 3: DEBUG: Hydra login form response] ********************************
+ok: [localhost] => {
+    "msg": [
+        "Request URL: https://192-168-39-128.nip.io:30800/login?login_challenge=K5ou2mb4xBntlOOF1yijCYvOEYSoDxcIwK1Pe-6lpVsGMkfhjKUeyOkV0j0-Yj-ACTf0w0D-YRPpJCs020K6JsHETbOyB7Hk19be5NTYp6DgVNnGcVtjTrGcp1QJ1dmqVJOv-D6CW3DzPG970PxoOGzy6g8LtM7DPawkc7K3F3nH7-AxYZc5p4e-il52li-1KArFJDe34RtpzEQ26oo6727BMq52bHme7skkC1HE1ud-qhzTJRp94tvb2dBUQFFCcrrCasbtAjvEpdHr-1-a0qyVaE_9g0W_jxxB3cPtqh1mXPFEyyJYYQvWWuYQj1Z6XnWJ06992M0ozpxAUmoiwyLPdFJyQjXagvvY3smrUde1-fpnJhqhloYyoyYN3wpazvDK8iwzirJCE7fvpb3HihHE2thw8Fr1AKeQacgHtaYcamaaoG7hUUxFkPBYtkfCEyBXCfAn95IP7NotrenJjZ-aPkIK7L_0OvgubvSyJsKPLawgAOsMiLerUDqvcxQIzWei1YqJo8CmwkIpoLORcIu35F--v2RCnbgWoB33vmDTYYs7l5pnwJ29lRlVgAqPQBVYJAUakj9YYaTT2QetkACFaA2ws7XdUJ-RJMaKrand1nSYU5y5oBl4s2669QDn2uRo0AL7W9iGalUOhK3xgazEFNI1gPZobZO3uj5UdqlJJ9OPwYPVvwOGUQBy2H5EjRrqU9UdaZYNLeLsWyqMwNC0xFg4TlfwenY_sftIY2QOfrt1rb2TBLF9NAFNVFyqs7RSQtSl_X4nnBC2iDVLy37NBFnbyO5wMw1pxitA-tQQDSgnVFpIx6zNztLHBWetgnnTETK9yG0IMcxM0zUnOB94ozBWrWahYkoX4EwNQtPPfIzO1_Ns-Zc1AH-Nh66jLZJypWN9Pi62M-uuO1L1Yt6I8MQFyOj6cmVjWYWLw-W-vJz7XLT4zU-vgW9vVnTgWyXQFaihUqrgZt5aY4Yhr53_O-TA7VAdPYaBUjmWHZWTGlNd-4SSQWyzKEYZL-rerLlc02w7sKRRyDoSItNm8DAl1HVTETLYncG9AeDr6OfY2_l2-QjRJf4xbl8wtGb37GI7A5aukR_7zelCMYRDqG7kFKih_E4a9H-Bdqza3Q1S47jTGFsvqxTgSctZhlXSUJN1vrOc5Ndl_p0uNRbSGhNxPG5zU5kHZZvoyNSCwaPxC2w6H_BkS1gSHHHRg_cOiZmc7ROY2xsPP7_F40yZb7nbefFNq_dP1QSaUJzZRZxBznCUneK-BaK_M2Iop3O0aGdG8G3bwuXOStRuQPcQX_fUDRevoCuSvqoSIn1wSZI_stckiPjvpXs_3yS0Si9YCLRkIr9S7_m_uhQizE7eQZlEkCAkRXOpLxa_A2mHSc8QM-h-KyXkKLhh-WBReEhzV4GBl9k8EMnmH62u6yb7LYNwAUSi7BY7LwsG_igmdvQwpha6bicrz4zTSmPqLAL_UlJzMccmNCOIbVBF3rlzC7NyOEjjIxFaIQ4MFIfCXA-CxGp6LioN5E3cEiTtM9DwRAkcEByhkBCEdk8GbTOETN5EzQ%3D%3D",
+        "Request cookies: ory_hydra_login_csrf_dev_59910954=MTc4MDExOTY4OHxBWF8ySFBzaWZoUHZ6Nllsc3NRWE13YnB0OHltLWQ2azdHVmFtMUxyaUFqc3lUTFZTR25JN0FiX0xiNUE1aDJTNUtNdngyaGRvTmZLWFlad1Y4MExIV3JZRDYyM09DcmVJd2VQNm16NmdMWWxnWVdfanpRajR0OUhFWW1yfCskKTR-aXQIi-N3drpuXLbML0qDt8Io2KjagOVLNrjf",
+        "Response status: 200",
+        "Response cookies: None",
+        "Form content (first 200 chars): \n    <html><body style=\"font-family:Arial;max-width:400px;margin:100px auto;padding:20px\">\n      <h2>Kiali Test Login</h2>\n      <form method=\"post\" action=\"/login?login_challenge=K5ou2mb4xBntlOOF1yij..."
+    ]
+}
+
+TASK [Step 3: Assert login form received] **************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [Step 4: Submit login form with credentials] ******************************
+ok: [localhost]
+
+TASK [Step 4: DEBUG: Login form submission response] ***************************
+ok: [localhost] => {
+    "msg": [
+        "Request URL: https://192-168-39-128.nip.io:30800/login?login_challenge=K5ou2mb4xBntlOOF1yijCYvOEYSoDxcIwK1Pe-6lpVsGMkfhjKUeyOkV0j0-Yj-ACTf0w0D-YRPpJCs020K6JsHETbOyB7Hk19be5NTYp6DgVNnGcVtjTrGcp1QJ1dmqVJOv-D6CW3DzPG970PxoOGzy6g8LtM7DPawkc7K3F3nH7-AxYZc5p4e-il52li-1KArFJDe34RtpzEQ26oo6727BMq52bHme7skkC1HE1ud-qhzTJRp94tvb2dBUQFFCcrrCasbtAjvEpdHr-1-a0qyVaE_9g0W_jxxB3cPtqh1mXPFEyyJYYQvWWuYQj1Z6XnWJ06992M0ozpxAUmoiwyLPdFJyQjXagvvY3smrUde1-fpnJhqhloYyoyYN3wpazvDK8iwzirJCE7fvpb3HihHE2thw8Fr1AKeQacgHtaYcamaaoG7hUUxFkPBYtkfCEyBXCfAn95IP7NotrenJjZ-aPkIK7L_0OvgubvSyJsKPLawgAOsMiLerUDqvcxQIzWei1YqJo8CmwkIpoLORcIu35F--v2RCnbgWoB33vmDTYYs7l5pnwJ29lRlVgAqPQBVYJAUakj9YYaTT2QetkACFaA2ws7XdUJ-RJMaKrand1nSYU5y5oBl4s2669QDn2uRo0AL7W9iGalUOhK3xgazEFNI1gPZobZO3uj5UdqlJJ9OPwYPVvwOGUQBy2H5EjRrqU9UdaZYNLeLsWyqMwNC0xFg4TlfwenY_sftIY2QOfrt1rb2TBLF9NAFNVFyqs7RSQtSl_X4nnBC2iDVLy37NBFnbyO5wMw1pxitA-tQQDSgnVFpIx6zNztLHBWetgnnTETK9yG0IMcxM0zUnOB94ozBWrWahYkoX4EwNQtPPfIzO1_Ns-Zc1AH-Nh66jLZJypWN9Pi62M-uuO1L1Yt6I8MQFyOj6cmVjWYWLw-W-vJz7XLT4zU-vgW9vVnTgWyXQFaihUqrgZt5aY4Yhr53_O-TA7VAdPYaBUjmWHZWTGlNd-4SSQWyzKEYZL-rerLlc02w7sKRRyDoSItNm8DAl1HVTETLYncG9AeDr6OfY2_l2-QjRJf4xbl8wtGb37GI7A5aukR_7zelCMYRDqG7kFKih_E4a9H-Bdqza3Q1S47jTGFsvqxTgSctZhlXSUJN1vrOc5Ndl_p0uNRbSGhNxPG5zU5kHZZvoyNSCwaPxC2w6H_BkS1gSHHHRg_cOiZmc7ROY2xsPP7_F40yZb7nbefFNq_dP1QSaUJzZRZxBznCUneK-BaK_M2Iop3O0aGdG8G3bwuXOStRuQPcQX_fUDRevoCuSvqoSIn1wSZI_stckiPjvpXs_3yS0Si9YCLRkIr9S7_m_uhQizE7eQZlEkCAkRXOpLxa_A2mHSc8QM-h-KyXkKLhh-WBReEhzV4GBl9k8EMnmH62u6yb7LYNwAUSi7BY7LwsG_igmdvQwpha6bicrz4zTSmPqLAL_UlJzMccmNCOIbVBF3rlzC7NyOEjjIxFaIQ4MFIfCXA-CxGp6LioN5E3cEiTtM9DwRAkcEByhkBCEdk8GbTOETN5EzQ%3D%3D",
+        "Request cookies: ory_hydra_login_csrf_dev_59910954=MTc4MDExOTY4OHxBWF8ySFBzaWZoUHZ6Nllsc3NRWE13YnB0OHltLWQ2azdHVmFtMUxyaUFqc3lUTFZTR25JN0FiX0xiNUE1aDJTNUtNdngyaGRvTmZLWFlad1Y4MExIV3JZRDYyM09DcmVJd2VQNm16NmdMWWxnWVdfanpRajR0OUhFWW1yfCskKTR-aXQIi-N3drpuXLbML0qDt8Io2KjagOVLNrjf",
+        "Response status: 302",
+        "Response location: https://192-168-39-128.nip.io:30967/oauth2/auth?approval_prompt=force&client_id=kiali-app&login_verifier=AY3p6786noPcIt0fs_IBAM5eUIWgK4-6pEoI5tVz75SjjU4QGD6Kb9nakXkEm3WX0NyScbrodI2ZYXst_N4TIhjth3ZtKDqFl7GdTsJbLV4N4VVtsELY7_RDRgJKlIWmvT5dZy43eE3dWU-33XnKDheoNyfoLqSiNfitXQdckin41siebg8AMXZc6lCklcCLbkt21gLh87fJrjw5Id5jf75ea__lrco-PtD92qwCzkKQjV23a1EnZsEQ8i5c-oJ64sJyCoN9dBMoVGABku-fh1FQid2scvpB8tbmTVpL6NGgRnQQHYldsF5L5vTjRfPGiuQD5NnlmEiB9RR72FnULqtU13Uz_Fr-OJy31IxluIYk0pThoRseKlrE4YNpfOKzQoayItCprtm02An__73rT6OOciIawsS8SwoH9KB_Lk_ykmSkClhW1fDCVYAIaH3-m99s_EmAi0g8NOVnD448FFjj5yTSssaM5nrc3bxCgAxoMZFnu7SuUT496fVt4Hbn4Pes0PpJZVFReME7HT1OCvJ_VDB_AZ5kpxwvUoRaVR9S2dl_kvlhUKaK9VyuVEC3sr0lFSkfB0Vcr2Eh2_KASlFjWcZOxcbrf7BmWgRsCCpIgGcbVFDK6Ydor9HJxq0UJ5SgNsVvdbB4A_ZWS7tomNhjhOJZLdRLQsnS5rHL8P_00S181aqTSxCa_s5x005m1wsJEm0K2S1Ud5mE-V0NwHa6vDtUeZrb-_PYJFxZnXGTgeKLkeUCW_K6bM7kdcqzA2-d8GDqRia5442cdmeNQaLev-5Swz028j1Xylh3DeNc2WA78WG0meFoqjDOGehTWHw9AyjUmim5_yVOaXbkknRrIF-KUKKDaIIvpCY83wqsyRX-A6LMET3y5cnuySrWF_Ex1yYSODASLkXJn1gUSy4vKenHCOSXC1P8oJ1snzA3Lb-5pEqRTjv5Z4PNFgBL55SzMu5IH0rIW8bYOiXte4WX_vv0mZs2TrCd6PTeoIDcebNMk8JGVTbUjExHPJBLjA8A8VZWhgBPx3D__PghxvOyI6EZqkRLyr3ghgcskqYdyrs3Q-UZpI48ywA0ApSmGh2G85IlmWoAh3lGQAmRFFJaoTg3zOWGefQqJZGATXA5SvgVtYT9tTq8PEi9xOCPBTQefKFXsF5MHVlTqOnA7TjCKsofXH5JzS9MgHkqu0E5zRDBpVBXPDpdkARMQVK9HDCWS4RIV2o7T8zVZn0sQptWK9AH2-9yCvA1L8ek6vdsOymNZiEQu3UWd0DsE3qPZHswgBs8efcqET5KJs-dPSTi0RvnIVIw1vOBkC9EToNVBIRJojAOOiTSl23WR7HSnfWtNcnak54RckwT9_Wrsk8cPq3Y0JlSD3XKdAjideaCsnFlnQOCH4IxeAYks7DapnUWC8ZdeN8DosQhvoZIMz_secot9h5FM6L17CEfxxpegVin4UyUHXtSQ0k9W-xXCHJrLwbYJ7tU-zSA3rPqWnYs-wlLJsKPdJIcLBKEK4oLgEOeMIgFWXIdLo0xOD4FB8wH318iHzP19XAA04rb2ctgRcwEKnkfnQr8s74VRUPmKMU9ZpFqod_y4st3wLRsgelsS5Mcg5w5ENP0D4Ex6wgGoxLMtg%3D%3D&redirect_uri=http%3A%2F%2Fkiali-proxy.192-168-39-128.nip.io%3A30805%2Foauth2%2Fcallback&response_type=code&scope=openid+email+profile&state=bQB0-fxJ_XXgerz5iDNzH1FNO3_cWNYFn1Al5gNnXlM%3A%2F",
+        "Response cookies: None"
+    ]
+}
+
+TASK [Step 4: Assert login form submission successful] *************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Step 4: Update Hydra cookies from login response] ************************
+ok: [localhost]
+
+TASK [Step 5: Follow login verifier redirect] **********************************
+ok: [localhost]
+
+TASK [Step 5: DEBUG: Login verifier response] **********************************
+ok: [localhost] => {
+    "msg": [
+        "Request URL: https://192-168-39-128.nip.io:30967/oauth2/auth?approval_prompt=force&client_id=kiali-app&login_verifier=AY3p6786noPcIt0fs_IBAM5eUIWgK4-6pEoI5tVz75SjjU4QGD6Kb9nakXkEm3WX0NyScbrodI2ZYXst_N4TIhjth3ZtKDqFl7GdTsJbLV4N4VVtsELY7_RDRgJKlIWmvT5dZy43eE3dWU-33XnKDheoNyfoLqSiNfitXQdckin41siebg8AMXZc6lCklcCLbkt21gLh87fJrjw5Id5jf75ea__lrco-PtD92qwCzkKQjV23a1EnZsEQ8i5c-oJ64sJyCoN9dBMoVGABku-fh1FQid2scvpB8tbmTVpL6NGgRnQQHYldsF5L5vTjRfPGiuQD5NnlmEiB9RR72FnULqtU13Uz_Fr-OJy31IxluIYk0pThoRseKlrE4YNpfOKzQoayItCprtm02An__73rT6OOciIawsS8SwoH9KB_Lk_ykmSkClhW1fDCVYAIaH3-m99s_EmAi0g8NOVnD448FFjj5yTSssaM5nrc3bxCgAxoMZFnu7SuUT496fVt4Hbn4Pes0PpJZVFReME7HT1OCvJ_VDB_AZ5kpxwvUoRaVR9S2dl_kvlhUKaK9VyuVEC3sr0lFSkfB0Vcr2Eh2_KASlFjWcZOxcbrf7BmWgRsCCpIgGcbVFDK6Ydor9HJxq0UJ5SgNsVvdbB4A_ZWS7tomNhjhOJZLdRLQsnS5rHL8P_00S181aqTSxCa_s5x005m1wsJEm0K2S1Ud5mE-V0NwHa6vDtUeZrb-_PYJFxZnXGTgeKLkeUCW_K6bM7kdcqzA2-d8GDqRia5442cdmeNQaLev-5Swz028j1Xylh3DeNc2WA78WG0meFoqjDOGehTWHw9AyjUmim5_yVOaXbkknRrIF-KUKKDaIIvpCY83wqsyRX-A6LMET3y5cnuySrWF_Ex1yYSODASLkXJn1gUSy4vKenHCOSXC1P8oJ1snzA3Lb-5pEqRTjv5Z4PNFgBL55SzMu5IH0rIW8bYOiXte4WX_vv0mZs2TrCd6PTeoIDcebNMk8JGVTbUjExHPJBLjA8A8VZWhgBPx3D__PghxvOyI6EZqkRLyr3ghgcskqYdyrs3Q-UZpI48ywA0ApSmGh2G85IlmWoAh3lGQAmRFFJaoTg3zOWGefQqJZGATXA5SvgVtYT9tTq8PEi9xOCPBTQefKFXsF5MHVlTqOnA7TjCKsofXH5JzS9MgHkqu0E5zRDBpVBXPDpdkARMQVK9HDCWS4RIV2o7T8zVZn0sQptWK9AH2-9yCvA1L8ek6vdsOymNZiEQu3UWd0DsE3qPZHswgBs8efcqET5KJs-dPSTi0RvnIVIw1vOBkC9EToNVBIRJojAOOiTSl23WR7HSnfWtNcnak54RckwT9_Wrsk8cPq3Y0JlSD3XKdAjideaCsnFlnQOCH4IxeAYks7DapnUWC8ZdeN8DosQhvoZIMz_secot9h5FM6L17CEfxxpegVin4UyUHXtSQ0k9W-xXCHJrLwbYJ7tU-zSA3rPqWnYs-wlLJsKPdJIcLBKEK4oLgEOeMIgFWXIdLo0xOD4FB8wH318iHzP19XAA04rb2ctgRcwEKnkfnQr8s74VRUPmKMU9ZpFqod_y4st3wLRsgelsS5Mcg5w5ENP0D4Ex6wgGoxLMtg%3D%3D&redirect_uri=http%3A%2F%2Fkiali-proxy.192-168-39-128.nip.io%3A30805%2Foauth2%2Fcallback&response_type=code&scope=openid+email+profile&state=bQB0-fxJ_XXgerz5iDNzH1FNO3_cWNYFn1Al5gNnXlM%3A%2F",
+        "Request cookies: ory_hydra_login_csrf_dev_59910954=MTc4MDExOTY4OHxBWF8ySFBzaWZoUHZ6Nllsc3NRWE13YnB0OHltLWQ2azdHVmFtMUxyaUFqc3lUTFZTR25JN0FiX0xiNUE1aDJTNUtNdngyaGRvTmZLWFlad1Y4MExIV3JZRDYyM09DcmVJd2VQNm16NmdMWWxnWVdfanpRajR0OUhFWW1yfCskKTR-aXQIi-N3drpuXLbML0qDt8Io2KjagOVLNrjf",
+        "Response status: 302",
+        "Response location: https://192-168-39-128.nip.io:30800/consent?consent_challenge=FGVkV3jMuzknpcTag0Y2NaVaBBsN0bAFfg8z4XM7tDr1BXV-UBS1GDt7HGhpR8bYeLIxS77eHb9XgessGiUUqNRLy_nrzF273-3Ll2f-cgCXRfsampFjDXvnrUZuqBfEzKjGexgSuRGr1jTLpk9X0OtY2hNHea7P-ajfey4BqFS8Kn_VzpLOn3NBREgV6xwEsVXsmjvmjS3sicAiOLUQZA_cXWzSENqAs8Mn2Btnr3IVeockAtZc1VBvZxmkRh3DhhJy_abG09cttsiZ1F-2F81PG1bGpnsh9AShpeTTvyDSdTWYpaKMd_5TyJ0OTDRrTDPc6u8TrkxjpLt5soKTpQov8sR_ieJ2RjRrh-u6Pz32fsb_dpwO9ZpqpSPt9066NIel2Iv3v3dFGZYFmgDIClwl-S1Xhql7aW3z0ISHx_9aZTeWWOeNWCX0S5fG_DKROCn19_szUoLI_Ou3UFc_d3gS-tIS8O2KEH_BasOjg85YjZa-ubINi-92T5kQqFiKXQrPxSqclBVKy-XmVrwtGTqhOz82X_LtpS_HNMGbQwLKJ1PW-YNPK3YDF8clPXaPIPs-kpBGad5n9JDQyskYfMmtRDcJSD3Gcc4zRpwOiJwwHL5HrOeqDCCiB6r-wcUrMNnUDWssF5mqvZfEhThZ-8Xp2omscX0wqvexvm_dVdMHYBeF5OnArSqb4ZQsyGbq02ED8aFBtmLTJM_5qLyZzbpipnC5Ukjn1aNpYwx8JBvXECaKZsU8R7NIxJ-qWwiY6UJV3y4EwqHHi_4trvbISiFvq6MFdENoEzptAlufNQTTcwcabTY87tMxscjYcQYqjBjuveBcP9onI8RetwS7a-2Jl0nS5LJpcoHR1ZLpOi61kXeEuxTlmRadPffpSK5ZjSGjopnIh4Fg90XbZe8T6bQB3iM0wM-Dr9eJUJWqtBGAR5OFaoUeNNjLIkXuHE-IiZqoKwhUgjp048WjC43ocdF58Swf2xD1qeMWua1AZew0qU3Q5SC8tj0oKl21i0acugQ_H25rEAiHMulJchbSJgiXRedE8BSsRlM2ZrYihY7Ta6ex_So8rhDkul3IUUKQ1yfdrPYN4He1wWle7fpUrDSge-tqBHBjJ8fGT7Qp09bk9tRujn8eaOW20bz6Y74uF6u5P8_etMtu0BAdYAtxyJsMs8KHdWXKKCaj-vpt7Jlay0AaGz4pxpcRry4RPShDyjy_1BBJ1FYhgzoOKGFWQ9vFdqziDbDwn74d0xTqaEEO36J6CRFd7fvQsrcDpE9WdTPLHzwTEuZEfTc7HUESATVGDnjqqgpYURrwWnAO_lqFXu_YLu-MnFg3ThaSpvkp3jioNv6pEy50hNE8_iUeNP16u9OkoYaPvxeVY2vXS59oH1Ooxd_qlsKu4JZvsiHaJJDpbCm6iEf2SyNsboASGz95GAEV5KHEAXmK_fzmT6SijhpIP2U4SkjW6eA3IPDlQU6GbRJqI1MBvh_q9iZiRmE_ZT7784WKcDUwq-IIIKjc-Fh7E2IN1W4cGv7K2owgV3x5KYyQDOIXsaN6MKDQ02burwN3Cwo6BCGyKMzp1YStSbA0rwpog_aSP3geRPrxcQCX__ouviR002PuogTf68bhZ6gpsUV_qZBLCAnv-Vb04zP-9T3xxEzcTiWABqg_UYwjvAyGJ2ECyzZvo8sWPseQK3cuSHr2C78aqRGhAdVqdcwJcScRSOc%3D",
+        "Response cookies: ory_hydra_consent_csrf_dev_59910954=MTc4MDExOTY4OXxxRFIwTk1CWXBTdlV4YnpmeXRKMTlpNkRMZWpzc3BGY3c1dXRsQjFHV0o4dEEwVjR2VkNwakxHUWgzaEhneTdCMDNtRkpfWEluOW5XRjJBVVdhSVVOV0d1UzRkT0I5Sm9kSi1IREtMWGEyTk91aFoycURPbTBoVUF2ZnpifMIyJ8UvFXRILq1ZUexxtpo5XzePCOLyX0_ZZAQtBf4d; Path=/; Expires=Sat, 30 May 2026 06:11:29 GMT; Max-Age=1800; HttpOnly; SameSite=None"
+    ]
+}
+
+TASK [Step 5: Update Hydra cookies from login verifier response] ***************
+ok: [localhost]
+
+TASK [Step 6: Follow consent challenge redirect (auto-approval by Hydra UI for testing)] ***
+ok: [localhost]
+
+TASK [Step 6: DEBUG: Consent challenge response] *******************************
+ok: [localhost] => {
+    "msg": [
+        "Request URL: https://192-168-39-128.nip.io:30800/consent?consent_challenge=FGVkV3jMuzknpcTag0Y2NaVaBBsN0bAFfg8z4XM7tDr1BXV-UBS1GDt7HGhpR8bYeLIxS77eHb9XgessGiUUqNRLy_nrzF273-3Ll2f-cgCXRfsampFjDXvnrUZuqBfEzKjGexgSuRGr1jTLpk9X0OtY2hNHea7P-ajfey4BqFS8Kn_VzpLOn3NBREgV6xwEsVXsmjvmjS3sicAiOLUQZA_cXWzSENqAs8Mn2Btnr3IVeockAtZc1VBvZxmkRh3DhhJy_abG09cttsiZ1F-2F81PG1bGpnsh9AShpeTTvyDSdTWYpaKMd_5TyJ0OTDRrTDPc6u8TrkxjpLt5soKTpQov8sR_ieJ2RjRrh-u6Pz32fsb_dpwO9ZpqpSPt9066NIel2Iv3v3dFGZYFmgDIClwl-S1Xhql7aW3z0ISHx_9aZTeWWOeNWCX0S5fG_DKROCn19_szUoLI_Ou3UFc_d3gS-tIS8O2KEH_BasOjg85YjZa-ubINi-92T5kQqFiKXQrPxSqclBVKy-XmVrwtGTqhOz82X_LtpS_HNMGbQwLKJ1PW-YNPK3YDF8clPXaPIPs-kpBGad5n9JDQyskYfMmtRDcJSD3Gcc4zRpwOiJwwHL5HrOeqDCCiB6r-wcUrMNnUDWssF5mqvZfEhThZ-8Xp2omscX0wqvexvm_dVdMHYBeF5OnArSqb4ZQsyGbq02ED8aFBtmLTJM_5qLyZzbpipnC5Ukjn1aNpYwx8JBvXECaKZsU8R7NIxJ-qWwiY6UJV3y4EwqHHi_4trvbISiFvq6MFdENoEzptAlufNQTTcwcabTY87tMxscjYcQYqjBjuveBcP9onI8RetwS7a-2Jl0nS5LJpcoHR1ZLpOi61kXeEuxTlmRadPffpSK5ZjSGjopnIh4Fg90XbZe8T6bQB3iM0wM-Dr9eJUJWqtBGAR5OFaoUeNNjLIkXuHE-IiZqoKwhUgjp048WjC43ocdF58Swf2xD1qeMWua1AZew0qU3Q5SC8tj0oKl21i0acugQ_H25rEAiHMulJchbSJgiXRedE8BSsRlM2ZrYihY7Ta6ex_So8rhDkul3IUUKQ1yfdrPYN4He1wWle7fpUrDSge-tqBHBjJ8fGT7Qp09bk9tRujn8eaOW20bz6Y74uF6u5P8_etMtu0BAdYAtxyJsMs8KHdWXKKCaj-vpt7Jlay0AaGz4pxpcRry4RPShDyjy_1BBJ1FYhgzoOKGFWQ9vFdqziDbDwn74d0xTqaEEO36J6CRFd7fvQsrcDpE9WdTPLHzwTEuZEfTc7HUESATVGDnjqqgpYURrwWnAO_lqFXu_YLu-MnFg3ThaSpvkp3jioNv6pEy50hNE8_iUeNP16u9OkoYaPvxeVY2vXS59oH1Ooxd_qlsKu4JZvsiHaJJDpbCm6iEf2SyNsboASGz95GAEV5KHEAXmK_fzmT6SijhpIP2U4SkjW6eA3IPDlQU6GbRJqI1MBvh_q9iZiRmE_ZT7784WKcDUwq-IIIKjc-Fh7E2IN1W4cGv7K2owgV3x5KYyQDOIXsaN6MKDQ02burwN3Cwo6BCGyKMzp1YStSbA0rwpog_aSP3geRPrxcQCX__ouviR002PuogTf68bhZ6gpsUV_qZBLCAnv-Vb04zP-9T3xxEzcTiWABqg_UYwjvAyGJ2ECyzZvo8sWPseQK3cuSHr2C78aqRGhAdVqdcwJcScRSOc%3D",
+        "Request cookies: ory_hydra_login_csrf_dev_59910954=MTc4MDExOTY4OHxBWF8ySFBzaWZoUHZ6Nllsc3NRWE13YnB0OHltLWQ2azdHVmFtMUxyaUFqc3lUTFZTR25JN0FiX0xiNUE1aDJTNUtNdngyaGRvTmZLWFlad1Y4MExIV3JZRDYyM09DcmVJd2VQNm16NmdMWWxnWVdfanpRajR0OUhFWW1yfCskKTR-aXQIi-N3drpuXLbML0qDt8Io2KjagOVLNrjf; ory_hydra_consent_csrf_dev_59910954=MTc4MDExOTY4OXxxRFIwTk1CWXBTdlV4YnpmeXRKMTlpNkRMZWpzc3BGY3c1dXRsQjFHV0o4dEEwVjR2VkNwakxHUWgzaEhneTdCMDNtRkpfWEluOW5XRjJBVVdhSVVOV0d1UzRkT0I5Sm9kSi1IREtMWGEyTk91aFoycURPbTBoVUF2ZnpifMIyJ8UvFXRILq1ZUexxtpo5XzePCOLyX0_ZZAQtBf4d",
+        "Response status: 302",
+        "Response location: https://192-168-39-128.nip.io:30967/oauth2/auth?approval_prompt=force&client_id=kiali-app&consent_verifier=znJBpu8gAoYXNwhUVAvl91mrnK7-NLXHCnhzXwVVVcd7oPKnl6aZYs2sVhTP3Lux0cDDUkLm8HIvROx4oPaxolwZF6vQXVHrYVVTXn-1z5zduMSZ4ZwVI1WnW0bw-r2KvAQVWfMzPXf9Hq-E3eBjPvNXyAx1yWTGoPDIPCQFvYvyHnfF7nMFjIvVmAnLAOaC16woOiKlA_0jm_TjSXUSxE6rOYrlAsAH1YbZM5IEjvKqPpHxVOehAdoUbG-230Yp2hHyvBYhuhltlK3QTVgws_bMKXEy7dspsQeqJq3XoYoAY_K-yEY8Fv61j8XeCpqQd1a7yj8seS7JTACCEAOr3qYp9ZvuWcxTR_s-iYQiJzVXLO84grqqU826vp4skmWJT_Dc3gpeE5oDXMSoKEnIIODf0Snd49fM4xcVqZ6sWHqdRndmoQHL2__EZ8jgUEhd5sfXjuJux0JD2VTRqAFaU-dDSzG81lhC-IOZlBpxA0cYR0oDtNHYs6ORuLB8_Vh07Sp593veEv3QFeskxxm00KU6pkWxUlzQBH2nWsMD7IpLACYHZmuAFXrF8A_AmZ7WigPq1Op8KJpHxQnfgP4C3ePpePhsPFljOnCcsRR1JYwIH5TA8YmgsfQQFEaS97gIFf4A5GB7ITz6yVEhPO2UoY0-1gSoAzgEnB_H-Vvz4KePZlJ6u_4leq42OGNExowulhsLoZqAa-BF5ElM9vmJkFSPXMTyUhfSFg-VIX1VMmxDUo2j8neGsITiOT5Xyd4jETuyAwAyln0LFfM7wzJSuNVm0NYk7WAexElTFUhm_3HY7bl5IsmFWppXhoaZJhE63ZJAtQqvu3G9oyGo-Dys7SnTVR9OWK0_008nMH42p7Unx764MAoa-EQ3bwk50H_GiCvEJUkcSsfBN5rgh2ipGuJggrd8FaGe5tn59tt2Dpj_b70ODL1uXzwff1n1Pn3Z7mVgj4ygynZeogqLne9MCkBmQBGIlUBYE3wjmHCCm396PM0Io_Jdh3H0qXNJpncQs1pPls70Pt9CwzNqAbaEeQD8_oUM5VqinjFv7ZdwstCg-OQIFSyw20WJL7EqKPx7HTxlQpTfbEabABV9h53Ww7hgcdRDNzlZeH_oTs37SnCsfTj2ofM_EY8jSlGN0TMnkMz42r-QF-Zb7yFtbOc-mbWk2IPLdNLHMGLr0a9cSQ45-ZsEt60JYdH-2f6ZjgPMXp4Z4Sm-MirIvq91WYTrgJt3NvTtvAKnTclqNJH-BndpMrlziYIDz6Qkx6gy3Fgvey3UU5haybb-V3XMGvL7m_-Lg63cz5xd2nrEeKXnb6lwCZgBYo6kjYcFJHshcMOeLbnS02zw9r-EFFqJIwrvb8SSPJ18WrvvoqliuSlXRVTZ4SPoK9PCOP140yYcbSTKgadJ_0OcG2K9gaM_W7eku6p0SOxKzbovkgUKHshVgbW0rlEl_DY4tleEU0eUQniDFVxyNwb6cHOGKhqK363wvgNSMvSm1zx2Av9cOfn9ubRC05E2s8dgk2BopCg7e5iBOLbhoq6MMUvacl1jA0ugizTE4_v45pWXfsto_DtzZkUMegEhFUlHmqHknKAW0josQGyJPkkPBiPXApgisbai_y776xY9E_8mfQwJ__BZAMbncl0OZ4d_aJ5ELaO5HHkG3v7QzqhDwCIccMt0rsX9Q5nohCh4nE2wW-kPLYlosNE5T5HMfrpcsh1VU5i7NPAilMfs_u5C&redirect_uri=http%3A%2F%2Fkiali-proxy.192-168-39-128.nip.io%3A30805%2Foauth2%2Fcallback&response_type=code&scope=openid+email+profile&state=bQB0-fxJ_XXgerz5iDNzH1FNO3_cWNYFn1Al5gNnXlM%3A%2F",
+        "Response cookies: None"
+    ]
+}
+
+TASK [Step 6: Update Hydra cookies from consent response] **********************
+ok: [localhost]
+
+TASK [Step 7: Follow consent verifier redirect to get authorization code] ******
+ok: [localhost]
+
+TASK [Step 7: DEBUG: Authorization code response] ******************************
+ok: [localhost] => {
+    "msg": [
+        "Request URL: https://192-168-39-128.nip.io:30967/oauth2/auth?approval_prompt=force&client_id=kiali-app&consent_verifier=znJBpu8gAoYXNwhUVAvl91mrnK7-NLXHCnhzXwVVVcd7oPKnl6aZYs2sVhTP3Lux0cDDUkLm8HIvROx4oPaxolwZF6vQXVHrYVVTXn-1z5zduMSZ4ZwVI1WnW0bw-r2KvAQVWfMzPXf9Hq-E3eBjPvNXyAx1yWTGoPDIPCQFvYvyHnfF7nMFjIvVmAnLAOaC16woOiKlA_0jm_TjSXUSxE6rOYrlAsAH1YbZM5IEjvKqPpHxVOehAdoUbG-230Yp2hHyvBYhuhltlK3QTVgws_bMKXEy7dspsQeqJq3XoYoAY_K-yEY8Fv61j8XeCpqQd1a7yj8seS7JTACCEAOr3qYp9ZvuWcxTR_s-iYQiJzVXLO84grqqU826vp4skmWJT_Dc3gpeE5oDXMSoKEnIIODf0Snd49fM4xcVqZ6sWHqdRndmoQHL2__EZ8jgUEhd5sfXjuJux0JD2VTRqAFaU-dDSzG81lhC-IOZlBpxA0cYR0oDtNHYs6ORuLB8_Vh07Sp593veEv3QFeskxxm00KU6pkWxUlzQBH2nWsMD7IpLACYHZmuAFXrF8A_AmZ7WigPq1Op8KJpHxQnfgP4C3ePpePhsPFljOnCcsRR1JYwIH5TA8YmgsfQQFEaS97gIFf4A5GB7ITz6yVEhPO2UoY0-1gSoAzgEnB_H-Vvz4KePZlJ6u_4leq42OGNExowulhsLoZqAa-BF5ElM9vmJkFSPXMTyUhfSFg-VIX1VMmxDUo2j8neGsITiOT5Xyd4jETuyAwAyln0LFfM7wzJSuNVm0NYk7WAexElTFUhm_3HY7bl5IsmFWppXhoaZJhE63ZJAtQqvu3G9oyGo-Dys7SnTVR9OWK0_008nMH42p7Unx764MAoa-EQ3bwk50H_GiCvEJUkcSsfBN5rgh2ipGuJggrd8FaGe5tn59tt2Dpj_b70ODL1uXzwff1n1Pn3Z7mVgj4ygynZeogqLne9MCkBmQBGIlUBYE3wjmHCCm396PM0Io_Jdh3H0qXNJpncQs1pPls70Pt9CwzNqAbaEeQD8_oUM5VqinjFv7ZdwstCg-OQIFSyw20WJL7EqKPx7HTxlQpTfbEabABV9h53Ww7hgcdRDNzlZeH_oTs37SnCsfTj2ofM_EY8jSlGN0TMnkMz42r-QF-Zb7yFtbOc-mbWk2IPLdNLHMGLr0a9cSQ45-ZsEt60JYdH-2f6ZjgPMXp4Z4Sm-MirIvq91WYTrgJt3NvTtvAKnTclqNJH-BndpMrlziYIDz6Qkx6gy3Fgvey3UU5haybb-V3XMGvL7m_-Lg63cz5xd2nrEeKXnb6lwCZgBYo6kjYcFJHshcMOeLbnS02zw9r-EFFqJIwrvb8SSPJ18WrvvoqliuSlXRVTZ4SPoK9PCOP140yYcbSTKgadJ_0OcG2K9gaM_W7eku6p0SOxKzbovkgUKHshVgbW0rlEl_DY4tleEU0eUQniDFVxyNwb6cHOGKhqK363wvgNSMvSm1zx2Av9cOfn9ubRC05E2s8dgk2BopCg7e5iBOLbhoq6MMUvacl1jA0ugizTE4_v45pWXfsto_DtzZkUMegEhFUlHmqHknKAW0josQGyJPkkPBiPXApgisbai_y776xY9E_8mfQwJ__BZAMbncl0OZ4d_aJ5ELaO5HHkG3v7QzqhDwCIccMt0rsX9Q5nohCh4nE2wW-kPLYlosNE5T5HMfrpcsh1VU5i7NPAilMfs_u5C&redirect_uri=http%3A%2F%2Fkiali-proxy.192-168-39-128.nip.io%3A30805%2Foauth2%2Fcallback&response_type=code&scope=openid+email+profile&state=bQB0-fxJ_XXgerz5iDNzH1FNO3_cWNYFn1Al5gNnXlM%3A%2F",
+        "Request cookies: ory_hydra_login_csrf_dev_59910954=MTc4MDExOTY4OHxBWF8ySFBzaWZoUHZ6Nllsc3NRWE13YnB0OHltLWQ2azdHVmFtMUxyaUFqc3lUTFZTR25JN0FiX0xiNUE1aDJTNUtNdngyaGRvTmZLWFlad1Y4MExIV3JZRDYyM09DcmVJd2VQNm16NmdMWWxnWVdfanpRajR0OUhFWW1yfCskKTR-aXQIi-N3drpuXLbML0qDt8Io2KjagOVLNrjf; ory_hydra_consent_csrf_dev_59910954=MTc4MDExOTY4OXxxRFIwTk1CWXBTdlV4YnpmeXRKMTlpNkRMZWpzc3BGY3c1dXRsQjFHV0o4dEEwVjR2VkNwakxHUWgzaEhneTdCMDNtRkpfWEluOW5XRjJBVVdhSVVOV0d1UzRkT0I5Sm9kSi1IREtMWGEyTk91aFoycURPbTBoVUF2ZnpifMIyJ8UvFXRILq1ZUexxtpo5XzePCOLyX0_ZZAQtBf4d",
+        "Response status: 303",
+        "Response location: http://kiali-proxy.192-168-39-128.nip.io:30805/oauth2/callback?code=ory_ac_iuHyOfxfYN0WQnv9RP1XUfHGaMTELswJWFMRH_CIYgg.7xLkX9n5pckxlPi_5EMuIDoR28FpW_Qtd5NC6DMK2Iw&scope=openid+email+profile&state=bQB0-fxJ_XXgerz5iDNzH1FNO3_cWNYFn1Al5gNnXlM%3A%2F",
+        "Response cookies: None"
+    ]
+}
+
+TASK [Step 7: Assert authorization code callback received] *********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [Step 8: Follow OAuth2 callback to proxy] *********************************
+ok: [localhost]
+
+TASK [Step 8: DEBUG: OAuth2 callback response] *********************************
+ok: [localhost] => {
+    "msg": [
+        "Request URL: http://kiali-proxy.192-168-39-128.nip.io:30805/oauth2/callback?code=ory_ac_iuHyOfxfYN0WQnv9RP1XUfHGaMTELswJWFMRH_CIYgg.7xLkX9n5pckxlPi_5EMuIDoR28FpW_Qtd5NC6DMK2Iw&scope=openid+email+profile&state=bQB0-fxJ_XXgerz5iDNzH1FNO3_cWNYFn1Al5gNnXlM%3A%2F",
+        "Request cookies: _oauth2_proxy_csrf=kVfz6Jy3im3N9Ua0W5svnCs-W_m-ulaPCcgjSMwVr2jSG1vEhGnPIhDg-Z1RKCAF1RM6AhaWxDddt7oxpBXtC5KzuRwfl778wzAqSCAfWfdhO6ZtnSe_qD4=|1780119687|frdWvZbHA9Rl7yl8VTHiBh-dO50KvFTgRjMN-8SXR0c=",
+        "Response status: 302",
+        "Response location: http://kiali-proxy.192-168-39-128.nip.io:30805?code=ory_ac_iuHyOfxfYN0WQnv9RP1XUfHGaMTELswJWFMRH_CIYgg.7xLkX9n5pckxlPi_5EMuIDoR28FpW_Qtd5NC6DMK2Iw&scope=openid+email+profile&state=bQB0-fxJ_XXgerz5iDNzH1FNO3_cWNYFn1Al5gNnXlM%3A%2F/",
+        "Response cookies: _oauth2_proxy=I_eUV1Qc1i6hMTMT96ekWm2WTg9OsNgZDuQ4bzfuAhfwPpR3qlyjiliMkEKCiDpiOWkQjINP3NNHkTeUtYaSNSgnk_PzSk7oJh6P5f9pOY848_MuLKzIvn6Wg7CGh3xVG_DobcafMHSkLr3NNN0HwSov3fHxMJKeEcxLGuOkr5y9QAi1TPB7a1PVJO564YZTsMUSWUJkfj-X_S4M4fKjTSPSjBQqBhaPwUAMIoJDlO-dkeGFMZlhIPAOKzAycfTPZwVqpuXmRFMci_gjNQJfahs_HUZTE3LThCmreEMstwXzlLPTI5i4P4q7cZesgRopj8ugygWavBt8nVV_Nd2nyWRMcsdIr8X2hJakrFNmWU-3lowOuMlIUyAjBA4eEOcoAcWgTPX7FAL9JpRn_HKGHXwzhLIlmDDFEMU4ieVxtJ1Qjtp-EKsj9oQFCowbExXer6GmvT-_KEja4-iTJJRD9ZVzfIu2i20go0p4O1WFWMPfEGjxo1EdBwbowtqDMA5QeJe6CfMp5x6GQGjkqcD0J9FLCO_gV4civ2SD7F6kwpVfmBCPmhHHGp1fZ05uGd6V3lVUhz611BeE6boW-rFSA8-8j6jW-I5Xz-LiUjQzrlE_9YvYCpdoj3v1ztLR_u7bwYsP8wRZtw2JsvKoMt06V_jB2MTYsgUwcFtuVTiTXGmzOEbkrctklhCTTIb-XZg8BIC_9TgnAs90nu4s0TmtWDJ3YgRbJn_B9mgtCLVyXkcNK9VV0EE4AgAhtCKHfB-qKwxj2jDWc2XJacRtFNjfy8HH-SfJUaulZZ3-R1dcrtNl4BPaEVz-FpuoEeJj0dKsQ6ueWKFthHx8Pmf4Osl9AAb6zVamO04WYfd3gUJhSv1dzoW4XQOHTlo2K3Fa68pb10ExzdMjt0HPkrvd-A8LzckXxJHVZcDgECbwQkQvT2trh0kVyDL8IxN3LMqNhhpzdjte7VOsJZVIOBuHQcm1bH9dFLpJNvd4FqnCQYc279RxgXcz9A2bVQWP6zHcs7S7O7DQ5PP4QhOIc6W71YnSSpxCQ4oH5v4zNrmJFMc6likWzkwH4_IlLiAwXJ2Ue9nbe86CO4_tmvHI90a6gM_tchsC-2w58IMP2kzmQIcka0SVRjTLSV75ANJr_MZJJ-QS-Rpm6-qgIle_w6-0GEcPi3KHJlx6xquo-I1e_fH85aKnzxDa5DUYc5ARPDCLcnUEqfGezHlGDZkVV_hq6Dc8ac4_6mx8AgPtF4GeJL2wyKNm9eKqNIFqrmHneJHVW0P_fIFxKxoLHbqo_G4V_gF33UnznVnI5H9XwrmtIy6oYhCswILWVAQyPECl7_IcWokUwhVHmjaOwwOuaRTiLhWLIEm5_LhU0OGIRyYIRuyuhEpVfka3itAWIIzckiVDkeEoL9zc5OsoQ32mq285zBtaNWg51kZcURBB9hEW0uMqdNQmSTFJFscsMd3RnJBpbYVrbVotFuqD2RJDfE7dT6CJDvsJBXc8pYmAE6vcRSJRYhtWI7j4HeKLyARZljmRzoomqwelE1UBwlEfnfv7CHn3OYP4t_PDXCso6wb6WSYxEu9dL__neC8y3DasWoxCgKi8GK83_BAvCa4Jn3po_38ftKbdBXIN2fubH44SKDXpeSOdF9VQJNznp6R99czqnOuQRtyZK35JsIcO1ldjGasmE7auFcYSHQSdBIDttjbabnyTjszP0hSSqA1ABr0n9fVfSJp7zwl4sBssrnc--M63OssJXV6kny0y4l-zK4itOJ9QLp5kTVjmZLqgLEjo8c6bJHv50UUwNEAp9q-VRABSSpwzZ75htsREMzyQdTL31bjdBm5jopyOUvN4ZfWa7Y0wxv-L3vSxobUvX0BWd64NDL9potnxFb0F_PXQND-fmT21knye6o8COgCz7LaF5TnVb2amKzGGbYfR7CAYD1gP1zf0zubHc06_EFlIULF9ClS3FTZS|1780119692|nHC_TOJ2YOih0b9wJZvQ5RkjHXlAUabYFNfdzC17TII=; Path=/; Expires=Sat, 06 Jun 2026 05:41:32 GMT; HttpOnly"
+    ]
+}
+
+TASK [Step 8: Assert OAuth2 proxy callback successful] *************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [Step 9: Follow final redirect to get bearer token] ***********************
+ok: [localhost]
+
+TASK [Step 9: DEBUG: Bearer token response] ************************************
+ok: [localhost] => {
+    "msg": [
+        "Request URL: http://kiali-proxy.192-168-39-128.nip.io:30805?code=ory_ac_iuHyOfxfYN0WQnv9RP1XUfHGaMTELswJWFMRH_CIYgg.7xLkX9n5pckxlPi_5EMuIDoR28FpW_Qtd5NC6DMK2Iw&scope=openid+email+profile&state=bQB0-fxJ_XXgerz5iDNzH1FNO3_cWNYFn1Al5gNnXlM%3A%2F/",
+        "Request cookies: _oauth2_proxy=I_eUV1Qc1i6hMTMT96ekWm2WTg9OsNgZDuQ4bzfuAhfwPpR3qlyjiliMkEKCiDpiOWkQjINP3NNHkTeUtYaSNSgnk_PzSk7oJh6P5f9pOY848_MuLKzIvn6Wg7CGh3xVG_DobcafMHSkLr3NNN0HwSov3fHxMJKeEcxLGuOkr5y9QAi1TPB7a1PVJO564YZTsMUSWUJkfj-X_S4M4fKjTSPSjBQqBhaPwUAMIoJDlO-dkeGFMZlhIPAOKzAycfTPZwVqpuXmRFMci_gjNQJfahs_HUZTE3LThCmreEMstwXzlLPTI5i4P4q7cZesgRopj8ugygWavBt8nVV_Nd2nyWRMcsdIr8X2hJakrFNmWU-3lowOuMlIUyAjBA4eEOcoAcWgTPX7FAL9JpRn_HKGHXwzhLIlmDDFEMU4ieVxtJ1Qjtp-EKsj9oQFCowbExXer6GmvT-_KEja4-iTJJRD9ZVzfIu2i20go0p4O1WFWMPfEGjxo1EdBwbowtqDMA5QeJe6CfMp5x6GQGjkqcD0J9FLCO_gV4civ2SD7F6kwpVfmBCPmhHHGp1fZ05uGd6V3lVUhz611BeE6boW-rFSA8-8j6jW-I5Xz-LiUjQzrlE_9YvYCpdoj3v1ztLR_u7bwYsP8wRZtw2JsvKoMt06V_jB2MTYsgUwcFtuVTiTXGmzOEbkrctklhCTTIb-XZg8BIC_9TgnAs90nu4s0TmtWDJ3YgRbJn_B9mgtCLVyXkcNK9VV0EE4AgAhtCKHfB-qKwxj2jDWc2XJacRtFNjfy8HH-SfJUaulZZ3-R1dcrtNl4BPaEVz-FpuoEeJj0dKsQ6ueWKFthHx8Pmf4Osl9AAb6zVamO04WYfd3gUJhSv1dzoW4XQOHTlo2K3Fa68pb10ExzdMjt0HPkrvd-A8LzckXxJHVZcDgECbwQkQvT2trh0kVyDL8IxN3LMqNhhpzdjte7VOsJZVIOBuHQcm1bH9dFLpJNvd4FqnCQYc279RxgXcz9A2bVQWP6zHcs7S7O7DQ5PP4QhOIc6W71YnSSpxCQ4oH5v4zNrmJFMc6likWzkwH4_IlLiAwXJ2Ue9nbe86CO4_tmvHI90a6gM_tchsC-2w58IMP2kzmQIcka0SVRjTLSV75ANJr_MZJJ-QS-Rpm6-qgIle_w6-0GEcPi3KHJlx6xquo-I1e_fH85aKnzxDa5DUYc5ARPDCLcnUEqfGezHlGDZkVV_hq6Dc8ac4_6mx8AgPtF4GeJL2wyKNm9eKqNIFqrmHneJHVW0P_fIFxKxoLHbqo_G4V_gF33UnznVnI5H9XwrmtIy6oYhCswILWVAQyPECl7_IcWokUwhVHmjaOwwOuaRTiLhWLIEm5_LhU0OGIRyYIRuyuhEpVfka3itAWIIzckiVDkeEoL9zc5OsoQ32mq285zBtaNWg51kZcURBB9hEW0uMqdNQmSTFJFscsMd3RnJBpbYVrbVotFuqD2RJDfE7dT6CJDvsJBXc8pYmAE6vcRSJRYhtWI7j4HeKLyARZljmRzoomqwelE1UBwlEfnfv7CHn3OYP4t_PDXCso6wb6WSYxEu9dL__neC8y3DasWoxCgKi8GK83_BAvCa4Jn3po_38ftKbdBXIN2fubH44SKDXpeSOdF9VQJNznp6R99czqnOuQRtyZK35JsIcO1ldjGasmE7auFcYSHQSdBIDttjbabnyTjszP0hSSqA1ABr0n9fVfSJp7zwl4sBssrnc--M63OssJXV6kny0y4l-zK4itOJ9QLp5kTVjmZLqgLEjo8c6bJHv50UUwNEAp9q-VRABSSpwzZ75htsREMzyQdTL31bjdBm5jopyOUvN4ZfWa7Y0wxv-L3vSxobUvX0BWd64NDL9potnxFb0F_PXQND-fmT21knye6o8COgCz7LaF5TnVb2amKzGGbYfR7CAYD1gP1zf0zubHc06_EFlIULF9ClS3FTZS|1780119692|nHC_TOJ2YOih0b9wJZvQ5RkjHXlAUabYFNfdzC17TII=",
+        "Response status: 302",
+        "Response location: http://kiali-proxy.192-168-39-128.nip.io:30805?code=ory_ac_iuHyOfxfYN0WQnv9RP1XUfHGaMTELswJWFMRH_CIYgg.7xLkX9n5pckxlPi_5EMuIDoR28FpW_Qtd5NC6DMK2Iw&scope=openid+email+profile&state=bQB0-fxJ_XXgerz5iDNzH1FNO3_cWNYFn1Al5gNnXlM%3A%2F//kiali/",
+        "Response authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU1ZWRhNjZiLTM1MjEtNDYwMy1hYWQ1LWRjZmI0Yzg2NjU2OSIsInR5cCI6IkpXVCJ9.eyJhdF9oYXNoIjoiYm9IbkhLNElvcUI1U0plMzZsdzdlQSIsImF1ZCI6WyJraWFsaS1hcHAiXSwiYXV0aF90aW1lIjoxNzgwMTE5Njg5LCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzgwMTIzMjkwLCJncm91cHMiOlsiYWRtaW4iLCJ1c2VycyJdLCJpYXQiOjE3ODAxMTk2OTAsImlzcyI6Imh0dHBzOi8vMTkyLTE2OC0zOS0xMjgubmlwLmlvOjMwOTY3IiwianRpIjoiYmViOTQ2N2UtNGI0YS00NTAwLTkwODEtMjBiNmJlMjdhZDE4IiwicmF0IjoxNzgwMTE5Njg4LCJzaWQiOiJhMWUzZGMyOC00NmYyLTQ0ZGQtYmNjMS0wZWUzN2QwODVjOGYiLCJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSJ9.pF_cUYZJRszjlPNkQf8HVvlSlBwhmYA8wli3wSyJasx8Bq1FONFY7jqct9eD17eqy5HQv7WGRXeHHdljcHRTCOp8cPJNlsQO2eoB3tIKmgzrYtQNbe3SllFzmCUPMdswkfws6wYcPygS5aIxkO_uP6SsTkDcQl4K-CebiwZcOYZl6PpzPFZ7habgfB5-gAzysD0SsjilRZNI05LZp9Zc7CzlCBOCeRw66dE0pTz9-IAv1skxyDjiKvQr0ym7gChcf9tZerFh565eYer6_ZQ7ZckYadf5DwEBrItHpw3198oohh7rLc71TTGBjfjr0Hr2429Km6tpp5JqxcKe9kHw8r6KMONOH4oC_wdp8s1jjJPbqdhxGzpTegDX8SpDvGY6YyP-ZPfFM2BlzcxUmKaQw4zasXTac4xZJI5HbRluO34FSIcgAOeviPvPVpPewLNZL_SbgzmEurtoStspuv9xHUb8kkz2jRWxLvIbf3Wf0wl45RLUqxvgi3svCk9NqgIEViFstaUXHqtRZFMxb1S6IPIb5stJr5is5iJdkxiFXgV233Jb6PslU7knzvNAtTN9vGTBfu1w9Pw45AlLPplSuyDCek_oPvCOarNkHzHQgRS7UmVwaAz9zg4HerOqtJPpPjASBNIhvPUrdw3ehwfUnPKteSbO-E4atqFduThYjKY",
+        "Response cookies: None"
+    ]
+}
+
+TASK [Step 9: Assert bearer token received] ************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [Step 10: Make authenticated request to Kiali API] ************************
+ok: [localhost]
+
+TASK [Step 10: DEBUG: Authenticated API response] ******************************
+ok: [localhost] => {
+    "msg": [
+        "Request URL: http://192.168.39.128:32080/kiali/api/namespaces",
+        "Request authorization: Bearer eyJhbGciOiJSUzI1NiIs...",
+        "Response status: 200",
+        "Response content: [{'name': 'istio-system', 'cluster': 'ci', 'isAmbient': False, 'isControlPlane': True, 'labels': {'kubernetes.io/metadata.name': 'istio-system', 'topology.istio.io/network': ''}, 'annotations': None, 'revision': 'default'}]"
+    ]
+}
+
+TASK [Step 10: Assert that we were able to get the list of namespaces] *********
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=62   changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0
+
+INFO     Running header-auth-test > destroy
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/header-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/header-auth-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/header-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/header-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/header-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: minikube
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/header-auth-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/header-auth-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/header-auth-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/header-auth-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_MINIKUBE_IP: 192.168.39.128
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/header-auth-test
+MOLECULE_SCENARIO_NAME: header-auth-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/header-auth-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/header-auth-test/tests
+MOLECULE_WAIT_RETRIES: '120'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/header-auth-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/header-auth-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/header-auth-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/header-auth-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/header-auth-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=minikube MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/header-auth-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/header-auth-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/header-auth-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/header-auth-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_MINIKUBE_IP=192.168.39.128 MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/header-auth-test MOLECULE_SCENARIO_NAME=header-auth-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/header-auth-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/header-auth-test/tests MOLECULE_WAIT_RETRIES=120
+
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Remove Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Wait for Kiali ConfigMap to be uninstalled] ******************************
+ok: [localhost]
+
+TASK [Uninstall Operator via Helm] *********************************************
+changed: [localhost]
+
+TASK [Remove CRDs] *************************************************************
+changed: [localhost]
+
+TASK [Removing Operator namespace] *********************************************
+changed: [localhost]
+
+TASK [Removing CR namespace if it is different than control plane and operator namespace] ***
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=10   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
+Molecule test passed: header-auth-test
+
+molecule-tests-volume
+rolebinding.rbac.authorization.k8s.io "openid-rolebinding-istio-system" deleted from istio-system namespace

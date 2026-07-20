@@ -1,0 +1,104 @@
+Docker is no longer supported by the molecule tests. This argument will largely be ignored and podman used instead.
+========== SETTINGS ==========
+DORP=podman
+KIALI_SRC_HOME=/home/jmazzite/source/kiali/kiali
+ALL_TESTS=accessible-namespaces-test
+affinity-tolerations-resources-test
+api-test
+cluster-wide-access-test
+config-values-test
+containers-test
+default-namespace-test
+external-auth-rotation-test
+grafana-test
+header-auth-test
+instance-name-test
+jaeger-test
+metrics-test
+null-cr-values-test
+only-view-only-mode-test
+openid-openshift-test
+openid-test
+os-console-links-test
+ossmconsole-config-values-test
+remote-cluster-resources-test
+roles-test
+rolling-restart-test
+tls-profile-test
+token-test
+SKIP_TESTS=openid-openshift-test os-console-links-test ossmconsole-config-values-test tls-profile-test
+CLUSTER_TYPE=minikube
+MOLECULE_USE_DEFAULT_IMAGES=false
+MOLECULE_USE_DEV_IMAGES=false
+MOLECULE_DEBUG=true
+MOLECULE_DESTROY_NEVER=false
+MOLECULE_KIALI_CR_SPEC_VERSION=default
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default
+MOLECULE_OPERATOR_INSTALLER=helm
+MOLECULE_OPERATOR_PROFILER_ENABLED=true
+TEST_LOGS_DIR=/home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00
+JUNIT_XML_FILE=/home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00/results.xml
+TEST_CLIENT_EXE=/home/jmazzite/bin/kubectl
+COLOR=false
+MINIKUBE_EXE=/home/jmazzite/bin/minikube
+MINIKUBE_PROFILE=ci
+KIND=
+KIND_NAME=
+HELM_CHARTS_REPO=/home/jmazzite/source/kiali/helm-charts
+HELM_CHARTS_REPO_PULL=true
+CI=false
+==============================
+All molecule test logs will go here: /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00
+
+=========================
+=== BUILD HELM CHARTS ===
+=========================
+
+make: Entering directory '/home/jmazzite/source/kiali/helm-charts'
+Using helm from PATH: /home/jmazzite/bin/helm
+Will use this helm executable: helm
+helm version
+version.BuildInfo{Version:"v3.10.1", GitCommit:"9f88ccb6aee40b9a0535fcc7efea6055e1ef72c9", GitTreeState:"clean", GoVersion:"go1.18.7"}
+Building Helm Chart for Kiali operator
+==> Linting /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-operator-2.28.0-SNAPSHOT.tgz
+Building Helm Chart for Kiali server
+==> Linting /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-server
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /home/jmazzite/source/kiali/helm-charts/_output/charts/kiali-server-2.28.0-SNAPSHOT.tgz
+make: Leaving directory '/home/jmazzite/source/kiali/helm-charts'
+
+=====================
+=== TEST RESULTS: ===
+=====================
+
+              accessible-namespaces-test... FAILURE [0m 4s]
+     affinity-tolerations-resources-test... FAILURE [0m 6s]
+                                api-test... FAILURE [0m 3s]
+                cluster-wide-access-test... FAILURE [0m 0s]
+                      config-values-test... FAILURE [0m 1s]
+                         containers-test... FAILURE [0m 1s]
+                  default-namespace-test... FAILURE [0m 1s]
+             external-auth-rotation-test... FAILURE [0m 0s]
+                            grafana-test... FAILURE [0m 1s]
+                        header-auth-test... FAILURE [0m 1s]
+                      instance-name-test... FAILURE [0m 0s]
+                             jaeger-test... FAILURE [0m 5s]
+                            metrics-test... FAILURE [0m 1s]
+                     null-cr-values-test... FAILURE [0m 0s]
+                only-view-only-mode-test... FAILURE [0m 1s]
+                   openid-openshift-test... skipped
+                             openid-test... FAILURE [0m 2s]
+                   os-console-links-test... skipped
+          ossmconsole-config-values-test... skipped
+           remote-cluster-resources-test... FAILURE [0m 1s]
+                              roles-test... FAILURE [0m 1s]
+                    rolling-restart-test... FAILURE [0m 2s]
+                        tls-profile-test... skipped
+                              token-test... FAILURE [0m 1s]
+
+Test logs can be found at: /home/jmazzite/source/jmazzitelli/kiali-molecule-test-logs/molecule-tests-2026-06-15_01-00-00
+
