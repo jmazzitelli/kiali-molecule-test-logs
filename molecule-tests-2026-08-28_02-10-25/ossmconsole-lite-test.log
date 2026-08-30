@@ -1,0 +1,666 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT/helm-charts'
+Using helm from PATH: /usr/bin/helm
+Will use this helm executable: helm
+helm version
+version.BuildInfo{Version:"v3.11", GitCommit:"", GitTreeState:"", GoVersion:"go1.20.1"}
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator-2.32.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT/helm-charts'
+OCP repos: external=[default-route-openshift-image-registry.apps-crc.testing] internal=[image-registry.openshift-image-registry.svc:5000]
+
+Will auto-detect hosts to add based on the CLUSTER_REPO: default-route-openshift-image-registry.apps-crc.testing
+Auto-detected add host args: --add-host=kiali-istio-system.apps-crc.testing:127.0.0.1 --add-host=prometheus-istio-system.apps-crc.testing:127.0.0.1 --add-host=api.crc.testing:127.0.0.1 --add-host=oauth-openshift.apps-crc.testing:127.0.0.1 --add-host=hydra-public-ory.apps-crc.testing:127.0.0.1 --add-host=hydra-admin-ory.apps-crc.testing:127.0.0.1 --add-host=hydra-ui-ory.apps-crc.testing:127.0.0.1
+Will not rebuild kiali-molecule image.
+Cleaning up previous molecule resources and prepare volumes for a new run
+podman volume rm molecule-tests-volume 2>/dev/null || ( \
+	for c in $(podman ps -a --filter volume=molecule-tests-volume --format '{{.ID}}'); do \
+		podman kill "$c"; \
+		podman rm "$c"; \
+	done && \
+	podman volume exists molecule-tests-volume && echo "Podman volume already exists; deleting it" && podman volume rm molecule-tests-volume || true \
+	)
+podman volume create molecule-tests-volume
+molecule-tests-volume
+podman create -v molecule-tests-volume:/data --name molecule-volume-helper quay.io/fedora/fedora-minimal:latest sleep infinity
+8807ce32c4f669e4b36c9691a2353097620f6b1ac73a8d03222ca004cb4354d1
+podman start molecule-volume-helper
+molecule-volume-helper
+podman run --rm -v molecule-tests-volume:/data -v "/tmp/KIALI-GIT/helm-charts":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/helm-charts-repo
+podman run --rm -v molecule-tests-volume:/data -v "$(realpath /tmp/KIALI-GIT/kiali/operator)":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/operator
+podman run --rm -v molecule-tests-volume:/data -v "/home/jmazzite/.kube/config":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/kubeconfig
+podman stop molecule-volume-helper
+time="2026-08-28T05:02:47-04:00" level=warning msg="StopSignal SIGTERM failed to stop container molecule-volume-helper in 10 seconds, resorting to SIGKILL"
+molecule-volume-helper
+podman rm molecule-volume-helper
+molecule-volume-helper
+Command "info" is deprecated, and will be removed in the future version.
+namespace/kiali-operator created
+secret/kiali-operator-pull-secret created
+secret/kiali-operator-pull-secret labeled
+podman run       --rm              --env KUBECONFIG=/tmp/molecule/kubeconfig       --env K8S_AUTH_KUBECONFIG=/tmp/molecule/kubeconfig       --env MOLECULE_CLUSTER_TYPE=openshift       --env MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo       -v molecule-tests-volume:/tmp/molecule                            -w /tmp/molecule/operator       --network=host       --add-host=kiali-istio-system.apps-crc.testing:127.0.0.1 --add-host=prometheus-istio-system.apps-crc.testing:127.0.0.1 --add-host=api.crc.testing:127.0.0.1 --add-host=oauth-openshift.apps-crc.testing:127.0.0.1 --add-host=hydra-public-ory.apps-crc.testing:127.0.0.1 --add-host=hydra-admin-ory.apps-crc.testing:127.0.0.1 --add-host=hydra-ui-ory.apps-crc.testing:127.0.0.1       --env DORP=podman       --env OPERATOR_IMAGE_PULL_SECRET_NAME=kiali-operator-pull-secret       --env MOLECULE_KIALI_CR_SPEC_VERSION=default       --env PLUGIN_IMAGE_PULL_SECRET_JSON=       --env MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default              --env MOLECULE_OPERATOR_PROFILER_ENABLED=true       --env MOLECULE_OPERATOR_INSTALLER=helm       --env MOLECULE_DUMP_LOGS_ON_ERROR=true              --env MOLECULE_WAIT_RETRIES=360       localhost/kiali-molecule:latest molecule       --debug       test              --scenario-name ossmconsole-lite-test
+Running molecule test: scenario=ossmconsole-lite-test (attempt=1)
+DEBUG    Validating schema /tmp/molecule/operator/molecule/ossmconsole-lite-test/molecule.yml.
+WARNING  Driver podman does not provide a schema.
+INFO     ossmconsole-lite-test scenario test matrix: prepare, converge, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Adding '--pre' to ansible-galaxy collection install because we detected one collection being sourced from git.
+INFO     Running ansible-galaxy collection install -v --pre -r requirements.yml
+INFO     Set ANSIBLE_ROLES_PATH=roles:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Running ossmconsole-lite-test > prepare
+INFO     Sanity checks: 'podman'
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/ossmconsole-lite-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-lite-test
+MOLECULE_SCENARIO_NAME: ossmconsole-lite-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-lite-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/ossmconsole-lite-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-lite-test MOLECULE_SCENARIO_NAME=ossmconsole-lite-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-lite-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [meta] ********************************************************************
+skipping: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Make sure the operator namespace exists] *********************************
+ok: [localhost]
+
+TASK [Find the latest Operator Helm Chart] *************************************
+changed: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [Install Operator via Helm] ***********************************************
+changed: [localhost]
+
+PLAY [Install OSSMConsole] *****************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [meta] ********************************************************************
+skipping: [localhost]
+
+TASK [Make sure the OSSMConsole CR namespace exists] ***************************
+ok: [localhost]
+
+TASK [Make sure the OSSMConsole install namespace exists] **********************
+skipping: [localhost]
+
+TASK [Define the name of the pull secret if a secret is needed to pull the plugin image from the internal image registry] ***
+skipping: [localhost]
+
+TASK [Create the secret that will be used by the plugin pod to pull the image from the internal registry when needed] ***
+skipping: [localhost]
+
+TASK [Wait for the OSSMConsole CRD to be established] **************************
+ok: [localhost]
+
+TASK [Prepare initial OSSMConsole CR definition based solely on the template] ***
+ok: [localhost]
+
+TASK [Create OSSMConsole CR] ***************************************************
+changed: [localhost]
+
+TASK [Asserting that OSSMConsole plugin is Deployed] ***************************
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (360 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (359 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (358 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (357 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (356 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (355 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (354 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (353 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (352 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (351 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (350 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (349 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (348 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (347 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (346 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (345 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (344 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (343 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (342 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (341 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (340 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (339 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (338 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (337 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (336 retries left).
+FAILED - RETRYING: [localhost]: Asserting that OSSMConsole plugin is Deployed (335 retries left).
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=19   changed=3    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0
+
+INFO     Running ossmconsole-lite-test > converge
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/ossmconsole-lite-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-lite-test
+MOLECULE_SCENARIO_NAME: ossmconsole-lite-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-lite-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/ossmconsole-lite-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-lite-test MOLECULE_SCENARIO_NAME=ossmconsole-lite-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-lite-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Tests] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [meta] ********************************************************************
+skipping: [localhost]
+
+TASK [Get OSSMConsole CR if present] *******************************************
+ok: [localhost]
+
+TASK [Get OSSMConsole Pod] *****************************************************
+ok: [localhost]
+
+TASK [Get OSSMConsole Deployment] **********************************************
+ok: [localhost]
+
+TASK [Get OSSMConsole ConfigMap] ***********************************************
+ok: [localhost]
+
+TASK [Format OSSMConsole ConfigMap] ********************************************
+ok: [localhost]
+
+TASK [Dump OSSMConsole ConfigMap] **********************************************
+ok: [localhost] => {
+    "msg": {
+        "internal": {
+            "techPreview": false
+        }
+    }
+}
+
+TASK [Get OSSMConsole ConsolePlugin] *******************************************
+ok: [localhost]
+
+TASK [Dump OSSMConsole ConsolePlugin] ******************************************
+ok: [localhost] => {
+    "msg": {
+        "apiVersion": "console.openshift.io/v1",
+        "kind": "ConsolePlugin",
+        "metadata": {
+            "annotations": {
+                "operator-sdk/primary-resource": "kiali-operator/ossmconsole",
+                "operator-sdk/primary-resource-type": "OSSMConsole.kiali.io"
+            },
+            "creationTimestamp": "2026-08-28T09:07:30Z",
+            "generation": 1,
+            "labels": {
+                "app": "ossmconsole",
+                "app.kubernetes.io/instance": "ossmconsole",
+                "app.kubernetes.io/name": "ossmconsole",
+                "app.kubernetes.io/part-of": "ossmconsole",
+                "app.kubernetes.io/version": "latest",
+                "version": "latest"
+            },
+            "managedFields": [
+                {
+                    "apiVersion": "console.openshift.io/v1",
+                    "fieldsType": "FieldsV1",
+                    "fieldsV1": {
+                        "f:metadata": {
+                            "f:annotations": {
+                                ".": {},
+                                "f:operator-sdk/primary-resource": {},
+                                "f:operator-sdk/primary-resource-type": {}
+                            },
+                            "f:labels": {
+                                ".": {},
+                                "f:app": {},
+                                "f:app.kubernetes.io/instance": {},
+                                "f:app.kubernetes.io/name": {},
+                                "f:app.kubernetes.io/part-of": {},
+                                "f:app.kubernetes.io/version": {},
+                                "f:version": {}
+                            }
+                        },
+                        "f:spec": {
+                            ".": {},
+                            "f:backend": {
+                                ".": {},
+                                "f:service": {
+                                    ".": {},
+                                    "f:basePath": {},
+                                    "f:name": {},
+                                    "f:namespace": {},
+                                    "f:port": {}
+                                },
+                                "f:type": {}
+                            },
+                            "f:displayName": {},
+                            "f:i18n": {
+                                ".": {},
+                                "f:loadType": {}
+                            }
+                        }
+                    },
+                    "manager": "OpenAPI-Generator",
+                    "operation": "Update",
+                    "time": "2026-08-28T09:07:30Z"
+                }
+            ],
+            "name": "ossmconsole",
+            "resourceVersion": "71335",
+            "uid": "fb3146fd-2ecd-4bcd-9f45-0ddddfe94825"
+        },
+        "spec": {
+            "backend": {
+                "service": {
+                    "basePath": "/",
+                    "name": "ossmconsole",
+                    "namespace": "kiali-operator",
+                    "port": 9443
+                },
+                "type": "Service"
+            },
+            "displayName": "OpenShift Service Mesh Console",
+            "i18n": {
+                "loadType": "Preload"
+            }
+        }
+    }
+}
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [The current CR status] ***************************************************
+ok: [localhost] => {
+    "msg": {
+        "conditions": [
+            {
+                "ansibleResult": {
+                    "changed": 7,
+                    "completion": "2026-08-28T09:07:37.620615+00:00",
+                    "failures": 0,
+                    "ok": 56,
+                    "skipped": 38
+                },
+                "lastTransitionTime": "2026-08-28T09:04:27Z",
+                "message": "Awaiting next reconciliation",
+                "reason": "Successful",
+                "status": "True",
+                "type": "Running"
+            },
+            {
+                "lastTransitionTime": "2026-08-28T09:07:38Z",
+                "message": "Last reconciliation succeeded",
+                "reason": "Successful",
+                "status": "True",
+                "type": "Successful"
+            },
+            {
+                "lastTransitionTime": "2026-08-28T09:07:38Z",
+                "message": "",
+                "reason": "",
+                "status": "False",
+                "type": "Failure"
+            }
+        ],
+        "deployment": {
+            "namespace": "kiali-operator"
+        },
+        "environment": {
+            "kialiVersion": "unknown",
+            "kubernetesVersion": "1.35.5",
+            "openshiftVersion": "4.22.1",
+            "operatorVersion": "v2.32.0-SNAPSHOT"
+        },
+        "kiali": {
+            "available": false,
+            "serviceName": "",
+            "serviceNamespace": "",
+            "servicePort": "0"
+        },
+        "progress": {
+            "duration": "0:03:05",
+            "message": "5. Finished"
+        },
+        "specVersion": "default"
+    }
+}
+
+TASK [Confirm all the core OSSM Console resources exist even though no Kiali is installed] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Confirm the CR status reports Kiali as unavailable] **********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Confirm the ConsolePlugin was created without a Kiali proxy entry] *******
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Explicitly configure a Kiali servicePort even though no Kiali is installed on the cluster] ***
+ok: [localhost]
+
+TASK [Change OSSMConsole CR with new OSSMConsole CR] ***************************
+--- before
++++ after
+@@ -1,27 +1,7 @@
+ {
+     "metadata": {
+-        "generation": 1,
++        "generation": 2,
+         "managedFields": [
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:spec": {
+-                        ".": {},
+-                        "f:deployment": {
+-                            ".": {},
+-                            "f:imageName": {},
+-                            "f:imagePullPolicy": {},
+-                            "f:imagePullSecrets": {},
+-                            "f:imageVersion": {}
+-                        },
+-                        "f:version": {}
+-                    }
+-                },
+-                "manager": "OpenAPI-Generator",
+-                "operation": "Update",
+-                "time": "2026-08-28T09:04:27Z"
+-            },
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+                 "fieldsType": "FieldsV1",
+@@ -86,9 +66,37 @@
+                 "operation": "Update",
+                 "subresource": "status",
+                 "time": "2026-08-28T09:07:38Z"
++            },
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:spec": {
++                        ".": {},
++                        "f:deployment": {
++                            ".": {},
++                            "f:imageName": {},
++                            "f:imagePullPolicy": {},
++                            "f:imagePullSecrets": {},
++                            "f:imageVersion": {}
++                        },
++                        "f:kiali": {
++                            ".": {},
++                            "f:servicePort": {}
++                        },
++                        "f:version": {}
++                    }
++                },
++                "manager": "OpenAPI-Generator",
++                "operation": "Update",
++                "time": "2026-08-28T09:07:59Z"
+             }
+         ],
+-        "resourceVersion": "71407"
++        "resourceVersion": "71478"
+     },
+-    "spec": {}
++    "spec": {
++        "kiali": {
++            "servicePort": 15014
++        }
++    }
+ }
+
+changed: [localhost]
+
+TASK [Wait for the OSSMConsole CR reconciliation to fail] **********************
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (360 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (359 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (358 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (357 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (356 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (355 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (354 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (353 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (352 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (351 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (350 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (349 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (348 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (347 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (346 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (345 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (344 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (343 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (342 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (341 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (340 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (339 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (338 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (337 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (336 retries left).
+FAILED - RETRYING: [localhost]: Wait for the OSSMConsole CR reconciliation to fail (335 retries left).
+ok: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [Confirm the reconciliation failure is about the inability to find Kiali] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=21   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Running ossmconsole-lite-test > destroy
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/ossmconsole-lite-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-lite-test
+MOLECULE_SCENARIO_NAME: ossmconsole-lite-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/ossmconsole-lite-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/ossmconsole-lite-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/ossmconsole-lite-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/ossmconsole-lite-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-lite-test MOLECULE_SCENARIO_NAME=ossmconsole-lite-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/ossmconsole-lite-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/ossmconsole-lite-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [meta] ********************************************************************
+skipping: [localhost]
+
+PLAY [Remove OSSMConsole] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [meta] ********************************************************************
+skipping: [localhost]
+
+TASK [Remove OSSMConsole CR] ***************************************************
+changed: [localhost]
+
+PLAY [Uninstall the operator - no Kiali installation to remove since none was installed] ***
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Uninstall Operator via Helm] *********************************************
+changed: [localhost]
+
+TASK [Remove CRDs] *************************************************************
+changed: [localhost]
+
+TASK [Removing Operator namespace] *********************************************
+changed: [localhost]
+
+TASK [Removing CR namespace if it is different than control plane and operator namespace] ***
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=15   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
+Molecule test passed: ossmconsole-lite-test
+
+molecule-tests-volume

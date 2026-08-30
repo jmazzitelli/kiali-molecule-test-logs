@@ -1,0 +1,1387 @@
+/bin/bash: line 1: go: command not found
+Pulling down latest helm-charts from remote repo to here: /tmp/KIALI-GIT/helm-charts
+Git repo for the helm charts is found here: /tmp/KIALI-GIT/helm-charts
+make[1]: Entering directory '/tmp/KIALI-GIT/helm-charts'
+Using helm from PATH: /usr/bin/helm
+Will use this helm executable: helm
+helm version
+version.BuildInfo{Version:"v3.11", GitCommit:"", GitTreeState:"", GoVersion:"go1.20.1"}
+Building Helm Chart for Kiali operator
+==> Linting /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator
+
+1 chart(s) linted, 0 chart(s) failed
+Successfully packaged chart and saved it to: /tmp/KIALI-GIT/helm-charts/_output/charts/kiali-operator-2.32.0-SNAPSHOT.tgz
+make[1]: Leaving directory '/tmp/KIALI-GIT/helm-charts'
+OCP repos: external=[default-route-openshift-image-registry.apps-crc.testing] internal=[image-registry.openshift-image-registry.svc:5000]
+
+Will auto-detect hosts to add based on the CLUSTER_REPO: default-route-openshift-image-registry.apps-crc.testing
+Auto-detected add host args: --add-host=kiali-istio-system.apps-crc.testing:127.0.0.1 --add-host=prometheus-istio-system.apps-crc.testing:127.0.0.1 --add-host=api.crc.testing:127.0.0.1 --add-host=oauth-openshift.apps-crc.testing:127.0.0.1 --add-host=hydra-public-ory.apps-crc.testing:127.0.0.1 --add-host=hydra-admin-ory.apps-crc.testing:127.0.0.1 --add-host=hydra-ui-ory.apps-crc.testing:127.0.0.1
+Will not rebuild kiali-molecule image.
+Cleaning up previous molecule resources and prepare volumes for a new run
+podman volume rm molecule-tests-volume 2>/dev/null || ( \
+	for c in $(podman ps -a --filter volume=molecule-tests-volume --format '{{.ID}}'); do \
+		podman kill "$c"; \
+		podman rm "$c"; \
+	done && \
+	podman volume exists molecule-tests-volume && echo "Podman volume already exists; deleting it" && podman volume rm molecule-tests-volume || true \
+	)
+podman volume create molecule-tests-volume
+molecule-tests-volume
+podman create -v molecule-tests-volume:/data --name molecule-volume-helper quay.io/fedora/fedora-minimal:latest sleep infinity
+910fe2c619b163ff968b9cd45fed10575eb878610e43c99df1ccadca071056db
+podman start molecule-volume-helper
+molecule-volume-helper
+podman run --rm -v molecule-tests-volume:/data -v "/tmp/KIALI-GIT/helm-charts":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/helm-charts-repo
+podman run --rm -v molecule-tests-volume:/data -v "$(realpath /tmp/KIALI-GIT/kiali/operator)":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/operator
+podman run --rm -v molecule-tests-volume:/data -v "/home/jmazzite/.kube/config":/source:ro,Z quay.io/fedora/fedora-minimal cp -r /source /data/kubeconfig
+podman stop molecule-volume-helper
+time="2026-08-30T03:30:43-04:00" level=warning msg="StopSignal SIGTERM failed to stop container molecule-volume-helper in 10 seconds, resorting to SIGKILL"
+molecule-volume-helper
+podman rm molecule-volume-helper
+molecule-volume-helper
+Command "info" is deprecated, and will be removed in the future version.
+namespace/kiali-operator created
+secret/kiali-operator-pull-secret created
+secret/kiali-operator-pull-secret labeled
+podman run       --rm              --env KUBECONFIG=/tmp/molecule/kubeconfig       --env K8S_AUTH_KUBECONFIG=/tmp/molecule/kubeconfig       --env MOLECULE_CLUSTER_TYPE=openshift       --env MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo       -v molecule-tests-volume:/tmp/molecule                            -w /tmp/molecule/operator       --network=host       --add-host=kiali-istio-system.apps-crc.testing:127.0.0.1 --add-host=prometheus-istio-system.apps-crc.testing:127.0.0.1 --add-host=api.crc.testing:127.0.0.1 --add-host=oauth-openshift.apps-crc.testing:127.0.0.1 --add-host=hydra-public-ory.apps-crc.testing:127.0.0.1 --add-host=hydra-admin-ory.apps-crc.testing:127.0.0.1 --add-host=hydra-ui-ory.apps-crc.testing:127.0.0.1       --env DORP=podman       --env OPERATOR_IMAGE_PULL_SECRET_NAME=kiali-operator-pull-secret       --env MOLECULE_KIALI_CR_SPEC_VERSION=default       --env PLUGIN_IMAGE_PULL_SECRET_JSON=       --env MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default              --env MOLECULE_OPERATOR_PROFILER_ENABLED=true       --env MOLECULE_OPERATOR_INSTALLER=helm       --env MOLECULE_DUMP_LOGS_ON_ERROR=true              --env MOLECULE_WAIT_RETRIES=360       localhost/kiali-molecule:latest molecule       --debug       test              --scenario-name external-auth-rotation-test
+Running molecule test: scenario=external-auth-rotation-test (attempt=1)
+DEBUG    Validating schema /tmp/molecule/operator/molecule/external-auth-rotation-test/molecule.yml.
+WARNING  Driver podman does not provide a schema.
+INFO     external-auth-rotation-test scenario test matrix: prepare, converge, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Adding '--pre' to ansible-galaxy collection install because we detected one collection being sourced from git.
+INFO     Running ansible-galaxy collection install -v --pre -r requirements.yml
+INFO     Set ANSIBLE_ROLES_PATH=roles:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Running external-auth-rotation-test > prepare
+INFO     Sanity checks: 'podman'
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/external-auth-rotation-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/external-auth-rotation-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/external-auth-rotation-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/external-auth-rotation-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/external-auth-rotation-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/external-auth-rotation-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/external-auth-rotation-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/external-auth-rotation-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/external-auth-rotation-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/external-auth-rotation-test
+MOLECULE_SCENARIO_NAME: external-auth-rotation-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/external-auth-rotation-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/external-auth-rotation-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/external-auth-rotation-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/external-auth-rotation-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/external-auth-rotation-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/external-auth-rotation-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/external-auth-rotation-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/external-auth-rotation-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/external-auth-rotation-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/external-auth-rotation-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/external-auth-rotation-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/external-auth-rotation-test MOLECULE_SCENARIO_NAME=external-auth-rotation-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/external-auth-rotation-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/external-auth-rotation-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+PLAY [Create OpenShift Security Context Constraints] ***************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Create anyuid Security Context Constraint for grafana-echo] **************
+changed: [localhost]
+
+PLAY [Prepare] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Make sure the operator namespace exists] *********************************
+ok: [localhost]
+
+TASK [Find the latest Operator Helm Chart] *************************************
+changed: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [fail] ********************************************************************
+skipping: [localhost]
+
+TASK [Install Operator via Helm] ***********************************************
+changed: [localhost]
+
+TASK [Make sure the CR namespace exists] ***************************************
+ok: [localhost]
+
+TASK [Wait for the CRD to be established] **************************************
+ok: [localhost]
+
+TASK [Prepare initial Kiali CR definition based solely on the template] ********
+ok: [localhost]
+
+TASK [Create Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Asserting that Kiali is Deployed] ****************************************
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (360 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (359 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (358 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (357 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (356 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (355 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (354 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (353 retries left).
+FAILED - RETRYING: [localhost]: Asserting that Kiali is Deployed (352 retries left).
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=20   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Running external-auth-rotation-test > converge
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/external-auth-rotation-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/external-auth-rotation-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/external-auth-rotation-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/external-auth-rotation-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/external-auth-rotation-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/external-auth-rotation-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/external-auth-rotation-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/external-auth-rotation-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/external-auth-rotation-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/external-auth-rotation-test
+MOLECULE_SCENARIO_NAME: external-auth-rotation-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/external-auth-rotation-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/external-auth-rotation-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/external-auth-rotation-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/external-auth-rotation-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/external-auth-rotation-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/external-auth-rotation-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/external-auth-rotation-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/external-auth-rotation-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/external-auth-rotation-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/external-auth-rotation-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/external-auth-rotation-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/external-auth-rotation-test MOLECULE_SCENARIO_NAME=external-auth-rotation-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/external-auth-rotation-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/external-auth-rotation-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Tests] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/external-auth-rotation-test/../common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali CR: {'apiVersion': 'kiali.io/v1alpha1', 'kind': 'Kiali', 'metadata': {'creationTimestamp': '2026-08-30T07:32:26Z', 'finalizers': ['kiali.io/finalizer'], 'generation': 1, 'managedFields': [{'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:spec': {'.': {}, 'f:ai': {'.': {}, 'f:chat': {'.': {}, 'f:default_provider': {}, 'f:enabled': {}, 'f:max_tool_iterations': {}, 'f:providers': {}}, 'f:enabled': {}}, 'f:auth': {'.': {}, 'f:strategy': {}}, 'f:deployment': {'.': {}, 'f:cluster_wide_access': {}, 'f:image_digest': {}, 'f:image_name': {}, 'f:image_pull_policy': {}, 'f:image_version': {}, 'f:ingress': {'.': {}, 'f:class_name': {}, 'f:enabled': {}}, 'f:instance_name': {}, 'f:logger': {'.': {}, 'f:log_format': {}, 'f:log_level': {}, 'f:sampler_rate': {}, 'f:time_field_format': {}}, 'f:namespace': {}, 'f:probes': {'.': {}, 'f:liveness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:readiness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:startup': {'.': {}, 'f:failure_threshold': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}}, 'f:remote_cluster_resources_only': {}, 'f:replicas': {}, 'f:secret_name': {}, 'f:service_type': {}, 'f:view_only_mode': {}}, 'f:external_services': {'.': {}, 'f:custom_dashboards': {'.': {}, 'f:discovery_auto_threshold': {}, 'f:discovery_enabled': {}, 'f:enabled': {}, 'f:is_core': {}, 'f:namespace_label': {}, 'f:prometheus': {'.': {}, 'f:auth': {'.': {}, 'f:cert_file': {}, 'f:insecure_skip_verify': {}, 'f:key_file': {}, 'f:password': {}, 'f:token': {}, 'f:type': {}, 'f:use_kiali_token': {}, 'f:username': {}}, 'f:cache_duration': {}, 'f:cache_enabled': {}, 'f:cache_expiration': {}, 'f:is_core': {}}}, 'f:grafana': {'.': {}, 'f:auth': {'.': {}, 'f:insecure_skip_verify': {}, 'f:password': {}, 'f:type': {}, 'f:use_kiali_token': {}, 'f:username': {}}, 'f:dashboards': {}, 'f:enabled': {}, 'f:external_url': {}, 'f:internal_url': {}, 'f:is_core': {}}, 'f:perses': {'.': {}, 'f:enabled': {}, 'f:is_core': {}, 'f:project': {}, 'f:url_format': {}}, 'f:prometheus': {'.': {}, 'f:auth': {'.': {}, 'f:insecure_skip_verify': {}, 'f:oauth2': {'.': {}, 'f:auth_style': {}, 'f:client_id': {}, 'f:client_secret': {}, 'f:token_url': {}}, 'f:type': {}, 'f:use_kiali_token': {}}, 'f:cache_duration': {}, 'f:cache_enabled': {}, 'f:cache_expiration': {}, 'f:enabled': {}, 'f:is_core': {}}, 'f:tracing': {'.': {}, 'f:auth': {'.': {}, 'f:cert_file': {}, 'f:insecure_skip_verify': {}, 'f:key_file': {}, 'f:password': {}, 'f:token': {}, 'f:type': {}, 'f:use_kiali_token': {}, 'f:username': {}}, 'f:disable_version_check': {}, 'f:enabled': {}, 'f:grpc_port': {}, 'f:is_core': {}, 'f:namespace_selector': {}, 'f:provider': {}, 'f:query_timeout': {}, 'f:use_grpc': {}, 'f:use_waypoint_name': {}}}, 'f:version': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'time': '2026-08-30T07:32:26Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:metadata': {'f:finalizers': {'.': {}, 'v:\"kiali.io/finalizer\"': {}}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'time': '2026-08-30T07:32:26Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'f:deployment': {'.': {}, 'f:instanceName': {}, 'f:namespace': {}, 'f:remoteClusterResourcesOnly': {}}, 'f:environment': {'.': {}, 'f:isOpenshift': {}, 'f:kubernetesVersion': {}, 'f:openshiftVersion': {}, 'f:operatorVersion': {}}, 'f:progress': {'.': {}, 'f:duration': {}, 'f:message': {}}, 'f:specVersion': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-08-30T07:33:29Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'.': {}, 'f:conditions': {}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-08-30T07:33:30Z'}], 'name': 'kiali', 'namespace': 'kiali-operator', 'resourceVersion': '52216', 'uid': 'f7a08248-dad4-4888-abca-29b038771089'}, 'spec': {'ai': {'chat': {'default_provider': 'enabled-provider', 'enabled': True, 'max_tool_iterations': 5, 'providers': [{'config': 'default', 'default_model': 'enabled-model', 'enabled': True, 'insecure_skip_verify': False, 'key': 'inline-enabled-provider-key', 'models': [{'enabled': True, 'key': 'inline-enabled-model-key', 'model': 'gpt-4', 'name': 'enabled-model'}, {'enabled': False, 'key': 'inline-disabled-model-key', 'model': 'gpt-3.5', 'name': 'disabled-model'}], 'name': 'enabled-provider', 'type': 'openai'}, {'config': 'azure', 'default_model': 'model-under-disabled-provider', 'enabled': False, 'insecure_skip_verify': False, 'key': 'inline-disabled-provider-key', 'models': [{'enabled': True, 'key': 'inline-model-under-disabled-provider-key', 'model': 'gpt-4-azure', 'name': 'model-under-disabled-provider'}], 'name': 'disabled-provider', 'type': 'openai'}]}, 'enabled': True}, 'auth': {'strategy': 'anonymous'}, 'deployment': {'cluster_wide_access': True, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_version': 'latest', 'ingress': {'class_name': 'nginx', 'enabled': True}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'debug', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'secret_name': 'kiali', 'service_type': 'NodePort', 'view_only_mode': False}, 'external_services': {'custom_dashboards': {'discovery_auto_threshold': 10, 'discovery_enabled': 'auto', 'enabled': True, 'is_core': False, 'namespace_label': 'namespace', 'prometheus': {'auth': {'cert_file': '', 'insecure_skip_verify': False, 'key_file': '', 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'is_core': True}}, 'grafana': {'auth': {'insecure_skip_verify': False, 'password': 'echo-pass1', 'type': 'basic', 'use_kiali_token': False, 'username': 'echo-user1'}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'app': '', 'datasource': '', 'namespace': 'istio-system', 'service': '', 'version': '', 'workload': ''}}], 'enabled': True, 'external_url': 'https://grafana-echo.istio-system:8443', 'internal_url': 'https://grafana-echo.istio-system:8443', 'is_core': False}, 'perses': {'enabled': False, 'is_core': False, 'project': 'istio', 'url_format': ''}, 'prometheus': {'auth': {'insecure_skip_verify': False, 'oauth2': {'auth_style': 'header', 'client_id': 'test-prometheus-client', 'client_secret': 'inline-prometheus-secret', 'token_url': 'https://idp.example.com/token'}, 'type': 'oauth2', 'use_kiali_token': False}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'enabled': True, 'is_core': True}, 'tracing': {'auth': {'cert_file': '', 'insecure_skip_verify': False, 'key_file': '', 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'disable_version_check': False, 'enabled': False, 'grpc_port': 9095, 'is_core': False, 'namespace_selector': True, 'provider': 'jaeger', 'query_timeout': 5, 'use_grpc': True, 'use_waypoint_name': False}}, 'version': 'default'}, 'status': {'conditions': [{'ansibleResult': {'changed': 12, 'completion': '2026-08-30T07:33:29.882363+00:00', 'failures': 0, 'ok': 87, 'skipped': 76}, 'lastTransitionTime': '2026-08-30T07:32:26Z', 'message': 'Awaiting next reconciliation', 'reason': 'Successful', 'status': 'True', 'type': 'Running'}, {'lastTransitionTime': '2026-08-30T07:33:30Z', 'message': 'Last reconciliation succeeded', 'reason': 'Successful', 'status': 'True', 'type': 'Successful'}, {'lastTransitionTime': '2026-08-30T07:33:30Z', 'message': '', 'reason': '', 'status': 'False', 'type': 'Failure'}], 'deployment': {'instanceName': 'kiali', 'namespace': 'istio-system', 'remoteClusterResourcesOnly': False}, 'environment': {'isOpenshift': True, 'kubernetesVersion': '1.35.5', 'openshiftVersion': '4.22.1', 'operatorVersion': 'v2.32.0-SNAPSHOT'}, 'progress': {'duration': '0:00:58', 'message': '7. Finished all resource creation'}, 'specVersion': 'default'}}"
+}
+
+TASK [Get Kiali Configmap] *****************************************************
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali ConfigMap: {'additional_display_details': [{'annotation': 'kiali.io/api-spec', 'icon_annotation': 'kiali.io/api-type', 'title': 'API Documentation'}], 'ai': {'chat': {'allowed_users': [], 'default_provider': 'enabled-provider', 'enabled': True, 'max_tool_iterations': 5, 'providers': [{'config': 'default', 'default_model': 'enabled-model', 'enabled': True, 'insecure_skip_verify': False, 'key': 'inline-enabled-provider-key', 'models': [{'enabled': True, 'key': 'inline-enabled-model-key', 'model': 'gpt-4', 'name': 'enabled-model'}, {'enabled': False, 'key': 'inline-disabled-model-key', 'model': 'gpt-3.5', 'name': 'disabled-model'}], 'name': 'enabled-provider', 'type': 'openai'}, {'config': 'azure', 'default_model': 'model-under-disabled-provider', 'enabled': False, 'insecure_skip_verify': False, 'key': 'inline-disabled-provider-key', 'models': [{'enabled': True, 'key': 'inline-model-under-disabled-provider-key', 'model': 'gpt-4-azure', 'name': 'model-under-disabled-provider'}], 'name': 'disabled-provider', 'type': 'openai'}], 'store_config': {'enabled': True, 'inactivity_timeout': '30m', 'max_cache_memory_mb': 1024, 'reduce_threshold': 15, 'reduce_with_ai': False}, 'tools': {}}, 'enabled': True}, 'auth': {'openid': {'additional_request_params': {}, 'allowed_domains': [], 'api_proxy': '', 'api_proxy_ca_data': '', 'api_token': 'id_token', 'authentication_timeout': 300, 'authorization_endpoint': '', 'client_id': '', 'disable_rbac': False, 'discovery_override': {'authorization_endpoint': '', 'end_session_endpoint': '', 'jwks_uri': '', 'token_endpoint': '', 'userinfo_endpoint': ''}, 'http_proxy': '', 'https_proxy': '', 'insecure_skip_verify_tls': False, 'issuer_uri': '', 'post_logout_redirect_uri': '', 'scopes': ['openid', 'profile', 'email'], 'username_claim': 'sub'}, 'openshift': {'impersonation': {'allowed_groups': [], 'allowed_users': [], 'enabled': False}, 'insecure_skip_verify_tls': False}, 'strategy': 'anonymous'}, 'clustering': {'autodetect_secrets': {'enabled': True, 'label': 'kiali.io/multiCluster=true'}, 'clusters': [], 'enable_exec_provider': False, 'ignore_home_cluster': False, 'kiali_urls': []}, 'custom_dashboards': [], 'deployment': {'additional_pod_containers_yaml': [], 'additional_pod_init_containers_yaml': [], 'affinity': {'node': {}, 'pod': {}, 'pod_anti': {}}, 'cluster_wide_access': True, 'configmap_annotations': {}, 'custom_envs': [], 'custom_secrets': [], 'discovery_selectors': {}, 'dns': {'config': {}, 'policy': ''}, 'extra_labels': {}, 'host_aliases': [], 'hpa': {'api_version': 'autoscaling/v2', 'spec': {}}, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_pull_secrets': [], 'image_version': 'latest', 'ingress': {'additional_labels': {}, 'class_name': 'nginx', 'enabled': True}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'debug', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'network_policy': {'enabled': True}, 'node_selector': {}, 'pod_annotations': {'proxy.istio.io/config': '{ \"holdApplicationUntilProxyStarts\": true }'}, 'pod_disruption_budget': {'api_version': 'policy/v1', 'spec': {}}, 'pod_labels': {}, 'priority_class_name': '', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'resources': {'limits': {'memory': '1Gi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}, 'secret_name': 'kiali', 'security_context': {}, 'service_annotations': {}, 'service_type': 'NodePort', 'strategy': {}, 'tls_config': {'cipher_suites': [], 'max_version': '', 'min_version': '', 'source': 'auto'}, 'tolerations': [], 'topology_spread_constraints': [], 'version_label': 'master', 'view_only_mode': False}, 'extensions': [], 'external_services': {'custom_dashboards': {'discovery_auto_threshold': 10, 'discovery_enabled': 'auto', 'enabled': True, 'is_core': False, 'namespace_label': 'namespace', 'prometheus': {'auth': {'cert_file': '', 'insecure_skip_verify': False, 'key_file': '', 'oauth2': {'audience': '', 'auth_style': 'header', 'client_id': '', 'client_secret': '', 'scopes': [], 'token_url': ''}, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': ''}}, 'grafana': {'auth': {'insecure_skip_verify': False, 'oauth2': {'audience': '', 'auth_style': 'header', 'client_id': '', 'client_secret': '', 'scopes': [], 'token_url': ''}, 'password': 'echo-pass1', 'token': '', 'type': 'basic', 'use_kiali_token': False, 'username': 'echo-user1'}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'app': '', 'datasource': '', 'namespace': 'istio-system', 'service': '', 'version': '', 'workload': ''}}], 'datasource_uid': '', 'enabled': True, 'external_url': 'https://grafana-echo.istio-system:8443', 'health_check_url': '', 'internal_url': 'https://grafana-echo.istio-system:8443', 'is_core': False}, 'istio': {'component_status': {'components': [], 'enabled': True}, 'gateway_api_classes': [], 'gateway_api_classes_label_selector': '', 'istio_api_enabled': True, 'istio_identity_domain': '', 'istiod_polling_interval_seconds': 20, 'validation_change_detection_enabled': True, 'validation_reconcile_interval': '1m'}, 'perses': {'auth': {'insecure_skip_verify': False, 'oauth2': {'audience': '', 'auth_style': 'header', 'client_id': '', 'client_secret': '', 'scopes': [], 'token_url': ''}, 'password': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard'}, {'name': 'Istio Control Plane Dashboard'}, {'name': 'Istio Performance Dashboard'}, {'name': 'Istio Wasm Extension Dashboard'}], 'enabled': False, 'external_url': '', 'health_check_url': '', 'internal_url': '', 'is_core': False, 'project': 'istio', 'url_format': ''}, 'prometheus': {'auth': {'insecure_skip_verify': False, 'oauth2': {'audience': '', 'auth_style': 'header', 'client_id': 'test-prometheus-client', 'client_secret': 'inline-prometheus-secret', 'scopes': [], 'token_url': 'https://idp.example.com/token'}, 'password': '', 'token': '', 'type': 'oauth2', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'enabled': True, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': 'http://prometheus.istio-system:9090'}, 'tracing': {'auth': {'cert_file': '', 'insecure_skip_verify': False, 'key_file': '', 'oauth2': {'audience': '', 'auth_style': 'header', 'client_id': '', 'client_secret': '', 'scopes': [], 'token_url': ''}, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'custom_headers': {}, 'disable_version_check': False, 'enabled': False, 'external_url': '', 'grpc_port': 9095, 'health_check_url': '', 'internal_url': 'http://tracing.istio-system:16685/jaeger', 'is_core': False, 'namespace_selector': True, 'provider': 'jaeger', 'query_scope': {}, 'query_timeout': 5, 'tempo_config': {'cache_capacity': 200, 'cache_enabled': True, 'datasource_uid': '', 'name': '', 'namespace': '', 'org_id': '', 'tenant': '', 'url_format': 'grafana'}, 'use_grpc': True, 'use_waypoint_name': False, 'whitelist_istio_system': ['jaeger-query', 'istio-ingressgateway']}}, 'health_config': {'compute': {'duration': '5m', 'refresh_interval': '3m', 'timeout': '10m'}, 'rate': []}, 'identity': {'cert_file': '/kiali-cert/tls.crt', 'private_key_file': '/kiali-cert/tls.key'}, 'installation_tag': '', 'istio_labels': {'app_label_name': '', 'version_label_name': ''}, 'kiali_feature_flags': {'authz': {'require_namespace_get': False}, 'clustering': {'enable_exec_provider': False}, 'custom_workload_types': [], 'disabled_features': [], 'istio_annotation_action': True, 'istio_injection_action': True, 'istio_upgrade_action': False, 'ui_defaults': {'graph': {'find_options': [{'auto_select': False, 'description': 'Find: slow edges (> 1s)', 'expression': 'rt > 1000'}, {'auto_select': False, 'description': 'Find: unhealthy nodes', 'expression': '! healthy'}, {'auto_select': False, 'description': 'Find: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Find: nodes with the 2 top rankings', 'expression': 'rank <= 2'}], 'hide_options': [{'auto_select': False, 'description': 'Hide: healthy nodes', 'expression': 'healthy'}, {'auto_select': False, 'description': 'Hide: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Hide: nodes ranked lower than the 2 top rankings', 'expression': 'rank > 2'}], 'settings': {'animation': 'point'}, 'traffic': {'ambient': 'total', 'grpc': 'requests', 'http': 'requests', 'tcp': 'sent'}}, 'i18n': {'show_selector': False}, 'list': {'include_health': True, 'include_istio_resources': True, 'include_validations': True, 'show_include_toggles': False}, 'mesh': {'find_options': [{'description': 'Find: unhealthy nodes', 'expression': '! healthy'}], 'hide_options': [{'description': 'Hide: healthy nodes', 'expression': 'healthy'}]}, 'metrics_inbound': {'aggregations': []}, 'metrics_outbound': {'aggregations': []}, 'metrics_per_refresh': '1m', 'namespaces': [], 'refresh_interval': '1m', 'tracing': {'limit': 100}}, 'validations': {'ignore': ['KIA1301'], 'skip_wildcard_gateway_hosts': False}}, 'kiali_internal': {}, 'kubernetes_config': {'burst': 200, 'cache_duration': 300, 'cache_token_namespace_duration': 10, 'cluster_name': '', 'excluded_workloads': ['CronJob', 'DeploymentConfig', 'Job', 'ReplicationController'], 'qps': 175}, 'login_token': {'expiration_seconds': 86400, 'signing_key': 'secret:kiali-signing-key:key'}, 'server': {'address': '', 'audit_log': True, 'cors_allow_all': False, 'gzip_enabled': True, 'observability': {'metrics': {'enabled': True, 'health_status': {'enabled': False, 'max_consecutive_na': 3}, 'port': 9090}, 'tracing': {'collector_type': 'otel', 'collector_url': 'jaeger-collector.istio-system:4318', 'enabled': False, 'otel': {'ca_name': '', 'protocol': 'http', 'skip_verify': False, 'tls_enabled': False}, 'sampling_rate': 0.5}}, 'port': 20001, 'profiler': {'enabled': False}, 'require_auth': False, 'web_fqdn': '', 'web_history_mode': 'browser', 'web_port': '', 'web_root': '/', 'web_schema': '', 'write_timeout': '60s'}, 'version': 'default'}"
+}
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+ok: [localhost]
+
+TASK [Determine the Kiali URL on minikube] *************************************
+skipping: [localhost]
+
+TASK [Determine the Kiali URL on kind] *****************************************
+skipping: [localhost]
+
+TASK [Assert Kiali Pod(s) are Running] *****************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Assert Kiali Pod is Running on the correct Namespace] ********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Wait for Kiali Deployment rollout to complete] ***************************
+ok: [localhost]
+
+TASK [Asserting that Kiali Pod(s) are running and ready] ***********************
+ok: [localhost]
+
+TASK [Debug pod readiness snapshot (for diagnostics)] **************************
+ok: [localhost] => {
+    "msg": [
+        "Kiali pod names: ['kiali-769b49bb5d-vftfh']",
+        "Kiali pod phases: ['Running']",
+        "Kiali container readiness: [[{'name': 'kiali', 'state': {'running': {'startedAt': '2026-08-30T07:33:22Z'}}, 'lastState': {}, 'ready': True, 'restartCount': 0, 'image': 'quay.io/kiali/kiali:latest', 'imageID': 'quay.io/kiali/kiali@sha256:0ab0caa8292948a5d79ebee66f767f50272064891e91caa240767ea04b9a7251', 'containerID': 'cri-o://b43bc28084e682cb3bee630d49d7f43dd6d51c2c18106ce24e1f8367c6eb743c', 'started': True, 'allocatedResources': {'cpu': '10m', 'memory': '64Mi'}, 'resources': {'limits': {'memory': '1Gi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}, 'volumeMounts': [{'name': 'kiali-configuration', 'mountPath': '/kiali-configuration'}, {'name': 'kiali-cert', 'mountPath': '/kiali-cert'}, {'name': 'kiali-secret', 'mountPath': '/kiali-secret'}, {'name': 'kiali-cabundle', 'mountPath': '/kiali-cabundle'}, {'name': 'login-token-signing-key', 'mountPath': '/kiali-override-secrets/login-token-signing-key', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'kiali-multi-cluster-secret', 'mountPath': '/kiali-remote-cluster-secrets/kiali-multi-cluster-secret', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'kube-api-access-9pdvt', 'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}], 'user': {'linux': {'uid': 1000660000, 'gid': 0, 'supplementalGroups': [0, 1000660000]}}}]]"
+    ]
+}
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+ok: [localhost]
+
+TASK [Assert initial Kiali pod has NO chat-ai secret volumes (inline keys used)] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified initial pod has no chat-ai secret volumes (inline keys are used)"
+}
+
+TASK [Assert initial Kiali pod has NO prometheus-oauth2 secret volumes (inline secret used)] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified initial pod has no prometheus-oauth2 secret volumes (inline secret is used)"
+}
+
+TASK [Assert Kiali ConfigMap has inline chat AI keys (not secret references)] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified ConfigMap has inline chat AI keys (provider=inline-enabled-provider-key, model=inline-enabled-model-key)"
+}
+
+TASK [Create external auth rotation test resources] ****************************
+changed: [localhost]
+
+TASK [Wait for grafana-echo deployment to become ready] ************************
+ok: [localhost]
+
+TASK [Prepare updated Kiali CR with secret-based Grafana auth and ChatAI keys] ***
+ok: [localhost]
+
+TASK [Change Kiali CR with new Kiali CR] ***************************************
+--- before
++++ after
+@@ -1,7 +1,67 @@
+ {
+     "metadata": {
+-        "generation": 1,
++        "generation": 2,
+         "managedFields": [
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:metadata": {
++                        "f:finalizers": {
++                            ".": {},
++                            "v:\"kiali.io/finalizer\"": {}
++                        }
++                    }
++                },
++                "manager": "ansible-operator",
++                "operation": "Update",
++                "time": "2026-08-30T07:32:26Z"
++            },
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:status": {
++                        "f:deployment": {
++                            ".": {},
++                            "f:instanceName": {},
++                            "f:namespace": {},
++                            "f:remoteClusterResourcesOnly": {}
++                        },
++                        "f:environment": {
++                            ".": {},
++                            "f:isOpenshift": {},
++                            "f:kubernetesVersion": {},
++                            "f:openshiftVersion": {},
++                            "f:operatorVersion": {}
++                        },
++                        "f:progress": {
++                            ".": {},
++                            "f:duration": {},
++                            "f:message": {}
++                        },
++                        "f:specVersion": {}
++                    }
++                },
++                "manager": "OpenAPI-Generator",
++                "operation": "Update",
++                "subresource": "status",
++                "time": "2026-08-30T07:33:29Z"
++            },
++            {
++                "apiVersion": "kiali.io/v1alpha1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:status": {
++                        ".": {},
++                        "f:conditions": {}
++                    }
++                },
++                "manager": "ansible-operator",
++                "operation": "Update",
++                "subresource": "status",
++                "time": "2026-08-30T07:33:30Z"
++            },
+             {
+                 "apiVersion": "kiali.io/v1alpha1",
+                 "fieldsType": "FieldsV1",
+@@ -101,7 +161,9 @@
+                                 ".": {},
+                                 "f:auth": {
+                                     ".": {},
++                                    "f:cert_file": {},
+                                     "f:insecure_skip_verify": {},
++                                    "f:key_file": {},
+                                     "f:password": {},
+                                     "f:type": {},
+                                     "f:use_kiali_token": {},
+@@ -170,70 +232,10 @@
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+-                "time": "2026-08-30T07:32:26Z"
+-            },
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:metadata": {
+-                        "f:finalizers": {
+-                            ".": {},
+-                            "v:\"kiali.io/finalizer\"": {}
+-                        }
+-                    }
+-                },
+-                "manager": "ansible-operator",
+-                "operation": "Update",
+-                "time": "2026-08-30T07:32:26Z"
+-            },
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:status": {
+-                        "f:deployment": {
+-                            ".": {},
+-                            "f:instanceName": {},
+-                            "f:namespace": {},
+-                            "f:remoteClusterResourcesOnly": {}
+-                        },
+-                        "f:environment": {
+-                            ".": {},
+-                            "f:isOpenshift": {},
+-                            "f:kubernetesVersion": {},
+-                            "f:openshiftVersion": {},
+-                            "f:operatorVersion": {}
+-                        },
+-                        "f:progress": {
+-                            ".": {},
+-                            "f:duration": {},
+-                            "f:message": {}
+-                        },
+-                        "f:specVersion": {}
+-                    }
+-                },
+-                "manager": "OpenAPI-Generator",
+-                "operation": "Update",
+-                "subresource": "status",
+-                "time": "2026-08-30T07:33:29Z"
+-            },
+-            {
+-                "apiVersion": "kiali.io/v1alpha1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:status": {
+-                        ".": {},
+-                        "f:conditions": {}
+-                    }
+-                },
+-                "manager": "ansible-operator",
+-                "operation": "Update",
+-                "subresource": "status",
+-                "time": "2026-08-30T07:33:30Z"
++                "time": "2026-08-30T07:34:15Z"
+             }
+         ],
+-        "resourceVersion": "52216"
++        "resourceVersion": "52362"
+     },
+     "spec": {
+         "ai": {
+@@ -244,17 +246,17 @@
+                         "default_model": "enabled-model",
+                         "enabled": true,
+                         "insecure_skip_verify": false,
+-                        "key": "inline-enabled-provider-key",
++                        "key": "secret:chatai-enabled-provider-key:api-key",
+                         "models": [
+                             {
+                                 "enabled": true,
+-                                "key": "inline-enabled-model-key",
++                                "key": "secret:chatai-enabled-model-key:api-key",
+                                 "model": "gpt-4",
+                                 "name": "enabled-model"
+                             },
+                             {
+                                 "enabled": false,
+-                                "key": "inline-disabled-model-key",
++                                "key": "secret:chatai-disabled-model-key:api-key",
+                                 "model": "gpt-3.5",
+                                 "name": "disabled-model"
+                             }
+@@ -267,11 +269,11 @@
+                         "default_model": "model-under-disabled-provider",
+                         "enabled": false,
+                         "insecure_skip_verify": false,
+-                        "key": "inline-disabled-provider-key",
++                        "key": "secret:chatai-disabled-provider-key:api-key",
+                         "models": [
+                             {
+                                 "enabled": true,
+-                                "key": "inline-model-under-disabled-provider-key",
++                                "key": "secret:chatai-model-disabled-provider-key:api-key",
+                                 "model": "gpt-4-azure",
+                                 "name": "model-under-disabled-provider"
+                             }
+@@ -285,14 +287,16 @@
+         "external_services": {
+             "grafana": {
+                 "auth": {
+-                    "password": "echo-pass1",
+-                    "username": "echo-user1"
++                    "cert_file": "secret:grafana-client-cert:tls.crt",
++                    "key_file": "secret:grafana-client-key:tls.key",
++                    "password": "secret:grafana-password:value",
++                    "username": "secret:grafana-username:value"
+                 }
+             },
+             "prometheus": {
+                 "auth": {
+                     "oauth2": {
+-                        "client_secret": "inline-prometheus-secret"
++                        "client_secret": "secret:prometheus-oauth2-creds:client_secret"
+                     }
+                 }
+             }
+
+changed: [localhost]
+
+TASK [Wait for Kiali CR changes to take effect] ********************************
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (360 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (359 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (358 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (357 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (356 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (355 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (354 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (353 retries left).
+FAILED - RETRYING: [localhost]: Wait for Kiali CR changes to take effect (352 retries left).
+ok: [localhost]
+
+TASK [Wait for Kiali Deployment rollout to complete] ***************************
+ok: [localhost]
+
+TASK [Asserting that Kiali Pod(s) are running and ready] ***********************
+ok: [localhost]
+
+TASK [Debug pod readiness snapshot (for diagnostics)] **************************
+ok: [localhost] => {
+    "msg": [
+        "Kiali pod names: ['kiali-79bc774799-vbh42']",
+        "Kiali pod phases: ['Running']",
+        "Kiali container readiness: [[{'name': 'kiali', 'state': {'running': {'startedAt': '2026-08-30T07:35:15Z'}}, 'lastState': {}, 'ready': True, 'restartCount': 0, 'image': 'quay.io/kiali/kiali:latest', 'imageID': 'quay.io/kiali/kiali@sha256:0ab0caa8292948a5d79ebee66f767f50272064891e91caa240767ea04b9a7251', 'containerID': 'cri-o://6cad85d8ea6b7134cd079c17646c4eda8433519d49251117df2c9585eb0001cb', 'started': True, 'allocatedResources': {'cpu': '10m', 'memory': '64Mi'}, 'resources': {'limits': {'memory': '1Gi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}, 'volumeMounts': [{'name': 'kiali-configuration', 'mountPath': '/kiali-configuration'}, {'name': 'kiali-cert', 'mountPath': '/kiali-cert'}, {'name': 'kiali-secret', 'mountPath': '/kiali-secret'}, {'name': 'kiali-cabundle', 'mountPath': '/kiali-cabundle'}, {'name': 'chat-ai-model-enabled-provider-enabled-model', 'mountPath': '/kiali-override-secrets/chat-ai-model-enabled-provider-enabled-model', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'chat-ai-provider-enabled-provider', 'mountPath': '/kiali-override-secrets/chat-ai-provider-enabled-provider', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'grafana-cert', 'mountPath': '/kiali-override-secrets/grafana-cert', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'grafana-key', 'mountPath': '/kiali-override-secrets/grafana-key', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'grafana-password', 'mountPath': '/kiali-override-secrets/grafana-password', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'grafana-username', 'mountPath': '/kiali-override-secrets/grafana-username', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'login-token-signing-key', 'mountPath': '/kiali-override-secrets/login-token-signing-key', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'prometheus-oauth2-client-secret', 'mountPath': '/kiali-override-secrets/prometheus-oauth2-client-secret', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'kiali-multi-cluster-secret', 'mountPath': '/kiali-remote-cluster-secrets/kiali-multi-cluster-secret', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}, {'name': 'kube-api-access-hggjr', 'mountPath': '/var/run/secrets/kubernetes.io/serviceaccount', 'readOnly': True, 'recursiveReadOnly': 'Disabled'}], 'user': {'linux': {'uid': 1000660000, 'gid': 0, 'supplementalGroups': [0, 1000660000]}}}]]"
+    ]
+}
+
+TASK [Wait for Kiali to be running and accepting requests] *********************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/external-auth-rotation-test/../common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Get Kiali CR if present] *************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali CR: {'apiVersion': 'kiali.io/v1alpha1', 'kind': 'Kiali', 'metadata': {'creationTimestamp': '2026-08-30T07:32:26Z', 'finalizers': ['kiali.io/finalizer'], 'generation': 2, 'managedFields': [{'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:metadata': {'f:finalizers': {'.': {}, 'v:\"kiali.io/finalizer\"': {}}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'time': '2026-08-30T07:32:26Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:spec': {'.': {}, 'f:ai': {'.': {}, 'f:chat': {'.': {}, 'f:default_provider': {}, 'f:enabled': {}, 'f:max_tool_iterations': {}, 'f:providers': {}}, 'f:enabled': {}}, 'f:auth': {'.': {}, 'f:strategy': {}}, 'f:deployment': {'.': {}, 'f:cluster_wide_access': {}, 'f:image_digest': {}, 'f:image_name': {}, 'f:image_pull_policy': {}, 'f:image_version': {}, 'f:ingress': {'.': {}, 'f:class_name': {}, 'f:enabled': {}}, 'f:instance_name': {}, 'f:logger': {'.': {}, 'f:log_format': {}, 'f:log_level': {}, 'f:sampler_rate': {}, 'f:time_field_format': {}}, 'f:namespace': {}, 'f:probes': {'.': {}, 'f:liveness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:readiness': {'.': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}, 'f:startup': {'.': {}, 'f:failure_threshold': {}, 'f:initial_delay_seconds': {}, 'f:period_seconds': {}}}, 'f:remote_cluster_resources_only': {}, 'f:replicas': {}, 'f:secret_name': {}, 'f:service_type': {}, 'f:view_only_mode': {}}, 'f:external_services': {'.': {}, 'f:custom_dashboards': {'.': {}, 'f:discovery_auto_threshold': {}, 'f:discovery_enabled': {}, 'f:enabled': {}, 'f:is_core': {}, 'f:namespace_label': {}, 'f:prometheus': {'.': {}, 'f:auth': {'.': {}, 'f:cert_file': {}, 'f:insecure_skip_verify': {}, 'f:key_file': {}, 'f:password': {}, 'f:token': {}, 'f:type': {}, 'f:use_kiali_token': {}, 'f:username': {}}, 'f:cache_duration': {}, 'f:cache_enabled': {}, 'f:cache_expiration': {}, 'f:is_core': {}}}, 'f:grafana': {'.': {}, 'f:auth': {'.': {}, 'f:cert_file': {}, 'f:insecure_skip_verify': {}, 'f:key_file': {}, 'f:password': {}, 'f:type': {}, 'f:use_kiali_token': {}, 'f:username': {}}, 'f:dashboards': {}, 'f:enabled': {}, 'f:external_url': {}, 'f:internal_url': {}, 'f:is_core': {}}, 'f:perses': {'.': {}, 'f:enabled': {}, 'f:is_core': {}, 'f:project': {}, 'f:url_format': {}}, 'f:prometheus': {'.': {}, 'f:auth': {'.': {}, 'f:insecure_skip_verify': {}, 'f:oauth2': {'.': {}, 'f:auth_style': {}, 'f:client_id': {}, 'f:client_secret': {}, 'f:token_url': {}}, 'f:type': {}, 'f:use_kiali_token': {}}, 'f:cache_duration': {}, 'f:cache_enabled': {}, 'f:cache_expiration': {}, 'f:enabled': {}, 'f:is_core': {}}, 'f:tracing': {'.': {}, 'f:auth': {'.': {}, 'f:cert_file': {}, 'f:insecure_skip_verify': {}, 'f:key_file': {}, 'f:password': {}, 'f:token': {}, 'f:type': {}, 'f:use_kiali_token': {}, 'f:username': {}}, 'f:disable_version_check': {}, 'f:enabled': {}, 'f:grpc_port': {}, 'f:is_core': {}, 'f:namespace_selector': {}, 'f:provider': {}, 'f:query_timeout': {}, 'f:use_grpc': {}, 'f:use_waypoint_name': {}}}, 'f:version': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'time': '2026-08-30T07:34:15Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'f:deployment': {'.': {}, 'f:instanceName': {}, 'f:namespace': {}, 'f:remoteClusterResourcesOnly': {}}, 'f:environment': {'.': {}, 'f:isOpenshift': {}, 'f:kubernetesVersion': {}, 'f:openshiftVersion': {}, 'f:operatorVersion': {}}, 'f:progress': {'.': {}, 'f:duration': {}, 'f:message': {}}, 'f:specVersion': {}}}, 'manager': 'OpenAPI-Generator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-08-30T07:35:15Z'}, {'apiVersion': 'kiali.io/v1alpha1', 'fieldsType': 'FieldsV1', 'fieldsV1': {'f:status': {'.': {}, 'f:conditions': {}}}, 'manager': 'ansible-operator', 'operation': 'Update', 'subresource': 'status', 'time': '2026-08-30T07:35:16Z'}], 'name': 'kiali', 'namespace': 'kiali-operator', 'resourceVersion': '52591', 'uid': 'f7a08248-dad4-4888-abca-29b038771089'}, 'spec': {'ai': {'chat': {'default_provider': 'enabled-provider', 'enabled': True, 'max_tool_iterations': 5, 'providers': [{'config': 'default', 'default_model': 'enabled-model', 'enabled': True, 'insecure_skip_verify': False, 'key': 'secret:chatai-enabled-provider-key:api-key', 'models': [{'enabled': True, 'key': 'secret:chatai-enabled-model-key:api-key', 'model': 'gpt-4', 'name': 'enabled-model'}, {'enabled': False, 'key': 'secret:chatai-disabled-model-key:api-key', 'model': 'gpt-3.5', 'name': 'disabled-model'}], 'name': 'enabled-provider', 'type': 'openai'}, {'config': 'azure', 'default_model': 'model-under-disabled-provider', 'enabled': False, 'insecure_skip_verify': False, 'key': 'secret:chatai-disabled-provider-key:api-key', 'models': [{'enabled': True, 'key': 'secret:chatai-model-disabled-provider-key:api-key', 'model': 'gpt-4-azure', 'name': 'model-under-disabled-provider'}], 'name': 'disabled-provider', 'type': 'openai'}]}, 'enabled': True}, 'auth': {'strategy': 'anonymous'}, 'deployment': {'cluster_wide_access': True, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_version': 'latest', 'ingress': {'class_name': 'nginx', 'enabled': True}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'debug', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'secret_name': 'kiali', 'service_type': 'NodePort', 'view_only_mode': False}, 'external_services': {'custom_dashboards': {'discovery_auto_threshold': 10, 'discovery_enabled': 'auto', 'enabled': True, 'is_core': False, 'namespace_label': 'namespace', 'prometheus': {'auth': {'cert_file': '', 'insecure_skip_verify': False, 'key_file': '', 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'is_core': True}}, 'grafana': {'auth': {'cert_file': 'secret:grafana-client-cert:tls.crt', 'insecure_skip_verify': False, 'key_file': 'secret:grafana-client-key:tls.key', 'password': 'secret:grafana-password:value', 'type': 'basic', 'use_kiali_token': False, 'username': 'secret:grafana-username:value'}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'app': '', 'datasource': '', 'namespace': 'istio-system', 'service': '', 'version': '', 'workload': ''}}], 'enabled': True, 'external_url': 'https://grafana-echo.istio-system:8443', 'internal_url': 'https://grafana-echo.istio-system:8443', 'is_core': False}, 'perses': {'enabled': False, 'is_core': False, 'project': 'istio', 'url_format': ''}, 'prometheus': {'auth': {'insecure_skip_verify': False, 'oauth2': {'auth_style': 'header', 'client_id': 'test-prometheus-client', 'client_secret': 'secret:prometheus-oauth2-creds:client_secret', 'token_url': 'https://idp.example.com/token'}, 'type': 'oauth2', 'use_kiali_token': False}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'enabled': True, 'is_core': True}, 'tracing': {'auth': {'cert_file': '', 'insecure_skip_verify': False, 'key_file': '', 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'disable_version_check': False, 'enabled': False, 'grpc_port': 9095, 'is_core': False, 'namespace_selector': True, 'provider': 'jaeger', 'query_timeout': 5, 'use_grpc': True, 'use_waypoint_name': False}}, 'version': 'default'}, 'status': {'conditions': [{'ansibleResult': {'changed': 11, 'completion': '2026-08-30T07:35:15.790302+00:00', 'failures': 0, 'ok': 88, 'skipped': 75}, 'lastTransitionTime': '2026-08-30T07:32:26Z', 'message': 'Awaiting next reconciliation', 'reason': 'Successful', 'status': 'True', 'type': 'Running'}, {'lastTransitionTime': '2026-08-30T07:35:16Z', 'message': 'Last reconciliation succeeded', 'reason': 'Successful', 'status': 'True', 'type': 'Successful'}, {'lastTransitionTime': '2026-08-30T07:33:30Z', 'message': '', 'reason': '', 'status': 'False', 'type': 'Failure'}], 'deployment': {'instanceName': 'kiali', 'namespace': 'istio-system', 'remoteClusterResourcesOnly': False}, 'environment': {'isOpenshift': True, 'kubernetesVersion': '1.35.5', 'openshiftVersion': '4.22.1', 'operatorVersion': 'v2.32.0-SNAPSHOT'}, 'progress': {'duration': '0:00:56', 'message': '7. Finished all resource creation'}, 'specVersion': 'default'}}"
+}
+
+TASK [Get Kiali Configmap] *****************************************************
+ok: [localhost]
+
+TASK [Format Configmap] ********************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "msg": "Present Kiali ConfigMap: {'additional_display_details': [{'annotation': 'kiali.io/api-spec', 'icon_annotation': 'kiali.io/api-type', 'title': 'API Documentation'}], 'ai': {'chat': {'allowed_users': [], 'default_provider': 'enabled-provider', 'enabled': True, 'max_tool_iterations': 5, 'providers': [{'config': 'default', 'default_model': 'enabled-model', 'enabled': True, 'insecure_skip_verify': False, 'key': 'secret:chatai-enabled-provider-key:api-key', 'models': [{'enabled': True, 'key': 'secret:chatai-enabled-model-key:api-key', 'model': 'gpt-4', 'name': 'enabled-model'}, {'enabled': False, 'key': 'secret:chatai-disabled-model-key:api-key', 'model': 'gpt-3.5', 'name': 'disabled-model'}], 'name': 'enabled-provider', 'type': 'openai'}, {'config': 'azure', 'default_model': 'model-under-disabled-provider', 'enabled': False, 'insecure_skip_verify': False, 'key': 'secret:chatai-disabled-provider-key:api-key', 'models': [{'enabled': True, 'key': 'secret:chatai-model-disabled-provider-key:api-key', 'model': 'gpt-4-azure', 'name': 'model-under-disabled-provider'}], 'name': 'disabled-provider', 'type': 'openai'}], 'store_config': {'enabled': True, 'inactivity_timeout': '30m', 'max_cache_memory_mb': 1024, 'reduce_threshold': 15, 'reduce_with_ai': False}, 'tools': {}}, 'enabled': True}, 'auth': {'openid': {'additional_request_params': {}, 'allowed_domains': [], 'api_proxy': '', 'api_proxy_ca_data': '', 'api_token': 'id_token', 'authentication_timeout': 300, 'authorization_endpoint': '', 'client_id': '', 'disable_rbac': False, 'discovery_override': {'authorization_endpoint': '', 'end_session_endpoint': '', 'jwks_uri': '', 'token_endpoint': '', 'userinfo_endpoint': ''}, 'http_proxy': '', 'https_proxy': '', 'insecure_skip_verify_tls': False, 'issuer_uri': '', 'post_logout_redirect_uri': '', 'scopes': ['openid', 'profile', 'email'], 'username_claim': 'sub'}, 'openshift': {'impersonation': {'allowed_groups': [], 'allowed_users': [], 'enabled': False}, 'insecure_skip_verify_tls': False}, 'strategy': 'anonymous'}, 'clustering': {'autodetect_secrets': {'enabled': True, 'label': 'kiali.io/multiCluster=true'}, 'clusters': [], 'enable_exec_provider': False, 'ignore_home_cluster': False, 'kiali_urls': []}, 'custom_dashboards': [], 'deployment': {'additional_pod_containers_yaml': [], 'additional_pod_init_containers_yaml': [], 'affinity': {'node': {}, 'pod': {}, 'pod_anti': {}}, 'cluster_wide_access': True, 'configmap_annotations': {}, 'custom_envs': [], 'custom_secrets': [], 'discovery_selectors': {}, 'dns': {'config': {}, 'policy': ''}, 'extra_labels': {}, 'host_aliases': [], 'hpa': {'api_version': 'autoscaling/v2', 'spec': {}}, 'image_digest': '', 'image_name': 'quay.io/kiali/kiali', 'image_pull_policy': 'Always', 'image_pull_secrets': [], 'image_version': 'latest', 'ingress': {'additional_labels': {}, 'class_name': 'nginx', 'enabled': True}, 'instance_name': 'kiali', 'logger': {'log_format': 'text', 'log_level': 'debug', 'sampler_rate': '1', 'time_field_format': '2006-01-02T15:04:05Z07:00'}, 'namespace': 'istio-system', 'network_policy': {'enabled': True}, 'node_selector': {}, 'pod_annotations': {'proxy.istio.io/config': '{ \"holdApplicationUntilProxyStarts\": true }'}, 'pod_disruption_budget': {'api_version': 'policy/v1', 'spec': {}}, 'pod_labels': {}, 'priority_class_name': '', 'probes': {'liveness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'readiness': {'initial_delay_seconds': 1, 'period_seconds': 1}, 'startup': {'failure_threshold': 60, 'initial_delay_seconds': 1, 'period_seconds': 1}}, 'remote_cluster_resources_only': False, 'replicas': 1, 'resources': {'limits': {'memory': '1Gi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}, 'secret_name': 'kiali', 'security_context': {}, 'service_annotations': {}, 'service_type': 'NodePort', 'strategy': {}, 'tls_config': {'cipher_suites': [], 'max_version': '', 'min_version': '', 'source': 'auto'}, 'tolerations': [], 'topology_spread_constraints': [], 'version_label': 'master', 'view_only_mode': False}, 'extensions': [], 'external_services': {'custom_dashboards': {'discovery_auto_threshold': 10, 'discovery_enabled': 'auto', 'enabled': True, 'is_core': False, 'namespace_label': 'namespace', 'prometheus': {'auth': {'cert_file': '', 'insecure_skip_verify': False, 'key_file': '', 'oauth2': {'audience': '', 'auth_style': 'header', 'client_id': '', 'client_secret': '', 'scopes': [], 'token_url': ''}, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': ''}}, 'grafana': {'auth': {'cert_file': 'secret:grafana-client-cert:tls.crt', 'insecure_skip_verify': False, 'key_file': 'secret:grafana-client-key:tls.key', 'oauth2': {'audience': '', 'auth_style': 'header', 'client_id': '', 'client_secret': '', 'scopes': [], 'token_url': ''}, 'password': 'secret:grafana-password:value', 'token': '', 'type': 'basic', 'use_kiali_token': False, 'username': 'secret:grafana-username:value'}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'app': '', 'datasource': '', 'namespace': 'istio-system', 'service': '', 'version': '', 'workload': ''}}], 'datasource_uid': '', 'enabled': True, 'external_url': 'https://grafana-echo.istio-system:8443', 'health_check_url': '', 'internal_url': 'https://grafana-echo.istio-system:8443', 'is_core': False}, 'istio': {'component_status': {'components': [], 'enabled': True}, 'gateway_api_classes': [], 'gateway_api_classes_label_selector': '', 'istio_api_enabled': True, 'istio_identity_domain': '', 'istiod_polling_interval_seconds': 20, 'validation_change_detection_enabled': True, 'validation_reconcile_interval': '1m'}, 'perses': {'auth': {'insecure_skip_verify': False, 'oauth2': {'audience': '', 'auth_style': 'header', 'client_id': '', 'client_secret': '', 'scopes': [], 'token_url': ''}, 'password': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'dashboards': [{'name': 'Istio Service Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'service': 'var-service', 'version': 'var-version'}}, {'name': 'Istio Workload Dashboard', 'variables': {'datasource': 'var-datasource', 'namespace': 'var-namespace', 'version': 'var-version', 'workload': 'var-workload'}}, {'name': 'Istio Mesh Dashboard'}, {'name': 'Istio Control Plane Dashboard'}, {'name': 'Istio Performance Dashboard'}, {'name': 'Istio Wasm Extension Dashboard'}], 'enabled': False, 'external_url': '', 'health_check_url': '', 'internal_url': '', 'is_core': False, 'project': 'istio', 'url_format': ''}, 'prometheus': {'auth': {'insecure_skip_verify': False, 'oauth2': {'audience': '', 'auth_style': 'header', 'client_id': 'test-prometheus-client', 'client_secret': 'secret:prometheus-oauth2-creds:client_secret', 'scopes': [], 'token_url': 'https://idp.example.com/token'}, 'password': '', 'token': '', 'type': 'oauth2', 'use_kiali_token': False, 'username': ''}, 'cache_duration': 7, 'cache_enabled': True, 'cache_expiration': 300, 'custom_headers': {}, 'enabled': True, 'health_check_url': '', 'is_core': True, 'query_scope': {}, 'thanos_proxy': {'enabled': False, 'retention_period': '7d', 'scrape_interval': '30s'}, 'url': 'http://prometheus.istio-system:9090'}, 'tracing': {'auth': {'cert_file': '', 'insecure_skip_verify': False, 'key_file': '', 'oauth2': {'audience': '', 'auth_style': 'header', 'client_id': '', 'client_secret': '', 'scopes': [], 'token_url': ''}, 'password': '', 'token': '', 'type': 'none', 'use_kiali_token': False, 'username': ''}, 'custom_headers': {}, 'disable_version_check': False, 'enabled': False, 'external_url': '', 'grpc_port': 9095, 'health_check_url': '', 'internal_url': 'http://tracing.istio-system:16685/jaeger', 'is_core': False, 'namespace_selector': True, 'provider': 'jaeger', 'query_scope': {}, 'query_timeout': 5, 'tempo_config': {'cache_capacity': 200, 'cache_enabled': True, 'datasource_uid': '', 'name': '', 'namespace': '', 'org_id': '', 'tenant': '', 'url_format': 'grafana'}, 'use_grpc': True, 'use_waypoint_name': False, 'whitelist_istio_system': ['jaeger-query', 'istio-ingressgateway']}}, 'health_config': {'compute': {'duration': '5m', 'refresh_interval': '3m', 'timeout': '10m'}, 'rate': []}, 'identity': {'cert_file': '/kiali-cert/tls.crt', 'private_key_file': '/kiali-cert/tls.key'}, 'installation_tag': '', 'istio_labels': {'app_label_name': '', 'version_label_name': ''}, 'kiali_feature_flags': {'authz': {'require_namespace_get': False}, 'clustering': {'enable_exec_provider': False}, 'custom_workload_types': [], 'disabled_features': [], 'istio_annotation_action': True, 'istio_injection_action': True, 'istio_upgrade_action': False, 'ui_defaults': {'graph': {'find_options': [{'auto_select': False, 'description': 'Find: slow edges (> 1s)', 'expression': 'rt > 1000'}, {'auto_select': False, 'description': 'Find: unhealthy nodes', 'expression': '! healthy'}, {'auto_select': False, 'description': 'Find: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Find: nodes with the 2 top rankings', 'expression': 'rank <= 2'}], 'hide_options': [{'auto_select': False, 'description': 'Hide: healthy nodes', 'expression': 'healthy'}, {'auto_select': False, 'description': 'Hide: unknown nodes', 'expression': 'name = unknown'}, {'auto_select': False, 'description': 'Hide: nodes ranked lower than the 2 top rankings', 'expression': 'rank > 2'}], 'settings': {'animation': 'point'}, 'traffic': {'ambient': 'total', 'grpc': 'requests', 'http': 'requests', 'tcp': 'sent'}}, 'i18n': {'show_selector': False}, 'list': {'include_health': True, 'include_istio_resources': True, 'include_validations': True, 'show_include_toggles': False}, 'mesh': {'find_options': [{'description': 'Find: unhealthy nodes', 'expression': '! healthy'}], 'hide_options': [{'description': 'Hide: healthy nodes', 'expression': 'healthy'}]}, 'metrics_inbound': {'aggregations': []}, 'metrics_outbound': {'aggregations': []}, 'metrics_per_refresh': '1m', 'namespaces': [], 'refresh_interval': '1m', 'tracing': {'limit': 100}}, 'validations': {'ignore': ['KIA1301'], 'skip_wildcard_gateway_hosts': False}}, 'kiali_internal': {}, 'kubernetes_config': {'burst': 200, 'cache_duration': 300, 'cache_token_namespace_duration': 10, 'cluster_name': '', 'excluded_workloads': ['CronJob', 'DeploymentConfig', 'Job', 'ReplicationController'], 'qps': 175}, 'login_token': {'expiration_seconds': 86400, 'signing_key': 'secret:kiali-signing-key:key'}, 'server': {'address': '', 'audit_log': True, 'cors_allow_all': False, 'gzip_enabled': True, 'observability': {'metrics': {'enabled': True, 'health_status': {'enabled': False, 'max_consecutive_na': 3}, 'port': 9090}, 'tracing': {'collector_type': 'otel', 'collector_url': 'jaeger-collector.istio-system:4318', 'enabled': False, 'otel': {'ca_name': '', 'protocol': 'http', 'skip_verify': False, 'tls_enabled': False}, 'sampling_rate': 0.5}}, 'port': 20001, 'profiler': {'enabled': False}, 'require_auth': False, 'web_fqdn': '', 'web_history_mode': 'browser', 'web_port': '', 'web_root': '/', 'web_schema': '', 'write_timeout': '60s'}, 'version': 'default'}"
+}
+
+TASK [Get Kiali Operator Pod] **************************************************
+ok: [localhost]
+
+TASK [Get Kiali Pod] ***********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Deployment] ****************************************************
+ok: [localhost]
+
+TASK [Get Kiali Service] *******************************************************
+ok: [localhost]
+
+TASK [Get Kiali Route] *********************************************************
+ok: [localhost]
+
+TASK [Get Kiali Ingress] *******************************************************
+skipping: [localhost]
+
+TASK [Determine the Kiali Route URL on OpenShift] ******************************
+ok: [localhost]
+
+TASK [Determine the Kiali URL on minikube] *************************************
+skipping: [localhost]
+
+TASK [Determine the Kiali URL on kind] *****************************************
+skipping: [localhost]
+
+TASK [Assert Kiali pod has all grafana secret volumes and mounts] **************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified all grafana secret volumes and mounts are present"
+}
+
+TASK [Assert Kiali pod has prometheus-oauth2-client-secret volume and mount] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified prometheus oauth2 client_secret volume and mount are present"
+}
+
+TASK [Assert Kiali pod has enabled ChatAI provider key secret volume and mount] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified enabled ChatAI provider key secret volume and mount are correctly configured"
+}
+
+TASK [Assert Kiali pod has enabled ChatAI model key secret volume and mount] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified enabled ChatAI model key secret volume and mount are correctly configured"
+}
+
+TASK [Assert Kiali pod does NOT have disabled model secret (disabled-model)] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified disabled-model secret is correctly NOT mounted"
+}
+
+TASK [Assert Kiali pod does NOT have disabled provider secret (disabled-provider)] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified disabled-provider secret is correctly NOT mounted"
+}
+
+TASK [Assert Kiali pod does NOT have model secret under disabled provider] *****
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified model secret under disabled provider is correctly NOT mounted"
+}
+
+TASK [Compute expected Basic auth headers] *************************************
+ok: [localhost]
+
+TASK [Get grafana-echo pod for log inspection (pre-rotation)] ******************
+ok: [localhost]
+
+TASK [Trigger Kiali to call Grafana endpoint (pre-rotation)] *******************
+ok: [localhost]
+
+TASK [Fetch and verify echo service logs (pre-rotation)] ***********************
+ok: [localhost]
+
+TASK [Verify pre-rotation credentials were used by Kiali] **********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified Kiali used echo-user1:echo-pass1 credentials and the initial client certificate before rotation"
+}
+
+TASK [Record Kiali restart/pod info before test] *******************************
+ok: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [Rotate external basic auth credentials (username -> echo-user2)] *********
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+     "data": {
+-        "value": "ZWNoby11c2VyMQ=="
++        "value": "ZWNoby11c2VyMg=="
+     },
+     "metadata": {
+         "managedFields": [
+@@ -16,9 +16,9 @@
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+-                "time": "2026-08-30T07:34:05Z"
++                "time": "2026-08-30T07:36:02Z"
+             }
+         ],
+-        "resourceVersion": "52292"
++        "resourceVersion": "52687"
+     }
+ }
+
+changed: [localhost]
+
+TASK [Rotate external basic auth credentials (password -> echo-pass2)] *********
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+     "data": {
+-        "value": "ZWNoby1wYXNzMQ=="
++        "value": "ZWNoby1wYXNzMg=="
+     },
+     "metadata": {
+         "managedFields": [
+@@ -16,9 +16,9 @@
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+-                "time": "2026-08-30T07:34:05Z"
++                "time": "2026-08-30T07:36:04Z"
+             }
+         ],
+-        "resourceVersion": "52294"
++        "resourceVersion": "52697"
+     }
+ }
+
+changed: [localhost]
+
+TASK [Rotate Grafana client certificate (new CN)] ******************************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+     "data": {
+-        "tls.crt": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURBRENDQWVpZ0F3SUJBZ0lVQy84RHF4U1AvQjdydjN6UEtjWm9yK0ZKUXc0d0RRWUpLb1pJaHZjTkFRRUwKQlFBd0ZURVRNQkVHQTFVRUF3d0tWR1Z6ZEVOQkxVOXNaREFlRncweU5URXlNRFF4TmpVNU1UaGFGdzB5TmpFeQpNRFF4TmpVNU1UaGFNQnN4R1RBWEJnTlZCQU1NRUd0cFlXeHBMV05zYVdWdWRDMXZiR1F3Z2dFaU1BMEdDU3FHClNJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURudlI2TVk2Y3NXY3BwS3ovdUh6M3p4Y2I3b3lCai9DWTUKdGZVVGtyWDJmMEdHZVZYVXhlcHVrTjJhMlpBVU9MVjcvbTRxNmx6bnBBTE93QW50SHliZG9CVE9OKzh3YjgrQgo5YzZKeFI2dmdPcmRseW1xWXZObWRFT294K09nK0k4MlkwdFduemdJU3F1WWdSV0c3OU03OVBWV0hhelVnUi9tCjJpMEpDRHRSbllKanUrNXNzTVlPS0hNdlMzc2dtTmpzOUljUzJuUG1yVGFVQ1k3aC9QTnJuM1EzWHJFeDh0NUwKMkdRWDlMc2FPZXpzdUFucjZReS9KNExtL1hkdjJiUkRWNGNJM0poc0JEYlU5aDB4Q2g5SjZFSVhXWFl0NWFkRwpNSERiaDh3dDNZYXZuRWJ0R1BFZTV3Qmd0Tzh2bkhlUmVEMzNxc1p6TWsvZGlpRkttS2t0QWdNQkFBR2pRakJBCk1CMEdBMVVkRGdRV0JCU1hQdk5HZWE1MzJ0a0tuTkF4ankyUktQallUVEFmQmdOVkhTTUVHREFXZ0JUR1prVUcKMGxjZ0hVdWVuQmdsNFVYYlErWFBWREFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBdEw0SGpzaElYU1BrUXVlZQpDM1JvY2hmeWY5S0lTZWNDcktLbFVKdlV4eWc5VDJLMnMxRjBnaGpBK0l3OFZ6NnBWZm1zcXNKKzI1QnBaS205ClNPempzeXJYT01GMkxDaG04NHNaY283Q1FSa09MeDhYeHlJMEhYT0gzbEdzbm9ycHlsUjlsSm5sNzh3Z0hrSHoKdDVsSGxQT29EZytzZHY0MU5NQ0F6ZnA5bmpZcTBxV0tRdm5KSUkvMFNvOE50b1hRNUUvVXRkeVZuc0dhUGFtQgp4U0N6Tm9nOStqd3Ftb1ZadFRmNGF1TTZFQkcwV3pxclR4dUZtcGdBblkzM3RBNDNoczBRMkxPeURYZ1VEaDNDCjhaYmFEN1Z5RStFYU9NK04yYmx2aG55NTIyS1p4MjkzU1l1d0xUQVc4SWl2dEJabmFtMTkwNWMwWDVuYndrL2oKMGR5N0tBPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo="
++        "tls.crt": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURBRENDQWVpZ0F3SUJBZ0lVWnhLS1BRTmJGby84ZzhIU1pKVDgxM280VUU4d0RRWUpLb1pJaHZjTkFRRUwKQlFBd0ZURVRNQkVHQTFVRUF3d0tWR1Z6ZEVOQkxVNWxkekFlRncweU5URXlNRFF4TmpVNU1UaGFGdzB5TmpFeQpNRFF4TmpVNU1UaGFNQnN4R1RBWEJnTlZCQU1NRUd0cFlXeHBMV05zYVdWdWRDMXVaWGN3Z2dFaU1BMEdDU3FHClNJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURPMVlvYW9SamJZVzlJbEt2NXdGNGlVMlFFc0RsQXJJUGcKOTlQQ3JCclh2N0lHbTVxZ1lGSDF3cGNYQ2xmRkpMK21UY1hybVBJQ0lXWHZWYjJ5MHIzU2lHMU41V2EvT2hFNwprTGF4cnNpV1hhWXlDWjRqVytPYlhKVjFhVHlhT2NpbjFqUlBwb3FhbFkxVFQ2WjlnTjNxUGtmSGZ2QXV6OWd0CjNPbXUrVWdTRVE5blRnTDRzd2VwamRKWndXZXpoRnZIUndKTDJLaFpCaGVQaVprNDdub2ZhVnZKWVI0emh2MkcKNk1SVkhtOUhVaXVYL3h4OVNWWnExVGRJZHVRM001WGFwNkMxc3V6dFdHUEF1WTN3MFhIa0V6TlMzR05HUTRtOQpKQVFxMFNJL0NWY0J0R0hGQXh5azFKcjVKZnhCOXZLblFscnBCN05hSmJCZGFDa1N4dTZiQWdNQkFBR2pRakJBCk1CMEdBMVVkRGdRV0JCUk84WGZtUitJU1IwT1Q1OGhwY0tWNi9YUm80REFmQmdOVkhTTUVHREFXZ0JRRE4ydzAKc2lpNjJsdlhlOFlEZnd4dTg5c0x4REFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBSVVWeFd2VS8xQUpoTXdQagplNm9nTFVsNVREYlJydDIyUnNzQXZFajNPVDd6UzlyeGhvYk0wV2tYNkpjMVJjY3hUTDZBYTIzZTJvZVVnaE40CkMzMk5jVi8zckVmZkxHNzYvMVliZmhCeWs4M25nWk5rVHUyTXdIUFdQR0s3NktoelpXdzIxQ2NMRXNsZnZjd1YKSDNrNU0xVzAzV1VINUl6OHpZdFdyL01uampCU09pQWw3eU5SN1VZNS9QSURneXR1WTFUQjByT0FLaXhyb1IxYgpXcjRkWXRncUMraG9icHYrOHMyNkJCSlVkQVVLSXNGMlpBZmxRdlZ2K1pzMkxBQnBSTjcyYVJsSFgzWWk4QzU4CjJIUFluem81czhhY1NYMW9rV1JjZDNuNDEya1o5RnlpNU5aazAzRmZIc2JvTVExQU84MzV6dE4yWEJEOU1IUUQKQWpGQmRRPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ=="
+     },
+     "metadata": {
+         "managedFields": [
+@@ -16,9 +16,9 @@
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+-                "time": "2026-08-30T07:34:05Z"
++                "time": "2026-08-30T07:36:07Z"
+             }
+         ],
+-        "resourceVersion": "52296"
++        "resourceVersion": "52701"
+     }
+ }
+
+changed: [localhost]
+
+TASK [Rotate Grafana client private key] ***************************************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+     "data": {
+-        "tls.key": "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2d0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktrd2dnU2xBZ0VBQW9JQkFRRG52UjZNWTZjc1djcHAKS3ovdUh6M3p4Y2I3b3lCai9DWTV0ZlVUa3JYMmYwR0dlVlhVeGVwdWtOMmEyWkFVT0xWNy9tNHE2bHpucEFMTwp3QW50SHliZG9CVE9OKzh3YjgrQjljNkp4UjZ2Z09yZGx5bXFZdk5tZEVPb3grT2crSTgyWTB0V256Z0lTcXVZCmdSV0c3OU03OVBWV0hhelVnUi9tMmkwSkNEdFJuWUpqdSs1c3NNWU9LSE12UzNzZ21OanM5SWNTMm5QbXJUYVUKQ1k3aC9QTnJuM1EzWHJFeDh0NUwyR1FYOUxzYU9lenN1QW5yNlF5L0o0TG0vWGR2MmJSRFY0Y0kzSmhzQkRiVQo5aDB4Q2g5SjZFSVhXWFl0NWFkR01IRGJoOHd0M1lhdm5FYnRHUEVlNXdCZ3RPOHZuSGVSZUQzM3FzWnpNay9kCmlpRkttS2t0QWdNQkFBRUNnZ0VBSXpORmFDTEhwUmpRZ2xBWS83cDIwUjFmZjhxdXVWdjI1eU9UVEthbmhYL3kKcHBLdUF4OWx0WklZcno3NzZvUEFyQ0IyS3pENm1BOEFMdGZaeWlSd3VycG9YcU5Td3ZpV1BHYzg0N2djVktGUQpTNjk4bXprNDZxZWZhQXhRMnhzcnVjeGZDR2lGVWpFY0crZ0RxcGIrN3VlNFpSMGwxYk9nSFJOU21FRjJyVFhsCjJQamlhRVBUT0hRQmpYbGlXbFpORXliWkc3cjZ1UUJQcGd4R1pLZFl6bWowWi9WUzIzM3JBMHNuT1ZiOWZGWncKakZaWUIwZWlJTWFpdHh3emYzMnZzclpCMUtNQTdtc29WenY3VDdqa05PQWdMM2FBbmV4WFE0bDh6K3RzYU1sNApQbWt3NVhYT1ZUTWJTa3gxa09KYjFqNmZLRmZRQUZmczNsalZ4aUhBeXdLQmdRRDYxN1JlYWlVVUJVVTJ6aXJvCmZmRzVUOVVlNVhLamxyajNqSWNoTkt4UnBBSWpoamw3Mm9QTDFhSThrenFwQnZFWXpLVGZ6VlFsakpxNEJsMm0KTW8rVC9SM3E2SmF4M3RQZGRrZ2dId01URlVxZlEyVVc0NEx3T0ZGenFmTGtqaXNNWWpDYjhSd1U3M1hyMnMrMQpSWkJCMnlINkNnbFBYcXpML0VVRkZBUzV4d0tCZ1FEc2dOemVSZkVXQmxwaUIwSnRveEdqUk5DK1BSMm5ZWnQ3CnFiNys2a08veXQ2VlR5YisvOTRaK25HcVZqSlBtd3ZYWnJsa2xQcWJ5N1orNk83STJkdUx5WjkwQzc5TDFSRkkKRjJQMWl3OUdQb3JQYlJGb2NvcmV6QjhKK3pVV0pjSXl0alBsQUJmRHQxeVk5ckZodEpnbHFzQyszcGVDS09sOApTNWFST2hEbGF3S0JnUURtVnJVV0RicEdqQ0JtbHlMbm90OFpINm5BV1VuUDFsTzdYWnVvYmtuZUhoQ290bFNLCjJya3pyOVR1Y3ZQbXlxMFI3TGxwbVk2dmZGR0dzckhFTDZHUWIxbk5vQTdnL3BEbVIvc3JJODhhOHU0M0dSZjIKMEt3b0VrOFpPdklEMWxqSllsRG9vWnI3em5nbVFDT0RmWUZlTis4WFA2Z1U3Z2NXdVd4WG9XNUZlUUtCZ1FDYQpia0xLK1V6Rm52eGh5bSs3KzZGR3hXYXc4bU5zcXJYR2VENzVZYXMvajQ3c1hEVVFpYTlUczArSmRLT0JpN0tkCndyd0lTNmVoRjlKZzZHVVR6ZjRvTjAzaGp0SXBDRVl5bHVOMHNJc1d5VHdHMmlkbDFuV0xxaW9TY0hCbnQ5d3AKRlFTcDRmZWlteGJoNHlSTXNvb3UvbUxCdjhPYkFIQUY4NjJyd3dqSlpRS0JnUUNDMHUrc0lJcEd2QU5PYWk4Mgptd254U3k4TmpLNnpxWTR6Qkwwdms2V0V1RFBMZWkveUdpVW5jYkNUSHhleUZyK1pkUEFQcFNwbi8wZVhYNFJFCnNHVVJBSWJ6bjRkU3g1Nys3d2dkam4vUTlDVXZuWWM0cmNTSTBaS09SNWpWcXZJMENXOUtlNDdLcXU5a2xSQmsKQXJzeWpvNUkwb0lkOTM2NkxVNjlzSVB3NEE9PQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg=="
++        "tls.key": "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2Z0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktnd2dnU2tBZ0VBQW9JQkFRRE8xWW9hb1JqYllXOUkKbEt2NXdGNGlVMlFFc0RsQXJJUGc5OVBDckJyWHY3SUdtNXFnWUZIMXdwY1hDbGZGSkwrbVRjWHJtUElDSVdYdgpWYjJ5MHIzU2lHMU41V2EvT2hFN2tMYXhyc2lXWGFZeUNaNGpXK09iWEpWMWFUeWFPY2luMWpSUHBvcWFsWTFUClQ2WjlnTjNxUGtmSGZ2QXV6OWd0M09tdStVZ1NFUTluVGdMNHN3ZXBqZEpad1dlemhGdkhSd0pMMktoWkJoZVAKaVprNDdub2ZhVnZKWVI0emh2Mkc2TVJWSG05SFVpdVgveHg5U1ZacTFUZElkdVEzTTVYYXA2QzFzdXp0V0dQQQp1WTN3MFhIa0V6TlMzR05HUTRtOUpBUXEwU0kvQ1ZjQnRHSEZBeHlrMUpyNUpmeEI5dktuUWxycEI3TmFKYkJkCmFDa1N4dTZiQWdNQkFBRUNnZ0VBUzFTUXVRUWxabmxGSzUwaVNaTWJkY3NEYVlXNVJHblFtbFlJcFNWRG5ZSnUKMTJOQzNOaFg0WGRleWdCMVdSTDZUaHFUVkN4Zk1CRno2OGhCaitpYlJCdDJHK0hLR3ltTjd6RFVxVUFzUkQrVgpjVEg1aTQxREIybWY4YVJEY3pSS2RYNVpqUXp0L0VFdHVNTVFzek1GSC9SUTlrS3dQWXhyZ3NDcng1TjVBVUxYCnlEa3RMdGtTV2MveENkekwwdllJNTl0ZHAvTTlVMHJFSTlmQUNsYmx4SFd0ckovVHE2T0R6dEFlallFbHdHN3AKMkU1YVVvbE4relo0TWZNS2ZFTTlSZjBRMEEvU2RiR1FVeXU5b3BlQW0wTnlzdmZ3K3h6K015WjlYem9xM2pVcAo0SXFzemZNeklOMytTU1E2cE4vejBZQ1lMWlhFZU9jTm0vRTREbGR2aVFLQmdRRG5LS1QrUEM2L2NpSFFzQTRVCkZkNVU1OTk1YnRmOWkwZlN2RDVKeHJOdjZiYTFiT0k4N2EyZWhIN0l1SFlIZDM4bEFnOTZYNTdQSlRVaHVFZ08KVlNTaGhGRDdJR1oxaU43d3RPMXZIOGp5U2t2RWxqUTNlaVhERngrTWdZTnNCSDlRRThmTXRYRlZ1NU82UDBOUQpLK0VZd3U5LzU0QWdqaDBNZ05FaU1zSDcvUUtCZ1FEbEQ3U3BabmMwdUNTSkNlQU4yZGNGWWc1V21nRGJlQTcrCkxBRHBLMjhuQzhkcGxBdjlCbEpiZjY5cDk3ZlRXNlJJUTdicFlCZGlPM2EyZFZNU1FJSHZBOTVqSGlLRHRkQnIKZjVZRGh5Mk5TZUFxVVAyTFZqOGVCblk4SGphWkZaR3NXUEh3NzkyZE5mZ3p3bDBTRWpmSFBHSklJZzlLSXlOawozS0o3UE5HOGR3S0JnQkY3QlY4a2RmU01VUHBURmYxMjJlVlowNUIvVFY0akZqOWRkT2huV2xKd1BoemlLd21vCmY2U3BLRjFOZGIrQ3pkNmlsVUVQMGhhZ0hiQjdHeGZhWUhiR1pzbFczZWl0ZlE1KzRDV3pKYU1NODBYZWhmeGMKQkZjSWZKNUhmUVRDSWs2UDhHQU9xSTl2Sy9DOXIvMTBGQVduV0MwMytIeDl3cnliVVRWZzJVS1JBb0dCQUphRQp1SW1zYkY2M05rTGF1MkUrcVYyL0xuN1gyZ0pkcFRSK1ErYjBoS2phdzZIc0IraXZrOFRPWmIwemE1YzJuQUJrCmhyaGFUV05lZ2NhcDEvbWhiQUJjd1hET1o0MjNGb3JkSHYyWWdXVmJpek1qWDBpRlZ4cHEwcHowbVpvRW8ySG0KWEsyZllUZ2lNOFFIVDFORnAyT0RtVzJlKy84U2tmcUFSVURJR1daSEFvR0JBSkxuajVaTzY0a0dZeGljZ2J0YgozRUk4N281T3p1eTJ1Z0NWaVZuSkpzS3E1RlQxRFBINHdyQVFPUGRWTnl2b25zeEhOdWdJZ25BQzJNY1FxbWVJClZrcUM3UHZKb1JIcGJtQjVRQUM3S1lFK1FFMTE5MzFYb0MxUEpibi91Q0p3U1FPQktQcCtEaTVOTWlPamlPU1QKbnFqbENyYUtBUXFLQUM0cUh1SFZuS0ZXCi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0="
+     },
+     "metadata": {
+         "managedFields": [
+@@ -16,9 +16,9 @@
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+-                "time": "2026-08-30T07:34:05Z"
++                "time": "2026-08-30T07:36:09Z"
+             }
+         ],
+-        "resourceVersion": "52297"
++        "resourceVersion": "52705"
+     }
+ }
+
+changed: [localhost]
+
+TASK [Rotate Grafana client CA trusted by the echo server] *********************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+     "data": {
+-        "ca.crt": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURDekNDQWZPZ0F3SUJBZ0lVQ0RPQTROc2k2OUF2eFRWVEFZWkphVWw5RzRvd0RRWUpLb1pJaHZjTkFRRUwKQlFBd0ZURVRNQkVHQTFVRUF3d0tWR1Z6ZEVOQkxVOXNaREFlRncweU5URXlNRFF4TmpVNU1UaGFGdzB5TmpFeQpNRFF4TmpVNU1UaGFNQlV4RXpBUkJnTlZCQU1NQ2xSbGMzUkRRUzFQYkdRd2dnRWlNQTBHQ1NxR1NJYjNEUUVCCkFRVUFBNElCRHdBd2dnRUtBb0lCQVFEQkZ1TDFkbk05LzB6U3crV0NVdE1kYmliSVRWRTVFU0x3ODJHMlhsdlcKSEF5Z01lbzc4dXc3WDdYOVJZMjBsNzY5c0dSSGQvcHovejZGWGt6L0gwL0hUOWhwVXFnVTRnZENrczVoR0dhWQpkM0ZWYWwwcEVrN0Fxb3d0aTZybS9NaTRKTXhQaTJjalp3cWp1R2tGbC9maVMyd0J6MTMwelJrR01qVGVJYUNUCjlYc0l6NzNsN1VhSUVCdmI3UmlLWVhpd0xOenVPMTJrUitPcG5ZL2Z6blA1T3c5Wmh5NFVxTnNGMG1sczlxRDIKZXJ0ZFIxYjdMaWNVSElGRWlBY3E5MzVPRHk5MS9MMmF1MCt0ck1aMEl6OWNnSXZWYVZMVE5DTEFXdmEvYjQxagpOc2tad2E1MmZUVXNmaTN1aHNDOHRYZW5BRDZpOHE4ODFPZjBhZ2tYdkpNbkFnTUJBQUdqVXpCUk1CMEdBMVVkCkRnUVdCQlRHWmtVRzBsY2dIVXVlbkJnbDRVWGJRK1hQVkRBZkJnTlZIU01FR0RBV2dCVEdaa1VHMGxjZ0hVdWUKbkJnbDRVWGJRK1hQVkRBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFBUgppNVUxeVFUaWZraEJQamdDVTVNZkcwSEI4UlFKT3VUVG5nRTVZRXJyMzRrb29rNTJVU1ZXYkYrd29Ja3ZnOEhoCkdDNWRBelE5RUxPMDg4WUI1Y0E0dTk4WlZDL1FTUU80b0Faa1NSREowb3JJQVBWYTBHRGN2TGErVmFYSVpCSWgKOFJWNWpVdHlCL2ZUQlFhTDRxdTJBYXVuNXUyOXAyejFhUHVFN29vYThJWm81aTY2aXd1OVNRbkZ5V0lZRXBDWgptbTBIRkloeTUxZUN6WFFBY2svcitjdWFYM2QwU3ZFT0dWbnNGRWlYNFRVN0gwUlpBN2hDSlFmamo4K3VudjRjCkYyQTF0RGJ1MDlGcWxwQVlRL00rd0haQmE2c2dFQ1ZFVTdINWJZWWk0bzRwSkg5cUwzTXBlaGRpS2U2R285RDgKYTBGcE40bjFnY1VVUHJ3UDNVTGgKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo="
++        "ca.crt": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURDakNDQWZLZ0F3SUJBZ0lUUHRVbFlTTFdzQmVWdHpWK2l6QU5YMDRFMmpBTkJna3Foa2lHOXcwQkFRc0YKQURBVk1STXdFUVlEVlFRRERBcFVaWE4wUTBFdFRtVjNNQjRYRFRJMU1USXdOREUyTlRreE9Gb1hEVEkyTVRJdwpOREUyTlRreE9Gb3dGVEVUTUJFR0ExVUVBd3dLVkdWemRFTkJMVTVsZHpDQ0FTSXdEUVlKS29aSWh2Y05BUUVCCkJRQURnZ0VQQURDQ0FRb0NnZ0VCQUtYdjdtZHNwNHFGTVdxQlh6VDFSOEVSdWxreG42YXk4TGdsZVNDaTRTUHcKQTJmQThwT1Y5QjEzUWdQN0wvalhwSDlUS2ZNQldlcWsxNEhTd25rTzhWL3NmditTYWFDcFNkZVpzbGZ4TVFXWApjR0pvV2lCT1JQYzVISXJMNm4rOGNiNW1hcDJnMTdyd1RPenpVYlVPR3h6ZUIrdU50SmJudVE3UU9zZGM2ZTZqCmhZTnhqTUFWQzdUcm85SmUwVksxYXQwVzlDMGtQdGUvait1NHhJbmlia0hOeXE1MWZjWkFMZVhOQ09mdE1SNXUKZmdHMEV6NTNoQlZGSWoyMWNhWGx6SjA1Q3lHc1p3RWZHaGw0QWVPMkM2eXZrQkxWaTl2Y2xhbjNPeXptdVIzTgo1cG95dllGeXJVajJxVTFUWS94cjBiaFU4WXV0QnNDSmp5d0dZME1jNU5zQ0F3RUFBYU5UTUZFd0hRWURWUjBPCkJCWUVGQU0zYkRTeUtMcmFXOWQ3eGdOL0RHN3oyd3ZFTUI4R0ExVWRJd1FZTUJhQUZBTTNiRFN5S0xyYVc5ZDcKeGdOL0RHN3oyd3ZFTUE4R0ExVWRFd0VCL3dRRk1BTUJBZjh3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUFwVApwUnU4Z2NPVXhVUUZmaXVCSWJTeGJ5TWdJNEMyM0pXK2xxeUtSMENRemZVMVV5WWUza3lDZFUwV3NqVDlPRUY0Cm16M1RLMEM2U0Y1UjA5WXlkU3k1bHNhS21CblZNNjV0ZEN2SnhlQmhpdDJjMjBRdGxURlR1dkFOUTlsVDZvMUMKU2VyYk9RZjJ0VEJSWTE1bXhaalJOaE1tUDgyaVpoaUt0ZklrZ09JRDZZL3hCcDVJVzdIc1d2TFJKVTZhUGR2cwpkOHUrYkNwYnUvbUVMTVRwazFUdzFqTXZmbFhlVWFUL1YrMnJMSUJUVSt2aStHM0IrTThxNTBBU1ZobmJMK1VsCndCaGNkZ0FudVpFQ3JXcUpxYUo3amVBREZCMnhYUFpBUFFkZk1QdXJwdms5SUdDcU40S1c3cFp1R3VPR3lvWjUKL3JjQnRlaHRsSFg3Zmh5M0w3TT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ=="
+     },
+     "metadata": {
+         "managedFields": [
+@@ -16,9 +16,9 @@
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+-                "time": "2026-08-30T07:34:05Z"
++                "time": "2026-08-30T07:36:11Z"
+             }
+         ],
+-        "resourceVersion": "52299"
++        "resourceVersion": "52708"
+     }
+ }
+
+changed: [localhost]
+
+TASK [Rotate Grafana server TLS serving cert/key] ******************************
+--- before
++++ after
+@@ -1,7 +1,7 @@
+ {
+     "data": {
+-        "tls.crt": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURmakNDQW1hZ0F3SUJBZ0lVYkJVM1d3SXpRUy91cnEvUUJqNitvZm9tbkc0d0RRWUpLb1pJaHZjTkFRRUwKQlFBd0ZURVRNQkVHQTFVRUF3d0tWR1Z6ZEVOQkxVOXNaREFlRncweU5URXlNRFV3TkRRM01ESmFGdzB5TmpFeQpNRFV3TkRRM01ESmFNQmN4RlRBVEJnTlZCQU1NREdkeVlXWmhibUV0WldOb2J6Q0NBU0l3RFFZSktvWklodmNOCkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFLdlgzOCt5ZGFTWWV0WlJRTkRxN0pXOWxISWtVc1ZXRG1RN2g3b1cKamUwZDVINWdBZldCR04vUTc3SlZzeVRmMCtqZExmZll2NVBBbkMrUEdQR2U5MGhpbkVDZHBJQ2pDcitLeGtEdApiL0Nxdjg4Y2hNTG9oV2YwbXJiWEhGenlyWnlOTDNpNHlObjJHR0xuMXI3ZWRQeElFYi9YTGQxVDlEc3doc3Y5ClZVZkNqWjNXcjN4SmptOURvYUJMREhXZ0ZrTVdSSkVnZWdPaUFPMy9LK1NJUUlqOHY4L0JwQklBdVgrRUErYTEKTThXd2Y5UUZRaWQ5RlFqdEVWRDNaUkJBdFl1cEVDWHRBZ3ZodEZiVDltUUN2VUFGdktXZXpYYVJIMGU0aDYwcwpBVmF3NVB3YWRIZXplREFTWHdLeHpWaGs4Um0rcXVnZU5tQmRSNW5JOTdIVWdXY0NBd0VBQWFPQnd6Q0J3REIrCkJnTlZIUkVFZHpCMWdneG5jbUZtWVc1aExXVmphRytDR1dkeVlXWmhibUV0WldOb2J5NXBjM1JwYnkxemVYTjAKWlcyQ0hXZHlZV1poYm1FdFpXTm9ieTVwYzNScGJ5MXplWE4wWlcwdWMzWmpnaXRuY21GbVlXNWhMV1ZqYUc4dQphWE4wYVc4dGMzbHpkR1Z0TG5OMll5NWpiSFZ6ZEdWeUxteHZZMkZzTUIwR0ExVWREZ1FXQkJSdUYvVmxRd014Cit2ZlRJRVBuR2pTdXlkMWdXREFmQmdOVkhTTUVHREFXZ0JUR1prVUcwbGNnSFV1ZW5CZ2w0VVhiUStYUFZEQU4KQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBTG80OThjZ0pHL0JBSlJTcGRGZnhwOGVUd1NFd094SkRqQlJnWW9yagplZ0pNNWV1dVEwbU9NbGZKcEIzSkZ2SUJ4ZmdKcS96K3hwTU0vMnhWY0NOMnFscWNXbkJTOUErUjVJempBM0NaClhBWk11MkNtenFsQmgzUHNtMEVGNmxtYXhLY3lrd3p2eDQ4YkN1RFlvdEh5dHozWk9kcGVTc0IzT01sOEcwOCsKRE9PUUxDcHVnU3hmbGRlTlVPSnd1bk93cVZWVGpONGpFbjlmTWdMUmFZMVQyZDJ1R0I1NUVZOW5XMDcvLy9ZaApwQ01MK0Y5dlVuSnU4QWlKeE9mN1d6ZXlDdXpYM1ZOci9Zak9qb0xxaTlMaTVFb3hCU29FKy9DTXczSXphdnpxCjY3MjRkQk1HcFZLcktvWm13T3FiY2F3RWh4bS9ETGluWHVmc2V4OE5HZnVmQnc9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
+-        "tls.key": "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2QUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktZd2dnU2lBZ0VBQW9JQkFRQ3IxOS9Qc25Xa21IclcKVVVEUTZ1eVZ2WlJ5SkZMRlZnNWtPNGU2Rm8zdEhlUitZQUgxZ1JqZjBPK3lWYk1rMzlQbzNTMzMyTCtUd0p3dgpqeGp4bnZkSVlweEFuYVNBb3dxL2lzWkE3Vy93cXIvUEhJVEM2SVZuOUpxMjF4eGM4cTJjalM5NHVNalo5aGhpCjU5YSszblQ4U0JHLzF5M2RVL1E3TUliTC9WVkh3bzJkMXE5OFNZNXZRNkdnU3d4MW9CWkRGa1NSSUhvRG9nRHQKL3l2a2lFQ0kvTC9Qd2FRU0FMbC9oQVBtdFRQRnNIL1VCVUluZlJVSTdSRlE5MlVRUUxXTHFSQWw3UUlMNGJSVwowL1prQXIxQUJieWxuczEya1I5SHVJZXRMQUZXc09UOEduUjNzM2d3RWw4Q3NjMVlaUEVadnFyb0hqWmdYVWVaCnlQZXgxSUZuQWdNQkFBRUNnZ0VBQjFjSmZwWlRJRVg5RHM2bkU4dkoyRFpWVEpacVprT2dDbGZIWjl6c2tHZnoKd3hLRTh1YmlDNXlJS0g2WE5taE1zbUhxa0c5SDlTdVVlZC80WEs5T2VIanh6d256SlZpckZGeGpaNnNwYzhiaQpock93UGdhaVZvZXczSGtONmNvTkNpYURyZUJKR1pQYkhjMlg1bi9PblpvR0QwTDR4YVYvUlduejZaNTNPQ2Q5CkxkRjg4S2EybENKdFFMVzdIM2E2dy9ILzZUZkhKb2d4aFBVWEQ5RmR5dWJpZDdjb0xPSE90b3BuanVoaU8xbXkKZUE3ZEw5RnFkdnpqZXJpcHlYT2hjeHplcFVIMkRxODRteXhQV0lXWDFyc3lDRkNjYnAzakFoTTFqUlhlNk00VworRDFKRUhLY29NelhLazJyTGhlbVZ6UVB5ZnBFa0tIOXBzdzBYZ2g4UlFLQmdRRGdyOEJWdFFiOVh4Nzk4cUx0ClpNMnlVUTRkYXJRRndvV293N3N2Q0tFVUZaZlVqSFg0MmUyYWREd0psNFlaeVR0dkU1TE9ESWpCVTlIY3N5bXcKOVBOaGFXUEMrY2NmVHFLbUlVd0ZMMkdGb3AzbGFzUDFmSGZCdjBXSHBzeUNFY2V2Mzd2WUg2dUgwdStIbWZvawpOZ2huNXZDZG82UEczbEdTYThmRHZQZGRoUUtCZ1FERHlzN3dxUlhZRzNrMHB5ZndwVHZMYnlaVi9XcjNZcmxvClZEMnRBeFFIbEpmWjRNRWhRSGkwdWpVMlNEUFJHS1BVK1ZxekVqMGtaamNqUnJ6azNnQWt2V0UxQklNbjJFeXoKYjFoYnVhM0xvSFQ4VWxoQmdBNHdEc1dCVkIwb283TlJSQnY4N28yWTcyV3lFeGFkd0loOEJrdVdnVXdqazJoQwpEWE8yWmoyUSt3S0JnQjBTb0xCMlhCRXMzYlcrVDVhb0ZIV2VSMVZIR1VRbGgyWHU3YW1JVkU5aysrQmt6RjhHCjA5ZkljbnhMUHU3WE92bUVidHA2aExkL1FRaHRwbGRmV3A2Z0pHaDJLVzNEbndnZ0J0WWs2MWwvVVM3K1FaemkKSGh6VHd3dHFhY3Zxd1F2Z3gwMlB5NElucVJiQ3RiczV3cHl2SlROQW1WQ0NNOHZlWmxyTmVMU0JBb0dBQStZUQo4dGZiR0grTGpWSGF5TDd4anQ1NnUvR2M1S294bVBNOGV5cDVocUVkMlBmUndMREE5cEJTcU84TklSZkZnMk1uCnZETWJ4cExHZkV4WFRKTmpHMWd1REZrM3AxNTJRSWh5RVBtRWpXNTNoZUs1NFN3RW5FNWUvbkZIVjF6VElFWWoKN0lodmgyRVUvRlBHK29NdjlKQkhod3F5RW05SC96QzNZaVZ0Q21zQ2dZQUN5cUFWRlF1ZjRyU2NDSTcra0hiaQpnRGxpMWFpdW9PZlJscGZxd09zblREUmVEMDJLblRDR0l1dXZUcFVPMkl0Z05UOHNOa1BiSThaZFRiN1E1b21pCjIyUDI2Wnc2UjFBanhjcFV4d1Erc1pIekZQUHhidUZWcWwwbldJaXlFUzN5eWFIeG5KTGZrL3BmL3Z5SHlnUHIKaU5CMXVYbnVGVHloRzF4RGpaN3JMZz09Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K"
++        "tls.crt": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURmakNDQW1hZ0F3SUJBZ0lVUTkwQ0Y5SEVqZG4zdUZtZWR4c1hjU0xHanA4d0RRWUpLb1pJaHZjTkFRRUwKQlFBd0ZURVRNQkVHQTFVRUF3d0tWR1Z6ZEVOQkxVNWxkekFlRncweU5URXlNRFV3TkRRM01EaGFGdzB5TmpFeQpNRFV3TkRRM01EaGFNQmN4RlRBVEJnTlZCQU1NREdkeVlXWmhibUV0WldOb2J6Q0NBU0l3RFFZSktvWklodmNOCkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFNZTRVejZkMmlodk9zQmNYTmgvYnRnUXdlT00yZkF3Q2lzakREUlQKZnh3WFVtWDZSU3FsQ25lNzdpK2FPNHZ3QUhxL1JWcHh0VG91Vk1IV3JJVTBranNyRW15YmlQNFlVUldib1dmWgpyQVpaV3hmK2FhMHAxcFZPY1BlTkZUYUw5V1RvMHJ2dWhUa3RyRFRLbHlBdHVvazljWUtJMStHbm5sUHhWMjQvClNKMm10VDlUcW9UUDMxWVNxam1yQzhDa05NYlNqbE03ekFDd0VtYWdQUWFwNmREM3NINVptUWMxSXRnZjVZTWcKT2xEVnY4N1RwK3U1eEZUYXBsWkwrcWVVeW9WSHRoSFNSWFhWdVByQzVFQW5VTlJQaEhxWVdPOVRtcVhVRlFXOApaaFlZRjRtNGVPUk9RV2tNK0tvN0wvdzFHakhTTWhNNC9OMXBUazhWb1FJWnhRRUNBd0VBQWFPQnd6Q0J3REIrCkJnTlZIUkVFZHpCMWdneG5jbUZtWVc1aExXVmphRytDR1dkeVlXWmhibUV0WldOb2J5NXBjM1JwYnkxemVYTjAKWlcyQ0hXZHlZV1poYm1FdFpXTm9ieTVwYzNScGJ5MXplWE4wWlcwdWMzWmpnaXRuY21GbVlXNWhMV1ZqYUc4dQphWE4wYVc4dGMzbHpkR1Z0TG5OMll5NWpiSFZ6ZEdWeUxteHZZMkZzTUIwR0ExVWREZ1FXQkJRb0QxUk5vZnFmCnJNQVdsSW5UQkpwUnNWT29BVEFmQmdOVkhTTUVHREFXZ0JRRE4ydzBzaWk2Mmx2WGU4WURmd3h1ODlzTHhEQU4KQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBSWJDTWxWNGlaa3pzMksrbHp6cFVyWWtCM29wdXdwODBDUWc2RUt1ZwppQnppZi9tdWRoQWJhOU9aTDcxZDQ0UTdrUVh6RjRrUWl3aDg1cldUdTZ2MXpmMTYwYi9jcDNXSE81OGlMUkkxCmNTbzdWY2NlRFlzcFFOdHYvMGkyVVZSNEozNU1rM2F4QmxrVW0zRTZqQVNvaTJMWVk5VjJieTQzTHNxK01iWS8KcTF6Szl6YW1uYXNXdnRwaGpMU2xxdk55eUlTMmZCdjJSOXRyZzNKSDBWWDlJZjlBWlIxSmVibDZPb25IbHQ4dQo3NXJnSmlUNjBCYTVzRGluQ2RoQTJBcEU5UHVRQXpwUVc5WmNHS0xDa20rbnlpSzg1OGo4TVBzZjJ2Nk4xeUNhClhPK010QnpMZGdXaDVEeVpoY2pBSXQ4bjhzWW82UmZ6TVpVd0lGQ0YyVkZDTVE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0t",
++        "tls.key": "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2UUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktjd2dnU2pBZ0VBQW9JQkFRREh1Rk0rbmRvb2J6ckEKWEZ6WWYyN1lFTUhqak5ud01Bb3JJd3cwVTM4Y0YxSmwra1VxcFFwM3UrNHZtanVMOEFCNnYwVmFjYlU2TGxUQgoxcXlGTkpJN0t4SnNtNGorR0ZFVm02Rm4yYXdHV1ZzWC9tbXRLZGFWVG5EM2pSVTJpL1ZrNk5LNzdvVTVMYXcwCnlwY2dMYnFKUFhHQ2lOZmhwNTVUOFZkdVAwaWRwclUvVTZxRXo5OVdFcW81cXd2QXBEVEcwbzVUTzh3QXNCSm0Kb0QwR3FlblE5N0IrV1prSE5TTFlIK1dESURwUTFiL08wNmZydWNSVTJxWldTL3FubE1xRlI3WVIwa1YxMWJqNgp3dVJBSjFEVVQ0UjZtRmp2VTVxbDFCVUZ2R1lXR0JlSnVIamtUa0ZwRFBpcU95LzhOUm94MGpJVE9QemRhVTVQCkZhRUNHY1VCQWdNQkFBRUNnZ0VBSjR4VEE1KzdidTFUcTNxK3NlcE9Gei8rUE9LTDEzbVQwZVh2U1Q5TmVORVAKY24wa0RDVkJWT05rYjQyeGcrempFMnRqdnR5c1g5aUQxUngrN2lPeVgwQVF0bXY0TFNUQWpiQlRQbDdHcHowegpnaVZSWk1aWHBSb3kyWHBZL0lPcmRLOTc1MVg4a0kyQVA3WHNSaVYzL2l3cUdZaWlneDh2aFh6UmJOWGdPY05MCkt1c2Q3ZWlwZ1VhQ3FwS0d0d25ickZBQVdLcGFjU1pnOXlsajFtM2FKZ2NtbkxZdEVaV2ZtSCtmdVhYWXp1MFMKWTFzRmp4UUVZRlJ4NWpOeTk3cDJDV01yT3hCL25BSDdjYi90bW9EYWhrck9LekRuSHowaHduSTBnYXZnTktuMwpuSDRFM1hzRk11SW1wKzZQQU1tOUlCRlBVOWE4M2ZtY3FBMC9nUExIaVFLQmdRRGs0WTNnbDdtV1F6cU8xSEMrCkt6d3VWY1NoNy9iVVNmbjZRSUlXVVNNVnVXb280eFVZdkdQdUFZK3Q5RStaZ1BkM1pQYStJcnZjMVMvdmVHQmIKRzF0T0V1UzAvVVRBdGdhN1JJWDRRTDB5c3VlTy9makh1MWdzdGxmRXZJcWx0T2RqNTJJdG5JSkliZE5RWXNaQwo0SlUrUHYzUUlxMTh2OXVnNXBNZEQySVpOUUtCZ1FEZllrRTRYVGhpWWtXODUzSzNETC83TWJXVjBLRC96N1ZRCkY2R3RaUjR3SU14MFRwRENFS0ZZc3N1Q3BScThNbC9yUExEdlRucXN5N25INDA4SUJvQVhldC82azJpNXJObUIKbHFZSmdvUnhMUXhNL2xBOXNEYmRnYnB6N3gybkZHYlExd1liM2pHSDJpQ1FoRmthYzhIb292QlR3TjFrQjloSwpRb2RIUEhDQ0hRS0JnRmM1M21nSmFxRHBYaGV3dm9hNjAyU1ZLeXJMMkxWdXUrV3pUK0JSYTUyTDIvbFpFV0VyCjZxbDV6dGZzazZsY2pQTGpkMlZldDFtaHBYTU4zU3JiY2lCKzhzcEcrenkySWpxY0VySlplY0VvalRiaGN6NHIKRjU5eW5tQkx1a3NNZG1LTWU4NEdKMkNTK2tWWVgxWjlZR01vZm5JanhSb1Z4QTI5MGJMeGVlRkJBb0dBQTd0NQppWDZOUForVXVMWkpSV095SlhsTUptZW8rUDA0YzFFaHcycm9HVGZERXNKcFNzVEtYVmdIYkhSandQYzZnUXl2CmpDQU1qcXlNdXhsQ0xja21CTDVwMVo3MjVmdE1Xd3p3VTBKYUFpWVZpWWZLUVcyYlRSSW8wbDBSYXNROWY0bkkKTVZrQ0ROb0pKMEQrMkNGTkFSMFAxT1pwREkzUkFGU2lPLzkzaGNVQ2dZRUFsdEJYK2NnZlJqbHpIdTdxeE5pZQo1ZFc4K01ERXEySldCWGczeFhneks3TER6UHo3Y0Nqd3JNTFg4NU1ZZGFOWTgzcTV4VDF6YmZjS0gzYmkwYU1rClM4UmF0ZkNKNWdsV2kwNU5OZXdXYWY2dXdqODJjZTdwanVEZzM4L2U4eFhVWldyZzBVS0UxNHNHMURueWNUNDgKWTJrWmp6Q09pTGp3NkJ5M2xqY3BKSFk9Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0="
+     },
+     "metadata": {
+         "managedFields": [
+@@ -18,9 +18,9 @@
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+-                "time": "2026-08-30T07:34:05Z"
++                "time": "2026-08-30T07:36:13Z"
+             }
+         ],
+-        "resourceVersion": "52295"
++        "resourceVersion": "52714"
+     }
+ }
+
+changed: [localhost]
+
+TASK [Rotate Server CA in kiali-cabundle ConfigMap] ****************************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+     "data": {
+-        "additional-ca-bundle.pem": "-----BEGIN CERTIFICATE-----\nMIIDCzCCAfOgAwIBAgIUCDOA4Nsi69AvxTVTAYZJaUl9G4owDQYJKoZIhvcNAQEL\nBQAwFTETMBEGA1UEAwwKVGVzdENBLU9sZDAeFw0yNTEyMDQxNjU5MThaFw0yNjEy\nMDQxNjU5MThaMBUxEzARBgNVBAMMClRlc3RDQS1PbGQwggEiMA0GCSqGSIb3DQEB\nAQUAA4IBDwAwggEKAoIBAQDBFuL1dnM9/0zSw+WCUtMdbibITVE5ESLw82G2XlvW\nHAygMeo78uw7X7X9RY20l769sGRHd/pz/z6FXkz/H0/HT9hpUqgU4gdCks5hGGaY\nd3FVal0pEk7Aqowti6rm/Mi4JMxPi2cjZwqjuGkFl/fiS2wBz130zRkGMjTeIaCT\n9XsIz73l7UaIEBvb7RiKYXiwLNzuO12kR+OpnY/fznP5Ow9Zhy4UqNsF0mls9qD2\nertdR1b7LicUHIFEiAcq935ODy91/L2au0+trMZ0Iz9cgIvVaVLTNCLAWva/b41j\nNskZwa52fTUsfi3uhsC8tXenAD6i8q881Of0agkXvJMnAgMBAAGjUzBRMB0GA1Ud\nDgQWBBTGZkUG0lcgHUuenBgl4UXbQ+XPVDAfBgNVHSMEGDAWgBTGZkUG0lcgHUue\nnBgl4UXbQ+XPVDAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQAR\ni5U1yQTifkhBPjgCU5MfG0HB8RQJOuTTngE5YErr34kook52USVWbF+woIkvg8Hh\nGC5dAzQ9ELO088YB5cA4u98ZVC/QSQO4oAZkSRDJ0orIAPVa0GDcvLa+VaXIZBIh\n8RV5jUtyB/fTBQaL4qu2Aaun5u29p2z1aPuE7ooa8IZo5i66iwu9SQnFyWIYEpCZ\nmm0HFIhy51eCzXQAck/r+cuaX3d0SvEOGVnsFEiX4TU7H0RZA7hCJQfjj8+unv4c\nF2A1tDbu09FqlpAYQ/M+wHZBa6sgECVEU7H5bYYi4o4pJH9qL3MpehdiKe6Go9D8\na0FpN4n1gcUUPrwP3ULh\n-----END CERTIFICATE-----\n"
++        "additional-ca-bundle.pem": "-----BEGIN CERTIFICATE-----\nMIIDCjCCAfKgAwIBAgITPtUlYSLWsBeVtzV+izANX04E2jANBgkqhkiG9w0BAQsF\nADAVMRMwEQYDVQQDDApUZXN0Q0EtTmV3MB4XDTI1MTIwNDE2NTkxOFoXDTI2MTIw\nNDE2NTkxOFowFTETMBEGA1UEAwwKVGVzdENBLU5ldzCCASIwDQYJKoZIhvcNAQEB\nBQADggEPADCCAQoCggEBAKXv7mdsp4qFMWqBXzT1R8ERulkxn6ay8LgleSCi4SPw\nA2fA8pOV9B13QgP7L/jXpH9TKfMBWeqk14HSwnkO8V/sfv+SaaCpSdeZslfxMQWX\ncGJoWiBORPc5HIrL6n+8cb5map2g17rwTOzzUbUOGxzeB+uNtJbnuQ7QOsdc6e6j\nhYNxjMAVC7Tro9Je0VK1at0W9C0kPte/j+u4xInibkHNyq51fcZALeXNCOftMR5u\nfgG0Ez53hBVFIj21caXlzJ05CyGsZwEfGhl4AeO2C6yvkBLVi9vclan3OyzmuR3N\n5poyvYFyrUj2qU1TY/xr0bhU8YutBsCJjywGY0Mc5NsCAwEAAaNTMFEwHQYDVR0O\nBBYEFAM3bDSyKLraW9d7xgN/DG7z2wvEMB8GA1UdIwQYMBaAFAM3bDSyKLraW9d7\nxgN/DG7z2wvEMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAApT\npRu8gcOUxUQFfiuBIbSxbyMgI4C23JW+lqyKR0CQzfU1UyYe3kyCdU0WsjT9OEF4\nmz3TK0C6SF5R09YydSy5lsaKmBnVM65tdCvJxeBhit2c20QtlTFTuvANQ9lT6o1C\nSerbOQf2tTBRY15mxZjRNhMmP82iZhiKtfIkgOID6Y/xBp5IW7HsWvLRJU6aPdvs\nd8u+bCpbu/mELMTpk1Tw1jMvflXeUaT/V+2rLIBTU+vi+G3B+M8q50ASVhnbL+Ul\nwBhcdgAnuZECrWqJqaJ7jeADFB2xXPZAPQdfMPurpvk9IGCqN4KW7pZuGuOGyoZ5\n/rcBtehtlHX7fhy3L7M=\n-----END CERTIFICATE-----"
+     },
+     "metadata": {
+         "managedFields": [
+@@ -15,9 +15,9 @@
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+-                "time": "2026-08-30T07:34:05Z"
++                "time": "2026-08-30T07:36:16Z"
+             }
+         ],
+-        "resourceVersion": "52300"
++        "resourceVersion": "52729"
+     }
+ }
+
+changed: [localhost]
+
+TASK [Restart grafana-echo deployment to pick up rotated secrets] **************
+--- before
++++ after
+@@ -1,149 +1,7 @@
+ {
+     "metadata": {
+-        "generation": 1,
++        "generation": 2,
+         "managedFields": [
+-            {
+-                "apiVersion": "apps/v1",
+-                "fieldsType": "FieldsV1",
+-                "fieldsV1": {
+-                    "f:metadata": {
+-                        "f:labels": {
+-                            ".": {},
+-                            "f:app": {}
+-                        }
+-                    },
+-                    "f:spec": {
+-                        "f:progressDeadlineSeconds": {},
+-                        "f:replicas": {},
+-                        "f:revisionHistoryLimit": {},
+-                        "f:selector": {},
+-                        "f:strategy": {
+-                            "f:rollingUpdate": {
+-                                ".": {},
+-                                "f:maxSurge": {},
+-                                "f:maxUnavailable": {}
+-                            },
+-                            "f:type": {}
+-                        },
+-                        "f:template": {
+-                            "f:metadata": {
+-                                "f:labels": {
+-                                    ".": {},
+-                                    "f:app": {}
+-                                }
+-                            },
+-                            "f:spec": {
+-                                "f:containers": {
+-                                    "k:{\"name\":\"nginx\"}": {
+-                                        ".": {},
+-                                        "f:args": {},
+-                                        "f:image": {},
+-                                        "f:imagePullPolicy": {},
+-                                        "f:livenessProbe": {
+-                                            ".": {},
+-                                            "f:failureThreshold": {},
+-                                            "f:initialDelaySeconds": {},
+-                                            "f:periodSeconds": {},
+-                                            "f:successThreshold": {},
+-                                            "f:tcpSocket": {
+-                                                ".": {},
+-                                                "f:port": {}
+-                                            },
+-                                            "f:timeoutSeconds": {}
+-                                        },
+-                                        "f:name": {},
+-                                        "f:ports": {
+-                                            ".": {},
+-                                            "k:{\"containerPort\":8443,\"protocol\":\"TCP\"}": {
+-                                                ".": {},
+-                                                "f:containerPort": {},
+-                                                "f:name": {},
+-                                                "f:protocol": {}
+-                                            }
+-                                        },
+-                                        "f:readinessProbe": {
+-                                            ".": {},
+-                                            "f:failureThreshold": {},
+-                                            "f:initialDelaySeconds": {},
+-                                            "f:periodSeconds": {},
+-                                            "f:successThreshold": {},
+-                                            "f:tcpSocket": {
+-                                                ".": {},
+-                                                "f:port": {}
+-                                            },
+-                                            "f:timeoutSeconds": {}
+-                                        },
+-                                        "f:resources": {},
+-                                        "f:terminationMessagePath": {},
+-                                        "f:terminationMessagePolicy": {},
+-                                        "f:volumeMounts": {
+-                                            ".": {},
+-                                            "k:{\"mountPath\":\"/certs\"}": {
+-                                                ".": {},
+-                                                "f:mountPath": {},
+-                                                "f:name": {},
+-                                                "f:readOnly": {}
+-                                            },
+-                                            "k:{\"mountPath\":\"/client-ca\"}": {
+-                                                ".": {},
+-                                                "f:mountPath": {},
+-                                                "f:name": {},
+-                                                "f:readOnly": {}
+-                                            },
+-                                            "k:{\"mountPath\":\"/etc/nginx/nginx.conf\"}": {
+-                                                ".": {},
+-                                                "f:mountPath": {},
+-                                                "f:name": {},
+-                                                "f:subPath": {}
+-                                            }
+-                                        }
+-                                    }
+-                                },
+-                                "f:dnsPolicy": {},
+-                                "f:restartPolicy": {},
+-                                "f:schedulerName": {},
+-                                "f:securityContext": {},
+-                                "f:serviceAccount": {},
+-                                "f:serviceAccountName": {},
+-                                "f:terminationGracePeriodSeconds": {},
+-                                "f:volumes": {
+-                                    ".": {},
+-                                    "k:{\"name\":\"client-ca\"}": {
+-                                        ".": {},
+-                                        "f:name": {},
+-                                        "f:secret": {
+-                                            ".": {},
+-                                            "f:defaultMode": {},
+-                                            "f:secretName": {}
+-                                        }
+-                                    },
+-                                    "k:{\"name\":\"nginx-conf\"}": {
+-                                        ".": {},
+-                                        "f:configMap": {
+-                                            ".": {},
+-                                            "f:defaultMode": {},
+-                                            "f:name": {}
+-                                        },
+-                                        "f:name": {}
+-                                    },
+-                                    "k:{\"name\":\"server-tls\"}": {
+-                                        ".": {},
+-                                        "f:name": {},
+-                                        "f:secret": {
+-                                            ".": {},
+-                                            "f:defaultMode": {},
+-                                            "f:secretName": {}
+-                                        }
+-                                    }
+-                                }
+-                            }
+-                        }
+-                    }
+-                },
+-                "manager": "OpenAPI-Generator",
+-                "operation": "Update",
+-                "time": "2026-08-30T07:34:05Z"
+-            },
+             {
+                 "apiVersion": "apps/v1",
+                 "fieldsType": "FieldsV1",
+@@ -188,13 +46,163 @@
+                 "operation": "Update",
+                 "subresource": "status",
+                 "time": "2026-08-30T07:34:12Z"
++            },
++            {
++                "apiVersion": "apps/v1",
++                "fieldsType": "FieldsV1",
++                "fieldsV1": {
++                    "f:metadata": {
++                        "f:labels": {
++                            ".": {},
++                            "f:app": {}
++                        }
++                    },
++                    "f:spec": {
++                        "f:progressDeadlineSeconds": {},
++                        "f:replicas": {},
++                        "f:revisionHistoryLimit": {},
++                        "f:selector": {},
++                        "f:strategy": {
++                            "f:rollingUpdate": {
++                                ".": {},
++                                "f:maxSurge": {},
++                                "f:maxUnavailable": {}
++                            },
++                            "f:type": {}
++                        },
++                        "f:template": {
++                            "f:metadata": {
++                                "f:annotations": {
++                                    ".": {},
++                                    "f:kubectl.kubernetes.io/restartedAt": {}
++                                },
++                                "f:labels": {
++                                    ".": {},
++                                    "f:app": {}
++                                }
++                            },
++                            "f:spec": {
++                                "f:containers": {
++                                    "k:{\"name\":\"nginx\"}": {
++                                        ".": {},
++                                        "f:args": {},
++                                        "f:image": {},
++                                        "f:imagePullPolicy": {},
++                                        "f:livenessProbe": {
++                                            ".": {},
++                                            "f:failureThreshold": {},
++                                            "f:initialDelaySeconds": {},
++                                            "f:periodSeconds": {},
++                                            "f:successThreshold": {},
++                                            "f:tcpSocket": {
++                                                ".": {},
++                                                "f:port": {}
++                                            },
++                                            "f:timeoutSeconds": {}
++                                        },
++                                        "f:name": {},
++                                        "f:ports": {
++                                            ".": {},
++                                            "k:{\"containerPort\":8443,\"protocol\":\"TCP\"}": {
++                                                ".": {},
++                                                "f:containerPort": {},
++                                                "f:name": {},
++                                                "f:protocol": {}
++                                            }
++                                        },
++                                        "f:readinessProbe": {
++                                            ".": {},
++                                            "f:failureThreshold": {},
++                                            "f:initialDelaySeconds": {},
++                                            "f:periodSeconds": {},
++                                            "f:successThreshold": {},
++                                            "f:tcpSocket": {
++                                                ".": {},
++                                                "f:port": {}
++                                            },
++                                            "f:timeoutSeconds": {}
++                                        },
++                                        "f:resources": {},
++                                        "f:terminationMessagePath": {},
++                                        "f:terminationMessagePolicy": {},
++                                        "f:volumeMounts": {
++                                            ".": {},
++                                            "k:{\"mountPath\":\"/certs\"}": {
++                                                ".": {},
++                                                "f:mountPath": {},
++                                                "f:name": {},
++                                                "f:readOnly": {}
++                                            },
++                                            "k:{\"mountPath\":\"/client-ca\"}": {
++                                                ".": {},
++                                                "f:mountPath": {},
++                                                "f:name": {},
++                                                "f:readOnly": {}
++                                            },
++                                            "k:{\"mountPath\":\"/etc/nginx/nginx.conf\"}": {
++                                                ".": {},
++                                                "f:mountPath": {},
++                                                "f:name": {},
++                                                "f:subPath": {}
++                                            }
++                                        }
++                                    }
++                                },
++                                "f:dnsPolicy": {},
++                                "f:restartPolicy": {},
++                                "f:schedulerName": {},
++                                "f:securityContext": {},
++                                "f:serviceAccount": {},
++                                "f:serviceAccountName": {},
++                                "f:terminationGracePeriodSeconds": {},
++                                "f:volumes": {
++                                    ".": {},
++                                    "k:{\"name\":\"client-ca\"}": {
++                                        ".": {},
++                                        "f:name": {},
++                                        "f:secret": {
++                                            ".": {},
++                                            "f:defaultMode": {},
++                                            "f:secretName": {}
++                                        }
++                                    },
++                                    "k:{\"name\":\"nginx-conf\"}": {
++                                        ".": {},
++                                        "f:configMap": {
++                                            ".": {},
++                                            "f:defaultMode": {},
++                                            "f:name": {}
++                                        },
++                                        "f:name": {}
++                                    },
++                                    "k:{\"name\":\"server-tls\"}": {
++                                        ".": {},
++                                        "f:name": {},
++                                        "f:secret": {
++                                            ".": {},
++                                            "f:defaultMode": {},
++                                            "f:secretName": {}
++                                        }
++                                    }
++                                }
++                            }
++                        }
++                    }
++                },
++                "manager": "OpenAPI-Generator",
++                "operation": "Update",
++                "time": "2026-08-30T07:36:18Z"
+             }
+         ],
+-        "resourceVersion": "52347"
++        "resourceVersion": "52732"
+     },
+     "spec": {
+         "template": {
+-            "metadata": {}
++            "metadata": {
++                "annotations": {
++                    "kubectl.kubernetes.io/restartedAt": "2026-08-30T07:33:34Z"
++                }
++            }
+         }
+     }
+ }
+
+changed: [localhost]
+
+TASK [Wait for grafana-echo deployment to become ready (post-restart)] *********
+ok: [localhost]
+
+TASK [Wait for secret rotation to propagate to pod volume mounts] **************
+Pausing for 90 seconds
+ok: [localhost]
+
+TASK [Get grafana-echo pod for log inspection (post-rotation)] *****************
+ok: [localhost]
+
+TASK [Trigger Kiali to call Grafana endpoint (post-rotation)] ******************
+ok: [localhost]
+
+TASK [Fetch and verify echo service logs (post-rotation)] **********************
+ok: [localhost]
+
+TASK [Verify post-rotation credentials were used by Kiali] *********************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Verified Kiali used echo-user2:echo-pass2 credentials and the rotated client certificate after rotation WITHOUT restarting"
+}
+
+TASK [Record Kiali restart/pod info after test] ********************************
+ok: [localhost]
+
+TASK [set_fact] ****************************************************************
+ok: [localhost]
+
+TASK [Assert Kiali container did not restart during secret rotation] ***********
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Kiali container did not restart during secret rotation"
+}
+
+TASK [Assert Kiali pod was not recreated during secret rotation] ***************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Kiali pod was not recreated (same pod: [kiali-79bc774799-vbh42])"
+}
+
+TASK [Set WRONG CA in kiali-cabundle ConfigMap (negative test)] ****************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+     "data": {
+-        "additional-ca-bundle.pem": "-----BEGIN CERTIFICATE-----\nMIIDCjCCAfKgAwIBAgITPtUlYSLWsBeVtzV+izANX04E2jANBgkqhkiG9w0BAQsF\nADAVMRMwEQYDVQQDDApUZXN0Q0EtTmV3MB4XDTI1MTIwNDE2NTkxOFoXDTI2MTIw\nNDE2NTkxOFowFTETMBEGA1UEAwwKVGVzdENBLU5ldzCCASIwDQYJKoZIhvcNAQEB\nBQADggEPADCCAQoCggEBAKXv7mdsp4qFMWqBXzT1R8ERulkxn6ay8LgleSCi4SPw\nA2fA8pOV9B13QgP7L/jXpH9TKfMBWeqk14HSwnkO8V/sfv+SaaCpSdeZslfxMQWX\ncGJoWiBORPc5HIrL6n+8cb5map2g17rwTOzzUbUOGxzeB+uNtJbnuQ7QOsdc6e6j\nhYNxjMAVC7Tro9Je0VK1at0W9C0kPte/j+u4xInibkHNyq51fcZALeXNCOftMR5u\nfgG0Ez53hBVFIj21caXlzJ05CyGsZwEfGhl4AeO2C6yvkBLVi9vclan3OyzmuR3N\n5poyvYFyrUj2qU1TY/xr0bhU8YutBsCJjywGY0Mc5NsCAwEAAaNTMFEwHQYDVR0O\nBBYEFAM3bDSyKLraW9d7xgN/DG7z2wvEMB8GA1UdIwQYMBaAFAM3bDSyKLraW9d7\nxgN/DG7z2wvEMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAApT\npRu8gcOUxUQFfiuBIbSxbyMgI4C23JW+lqyKR0CQzfU1UyYe3kyCdU0WsjT9OEF4\nmz3TK0C6SF5R09YydSy5lsaKmBnVM65tdCvJxeBhit2c20QtlTFTuvANQ9lT6o1C\nSerbOQf2tTBRY15mxZjRNhMmP82iZhiKtfIkgOID6Y/xBp5IW7HsWvLRJU6aPdvs\nd8u+bCpbu/mELMTpk1Tw1jMvflXeUaT/V+2rLIBTU+vi+G3B+M8q50ASVhnbL+Ul\nwBhcdgAnuZECrWqJqaJ7jeADFB2xXPZAPQdfMPurpvk9IGCqN4KW7pZuGuOGyoZ5\n/rcBtehtlHX7fhy3L7M=\n-----END CERTIFICATE-----"
++        "additional-ca-bundle.pem": "-----BEGIN CERTIFICATE-----\nMIIDCzCCAfOgAwIBAgIUCDOA4Nsi69AvxTVTAYZJaUl9G4owDQYJKoZIhvcNAQEL\nBQAwFTETMBEGA1UEAwwKVGVzdENBLU9sZDAeFw0yNTEyMDQxNjU5MThaFw0yNjEy\nMDQxNjU5MThaMBUxEzARBgNVBAMMClRlc3RDQS1PbGQwggEiMA0GCSqGSIb3DQEB\nAQUAA4IBDwAwggEKAoIBAQDBFuL1dnM9/0zSw+WCUtMdbibITVE5ESLw82G2XlvW\nHAygMeo78uw7X7X9RY20l769sGRHd/pz/z6FXkz/H0/HT9hpUqgU4gdCks5hGGaY\nd3FVal0pEk7Aqowti6rm/Mi4JMxPi2cjZwqjuGkFl/fiS2wBz130zRkGMjTeIaCT\n9XsIz73l7UaIEBvb7RiKYXiwLNzuO12kR+OpnY/fznP5Ow9Zhy4UqNsF0mls9qD2\nertdR1b7LicUHIFEiAcq935ODy91/L2au0+trMZ0Iz9cgIvVaVLTNCLAWva/b41j\nNskZwa52fTUsfi3uhsC8tXenAD6i8q881Of0agkXvJMnAgMBAAGjUzBRMB0GA1Ud\nDgQWBBTGZkUG0lcgHUuenBgl4UXbQ+XPVDAfBgNVHSMEGDAWgBTGZkUG0lcgHUue\nnBgl4UXbQ+XPVDAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQAR\ni5U1yQTifkhBPjgCU5MfG0HB8RQJOuTTngE5YErr34kook52USVWbF+woIkvg8Hh\nGC5dAzQ9ELO088YB5cA4u98ZVC/QSQO4oAZkSRDJ0orIAPVa0GDcvLa+VaXIZBIh\n8RV5jUtyB/fTBQaL4qu2Aaun5u29p2z1aPuE7ooa8IZo5i66iwu9SQnFyWIYEpCZ\nmm0HFIhy51eCzXQAck/r+cuaX3d0SvEOGVnsFEiX4TU7H0RZA7hCJQfjj8+unv4c\nF2A1tDbu09FqlpAYQ/M+wHZBa6sgECVEU7H5bYYi4o4pJH9qL3MpehdiKe6Go9D8\na0FpN4n1gcUUPrwP3ULh\n-----END CERTIFICATE-----"
+     },
+     "metadata": {
+         "managedFields": [
+@@ -15,9 +15,9 @@
+                 },
+                 "manager": "OpenAPI-Generator",
+                 "operation": "Update",
+-                "time": "2026-08-30T07:36:16Z"
++                "time": "2026-08-30T07:38:02Z"
+             }
+         ],
+-        "resourceVersion": "52729"
++        "resourceVersion": "52997"
+     }
+ }
+
+changed: [localhost]
+
+TASK [Wait for wrong CA to propagate to Kiali] *********************************
+Pausing for 90 seconds
+ok: [localhost]
+
+TASK [Trigger Kiali to call Grafana endpoint (with wrong CA)] ******************
+ok: [localhost]
+
+TASK [Get Kiali pod logs to verify TLS error] **********************************
+ok: [localhost]
+
+TASK [Verify Kiali logs show certificate validation error (negative test)] *****
+ok: [localhost] => {
+    "changed": false,
+    "msg": "Negative test PASSED: Kiali correctly failed TLS validation with wrong CA"
+}
+
+TASK [Delete external auth rotation test resources] ****************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=85   changed=12   unreachable=0    failed=0    skipped=6    rescued=0    ignored=0
+
+INFO     Running external-auth-rotation-test > destroy
+DEBUG: ANSIBLE ENVIRONMENT:
+ANSIBLE_COLLECTIONS_PATH: /home/runner/.cache/molecule/operator/external-auth-rotation-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections
+ANSIBLE_CONFIG: /home/runner/.cache/molecule/operator/external-auth-rotation-test/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/external-auth-rotation-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter
+ANSIBLE_LIBRARY: /usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/external-auth-rotation-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+ANSIBLE_ROLES_PATH: /home/runner/.cache/molecule/operator/external-auth-rotation-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+DEBUG: MOLECULE ENVIRONMENT:
+MOLECULE_CLUSTER_TYPE: openshift
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: podman
+MOLECULE_DUMP_LOGS_ON_ERROR: 'true'
+MOLECULE_ENV_FILE: /tmp/molecule/operator/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/runner/.cache/molecule/operator/external-auth-rotation-test
+MOLECULE_FILE: /home/runner/.cache/molecule/operator/external-auth-rotation-test/molecule.yml
+MOLECULE_HELM_CHARTS_REPO: /tmp/molecule/helm-charts-repo
+MOLECULE_INSTANCE_CONFIG: /home/runner/.cache/molecule/operator/external-auth-rotation-test/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/runner/.cache/molecule/operator/external-auth-rotation-test/inventory/ansible_inventory.yml
+MOLECULE_KIALI_CR_SPEC_VERSION: default
+MOLECULE_OPERATOR_INSTALLER: helm
+MOLECULE_OPERATOR_PROFILER_ENABLED: 'true'
+MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION: default
+MOLECULE_PROJECT_DIRECTORY: /tmp/molecule/operator
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /tmp/molecule/operator/molecule/external-auth-rotation-test
+MOLECULE_SCENARIO_NAME: external-auth-rotation-test
+MOLECULE_STATE_FILE: /home/runner/.cache/molecule/operator/external-auth-rotation-test/state.yml
+MOLECULE_VERIFIER_NAME: ansible
+MOLECULE_VERIFIER_TEST_DIRECTORY: /tmp/molecule/operator/molecule/external-auth-rotation-test/tests
+MOLECULE_WAIT_RETRIES: '360'
+
+DEBUG: SHELL REPLAY:
+ANSIBLE_COLLECTIONS_PATH=/home/runner/.cache/molecule/operator/external-auth-rotation-test/collections:/home/runner/.ansible/collections:/usr/share/ansible/collections:/etc/ansible/collections ANSIBLE_CONFIG=/home/runner/.cache/molecule/operator/external-auth-rotation-test/ansible.cfg ANSIBLE_FILTER_PLUGINS=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/filter:/home/runner/.cache/molecule/operator/external-auth-rotation-test/plugins/filter:/tmp/molecule/operator/plugins/filter:/home/runner/.ansible/plugins/filter:/usr/share/ansible/plugins/filter ANSIBLE_LIBRARY=/usr/local/lib/python3.11/site-packages/molecule/provisioner/ansible/plugins/modules:/usr/local/lib/python3.11/site-packages/molecule_plugins/vagrant/modules:/home/runner/.cache/molecule/operator/external-auth-rotation-test/library:/tmp/molecule/operator/library:/home/runner/.ansible/plugins/modules:/usr/share/ansible/plugins/modules ANSIBLE_ROLES_PATH=/home/runner/.cache/molecule/operator/external-auth-rotation-test/roles:/tmp/molecule:/home/runner/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles MOLECULE_CLUSTER_TYPE=openshift MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=podman MOLECULE_DUMP_LOGS_ON_ERROR=true MOLECULE_ENV_FILE=/tmp/molecule/operator/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/runner/.cache/molecule/operator/external-auth-rotation-test MOLECULE_FILE=/home/runner/.cache/molecule/operator/external-auth-rotation-test/molecule.yml MOLECULE_HELM_CHARTS_REPO=/tmp/molecule/helm-charts-repo MOLECULE_INSTANCE_CONFIG=/home/runner/.cache/molecule/operator/external-auth-rotation-test/instance_config.yml MOLECULE_INVENTORY_FILE=/home/runner/.cache/molecule/operator/external-auth-rotation-test/inventory/ansible_inventory.yml MOLECULE_KIALI_CR_SPEC_VERSION=default MOLECULE_OPERATOR_INSTALLER=helm MOLECULE_OPERATOR_PROFILER_ENABLED=true MOLECULE_OSSMCONSOLE_CR_SPEC_VERSION=default MOLECULE_PROJECT_DIRECTORY=/tmp/molecule/operator MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/tmp/molecule/operator/molecule/external-auth-rotation-test MOLECULE_SCENARIO_NAME=external-auth-rotation-test MOLECULE_STATE_FILE=/home/runner/.cache/molecule/operator/external-auth-rotation-test/state.yml MOLECULE_VERIFIER_NAME=ansible MOLECULE_VERIFIER_TEST_DIRECTORY=/tmp/molecule/operator/molecule/external-auth-rotation-test/tests MOLECULE_WAIT_RETRIES=360
+
+
+PLAY [Destroy external-auth-rotation-test] *************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+PLAY [Remove OpenShift Security Context Constraints] ***************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Remove anyuid Security Context Constraint for grafana-echo] **************
+changed: [localhost]
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [include_tasks] ***********************************************************
+included: /tmp/molecule/operator/molecule/common/cluster-info.yml for localhost
+
+TASK [Get information about the cluster] ***************************************
+ok: [localhost]
+
+TASK [Determine the cluster type] **********************************************
+ok: [localhost]
+
+TASK [Determine if the operator installation is managed externally or not] *****
+ok: [localhost]
+
+TASK [Remove Kiali CR] *********************************************************
+changed: [localhost]
+
+TASK [Wait for Kiali ConfigMap to be uninstalled] ******************************
+ok: [localhost]
+
+TASK [Uninstall Operator via Helm] *********************************************
+changed: [localhost]
+
+TASK [Remove CRDs] *************************************************************
+changed: [localhost]
+
+TASK [Removing Operator namespace] *********************************************
+changed: [localhost]
+
+TASK [Removing CR namespace if it is different than control plane and operator namespace] ***
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=16   changed=5    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
+Molecule test passed: external-auth-rotation-test
+
+molecule-tests-volume

@@ -1,0 +1,29 @@
+<testsuites  id="0" name="kiali molecule tests" tests="23" failures="1" time="13825">
+  <testsuite id="0" name="kiali molecule tests" tests="23" failures="1" time="13825">
+    <testcase id="accessible-namespaces-test" name="accessible-namespaces-test" classname="accessible-namespaces-test" time="1053"></testcase>
+    <testcase id="affinity-tolerations-resources-test" name="affinity-tolerations-resources-test" classname="affinity-tolerations-resources-test" time="459"></testcase>
+    <testcase id="api-test" name="api-test" classname="api-test" time="482"></testcase>
+    <testcase id="cluster-wide-access-test" name="cluster-wide-access-test" classname="cluster-wide-access-test" time="1123"></testcase>
+    <testcase id="config-values-test" name="config-values-test" classname="config-values-test" time="638"></testcase>
+    <testcase id="containers-test" name="containers-test" classname="containers-test" time="544">
+      <failure type="error" message="For details, see /tmp/KIALI-GIT/kiali-molecule-test-logs/molecule-tests-2026-08-28_02-10-25/containers-test.log"/>
+    </testcase>
+    <testcase id="default-namespace-test" name="default-namespace-test" classname="default-namespace-test" time="268"></testcase>
+    <testcase id="external-auth-rotation-test" name="external-auth-rotation-test" classname="external-auth-rotation-test" time="618"></testcase>
+    <testcase id="grafana-test" name="grafana-test" classname="grafana-test" time="453"></testcase>
+    <testcase id="instance-name-test" name="instance-name-test" classname="instance-name-test" time="524"></testcase>
+    <testcase id="jaeger-test" name="jaeger-test" classname="jaeger-test" time="526"></testcase>
+    <testcase id="metrics-test" name="metrics-test" classname="metrics-test" time="580"></testcase>
+    <testcase id="null-cr-values-test" name="null-cr-values-test" classname="null-cr-values-test" time="252"></testcase>
+    <testcase id="only-view-only-mode-test" name="only-view-only-mode-test" classname="only-view-only-mode-test" time="347"></testcase>
+    <testcase id="openid-openshift-test" name="openid-openshift-test" classname="openid-openshift-test" time="994"></testcase>
+    <testcase id="os-console-links-test" name="os-console-links-test" classname="os-console-links-test" time="762"></testcase>
+    <testcase id="ossmconsole-config-values-test" name="ossmconsole-config-values-test" classname="ossmconsole-config-values-test" time="499"></testcase>
+    <testcase id="ossmconsole-lite-test" name="ossmconsole-lite-test" classname="ossmconsole-lite-test" time="717"></testcase>
+    <testcase id="remote-cluster-resources-test" name="remote-cluster-resources-test" classname="remote-cluster-resources-test" time="1226"></testcase>
+    <testcase id="roles-test" name="roles-test" classname="roles-test" time="663"></testcase>
+    <testcase id="rolling-restart-test" name="rolling-restart-test" classname="rolling-restart-test" time="348"></testcase>
+    <testcase id="tls-profile-test" name="tls-profile-test" classname="tls-profile-test" time="448"></testcase>
+    <testcase id="token-test" name="token-test" classname="token-test" time="301"></testcase>
+  </testsuite>
+</testsuites>
